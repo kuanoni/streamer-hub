@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import { getCssText, globalCss } from '../stiches.config';
+import { getCssText, globalCss } from '../../stiches.config';
 
 const globalStyles = globalCss({
 	'*, *::before, *::after': {
