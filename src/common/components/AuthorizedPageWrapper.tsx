@@ -1,21 +1,23 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { ComponentAuth } from 'types/custom-auth';
+import { PageAuthorizationOptions } from 'types/custom-auth';
 
 type Props = {
-	auth: ComponentAuth;
+	authorizationOptions: PageAuthorizationOptions;
 	children?: React.ReactNode;
 };
 
-const AuthorizedPageWrapper = ({ auth, children }: Props) => {
+const AuthorizedPageWrapper = ({ authorizationOptions, children }: Props) => {
 	const router = useRouter();
 	const { data, status } = useSession();
 
-	if (status === 'loading') return <>{auth.loading}</>;
+	const { roleRequired, whileLoading, unauthorizedRedirect } = authorizationOptions;
 
-	if (status === 'unauthenticated' || data!.user?.role !== auth.role) {
-		router.push(auth.unauthorized);
-		return <>{auth.loading}</>;
+	if (status === 'loading') return <>{whileLoading}</>;
+
+	if (status === 'unauthenticated' || data!.user?.role !== roleRequired) {
+		router.push(unauthorizedRedirect);
+		return <>{whileLoading}</>;
 	}
 
 	return <>{children}</>;

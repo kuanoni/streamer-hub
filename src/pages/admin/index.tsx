@@ -1,8 +1,8 @@
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
 import React from 'react';
-import { Role } from 'types/custom-auth';
+import { Page, Role } from 'types/custom-auth';
 
-const Admin = () => {
+const Admin: Page = () => {
 	return <div>Admin</div>;
 };
 
@@ -12,8 +12,8 @@ Admin.getLayout = function getLayout(page: JSX.Element) {
 	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
 };
 
-Admin.auth = {
-	role: Role.ADMIN,
-	loading: <>Loading...</>,
-	unauthorized: '/',
+Admin.authorizationOptions = {
+	roleRequired: Role.ADMIN,
+	whileLoading: <>Loading...</>,
+	unauthorizedRedirect: '/',
 };
