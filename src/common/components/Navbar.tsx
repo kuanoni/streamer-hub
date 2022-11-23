@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { styled } from '../../../stiches.config';
 import SignIn from './SignIn';
@@ -40,6 +41,7 @@ const StyledLink = styled(Link, NavButtonLinkStyles);
 const StyledButton = styled('button', NavButtonLinkStyles);
 
 const Navbar = () => {
+	const { status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 
 	return (
@@ -51,7 +53,11 @@ const Navbar = () => {
 				<StyledLink href='/videos'>Videos</StyledLink>
 				<StyledLink href='/admin'>Admin</StyledLink>
 				<span className='right'>
-					<StyledButton onClick={() => setIsSignInOpen(true)}>Sign In</StyledButton>
+					{status === 'authenticated' ? (
+						<StyledButton onClick={() => signOut()}>Sign Out</StyledButton>
+					) : (
+						<StyledButton onClick={() => setIsSignInOpen(true)}>Sign In</StyledButton>
+					)}
 				</span>
 			</nav>
 		</StyledNav>
