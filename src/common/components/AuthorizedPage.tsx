@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { ComponentAuth } from 'types/next-auth';
+import { ComponentAuth } from 'types/custom-auth';
 
 type Props = {
 	auth: ComponentAuth;
@@ -9,11 +9,11 @@ type Props = {
 
 const AuthorizedPage = ({ auth, children }: Props) => {
 	const router = useRouter();
-	const { data, status } = useSession({ required: true });
+	const { data, status } = useSession();
 
-	if (status === 'loading' || !data.user) return <>{auth.loading}</>;
+	if (status === 'loading') return <>{auth.loading}</>;
 
-	if (data.user.role !== auth.role) {
+	if (status === 'unauthenticated' || data!.user?.role !== auth.role) {
 		router.push(auth.unauthorized);
 		return <>{auth.loading}</>;
 	}
