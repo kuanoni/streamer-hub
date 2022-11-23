@@ -1,10 +1,6 @@
 import NextAuth from 'next-auth';
 import { DefaultSession } from 'next-auth';
-
-export enum Role {
-	ADMIN,
-	USER,
-}
+import { Role } from './custom-auth';
 
 declare module 'next-auth' {
 	/**
@@ -20,10 +16,4 @@ declare module 'next-auth' {
 	interface User {
 		role?: Role;
 	}
-}
-
-export interface ComponentAuth {
-	role: Role;
-	loading: React.ReactNode;
-	unauthorized: string;
 }

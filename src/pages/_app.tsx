@@ -3,7 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import AuthorizedPage from '@/components/AuthorizedPage';
 import { NextComponentType, NextPageContext } from 'next';
 import { ReactElement, ReactNode } from 'react';
-import { ComponentAuth } from 'types/next-auth';
+import { ComponentAuth } from 'types/custom-auth';
 
 type LayoutPage = NextComponentType & {
 	getLayout?: (page: ReactElement) => ReactNode;

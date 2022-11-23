@@ -1,6 +1,6 @@
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
 import React from 'react';
-import { Role } from 'types/next-auth';
+import { Role } from 'types/custom-auth';
 
 const Admin = () => {
 	return <div>Admin</div>;
