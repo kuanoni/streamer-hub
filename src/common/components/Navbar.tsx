@@ -5,14 +5,13 @@ import { styled } from '../../../stiches.config';
 import SignIn from './SignIn';
 
 const StyledNav = styled('nav', {
-	padding: '1rem',
+	padding: '1rem 2rem',
 	nav: {
 		display: 'flex',
 		width: '100%',
-		padding: '1rem 2rem',
+		padding: '1rem',
 		backgroundColor: '$bgDark',
 		color: '$text',
-		borderRadius: 20,
 		'& .right': {
 			marginLeft: 'auto',
 		},
@@ -54,7 +53,10 @@ const Navbar = () => {
 				<StyledLink href='/admin'>Admin</StyledLink>
 				<span className='right'>
 					{status === 'authenticated' ? (
-						<StyledButton onClick={() => signOut()}>Sign Out</StyledButton>
+						<>
+							<StyledButton onClick={() => signOut()}>Sign Out</StyledButton>
+							<StyledLink href='/profile'>Profile</StyledLink>
+						</>
 					) : (
 						<StyledButton onClick={() => setIsSignInOpen(true)}>Sign In</StyledButton>
 					)}
