@@ -2,8 +2,9 @@ import { NextComponentType } from 'next';
 import { ReactElement, ReactNode } from 'react';
 
 export enum Role {
-	ADMIN = 'admin',
-	MOD = 'mod',
+	ADMIN,
+	MOD,
+	USER,
 }
 
 export interface PageAuthorizationOptions {
