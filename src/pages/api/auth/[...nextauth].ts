@@ -13,6 +13,12 @@ export const authOptions = {
 			clientSecret: extractStringEnvVar('GOOGLE_SECRET'),
 		}),
 	],
+	callbacks: {
+		async session({ session, token, user }: any) {
+			session.user.role = user.role; // Add role value to user object so it is passed along with session
+			return session;
+		},
+	},
 };
 
 export default NextAuth(authOptions);
