@@ -7,7 +7,7 @@ type Props = {
 	children?: React.ReactNode;
 };
 
-const AuthorizedPage = ({ auth, children }: Props) => {
+const AuthorizedPageWrapper = ({ auth, children }: Props) => {
 	const router = useRouter();
 	const { data, status } = useSession();
 
@@ -21,4 +21,4 @@ const AuthorizedPage = ({ auth, children }: Props) => {
 	return <>{children}</>;
 };
 
-export default AuthorizedPage;
+export default AuthorizedPageWrapper;

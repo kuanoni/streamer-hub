@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
-import AuthorizedPage from '@/components/AuthorizedPage';
+import AuthorizedPageWrapper from '@/components/AuthorizedPageWrapper';
 import { NextComponentType, NextPageContext } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { ComponentAuth } from 'types/custom-auth';
@@ -21,9 +21,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 		<SessionProvider>
 			{Component.auth
 				? getLayout(
-						<AuthorizedPage auth={Component.auth}>
+						<AuthorizedPageWrapper auth={Component.auth}>
 							<Component {...pageProps} />
-						</AuthorizedPage>
+						</AuthorizedPageWrapper>
 				  )
 				: getLayout(<Component {...pageProps} />)}
 		</SessionProvider>
