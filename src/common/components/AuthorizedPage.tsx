@@ -1,13 +1,17 @@
 import { useSession } from 'next-auth/react';
 
-const AuthorizedPage = ({ children }) => {
+type Props = {
+	children?: React.ReactNode;
+};
+
+const AuthorizedPage = ({ children }: Props) => {
 	const { status } = useSession({ required: true });
 
 	if (status === 'loading') {
 		return <div>Loading...</div>;
 	}
 
-	return children;
+	return <>{children}</>;
 };
 
 export default AuthorizedPage;
