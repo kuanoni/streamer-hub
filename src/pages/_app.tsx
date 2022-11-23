@@ -1,23 +1,27 @@
+import { NextComponentType } from 'next';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import AuthorizedPage from '@/components/AuthorizedPage';
 import { NextComponentType, NextPageContext } from 'next';
+import { ReactElement, ReactNode } from 'react';
 
-type AuthComponent = NextComponentType & { auth: Boolean | undefined };
+type LayoutPage = NextComponentType & { getLayout?: (page: ReactElement) => ReactNode, auth: Boolean | undefined };
 
-interface AuthAppProps extends AppProps {
-	Component: AuthComponent;
+interface LayoutAppProps extends AppProps {
+	Component: LayoutPage;
 }
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AuthAppProps) {
+const getLayout = Component.getLayout || ((page) => page);
+
 	return (
 		<SessionProvider>
 			{Component.auth ? (
 				<AuthorizedPage>
-					<Component {...pageProps} />
+					{getLayout(<Component {...pageProps} />)}
 				</AuthorizedPage>
 			) : (
-				<Component {...pageProps} />
+					{getLayout(<Component {...pageProps} />)}
 			)}
 		</SessionProvider>
 	);
