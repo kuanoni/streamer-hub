@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '../../../stiches.config';
+import SignIn from './SignIn';
 
 const StyledNav = styled('nav', {
 	padding: '1rem',
@@ -17,7 +18,7 @@ const StyledNav = styled('nav', {
 	},
 });
 
-const StyledLink = styled(Link, {
+const NavButtonLinkStyles = {
 	border: 'none',
 	backgroundColor: 'transparent',
 	textDecoration: 'underline',
@@ -27,16 +28,31 @@ const StyledLink = styled(Link, {
 	'&:not(:last-child)': {
 		marginRight: '2rem',
 	},
-});
+	'&:hover': {
+		color: '$primary',
+	},
+	'&:active': {
+		color: '$textDark',
+	},
+};
+
+const StyledLink = styled(Link, NavButtonLinkStyles);
+const StyledButton = styled('button', NavButtonLinkStyles);
 
 const Navbar = () => {
+	const [isSignInOpen, setIsSignInOpen] = useState(false);
+
 	return (
 		<StyledNav>
+			<SignIn isOpen={isSignInOpen} setIsOpen={setIsSignInOpen} />
 			<nav>
 				<StyledLink href='/'>Home</StyledLink>
 				<StyledLink href='/chat'>Chat</StyledLink>
 				<StyledLink href='/videos'>Videos</StyledLink>
 				<StyledLink href='/admin'>Admin</StyledLink>
+				<span className='right'>
+					<StyledButton onClick={() => setIsSignInOpen(true)}>Sign In</StyledButton>
+				</span>
 			</nav>
 		</StyledNav>
 	);
