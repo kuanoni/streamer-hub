@@ -3,6 +3,7 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/utils/mongodb';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { Role } from 'types/custom-auth';
 
 export const authOptions = {
 	adapter: MongoDBAdapter(clientPromise),
@@ -10,11 +11,20 @@ export const authOptions = {
 		GoogleProvider({
 			clientId: extractStringEnvVar('GOOGLE_ID'),
 			clientSecret: extractStringEnvVar('GOOGLE_SECRET'),
+			profile(profile) {
+				return {
+					id: profile.sub,
+					displayName: '',
+					email: profile.email,
+					emailVerified: profile.email_verified,
+					role: Role.USER,
+				};
+			},
 		}),
 	],
 	callbacks: {
-		async session({ session, token, user }: any) {
-			session.user.role = user.role; // Add role value to user object so it is passed along with session
+		async session({ session, user }: any) {
+			session.user = user; // Add role value to user object so it is passed along with session
 			return session;
 		},
 	},
