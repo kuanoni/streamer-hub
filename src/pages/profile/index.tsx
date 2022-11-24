@@ -1,6 +1,6 @@
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '../../../stiches.config';
 import { Role } from 'types/custom-auth';
 
@@ -18,8 +18,18 @@ const StyledInput = styled('input', {
 });
 
 const ProfileDashboard = () => {
+	const [displayNameValue, setDisplayNameValue] = useState('');
 	const { data } = useSession();
 	const user = data?.user;
+
+	const changeDisplayName = async () => {
+		const res = await fetch('/api/db/userSetDisplayName', {
+			method: 'PATCH',
+			body: JSON.stringify({ _id: user?.id, displayName: displayNameValue }),
+		}).then((res) => res.json());
+
+		console.log(res);
+	};
 
 	if (!user) return <>Loading...</>;
 
@@ -29,10 +39,13 @@ const ProfileDashboard = () => {
 			{user.displayName ? (
 				<h2>{user.displayName}</h2>
 			) : (
-				<StyledLabel>
-					Display Name
-					<StyledInput type='text' required />
-				</StyledLabel>
+				<>
+					<StyledLabel>
+						Display Name
+						<StyledInput type='text' required onChange={(e) => setDisplayNameValue(e.target.value)} />
+					</StyledLabel>
+					<button onClick={changeDisplayName}>Set display name</button>
+				</>
 			)}
 		</Container>
 	);
