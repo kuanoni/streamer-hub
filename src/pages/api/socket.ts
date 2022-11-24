@@ -1,5 +1,4 @@
-import messageHandler from '@/utils/messageHandler';
-import next, { NextApiRequest } from 'next';
+import { NextApiRequest } from 'next';
 import { Server as IOServer, Socket } from 'socket.io';
 import { NextApiResponseWithSocket } from 'types/socketio';
 
