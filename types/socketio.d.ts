@@ -14,3 +14,9 @@ interface SocketWithIO extends NetSocket {
 interface NextApiResponseWithSocket extends NextApiResponse {
 	socket: SocketWithIO;
 }
+
+type Message = {
+	time: Date;
+	displayName: string;
+	message: string;
+};
