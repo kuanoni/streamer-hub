@@ -1,26 +1,25 @@
 import messageHandler from '@/utils/messageHandler';
-import { NextApiRequest } from 'next';
+import next, { NextApiRequest } from 'next';
 import { Server as IOServer, Socket } from 'socket.io';
 import { NextApiResponseWithSocket } from 'types/socketio';
 
-export default (req: NextApiRequest, res: NextApiResponseWithSocket) => {
-	// It means that socket server was already initialised
-	if (res.socket.server.io) {
-		console.log('Already set up');
-		res.end();
-		return;
+export default async (req: NextApiRequest, res: NextApiResponseWithSocket) => {
+	if (!res.socket.server.io) {
+		console.log('Starting socket.io server');
+
+		const io = new IOServer(res.socket.server);
+
+		io.on('connection', async (socket) => {
+			// show active sockets for debugging
+			const sockets = await io.fetchSockets();
+			console.log(sockets.map((socket) => socket.id));
+
+			socket.on('createdMessage', (msg) => socket.nsp.emit('incomingMessage', msg));
+		});
+
+		res.socket.server.io = io;
+	} else {
+		// console.log('Socket.io server already running');
 	}
-
-	const io = new IOServer(res.socket.server);
-	res.socket.server.io = io;
-
-	const onConnection = (socket: Socket) => {
-		messageHandler(io, socket);
-	};
-
-	// Define actions inside
-	io.on('connection', onConnection);
-
-	console.log('Setting up socket');
 	res.end();
 };
