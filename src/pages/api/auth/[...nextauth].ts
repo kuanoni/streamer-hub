@@ -28,6 +28,9 @@ export const authOptions = {
 			return session;
 		},
 	},
+	pages: {
+		newUser: '/profile',
+	},
 };
 
 export default NextAuth(authOptions);
