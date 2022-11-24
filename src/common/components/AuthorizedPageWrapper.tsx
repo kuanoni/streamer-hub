@@ -10,12 +10,13 @@ type Props = {
 const AuthorizedPageWrapper = ({ authorizationOptions, children }: Props) => {
 	const router = useRouter();
 	const { data, status } = useSession();
+	const userRole = data?.user?.role;
 
 	const { roleRequired, whileLoading, unauthorizedRedirect } = authorizationOptions;
 
 	if (status === 'loading') return <>{whileLoading}</>;
 
-	if (status === 'unauthenticated' || data!.user?.role !== roleRequired) {
+	if (status === 'unauthenticated' || userRole === undefined || userRole > roleRequired) {
 		router.push(unauthorizedRedirect);
 		return <>{whileLoading}</>;
 	}

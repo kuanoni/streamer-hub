@@ -21,7 +21,8 @@
         "@/utils/*": ["src/common/utils/*"],
         "@/pages/*": ["src/pages/*"],
         "@/modules/*": ["src/modules/*"],
-    }
+    },
+    "typeRoots": ["./types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
