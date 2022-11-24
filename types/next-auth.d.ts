@@ -1,5 +1,4 @@
 import NextAuth from 'next-auth';
-import { DefaultSession } from 'next-auth';
 import { Role } from './custom-auth';
 
 declare module 'next-auth' {
