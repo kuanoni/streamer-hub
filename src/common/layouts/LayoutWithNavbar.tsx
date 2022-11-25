@@ -15,7 +15,8 @@ const LayoutWithNavbar = ({ children }: Props) => {
 
 	const Main = styled('main', {
 		position: 'relative',
-		padding: '1rem 2rem',
+		padding: '0 2rem',
+		paddingBottom: '1rem',
 	});
 
 	return (

@@ -4,13 +4,20 @@ import SocketProvider from '../context/SocketProvider';
 import ChatMessages from './ChatMessages';
 import MessageSendForm from './MessageSendForm';
 
-const StyledContainer = styled('div', {});
+const StyledContainer = styled('div', {
+	display: 'flex',
+	flexDirection: 'column',
+	height: '100%',
+	minWidth: 300,
+});
 
 export const ChatBox = () => {
 	return (
-		<SocketProvider>
-			<MessageSendForm />
-			<ChatMessages />
-		</SocketProvider>
+		<StyledContainer>
+			<SocketProvider>
+				<ChatMessages />
+				<MessageSendForm />
+			</SocketProvider>
+		</StyledContainer>
 	);
 };

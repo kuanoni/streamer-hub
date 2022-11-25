@@ -4,8 +4,15 @@ import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 
 const StyledContainer = styled('div', {
-	backgroundColor: '$bgDark',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'flex-end',
+	overflowY: 'auto',
+	height: '100%',
 	padding: '.5rem',
+	backgroundColor: '$bgDark',
+	border: '1px solid $textDark',
+	borderBottom: 'none',
 });
 
 const ChatMessages = () => {
