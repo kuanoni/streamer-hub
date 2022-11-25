@@ -32,7 +32,7 @@ export const messageHandler = async (socket: Socket) => {
 	const createdMessage = (msg: Message, callback: Function) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-		msg.time = new Date(socket.handshake.time);
+		msg.time = new Date();
 
 		const { error, value } = messageSchema.validate(msg);
 
