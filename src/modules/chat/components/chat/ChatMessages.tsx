@@ -1,9 +1,12 @@
-import { styled } from '../../../../../stiches.config';
+import { styled } from 'stiches.config';
 import React, { useContext, useMemo, useState } from 'react';
 import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 
-const StyledContainer = styled('div', {});
+const StyledContainer = styled('div', {
+	backgroundColor: '$bgDark',
+	padding: '.5rem',
+});
 
 const ChatMessages = () => {
 	const socket = useContext(SocketContext);

@@ -1,4 +1,4 @@
-import { styled } from '../../../../../stiches.config';
+import { styled } from 'stiches.config';
 import React, { FC } from 'react';
 import { Message } from 'types/socketio';
 

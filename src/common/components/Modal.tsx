@@ -8,7 +8,7 @@ interface props {
 
 import { createPortal } from 'react-dom';
 import { styled } from '@stitches/react';
-import { keyframes } from '../../../stiches.config';
+import { keyframes } from 'stiches.config';
 
 const fadeIn = keyframes({
 	'0%': { backgroundColor: 'rgba(0, 0, 0, 0)' },

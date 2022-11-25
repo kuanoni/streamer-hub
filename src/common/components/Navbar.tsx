@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import React, { useState } from 'react';
-import { styled } from '../../../stiches.config';
+import { styled } from 'stiches.config';
 import SignIn from './SignIn';
 
 const StyledNav = styled('nav', {
