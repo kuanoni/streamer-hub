@@ -4,22 +4,24 @@ import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 
 const StyledContainer = styled('div', {
-	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column-reverse',
-	justifyItems: 'end',
-	overflowY: 'auto',
 	height: '100%',
+	overflowY: 'auto',
+
+	'.messagesContainer': {
+		position: 'relative',
+		display: 'flex',
+		flexDirection: 'column',
+	},
 });
 
-const ScrollToBottomContainer = styled('div', {
-	position: 'sticky',
-	bottom: 6,
+const ToBottomButton = styled('div', {
+	position: 'relative',
 	height: 0,
-	left: 6,
-	right: 6,
-	margin: 10,
+	margin: '0 10px',
 	button: {
+		position: 'absolute',
 		width: '100%',
 		padding: '6px 0',
 		color: '$textDark',
@@ -43,18 +45,19 @@ const ScrollToBottomContainer = styled('div', {
 const ChatMessages = () => {
 	const socket = useContext(SocketContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
+	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const [focusedUser, setFocusedUser] = useState('');
 	const [freeScroll, setFreeScroll] = useState(false);
 
-	const focusedUserSelector = 'div[data-username=' + focusedUser + ']';
-
+	// uses css selector to highlight focusedUser messages while dimming the rest
+	const focusedUserSelector = '.msg[data-author=' + focusedUser + ']';
 	const containerFocusedUserCss = useMemo(() => {
 		if (focusedUser)
 			return {
 				[focusedUserSelector]: {
 					opacity: '1 !important',
 				},
-				div: {
+				'.msg': {
 					opacity: 0.3,
 				},
 			};
@@ -62,20 +65,22 @@ const ChatMessages = () => {
 	}, [focusedUser]);
 
 	const chatMessageList = useMemo(() => {
-		return socket?.messageLogs
-			.map((msg) => <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />)
-			.reverse();
+		return socket?.messageLogs.map((msg) => (
+			<ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />
+		));
 	}, [socket?.messageLogs]);
 
 	const scrollToBottom = () => {
-		scrollableContainerRef.current?.scrollTo({
-			top: 0,
-			behavior: 'smooth',
-		});
+		if (!bottomRef.current) return;
+		bottomRef.current.scrollIntoView({ behavior: 'smooth' });
 	};
 
+	// scrolling turns on freeScroll, reaching the bottom turns it off
 	const handleScroll = (e: React.UIEvent<HTMLElement>) => {
-		if (scrollableContainerRef.current?.scrollTop === 0) setFreeScroll(false);
+		if (!scrollableContainerRef.current) return;
+		const scrolledToBottom = scrollableContainerRef.current?.scrollTop === 0;
+
+		if (scrolledToBottom) setFreeScroll(false);
 		else setFreeScroll(true);
 	};
 
@@ -84,19 +89,23 @@ const ChatMessages = () => {
 	};
 
 	return (
-		<StyledContainer
-			ref={scrollableContainerRef}
-			onScroll={handleScroll}
-			onClick={handleClick}
-			css={containerFocusedUserCss}
-		>
-			<ScrollToBottomContainer>
+		<>
+			<StyledContainer
+				ref={scrollableContainerRef}
+				onScroll={handleScroll}
+				onClick={handleClick}
+				css={containerFocusedUserCss}
+			>
+				<div ref={bottomRef}></div>
+				<div className='messagesContainer'>{chatMessageList}</div>
+			</StyledContainer>
+
+			<ToBottomButton>
 				<button onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
 					Scroll to bottom
 				</button>
-			</ScrollToBottomContainer>
-			{chatMessageList}
-		</StyledContainer>
+			</ToBottomButton>
+		</>
 	);
 };
 
