@@ -42,7 +42,10 @@ const SocketProvider = ({ children }: Props) => {
 	const sendMessage = (message: string) => {
 		if (!data?.user) return;
 		const msg: Message = { time: new Date(), displayName: data.user.displayName, message };
-		socket?.emit('createdMessage', msg);
+
+		socket?.emit('createdMessage', msg, (res: { status: boolean }) => {
+			if (!res) console.log('Failed to send chat message.');
+		});
 	};
 
 	const providerData: SocketIface = Object.freeze({

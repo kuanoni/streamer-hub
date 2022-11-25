@@ -1,15 +1,55 @@
 import { Socket } from 'socket.io';
 import { Message } from 'types/socketio';
+import Joi from 'joi';
 
-export const messageHandler = (socket: Socket) => {
-	const createdMessage = (msg: Message) => {
-		socket.nsp.emit('incomingMessage', msg);
+const messageSchema = Joi.object({
+	time: Joi.date().required(),
+	displayName: Joi.string().max(25).required(),
+	message: Joi.string().max(500).required(),
+});
+
+const errorHandler = (handler: Function) => {
+	const handleError = (err: Error) => {
+		console.error(err);
 	};
 
-	console.log(socket.handshake.time);
+	return (...args: any[]) => {
+		try {
+			const handlerReturn = handler(...args);
+
+			// async handler
+			if (handlerReturn && typeof handlerReturn.catch === 'function') {
+				handlerReturn.catch((err: Error) => handleError(err));
+			}
+		} catch (err: any) {
+			// sync handler
+			handleError(err);
+		}
+	};
+};
+
+export const messageHandler = async (socket: Socket) => {
+	const createdMessage = (msg: Message, callback: Function) => {
+		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
+
+		const { error, value } = messageSchema.validate(msg);
+
+		if (error) {
+			callback();
+			throw error;
+		}
+
+		socket.nsp.emit('incomingMessage', value);
+
+		callback({
+			status: 'OK',
+		});
+	};
+
+	// console.log(socket.handshake.time);
 
 	// find some way to persist an array of messages on the server side
 	// add new messages to it and then emit it to clients
 
-	socket.on('createdMessage', createdMessage);
+	socket.on('createdMessage', errorHandler(createdMessage));
 };
