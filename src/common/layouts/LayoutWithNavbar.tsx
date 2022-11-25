@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar';
 import React from 'react';
-import { styled } from '../../../stiches.config';
+import { styled } from 'stiches.config';
 
 type Props = {
 	children?: React.ReactNode;
@@ -15,7 +15,8 @@ const LayoutWithNavbar = ({ children }: Props) => {
 
 	const Main = styled('main', {
 		position: 'relative',
-		padding: '1rem 2rem',
+		padding: '0 2rem',
+		paddingBottom: '1rem',
 	});
 
 	return (

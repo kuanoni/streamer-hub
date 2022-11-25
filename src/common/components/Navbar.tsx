@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import React, { useState } from 'react';
-import { styled } from '../../../stiches.config';
+import { styled } from 'stiches.config';
 import SignIn from './SignIn';
 
 const StyledNav = styled('nav', {
@@ -10,7 +10,7 @@ const StyledNav = styled('nav', {
 		display: 'flex',
 		width: '100%',
 		padding: '1rem',
-		backgroundColor: '$bgDark',
+		backgroundColor: '$bgDarkest',
 		color: '$text',
 		'& .right': {
 			marginLeft: 'auto',

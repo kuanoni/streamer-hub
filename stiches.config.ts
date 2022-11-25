@@ -4,7 +4,9 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 	theme: {
 		colors: {
 			bg: '#282828',
-			bgDark: '#030303',
+			bgDark: '#222',
+			bgDarker: '#111',
+			bgDarkest: '#030303',
 			primary: '#ffaec8',
 			text: '#dedede',
 			textDark: '#878787',

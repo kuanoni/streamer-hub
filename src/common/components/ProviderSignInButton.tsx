@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import { signIn } from 'next-auth/react';
 import React from 'react';
-import { styled } from '../../../stiches.config';
+import { styled } from 'stiches.config';
 import google from '../../../public/images/providers/small_google.png';
 
 interface Props {
