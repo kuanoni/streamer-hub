@@ -24,6 +24,15 @@ const ChatMessages = () => {
 		else return {};
 	}, [focusedUser]);
 
+	const chatMessageList = useMemo(() => {
+		return socket?.messageLogs.map((msg) => {
+			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
+		});
+	}, [socket?.messageLogs]);
+
+	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+		if (focusedUser) setFocusedUser('');
+	};
 
 	return (
 		<StyledContainer onClick={handleClick} css={containerFocusedUserCss}>
