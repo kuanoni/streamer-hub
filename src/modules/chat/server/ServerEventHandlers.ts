@@ -4,7 +4,7 @@ import Joi from 'joi';
 
 const messageSchema = Joi.object({
 	time: Joi.date().required(),
-	displayName: Joi.string().max(25).required(),
+	author: Joi.string().max(25).required(),
 	message: Joi.string().max(500).required(),
 });
 
@@ -40,13 +40,12 @@ export const messageHandler = async (socket: Socket) => {
 		}
 
 		socket.nsp.emit('incomingMessage', value);
+		// write to db
 
 		callback({
 			status: 'OK',
 		});
 	};
-
-	// console.log(socket.handshake.time);
 
 	// find some way to persist an array of messages on the server side
 	// add new messages to it and then emit it to clients

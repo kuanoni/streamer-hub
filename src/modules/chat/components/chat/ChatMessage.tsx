@@ -6,7 +6,8 @@ interface Props {
 }
 
 const ChatMessage: FC<Props> = ({ msg }) => {
-	return <div>{msg.time + ' | ' + msg.displayName + ' | ' + msg.message}</div>;
+	const date = new Date(msg.time).toLocaleString('en', { timeZoneName: 'short' });
+	return <div>{date + ' | ' + msg.author + ': ' + msg.message}</div>;
 };
 
 export default ChatMessage;
