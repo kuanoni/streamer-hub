@@ -37,9 +37,15 @@ const MessageSendForm = () => {
 		setText('');
 	};
 
+	const handleOnKeyUp = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (e.code === 'Enter') {
+			sendMessage();
+		}
+	};
+
 	return (
 		<StyledContainer>
-			<textarea value={text} onChange={(e) => setText(e.target.value)} />
+			<textarea value={text} onChange={(e) => setText(e.target.value)} onKeyUp={handleOnKeyUp} maxLength={500} />
 			<button onClick={sendMessage}>Send</button>
 		</StyledContainer>
 	);
