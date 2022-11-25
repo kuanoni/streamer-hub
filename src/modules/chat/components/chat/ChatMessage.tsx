@@ -52,9 +52,12 @@ const StyledAuthor = styled('span', {
 	},
 });
 
-const StyledText = styled('span', {});
+const StyledText = styled('span', {
+	maxWidth: '100%',
+	wordWrap: 'break-word',
+});
 
-const ChatMessage: FC<Props> = ({ msg, setFocusedUser }) => {
+const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	const dateObj = new Date(msg.time);
 	const timeTitle = timeTitleFormatter.format(dateObj);
 	const timeValue = timeValueFormatter.format(dateObj);
@@ -69,6 +72,6 @@ const ChatMessage: FC<Props> = ({ msg, setFocusedUser }) => {
 			<StyledText>{msg.text}</StyledText>
 		</StyledMessage>
 	);
-};
+});
 
 export default ChatMessage;
