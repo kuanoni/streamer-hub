@@ -4,6 +4,7 @@ import { Message } from 'types/socketio';
 
 interface Props {
 	msg: Message;
+	setFocusedUser: Function;
 }
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
@@ -66,6 +67,7 @@ const StyledAuthor = styled('span', {
 
 const StyledText = styled('span', {});
 
+const ChatMessage: FC<Props> = ({ msg, setFocusedUser }) => {
 	const dateObj = new Date(msg.time);
 	const timeTitle = timeTitleFormatter.format(dateObj);
 	const timeValue = timeValueFormatter.format(dateObj);
@@ -74,6 +76,7 @@ const StyledText = styled('span', {});
 		<StyledMessage data-username={msg.author}>
 			<time title={timeTitle}>{timeValue}</time>
 			<StyledAuthor>
+				<button onClick={() => setFocusedUser(msg.author)}>{msg.author}</button>
 			</StyledAuthor>
 			<span className='separator'>:</span>
 			<StyledText>{msg.text}</StyledText>
