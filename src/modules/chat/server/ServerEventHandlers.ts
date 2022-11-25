@@ -5,7 +5,7 @@ import Joi from 'joi';
 const messageSchema = Joi.object({
 	time: Joi.date().required(),
 	author: Joi.string().max(25).required(),
-	message: Joi.string().max(500).required(),
+	text: Joi.string().max(500).required(),
 });
 
 const errorHandler = (handler: Function) => {

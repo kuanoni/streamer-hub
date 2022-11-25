@@ -41,7 +41,7 @@ const SocketProvider = ({ children }: Props) => {
 
 	const sendMessage = (message: string) => {
 		if (!data?.user) return;
-		const msg = { author: data.user.displayName, message };
+		const msg = { author: data.user.displayName, text: message };
 
 		socket?.emit('createdMessage', msg, (res: { status: boolean }) => {
 			if (!res) console.log('Failed to send chat message.');
