@@ -1,5 +1,5 @@
 import { styled } from 'stiches.config';
-import React, { FC } from 'react';
+import React from 'react';
 import { Message } from 'types/socketio';
 
 interface Props {
@@ -32,21 +32,21 @@ const StyledMessage = styled('div', {
 		fontSize: '.75em',
 		marginRight: 4,
 	},
-	'.separator::after': {
-		content: ' ',
-	},
 });
 
 const StyledAuthor = styled('span', {
-	button: {
+	'.author': {
+		height: '100%',
 		padding: 0,
+		paddingLeft: 3,
 		margin: 0,
 		border: 'none',
 		color: 'inherit',
 		background: 'none',
 		fontSize: 'inherit',
+		fontWeight: 900,
 	},
-	'button:hover': {
+	'.author:hover': {
 		textDecoration: 'underline',
 		cursor: 'pointer',
 	},
@@ -63,12 +63,14 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	const timeValue = timeValueFormatter.format(dateObj);
 
 	return (
-		<StyledMessage data-username={msg.author}>
+		<StyledMessage className='msg' data-author={msg.author}>
 			<time title={timeTitle}>{timeValue}</time>
 			<StyledAuthor>
-				<button onClick={() => setFocusedUser(msg.author)}>{msg.author}</button>
+				<span className='author' onClick={() => setFocusedUser(msg.author)}>
+					{msg.author}
+				</span>
 			</StyledAuthor>
-			<span className='separator'>:</span>
+			<span className='separator'>{': '}</span>
 			<StyledText>{msg.text}</StyledText>
 		</StyledMessage>
 	);
