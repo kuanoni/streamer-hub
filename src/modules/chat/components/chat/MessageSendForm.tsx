@@ -6,6 +6,7 @@ const StyledContainer = styled('div', {
 	display: 'flex',
 	width: '100%',
 	height: 60,
+	padding: 6,
 	textarea: {
 		width: '100%',
 		color: '$text',

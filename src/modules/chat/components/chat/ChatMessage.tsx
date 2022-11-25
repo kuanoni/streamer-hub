@@ -24,21 +24,8 @@ const timeValueFormatter = new Intl.DateTimeFormat('default', {
 });
 
 const StyledMessage = styled('div', {
-	variants: {
-		isFocused: {
-			true: {
-				opacity: '1 !important',
-			},
-		},
-		isFocusing: {
-			true: {
-				opacity: 0.3,
-			},
-			false: {
-				opacity: 1,
-			},
-		},
-	},
+	fontSize: 13,
+	padding: '.2em 1.2em .2em .6em',
 	time: {
 		display: 'none',
 		color: '$textDark',

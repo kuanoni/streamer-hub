@@ -9,10 +9,6 @@ const StyledContainer = styled('div', {
 	justifyContent: 'flex-end',
 	overflowY: 'auto',
 	height: '100%',
-	padding: '.5rem',
-	backgroundColor: '$bgDark',
-	border: '1px solid $textDark',
-	borderBottom: 'none',
 });
 
 const ChatMessages = () => {
