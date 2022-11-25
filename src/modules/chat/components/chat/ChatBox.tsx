@@ -9,6 +9,8 @@ const StyledContainer = styled('div', {
 	flexDirection: 'column',
 	height: '100%',
 	minWidth: 300,
+	backgroundColor: '$bgDarkest',
+	border: '1px solid $bgDark',
 });
 
 export const ChatBox = () => {

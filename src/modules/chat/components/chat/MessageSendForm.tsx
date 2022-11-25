@@ -6,25 +6,24 @@ const StyledContainer = styled('div', {
 	display: 'flex',
 	width: '100%',
 	height: 60,
-	border: '1px solid $textDark',
 	textarea: {
 		width: '100%',
 		color: '$text',
-		backgroundColor: '$bgDark',
-		border: 'none',
+		backgroundColor: '$bgDarker',
+		border: '1px solid $bgDark',
 		outline: 'none',
 		resize: 'none',
 	},
 	button: {
 		border: 'none',
-		borderLeft: '1px solid $textDark',
+		borderLeft: '1px solid $bgDark',
 		borderRadius: 0,
 		color: '$text',
 		backgroundColor: '$bg',
 		cursor: 'pointer',
 	},
 	'button:hover': {
-		backgroundColor: '$bgDark',
+		backgroundColor: '$bgDarker',
 	},
 });
 

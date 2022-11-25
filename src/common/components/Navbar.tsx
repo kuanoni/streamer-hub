@@ -10,7 +10,7 @@ const StyledNav = styled('nav', {
 		display: 'flex',
 		width: '100%',
 		padding: '1rem',
-		backgroundColor: '$bgDark',
+		backgroundColor: '$bgDarkest',
 		color: '$text',
 		'& .right': {
 			marginLeft: 'auto',

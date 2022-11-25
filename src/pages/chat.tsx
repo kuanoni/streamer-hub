@@ -7,6 +7,7 @@ const StyledContainer = styled('div', {
 	display: 'grid',
 	gridTemplateColumns: '1fr auto',
 	height: '100%',
+	backgroundColor: '$bgDarker',
 });
 
 const Chat = () => {
