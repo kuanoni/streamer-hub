@@ -4,11 +4,40 @@ import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 
 const StyledContainer = styled('div', {
+	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column-reverse',
 	justifyItems: 'end',
 	overflowY: 'auto',
 	height: '100%',
+});
+
+const ScrollToBottomContainer = styled('div', {
+	position: 'sticky',
+	bottom: 6,
+	height: 0,
+	left: 6,
+	right: 6,
+	margin: 10,
+	button: {
+		width: '100%',
+		padding: '6px 0',
+		color: '$textDark',
+		backgroundColor: '$bgDark',
+		border: 'none',
+		opacity: 0.8,
+		transform: 'translateY(-100%)',
+		transition: '.2s ease',
+	},
+	'button:hover': {
+		color: '$text',
+		opacity: 1,
+		cursor: 'pointer',
+	},
+	'button.hide': {
+		opacity: 0,
+		pointerEvents: 'none',
+	},
 });
 
 const ChatMessages = () => {
@@ -38,21 +67,16 @@ const ChatMessages = () => {
 			.reverse();
 	}, [socket?.messageLogs]);
 
-	// if (scrollableContainerRef.current)
-	// 	scrollableContainerRef.current?.scrollTo({
-	// 		top: scrollableContainerRef.current.scrollHeight,
-	// 		behavior: 'auto',
-	// 	});
-
-	// useEffect(() => {
-	// 	scrollableContainerRef.current?.scrollTo({
-	// 		top: scrollableContainerRef.current.scrollHeight,
-	// 		behavior: 'auto',
-	// 	});
-	// }, [scrollableContainerRef.current?.scrollHeight]);
+	const scrollToBottom = () => {
+		scrollableContainerRef.current?.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+	};
 
 	const handleScroll = (e: React.UIEvent<HTMLElement>) => {
-		console.log(e);
+		if (scrollableContainerRef.current?.scrollTop === 0) setFreeScroll(false);
+		else setFreeScroll(true);
 	};
 
 	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -66,6 +90,11 @@ const ChatMessages = () => {
 			onClick={handleClick}
 			css={containerFocusedUserCss}
 		>
+			<ScrollToBottomContainer>
+				<button onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
+					Scroll to bottom
+				</button>
+			</ScrollToBottomContainer>
 			{chatMessageList}
 		</StyledContainer>
 	);
