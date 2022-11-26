@@ -31,7 +31,7 @@ const SocketProvider = ({ children }: Props) => {
 			socket.removeAllListeners();
 			socket.disconnect();
 		};
-	}, []);
+	}, [data?.user?.role]);
 
 	useEffect(() => {
 		if (status !== 'authenticated') return;

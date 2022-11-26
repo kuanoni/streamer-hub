@@ -2,7 +2,7 @@ import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const userSetDisplayName = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== 'PATCH') return res.json({ status: 500, message: 'Request must be PATCH.' });
 
 	try {
@@ -32,3 +32,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		res.json({ status: 500, message: err });
 	}
 };
+
+export default userSetDisplayName;

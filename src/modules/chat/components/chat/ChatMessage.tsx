@@ -76,4 +76,6 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	);
 });
 
+ChatMessage.displayName = 'ChatMessage';
+
 export default ChatMessage;

@@ -1,5 +1,5 @@
 import { styled } from 'stiches.config';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 
@@ -62,7 +62,7 @@ const ChatMessages = () => {
 				},
 			};
 		else return {};
-	}, [focusedUser]);
+	}, [focusedUser, focusedUserSelector]);
 
 	const chatMessageList = useMemo(() => {
 		return socket?.messageLogs.map((msg) => (

@@ -2,7 +2,7 @@ import extractStringEnvVar from '@/utils/extractStringEnvVar';
 import { NextApiRequest } from 'next';
 import { NextApiResponseWithSocket } from 'types/socketio';
 
-export default (req: NextApiRequest, res: NextApiResponseWithSocket) => {
+const emitMessage = () => (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 	if (!res.socket.server.io) return res.end({ status: 500, message: 'Socket server not running' });
 
 	let body;
@@ -24,3 +24,5 @@ export default (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 	res.send({ status: 200 });
 	res.end();
 };
+
+export default emitMessage;
