@@ -51,7 +51,7 @@ const Navbar = () => {
 				<StyledLink href='/'>Home</StyledLink>
 				<StyledLink href='/stream'>Stream</StyledLink>
 				<StyledLink href='/videos'>Videos</StyledLink>
-				<StyledLink href='/admin'>Admin</StyledLink>
+				{data?.user?.role === Role.ADMIN && <StyledLink href='/admin'>Admin</StyledLink>}
 				<span className='right'>
 					{status === 'authenticated' ? (
 						<>
