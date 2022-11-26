@@ -1,30 +1,42 @@
 import React, { useContext, useState } from 'react';
 import { styled } from 'stiches.config';
+import { IoIosSend } from 'react-icons/io';
 import SocketContext from '../context/SocketContext';
 
 const StyledContainer = styled('div', {
+	position: 'relative',
 	display: 'flex',
-	width: '100%',
-	height: 60,
-	padding: 6,
+	alignItems: 'center',
+	height: 75,
+	margin: 6,
+	backgroundColor: '$bgDarker',
+	border: '1px solid $bgDark',
+
 	textarea: {
 		width: '100%',
+		height: '100%',
+		marginRight: 0,
+		padding: 6,
 		color: '$text',
 		backgroundColor: '$bgDarker',
-		border: '1px solid $bgDark',
+		border: 'none',
 		outline: 'none',
 		resize: 'none',
 	},
-	button: {
+	'.send-btn': {
+		width: '2rem',
+		height: '2rem',
+		marginRight: 6,
+		padding: 6,
 		border: 'none',
-		borderLeft: '1px solid $bgDark',
-		borderRadius: 0,
+		borderRadius: '50%',
 		color: '$text',
-		backgroundColor: '$bg',
+		backgroundColor: '$bgDark',
 		cursor: 'pointer',
 	},
-	'button:hover': {
-		backgroundColor: '$bgDarker',
+	'.send-btn:hover': {
+		backgroundColor: '$bg',
+		color: '#fff',
 	},
 });
 
@@ -46,7 +58,7 @@ const MessageSendForm = () => {
 	return (
 		<StyledContainer>
 			<textarea value={text} onChange={(e) => setText(e.target.value)} onKeyUp={handleOnKeyUp} maxLength={500} />
-			<button onClick={sendMessage}>Send</button>
+			<IoIosSend className='send-btn' onClick={sendMessage} />
 		</StyledContainer>
 	);
 };
