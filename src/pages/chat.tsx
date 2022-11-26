@@ -18,11 +18,22 @@ const StyledContainer = styled('div', {
 	backgroundColor: '$bgDarker',
 });
 
+const StyledIframe = styled('iframe', {
+	color: 'transparent',
+});
+
 const Chat = () => {
 	return (
 		<RelativeContainer>
 			<StyledContainer>
-				<div></div>
+				<div>
+					{/* <StyledIframe
+						src='https://player.twitch.tv/?channel=public_domain_television&parent=localhost'
+						width='100%'
+						height='100%'
+						title='Faker stream'
+					/> */}
+				</div>
 				<ChatBox />
 			</StyledContainer>
 		</RelativeContainer>
