@@ -49,31 +49,28 @@ const ButtonsContainer = styled('div', {
 
 const MessageSendForm = () => {
 	const socket = useContext(SocketContext);
-	const [text, setText] = useState('');
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
 	const sendMessage = () => {
-		socket?.sendMessage(text);
-		setText('');
+		if (!textAreaRef.current) return console.log('textarea undefined');
+		socket?.sendMessage(textAreaRef.current?.value);
+		textAreaRef.current.value = '';
 	};
 
 	const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setText(e.target.value.replace(/\s+/g, ' '));
+		e.target.value = e.target.value.replace(/\s+/g, ' ');
 		e.target.style.height = 'inherit';
 		e.target.style.height = e.target.scrollHeight + 'px';
 	};
 
 	const handleOnKeyUp = (e: React.KeyboardEvent<HTMLElement>) => {
-		if (e.code === 'Enter') {
-			sendMessage();
-		}
+		if (e.code === 'Enter') sendMessage();
 	};
 
 	return (
 		<StyledContainer>
 			<StyledTextArea
 				ref={textAreaRef}
-				value={text}
 				onChange={onChangeTextArea}
 				onKeyUp={handleOnKeyUp}
 				maxLength={500}
@@ -81,7 +78,7 @@ const MessageSendForm = () => {
 			/>
 			<ButtonsContainer>
 				<IoIosSend className='btn send-btn' onClick={sendMessage} />
-				<RiEmotionFill className='btn emote-btn' onClick={sendMessage} />
+				<RiEmotionFill className='btn emote-btn' />
 			</ButtonsContainer>
 		</StyledContainer>
 	);
