@@ -8,6 +8,7 @@ const StyledContainer = styled('div', {
 	flexDirection: 'column-reverse',
 	height: '100%',
 	overflowY: 'auto',
+	scrollbarWidth: 'thin',
 
 	'.messagesContainer': {
 		position: 'relative',
@@ -16,33 +17,34 @@ const StyledContainer = styled('div', {
 	},
 });
 
-const ToBottomButton = styled('div', {
+const BottomContainer = styled('div', {
 	position: 'relative',
 	height: 0,
-	margin: '0 10px',
-	button: {
-		position: 'absolute',
-		width: '100%',
-		padding: '6px 0',
-		color: '$text',
-		backgroundColor: '$bgLightest',
-		border: 'none',
-		opacity: 0.9,
-		transform: 'translateY(-100%)',
-		transition: '.2s ease',
-	},
-	'button:hover': {
+	margin: '0 .5rem',
+});
+
+const ToBottomButton = styled('button', {
+	position: 'absolute',
+	width: '100%',
+	padding: '6px 0',
+	color: '$text',
+	backgroundColor: '$bgLightest',
+	border: 'none',
+	opacity: 0.9,
+	transform: 'translateY(-100%)',
+	transition: '.2s ease',
+	'&:hover': {
 		color: '$text',
 		opacity: 1,
 		cursor: 'pointer',
 	},
-	'button.hide': {
+	'&.hide': {
 		opacity: 0,
 		pointerEvents: 'none',
 	},
 });
 
-const ChatMessages = () => {
+const ChatMessages = ({ children }: { children: React.ReactNode }) => {
 	const socket = useContext(SocketContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
@@ -99,12 +101,12 @@ const ChatMessages = () => {
 				<div ref={bottomRef}></div>
 				<div className='messagesContainer'>{chatMessageList}</div>
 			</StyledContainer>
-
-			<ToBottomButton>
-				<button onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
+			<BottomContainer>
+				{children}
+				<ToBottomButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
 					Scroll to bottom
-				</button>
-			</ToBottomButton>
+				</ToBottomButton>
+			</BottomContainer>
 		</>
 	);
 };
