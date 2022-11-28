@@ -1,5 +1,5 @@
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
-import { ChatBox } from '@/modules/chat/components/chat/ChatBox';
+import { Chat } from '@/modules/chat/components/chat/Chat';
 import React from 'react';
 import { styled } from 'stiches.config';
 
@@ -27,14 +27,14 @@ const Stream = () => {
 		<RelativeContainer>
 			<StyledContainer>
 				<div>
-					<StyledIframe
-						src='https://player.twitch.tv/?channel=public_domain_television&parent=localhost'
+					{/* <StyledIframe
+						src='https://player.twitch.tv/?channel=moistcr1tikal&parent=localhost'
 						width='100%'
 						height='100%'
 						title='Faker stream'
-					/>
+					/> */}
 				</div>
-				<ChatBox />
+				<Chat />
 			</StyledContainer>
 		</RelativeContainer>
 	);
