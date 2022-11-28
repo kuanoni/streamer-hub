@@ -3,6 +3,7 @@ import { styled } from 'stiches.config';
 import { IoIosSend } from 'react-icons/io';
 import { RiEmotionFill } from 'react-icons/ri';
 import SocketContext from '../context/SocketContext';
+import EmoteSelector from './EmotePicker';
 
 const StyledContainer = styled('div', {
 	position: 'relative',
@@ -47,13 +48,20 @@ const ButtonsContainer = styled('div', {
 	},
 });
 
-const MessageSendForm = ({ setIsEmotesOpen }: { setIsEmotesOpen: Function }) => {
+const TopContainer = styled('div', {
+	position: 'relative',
+	height: 0,
+	margin: '0 .5rem',
+});
+
+const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
 	const socket = useContext(SocketContext);
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
 	const sendMessage = () => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
 
+		setIsEmotesOpen(false);
 		socket?.sendMessage(textAreaRef.current?.value);
 		textAreaRef.current.value = '';
 		textAreaRef.current.style.height = 'inherit';
@@ -69,30 +77,50 @@ const MessageSendForm = ({ setIsEmotesOpen }: { setIsEmotesOpen: Function }) => 
 		});
 	};
 
+	const emotePicked = (emoteKey: string) => {
+		if (!textAreaRef.current) return console.log('textarea undefined');
+		const cursorStart = textAreaRef.current.selectionStart;
+		textAreaRef.current.value =
+			textAreaRef.current.value.slice(0, cursorStart) +
+			emoteKey +
+			' ' +
+			textAreaRef.current.value.slice(cursorStart);
+
+		textAreaRef.current.selectionEnd = cursorStart + emoteKey.length + 1;
+
+		textAreaRef.current.focus();
+	};
+
 	const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		e.target.value = e.target.value.replace(/\s+/g, ' ');
+		e.target.value = e.target.value.replace(/[\r\n]+/gm, ' ');
 		e.target.style.height = 'inherit';
 		e.target.style.height = e.target.scrollHeight + 'px';
 	};
 
-	const handleOnKeyUp = (e: React.KeyboardEvent<HTMLElement>) => {
-		if (e.code === 'Enter') sendMessage();
+	const handleOnKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+			e.preventDefault();
+			if (textAreaRef.current?.value) sendMessage();
+		}
 	};
 
 	return (
-		<StyledContainer>
-			<StyledTextArea
-				ref={textAreaRef}
-				onChange={onChangeTextArea}
-				onKeyUp={handleOnKeyUp}
-				maxLength={500}
-				spellCheck={false}
-			/>
-			<ButtonsContainer>
-				<IoIosSend className='btn send-btn' onClick={sendMessage} />
-				<RiEmotionFill className='btn emote-btn' onClick={toggleEmotePicker} />
-			</ButtonsContainer>
-		</StyledContainer>
+		<>
+			<TopContainer>{isEmotesOpen && <EmoteSelector emotePicked={emotePicked} />}</TopContainer>
+			<StyledContainer>
+				<StyledTextArea
+					ref={textAreaRef}
+					onChange={onChangeTextArea}
+					onKeyDown={handleOnKeyDown}
+					maxLength={500}
+					spellCheck={false}
+				/>
+				<ButtonsContainer>
+					<IoIosSend className='btn send-btn' onClick={sendMessage} />
+					<RiEmotionFill className='btn emote-btn' onClick={toggleEmotePicker} />
+				</ButtonsContainer>
+			</StyledContainer>
+		</>
 	);
 };
 
