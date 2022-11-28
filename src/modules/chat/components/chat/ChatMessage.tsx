@@ -2,6 +2,7 @@ import { styled } from 'stiches.config';
 import React from 'react';
 import { Message } from 'types/socketio';
 import { injectEmotes } from '../../utils/injectEmotes';
+import { injectLinks } from '../../utils/injectLinks';
 
 interface Props {
 	msg: Message;
@@ -64,7 +65,8 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	const timeTitle = timeTitleFormatter.format(dateObj);
 	const timeValue = timeValueFormatter.format(dateObj);
 
-	const newText = injectEmotes(msg.text);
+	let newText = injectEmotes(msg.text);
+	newText = injectLinks(newText);
 
 	return (
 		<StyledMessage className='msg' data-author={msg.author}>
