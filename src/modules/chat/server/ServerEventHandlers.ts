@@ -29,7 +29,7 @@ const errorHandler = (handler: Function) => {
 };
 
 export const messageHandler = async (socket: Socket) => {
-	const createdPublicMessage = (msg: Message, callback: Function) => {
+	const createdMessage = (msg: Message, callback: Function) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
 		msg.time = new Date();
@@ -42,7 +42,7 @@ export const messageHandler = async (socket: Socket) => {
 			throw error;
 		}
 
-		socket.nsp.emit('incomingPublicMessage', value);
+		socket.nsp.emit('incomingMessage', value);
 		// write to db
 
 		callback({
@@ -53,5 +53,5 @@ export const messageHandler = async (socket: Socket) => {
 	// find some way to persist an array of messages on the server side
 	// add new messages to it and then emit it to clients
 
-	socket.on('createdPublicMessage', errorHandler(createdPublicMessage));
+	socket.on('createdMessage', errorHandler(createdMessage));
 };

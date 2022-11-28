@@ -19,11 +19,11 @@ const SocketProvider = ({ children }: Props) => {
 		fetch('/api/socket');
 		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 
-		const incomingPublicMessage = (msg: Message) => {
 			setMessageLogs((currentMessages) => [...currentMessages, msg]);
+		const incomingMessage = (msg: Message) => {
 		};
 
-		newSocket.on('incomingPublicMessage', incomingPublicMessage);
+		newSocket.on('incomingMessage', incomingMessage);
 
 		setSocket((currentSocket) => {
 			currentSocket?.disconnect();
