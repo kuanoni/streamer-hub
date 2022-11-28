@@ -2,6 +2,8 @@ import { styled } from 'stiches.config';
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
+import { MessageBoxContainer } from '../../styles';
+import { RiArrowDownSLine } from 'react-icons/ri';
 
 const StyledContainer = styled('div', {
 	display: 'flex',
@@ -23,16 +25,16 @@ const BottomContainer = styled('div', {
 	margin: '0 .5rem',
 });
 
-const ToBottomButton = styled('button', {
-	position: 'absolute',
-	width: '100%',
-	padding: '6px 0',
-	color: '$text',
+const ScrollDownButton = styled(MessageBoxContainer, {
+	display: 'flex',
+	justifyContent: 'center',
 	backgroundColor: '$bgLightest',
-	border: 'none',
 	opacity: 0.9,
-	transform: 'translateY(-100%)',
 	transition: '.2s ease',
+	svg: {
+		width: '2rem',
+		height: '2rem',
+	},
 	'&:hover': {
 		color: '$text',
 		opacity: 1,
@@ -44,7 +46,7 @@ const ToBottomButton = styled('button', {
 	},
 });
 
-const ChatMessages = ({ children }: { children: React.ReactNode }) => {
+const ChatMessages = ({ children, closePopup }: { children: React.ReactNode; closePopup: Function }) => {
 	const socket = useContext(SocketContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
@@ -88,6 +90,7 @@ const ChatMessages = ({ children }: { children: React.ReactNode }) => {
 
 	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
 		if (focusedUser) setFocusedUser('');
+		closePopup();
 	};
 
 	return (
@@ -103,9 +106,9 @@ const ChatMessages = ({ children }: { children: React.ReactNode }) => {
 			</StyledContainer>
 			<BottomContainer>
 				{children}
-				<ToBottomButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
-					Scroll to bottom
-				</ToBottomButton>
+				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
+					<RiArrowDownSLine />
+				</ScrollDownButton>
 			</BottomContainer>
 		</>
 	);
