@@ -17,27 +17,25 @@ const SocketProvider = ({ children }: Props) => {
 	useEffect(() => {
 		// make sure the server is running
 		fetch('/api/socket');
-		const socket = SocketIO({ autoConnect: false, auth: { role: data?.user?.role } });
+		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 
 		const incomingMessage = (msg: Message) => {
 			setMessageLogs((currentMessages) => [...currentMessages, msg]);
 		};
 
-		socket.on('incomingMessage', incomingMessage);
+		newSocket.on('incomingMessage', incomingMessage);
 
-		setSocket(socket);
+		setSocket((currentSocket) => {
+			currentSocket?.disconnect();
+			return newSocket;
+		});
+
+		newSocket.connect();
 
 		return () => {
-			socket.removeAllListeners();
-			socket.disconnect();
+			newSocket?.disconnect();
 		};
 	}, [data?.user?.role]);
-
-	useEffect(() => {
-		if (status !== 'authenticated') return;
-
-		socket?.connect();
-	}, [socket, status]);
 
 	const sendMessage = (message: string) => {
 		if (!data?.user) return;
@@ -50,7 +48,7 @@ const SocketProvider = ({ children }: Props) => {
 
 	const providerData: SocketIface = Object.freeze({
 		socket,
-		messageLogs: messageLogs,
+		messageLogs,
 		sendMessage,
 	});
 
