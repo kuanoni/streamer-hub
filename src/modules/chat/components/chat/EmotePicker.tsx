@@ -36,7 +36,7 @@ const EmotePicker = ({ emotePicked }: { emotePicked: Function }) => {
 	const emoteButtons = useMemo(() => {
 		return EmoteKeys.map((emoteKey, i) => (
 			<EmoteButton key={i} title={emoteKey} onClick={() => emotePicked(emoteKey)}>
-				{Emotes[emoteKey](i)}
+				{Emotes[emoteKey]}
 			</EmoteButton>
 		));
 	}, []);

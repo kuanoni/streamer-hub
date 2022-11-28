@@ -1,5 +1,4 @@
-import Image, { StaticImageData } from 'next/image';
-import { styled } from 'stiches.config';
+import { StaticImageData } from 'next/image';
 import ResidentSleeper from '../../../../public/images/emotes/ResidentSleeper.png';
 import LUL from '../../../../public/images/emotes/LUL.png';
 import BUNGER from '../../../../public/images/emotes/BUNGER.gif';
@@ -7,19 +6,14 @@ import BibleThump from '../../../../public/images/emotes/BibleThump.png';
 import CoolCat from '../../../../public/images/emotes/CoolCat.png';
 import BabyRage from '../../../../public/images/emotes/BabyRage.png';
 import { CSS } from '@stitches/react';
-
-const StyledEmote = styled(Image, {
-	margin: '-.5rem 0',
-	verticalAlign: 'middle',
-	maxHeight: 32,
-});
+import { StyledEmote } from '../styles';
 
 interface EmotesIface {
-	[index: string]: Function;
+	[index: string]: React.ReactNode;
 }
 
 const buildEmoteComponent = (name: string, src: StaticImageData, css?: CSS) => {
-	return (i: string | number) => <StyledEmote key={i} src={src} alt={name} title={name} css={css || {}} />;
+	return <StyledEmote src={src} alt={name} title={name} css={css || {}} />;
 };
 
 export const Emotes: EmotesIface = {
