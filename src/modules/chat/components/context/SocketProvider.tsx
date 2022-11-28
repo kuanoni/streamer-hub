@@ -14,6 +14,7 @@ const SocketProvider = ({ children }: Props) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
 	const [messageLogs, setMessageLogs] = useState<Array<Message>>([]);
+	const [isFirstConnect, setIsFirstConnect] = useState(true);
 
 	const createMessage = (type: MessageType, author: string, text: string): Message => {
 		return { type, time: new Date(), author, text };
@@ -35,14 +36,20 @@ const SocketProvider = ({ children }: Props) => {
 		fetch('/api/socket');
 		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 
+		if (isFirstConnect && data?.user !== undefined) {
+			const msg = createMessage(MessageType.INFO, 'INFO', 'Attempting to connect...');
+			writeMessage(msg);
+		}
+
 		const incomingMessage = (msg: Message) => {
 			writeMessage(msg);
 		};
 
 		const connect = () => {
-			if (data?.user) {
-				const msg = createMessage(MessageType.INFO, 'INFO', data.user.displayName + ' has connected.');
+			if (data?.user && isFirstConnect) {
+				const msg = createMessage(MessageType.INFO, 'INFO', 'You have connected.');
 				writeMessage(msg);
+				setIsFirstConnect(false);
 			}
 		};
 
