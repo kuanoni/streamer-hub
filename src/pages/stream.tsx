@@ -1,5 +1,5 @@
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
-import { ChatBox } from '@/modules/chat/components/chat/ChatBox';
+import { Chat } from '@/modules/chat/components/chat/Chat';
 import React from 'react';
 import { styled } from 'stiches.config';
 
@@ -34,7 +34,7 @@ const Stream = () => {
 						title='Faker stream'
 					/>
 				</div>
-				<ChatBox />
+				<Chat />
 			</StyledContainer>
 		</RelativeContainer>
 	);
