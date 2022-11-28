@@ -3,6 +3,7 @@ import { useSession, signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { styled } from 'stiches.config';
 import SignIn from './SignIn';
+import { Role } from 'types/custom-auth';
 
 const StyledNav = styled('nav', {
 	padding: '1rem 2rem',
@@ -40,7 +41,7 @@ const StyledLink = styled(Link, NavButtonLinkStyles);
 const StyledButton = styled('button', NavButtonLinkStyles);
 
 const Navbar = () => {
-	const { status } = useSession();
+	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 
 	return (
@@ -48,9 +49,9 @@ const Navbar = () => {
 			<SignIn isOpen={isSignInOpen} setIsOpen={setIsSignInOpen} />
 			<nav>
 				<StyledLink href='/'>Home</StyledLink>
-				<StyledLink href='/chat'>Chat</StyledLink>
+				<StyledLink href='/stream'>Stream</StyledLink>
 				<StyledLink href='/videos'>Videos</StyledLink>
-				<StyledLink href='/admin'>Admin</StyledLink>
+				{data?.user?.role === Role.ADMIN && <StyledLink href='/admin'>Admin</StyledLink>}
 				<span className='right'>
 					{status === 'authenticated' ? (
 						<>

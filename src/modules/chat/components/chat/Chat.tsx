@@ -1,8 +1,9 @@
 import { styled } from 'stiches.config';
-import React from 'react';
+import React, { useState } from 'react';
 import SocketProvider from '../context/SocketProvider';
-import ChatMessages from './ChatMessages';
+import ChatMessages from './MessageBox';
 import MessageSendForm from './MessageSendForm';
+import EmoteSelector from './EmotePicker';
 
 const StyledContainer = styled('div', {
 	display: 'flex',
@@ -15,12 +16,18 @@ const StyledContainer = styled('div', {
 	overflow: 'auto',
 });
 
-export const ChatBox = () => {
+export const Chat = () => {
+	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
+
+	const closePopup = () => {
+		setIsEmotesOpen(false);
+	};
+
 	return (
 		<StyledContainer>
 			<SocketProvider>
-				<ChatMessages />
-				<MessageSendForm />
+				<ChatMessages closePopup={closePopup}>{isEmotesOpen && <EmoteSelector />}</ChatMessages>
+				<MessageSendForm setIsEmotesOpen={setIsEmotesOpen} />
 			</SocketProvider>
 		</StyledContainer>
 	);

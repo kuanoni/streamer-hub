@@ -22,17 +22,17 @@ const StyledIframe = styled('iframe', {
 	color: 'transparent',
 });
 
-const Chat = () => {
+const Stream = () => {
 	return (
 		<RelativeContainer>
 			<StyledContainer>
 				<div>
-					{/* <StyledIframe
+					<StyledIframe
 						src='https://player.twitch.tv/?channel=public_domain_television&parent=localhost'
 						width='100%'
 						height='100%'
 						title='Faker stream'
-					/> */}
+					/>
 				</div>
 				<ChatBox />
 			</StyledContainer>
@@ -40,8 +40,8 @@ const Chat = () => {
 	);
 };
 
-export default Chat;
+export default Stream;
 
-Chat.getLayout = function getLayout(page: JSX.Element) {
+Stream.getLayout = function getLayout(page: JSX.Element) {
 	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
 };
