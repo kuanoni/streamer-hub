@@ -46,7 +46,7 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 	},
 });
 
-const ChatMessages = ({ children, closePopup }: { children: React.ReactNode; closePopup: Function }) => {
+const ChatMessages = ({ closePopup }: { closePopup: Function }) => {
 	const socket = useContext(SocketContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
@@ -105,7 +105,6 @@ const ChatMessages = ({ children, closePopup }: { children: React.ReactNode; clo
 				<div className='messagesContainer'>{chatMessageList}</div>
 			</StyledContainer>
 			<BottomContainer>
-				{children}
 				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
 					<RiArrowDownSLine />
 				</ScrollDownButton>
