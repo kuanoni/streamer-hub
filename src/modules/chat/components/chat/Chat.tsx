@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SocketProvider from '../context/SocketProvider';
 import ChatMessages from './MessageBox';
 import MessageSendForm from './MessageSendForm';
-import EmoteSelector from './EmoteSelector';
+import EmoteSelector from './EmotePicker';
 
 const StyledContainer = styled('div', {
 	display: 'flex',
@@ -17,10 +17,17 @@ const StyledContainer = styled('div', {
 });
 
 export const Chat = () => {
+	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
+
+	const closePopup = () => {
+		setIsEmotesOpen(false);
+	};
 
 	return (
 		<StyledContainer>
 			<SocketProvider>
+				<ChatMessages closePopup={closePopup}>{isEmotesOpen && <EmoteSelector />}</ChatMessages>
+				<MessageSendForm setIsEmotesOpen={setIsEmotesOpen} />
 			</SocketProvider>
 		</StyledContainer>
 	);

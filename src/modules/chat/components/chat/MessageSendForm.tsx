@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { styled } from 'stiches.config';
 import { IoIosSend } from 'react-icons/io';
 import { RiEmotionFill } from 'react-icons/ri';
@@ -47,14 +47,26 @@ const ButtonsContainer = styled('div', {
 	},
 });
 
-const MessageSendForm = () => {
+const MessageSendForm = ({ setIsEmotesOpen }: { setIsEmotesOpen: Function }) => {
 	const socket = useContext(SocketContext);
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
 	const sendMessage = () => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
+
 		socket?.sendMessage(textAreaRef.current?.value);
 		textAreaRef.current.value = '';
+		textAreaRef.current.style.height = 'inherit';
+		textAreaRef.current.focus();
+	};
+
+	const toggleEmotePicker = () => {
+		if (!textAreaRef.current) return console.log('textarea undefined');
+		textAreaRef.current.focus();
+
+		setIsEmotesOpen((isOpen: boolean) => {
+			return !isOpen;
+		});
 	};
 
 	const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,7 +90,7 @@ const MessageSendForm = () => {
 			/>
 			<ButtonsContainer>
 				<IoIosSend className='btn send-btn' onClick={sendMessage} />
-				<RiEmotionFill className='btn emote-btn' />
+				<RiEmotionFill className='btn emote-btn' onClick={toggleEmotePicker} />
 			</ButtonsContainer>
 		</StyledContainer>
 	);
