@@ -75,8 +75,11 @@ const MessageSendForm = ({ setIsEmotesOpen }: { setIsEmotesOpen: Function }) => 
 		e.target.style.height = e.target.scrollHeight + 'px';
 	};
 
-	const handleOnKeyUp = (e: React.KeyboardEvent<HTMLElement>) => {
-		if (e.code === 'Enter') sendMessage();
+	const handleOnKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+			e.preventDefault();
+			if (textAreaRef.current?.value) sendMessage();
+		}
 	};
 
 	return (
@@ -84,7 +87,7 @@ const MessageSendForm = ({ setIsEmotesOpen }: { setIsEmotesOpen: Function }) => 
 			<StyledTextArea
 				ref={textAreaRef}
 				onChange={onChangeTextArea}
-				onKeyUp={handleOnKeyUp}
+				onKeyDown={handleOnKeyDown}
 				maxLength={500}
 				spellCheck={false}
 			/>
