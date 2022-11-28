@@ -4,6 +4,7 @@ import SocketProvider from '../context/SocketProvider';
 import ChatMessages from './MessageBox';
 import MessageSendForm from './MessageSendForm';
 import EmoteSelector from './EmotePicker';
+import { useSession } from 'next-auth/react';
 
 const StyledContainer = styled('div', {
 	display: 'flex',
@@ -17,6 +18,7 @@ const StyledContainer = styled('div', {
 });
 
 export const Chat = () => {
+	const { status } = useSession();
 	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
 
 	const closePopup = () => {
@@ -27,7 +29,7 @@ export const Chat = () => {
 		<StyledContainer>
 			<SocketProvider>
 				<ChatMessages closePopup={closePopup}>{isEmotesOpen && <EmoteSelector />}</ChatMessages>
-				<MessageSendForm setIsEmotesOpen={setIsEmotesOpen} />
+				{status === 'authenticated' && <MessageSendForm setIsEmotesOpen={setIsEmotesOpen} />}
 			</SocketProvider>
 		</StyledContainer>
 	);
