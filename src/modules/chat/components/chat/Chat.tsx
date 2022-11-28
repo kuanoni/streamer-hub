@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import SocketProvider from '../context/SocketProvider';
 import ChatMessages from './MessageBox';
 import MessageSendForm from './MessageSendForm';
-import EmoteSelector from './EmotePicker';
 import { useSession } from 'next-auth/react';
 
 const StyledContainer = styled('div', {
@@ -28,8 +27,10 @@ export const Chat = () => {
 	return (
 		<StyledContainer>
 			<SocketProvider>
-				<ChatMessages closePopup={closePopup}>{isEmotesOpen && <EmoteSelector />}</ChatMessages>
-				{status === 'authenticated' && <MessageSendForm setIsEmotesOpen={setIsEmotesOpen} />}
+				<ChatMessages closePopup={closePopup} />
+				{status === 'authenticated' && (
+					<MessageSendForm isEmotesOpen={isEmotesOpen} setIsEmotesOpen={setIsEmotesOpen} />
+				)}
 			</SocketProvider>
 		</StyledContainer>
 	);
