@@ -1,6 +1,8 @@
 import { styled } from 'stiches.config';
 import React from 'react';
 import { Message } from 'types/socketio';
+import { injectEmotes } from '../../utils/injectEmotes';
+import { injectLinks } from '../../utils/injectLinks';
 
 interface Props {
 	msg: Message;
@@ -55,12 +57,16 @@ const StyledAuthor = styled('span', {
 const StyledText = styled('span', {
 	maxWidth: '100%',
 	wordWrap: 'break-word',
+	lineHeight: 1.75,
 });
 
 const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	const dateObj = new Date(msg.time);
 	const timeTitle = timeTitleFormatter.format(dateObj);
 	const timeValue = timeValueFormatter.format(dateObj);
+
+	let newText = injectEmotes(msg.text);
+	newText = injectLinks(newText);
 
 	return (
 		<StyledMessage className='msg' data-author={msg.author}>
@@ -71,7 +77,7 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 				</span>
 			</StyledAuthor>
 			<span className='separator'>{': '}</span>
-			<StyledText>{msg.text}</StyledText>
+			<StyledText>{newText}</StyledText>
 		</StyledMessage>
 	);
 });

@@ -1,5 +1,5 @@
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
-import { ChatBox } from '@/modules/chat/components/chat/ChatBox';
+import { Chat } from '@/modules/chat/components/chat/Chat';
 import React from 'react';
 import { styled } from 'stiches.config';
 
@@ -22,26 +22,26 @@ const StyledIframe = styled('iframe', {
 	color: 'transparent',
 });
 
-const Chat = () => {
+const Stream = () => {
 	return (
 		<RelativeContainer>
 			<StyledContainer>
 				<div>
 					{/* <StyledIframe
-						src='https://player.twitch.tv/?channel=public_domain_television&parent=localhost'
+						src='https://player.twitch.tv/?channel=moistcr1tikal&parent=localhost'
 						width='100%'
 						height='100%'
 						title='Faker stream'
 					/> */}
 				</div>
-				<ChatBox />
+				<Chat />
 			</StyledContainer>
 		</RelativeContainer>
 	);
 };
 
-export default Chat;
+export default Stream;
 
-Chat.getLayout = function getLayout(page: JSX.Element) {
+Stream.getLayout = function getLayout(page: JSX.Element) {
 	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
 };
