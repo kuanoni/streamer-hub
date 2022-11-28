@@ -4,6 +4,8 @@ import { IoIosSend } from 'react-icons/io';
 import { RiEmotionFill } from 'react-icons/ri';
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './EmotePicker';
+import { MessageType } from '../../common';
+import { useSession } from 'next-auth/react';
 
 const StyledContainer = styled('div', {
 	position: 'relative',
@@ -55,17 +57,23 @@ const TopContainer = styled('div', {
 });
 
 const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
-	const socket = useContext(SocketContext);
+	const ctx = useContext(SocketContext);
+	const { data } = useSession();
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
 	const sendMessage = () => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
+		if (!ctx) return console.log('context undefined');
+		if (!data?.user) return console.log('user undefined');
 
-		setIsEmotesOpen(false);
-		socket?.sendMessage(textAreaRef.current?.value);
+		const msg = ctx.createMessage(MessageType.PUBLIC, data?.user.displayName, textAreaRef.current?.value);
+		ctx.sendMessage(msg);
+
+		// recalculate textare height
 		textAreaRef.current.value = '';
 		textAreaRef.current.style.height = 'inherit';
 		textAreaRef.current.focus();
+		setIsEmotesOpen(false);
 	};
 
 	const toggleEmotePicker = () => {
