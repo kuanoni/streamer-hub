@@ -19,11 +19,11 @@ const SocketProvider = ({ children }: Props) => {
 		fetch('/api/socket');
 		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 
-		const incomingMessage = (msg: Message) => {
+		const incomingPublicMessage = (msg: Message) => {
 			setMessageLogs((currentMessages) => [...currentMessages, msg]);
 		};
 
-		newSocket.on('incomingMessage', incomingMessage);
+		newSocket.on('incomingPublicMessage', incomingPublicMessage);
 
 		setSocket((currentSocket) => {
 			currentSocket?.disconnect();
@@ -41,7 +41,7 @@ const SocketProvider = ({ children }: Props) => {
 		if (!data?.user) return;
 		const msg = { author: data.user.displayName, text: message };
 
-		socket?.emit('createdMessage', msg, (res: { status: boolean }) => {
+		socket?.emit('createdPublicMessage', msg, (res: { status: boolean }) => {
 			if (!res) console.log('Failed to send chat message.');
 		});
 	};
