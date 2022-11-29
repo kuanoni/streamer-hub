@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io';
+import { Socket, Server as IOServer } from 'socket.io';
 import { Message } from 'types/socketio';
 import Joi from 'joi';
 import { MessageType, SocketRooms } from '../common';
@@ -52,6 +52,7 @@ export const messageHandler = async (socket: Socket) => {
 
 		if (room) socket.in(room).emit('incomingMessage', value);
 		else socket.nsp.emit('incomingMessage', value);
+
 		// write to db
 
 		callback({
@@ -63,4 +64,13 @@ export const messageHandler = async (socket: Socket) => {
 	// add new messages to it and then emit it to clients
 
 	socket.on('createdMessage', errorHandler(createdMessage));
+};
+
+export const connectionHandler = async (socket: Socket) => {
+	socket.emit('incomingMessage', {
+		type: MessageType.INFO,
+		time: new Date(),
+		author: 'INFO',
+		text: 'You have connected.',
+	});
 };
