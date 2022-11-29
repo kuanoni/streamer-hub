@@ -4,6 +4,7 @@ import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
 import { injectEmotes } from '../../utils/injectEmotes';
 import { injectLinks } from '../../utils/injectLinks';
+import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 
 interface Props {
 	msg: Message;
@@ -27,7 +28,9 @@ const timeValueFormatter = new Intl.DateTimeFormat('default', {
 });
 
 const StyledMessage = styled('div', {
+	display: 'flex',
 	fontSize: 13,
+	lineHeight: 1.75,
 	padding: '.2em 1.2em .2em .6em',
 	time: {
 		display: 'none',
@@ -49,6 +52,8 @@ const StyledMessage = styled('div', {
 });
 
 const StyledAuthor = styled('span', {
+	display: 'flex',
+	alignItems: 'center',
 	'.author': {
 		height: '100%',
 		padding: 0,
@@ -69,8 +74,16 @@ const StyledAuthor = styled('span', {
 const StyledText = styled('span', {
 	maxWidth: '100%',
 	wordWrap: 'break-word',
-	lineHeight: 1.75,
 });
+
+type MessageIconObject = {
+	[index: number]: React.ReactNode;
+};
+
+const messageIcon: MessageIconObject = {
+	[MessageType.SERVER]: <BsShieldFillExclamation />,
+	[MessageType.INFO]: <BsInfoCircleFill />,
+};
 
 const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	const dateObj = new Date(msg.time);
@@ -80,20 +93,7 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	let newText = injectEmotes(msg.text);
 	newText = injectLinks(newText);
 
-	if (msg.type === MessageType.SERVER)
-		return (
-			<StyledMessage type={MessageType.SERVER}>
-				<StyledText>{msg.text}</StyledText>
-			</StyledMessage>
-		);
-	else if (msg.type === MessageType.INFO)
-		return (
-			<StyledMessage type={MessageType.INFO}>
-				<StyledText>{msg.text}</StyledText>
-			</StyledMessage>
-		);
-	else if (msg.type === MessageType.PRIVATE) return <></>;
-	else if (msg.type === MessageType.PUBLIC)
+	if (msg.type === MessageType.PUBLIC)
 		return (
 			<StyledMessage className='msg' data-author={msg.author}>
 				<time title={timeTitle}>{timeValue}</time>
@@ -102,11 +102,18 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 						{msg.author}
 					</span>
 				</StyledAuthor>
-				<span className='separator'>{': '}</span>
+				<span className='separator'>:&nbsp;</span>
 				<StyledText>{newText}</StyledText>
 			</StyledMessage>
 		);
-	else return <></>;
+	else
+		return (
+			<StyledMessage type={msg.type}>
+				<StyledAuthor>{messageIcon[msg.type]}</StyledAuthor>
+				<span className='separator'>&nbsp;</span>
+				<StyledText>{msg.text}</StyledText>
+			</StyledMessage>
+		);
 });
 
 ChatMessage.displayName = 'ChatMessage';
