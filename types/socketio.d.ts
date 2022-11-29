@@ -2,6 +2,7 @@ import { NextApiResponse } from 'next';
 import type { Server as HTTPServer } from 'http';
 import type { Socket as NetSocket } from 'net';
 import { Server as IOServer, Socket } from 'socket.io';
+import { MessageType } from '@/modules/chat/common';
 
 interface SocketServer extends HTTPServer {
 	io?: IOServer | undefined;
@@ -17,7 +18,7 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 
 type Message = {
 	type: MessageType;
-	time: Date;
+	time?: string | Date;
 	author: string;
 	text: string;
 };
