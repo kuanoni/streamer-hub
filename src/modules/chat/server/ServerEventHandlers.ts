@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { Message } from 'types/socketio';
 import Joi from 'joi';
-import { MessageType } from '../common';
+import { MessageType, SocketRooms } from '../common';
 
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),
@@ -31,9 +31,15 @@ const errorHandler = (handler: Function) => {
 };
 
 export const messageHandler = async (socket: Socket) => {
-	const createdMessage = (msg: Message, callback: Function) => {
+	const createdMessage = (
+		msg: Message,
+		callback: Function,
+		room?: SocketRooms,
+		type: MessageType = MessageType.PUBLIC
+	) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
+		msg.type = type;
 		msg.time = new Date().toISOString();
 		msg.text = msg.text.replace(/\s+/g, ' ').trim();
 
@@ -44,7 +50,8 @@ export const messageHandler = async (socket: Socket) => {
 			throw error;
 		}
 
-		socket.nsp.emit('incomingMessage', value);
+		if (room) socket.in(room).emit('incomingMessage', value);
+		else socket.nsp.emit('incomingMessage', value);
 		// write to db
 
 		callback({
