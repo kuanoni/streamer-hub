@@ -71,9 +71,7 @@ const ChatMessages = ({ closePopup }: { closePopup: Function }) => {
 
 	const chatMessageList = useMemo(() => {
 		return socket?.messageLogs.map((msg: Message) => {
-			if (!msg.time) msg.time = new Date().toISOString();
-			const time = typeof msg.time === 'string' ? msg.time : msg.time.toISOString();
-			return <ChatMessage key={time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
+			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
 	}, [socket?.messageLogs]);
 

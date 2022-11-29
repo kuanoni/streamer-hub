@@ -34,7 +34,7 @@ export const messageHandler = async (socket: Socket) => {
 	const createdMessage = (msg: Message, callback: Function) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-		msg.time = new Date();
+		msg.time = new Date().toISOString();
 		msg.text = msg.text.replace(/\s+/g, ' ').trim();
 
 		const { error, value } = messageSchema.validate(msg);

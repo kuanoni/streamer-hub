@@ -18,7 +18,7 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 
 type Message = {
 	type: MessageType;
-	time?: string | Date;
+	time?: string;
 	author: string;
 	text: string;
 };

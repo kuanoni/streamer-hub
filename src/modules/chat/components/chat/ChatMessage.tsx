@@ -47,6 +47,7 @@ const StyledMessage = styled('div', {
 			[MessageType.INFO]: {
 				color: '#45d3ff',
 			},
+			[MessageType.PRIVATE]: {},
 		},
 	},
 });
@@ -86,14 +87,16 @@ const messageIcon: MessageIconObject = {
 };
 
 const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
-	const dateObj = new Date(msg.time);
-	const timeTitle = timeTitleFormatter.format(dateObj);
-	const timeValue = timeValueFormatter.format(dateObj);
-
 	let newText = injectEmotes(msg.text);
 	newText = injectLinks(newText);
 
-	if (msg.type === MessageType.PUBLIC)
+	if (msg.type === MessageType.PUBLIC) {
+		if (!msg.time) throw new Error('time property is missing from public message');
+
+		const dateObj = new Date(msg.time);
+		const timeTitle = timeTitleFormatter.format(dateObj);
+		const timeValue = timeValueFormatter.format(dateObj);
+
 		return (
 			<StyledMessage className='msg' data-author={msg.author}>
 				<time title={timeTitle}>{timeValue}</time>
@@ -106,7 +109,7 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 				<StyledText>{newText}</StyledText>
 			</StyledMessage>
 		);
-	else
+	} else
 		return (
 			<StyledMessage type={msg.type}>
 				<StyledAuthor>{messageIcon[msg.type]}</StyledAuthor>
