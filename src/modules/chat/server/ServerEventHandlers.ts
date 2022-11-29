@@ -1,8 +1,10 @@
 import { Socket } from 'socket.io';
 import { Message } from 'types/socketio';
 import Joi from 'joi';
+import { MessageType } from '../common';
 
 const messageSchema = Joi.object({
+	type: Joi.number().valid(...Object.values(MessageType)),
 	time: Joi.date().required(),
 	author: Joi.string().max(25).required(),
 	text: Joi.string().max(500).required(),
