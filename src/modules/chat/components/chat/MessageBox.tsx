@@ -4,6 +4,7 @@ import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 import { MessageBoxContainer } from '../../styles';
 import { RiArrowDownSLine } from 'react-icons/ri';
+import { Message } from 'types/socketio';
 
 const StyledContainer = styled('div', {
 	display: 'flex',
@@ -69,7 +70,8 @@ const ChatMessages = ({ closePopup }: { closePopup: Function }) => {
 	}, [focusedUser, focusedUserSelector]);
 
 	const chatMessageList = useMemo(() => {
-		return socket?.messageLogs.map((msg) => {
+		return socket?.messageLogs.map((msg: Message) => {
+			if (!msg.time) throw new Error('Message was missing date: ' + msg);
 			const time = typeof msg.time === 'string' ? msg.time : new Date(msg.time).toISOString();
 			return <ChatMessage key={time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
