@@ -2,7 +2,7 @@ import { Server as IOServer } from 'socket.io';
 import { NextApiResponseWithSocket } from 'types/socketio';
 import { Role } from 'types/custom-auth';
 import { messageHandler } from './ServerEventHandlers';
-import { MessageType } from '../common';
+import { MessageType, SocketRooms } from '../common';
 
 export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	if (!res.socket.server.io) {
@@ -11,8 +11,8 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		const io = new IOServer(res.socket.server);
 
 		io.use(async (socket, next) => {
-			if (socket.handshake.auth.role === Role.ADMIN) socket.join('admin');
-			if (socket.handshake.auth.role === Role.MOD) socket.join('moderator');
+			if (socket.handshake.auth.role === Role.ADMIN) socket.join(SocketRooms.ADMIN);
+			if (socket.handshake.auth.role === Role.MOD) socket.join(SocketRooms.MODERATOR);
 
 			next();
 		});
@@ -20,7 +20,6 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		io.on('connection', async (socket) => {
 			const sockets = await io.fetchSockets();
 			console.log(`Connected: ${socket.id}`);
-			// console.log(`Auth: ${socket.handshake.auth.role}`);
 			console.log(
 				'Current sockets: ',
 				sockets.map((socket) => socket.id)
