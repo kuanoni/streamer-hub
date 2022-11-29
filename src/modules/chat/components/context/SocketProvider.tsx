@@ -17,7 +17,7 @@ const SocketProvider = ({ children }: Props) => {
 	const [isFirstConnect, setIsFirstConnect] = useState(true);
 
 	const createMessage = (type: MessageType, author: string, text: string): Message => {
-		return { type, time: new Date(), author, text };
+		return { type, author, text };
 	};
 
 	const writeMessage = (msg: Message) => {
