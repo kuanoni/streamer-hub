@@ -9,11 +9,25 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		const io = new IOServer(res.socket.server);
 
 		io.on('connection', async (socket) => {
-			// show active sockets for debugging
 			const sockets = await io.fetchSockets();
-			console.log(sockets.map((socket) => socket.id));
+			console.log(`Connected: ${socket.id}`);
+			// console.log(`Auth: ${socket.handshake.auth.role}`);
+			console.log(
+				'Current sockets: ',
+				sockets.map((socket) => socket.id)
+			);
+
 
 			messageHandler(socket);
+
+			socket.on('disconnect', async (reason) => {
+				const sockets = await io.fetchSockets();
+				console.log(`Disconnected: ${reason}`);
+				console.log(
+					'Current sockets: ',
+					sockets.map((socket) => socket.id)
+				);
+			});
 		});
 
 		res.socket.server.io = io;
