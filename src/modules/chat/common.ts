@@ -4,3 +4,9 @@ export enum MessageType {
 	PRIVATE,
 	PUBLIC,
 }
+
+export enum SocketRooms {
+	ADMIN = 'admin',
+	MODERATOR = 'moderator',
+}
+
