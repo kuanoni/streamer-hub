@@ -6,7 +6,7 @@ import SocketContext from '../context/SocketContext';
 import EmoteSelector from './EmotePicker';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
-import { Message, MessageWithoutTime } from 'types/socketio';
+import { MessageWithoutTime } from 'types/socketio';
 
 const StyledContainer = styled('div', {
 	position: 'relative',
