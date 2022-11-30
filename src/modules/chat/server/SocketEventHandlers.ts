@@ -31,12 +31,7 @@ const errorHandler = (handler: Function) => {
 };
 
 export const messageHandler = async (socket: Socket) => {
-	const createdMessage = (
-		msg: Message,
-		callback: Function,
-		room?: SocketRooms,
-		type: MessageType = MessageType.PUBLIC
-	) => {
+	const sentMessage = (msg: Message, callback: Function, room?: SocketRooms) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
 		msg.type = type;
@@ -63,7 +58,7 @@ export const messageHandler = async (socket: Socket) => {
 	// find some way to persist an array of messages on the server side
 	// add new messages to it and then emit it to clients
 
-	socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(createdMessage));
+	socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage));
 };
 
 export const connectionHandler = async (socket: Socket) => {
