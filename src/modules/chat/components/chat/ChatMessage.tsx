@@ -8,7 +8,7 @@ import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 
 interface Props {
 	msg: Message;
-	setFocusedUser: Function;
+	setFocusedUser: (user: string) => void;
 }
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
@@ -91,8 +91,6 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	newText = injectLinks(newText);
 
 	if (msg.type === MessageType.PUBLIC) {
-		if (!msg.time) throw new Error('time property is missing from public message');
-
 		const dateObj = new Date(msg.time);
 		const timeTitle = timeTitleFormatter.format(dateObj);
 		const timeValue = timeValueFormatter.format(dateObj);
