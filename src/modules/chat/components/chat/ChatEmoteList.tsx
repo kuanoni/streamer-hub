@@ -1,13 +1,24 @@
 import React, { useMemo } from 'react';
-import { styled, theme } from 'stiches.config';
+import { keyframes, styled, theme } from 'stiches.config';
 import { MessageBoxContainer } from '../../styles';
 import { EmoteKeys, Emotes } from '../../utils/ChatEmotes';
 
+const moveIn = keyframes({
+	'0%': {
+		opacity: 0,
+		transform: 'translateY(25px)',
+	},
+	'100%': {
+		opacity: 1,
+		transform: 'translateY(0px)',
+	},
+});
+
 const Container = styled(MessageBoxContainer, {
 	padding: '.5rem',
-	backgroundColor: theme.colors.bgDarker,
-	border: '1px solid ' + theme.colors.bgDark,
-	zIndex: 1,
+	backgroundColor: theme.colors.bgDark,
+	border: '1px solid ' + theme.colors.bg,
+	animation: `${moveIn} .25s`,
 	h2: {
 		marginTop: 0,
 	},
