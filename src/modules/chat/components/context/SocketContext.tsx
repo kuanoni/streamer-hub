@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import { SocketIface } from './SocketIface';
+import { SocketProviderIface } from './SocketProviderIface';
 
-const SocketContext = createContext<SocketIface | null>(null);
+const SocketContext = createContext<SocketProviderIface | null>(null);
 
 export default SocketContext;

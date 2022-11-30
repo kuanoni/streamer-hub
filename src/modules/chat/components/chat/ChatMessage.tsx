@@ -2,8 +2,8 @@ import { styled } from 'stiches.config';
 import React from 'react';
 import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
-import { injectEmotes } from '../../utils/injectEmotes';
-import { injectLinks } from '../../utils/injectLinks';
+import { injectTextWithEmotes } from '../../utils/injectTextWithEmotes';
+import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 
 interface Props {
@@ -87,8 +87,8 @@ const messageIcon: MessageIconObject = {
 };
 
 const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
-	let newText = injectEmotes(msg.text);
-	newText = injectLinks(newText);
+	let newText = injectTextWithEmotes(msg.text);
+	newText = injectTextWithLinks(newText);
 
 	if (msg.type === MessageType.PUBLIC) {
 		const dateObj = new Date(msg.time);

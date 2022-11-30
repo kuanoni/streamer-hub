@@ -3,7 +3,7 @@ import { styled } from 'stiches.config';
 import { IoIosSend } from 'react-icons/io';
 import { RiEmotionFill } from 'react-icons/ri';
 import SocketContext from '../context/SocketContext';
-import EmoteSelector from './EmotePicker';
+import EmoteSelector from './ChatEmoteList';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
 import { MessageWithoutTime } from 'types/socketio';
@@ -57,7 +57,7 @@ const TopContainer = styled('div', {
 	margin: '0 .5rem',
 });
 
-const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
+const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
 	const ctx = useContext(SocketContext);
 	const { data } = useSession();
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
@@ -137,4 +137,4 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 	);
 };
 
-export default MessageSendForm;
+export default ChatInput;

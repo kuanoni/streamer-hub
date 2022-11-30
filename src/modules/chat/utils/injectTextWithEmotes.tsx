@@ -1,7 +1,7 @@
 import { StyledEmote } from '../styles';
-import { EmoteKeys, Emotes } from './Emotes';
+import { EmoteKeys, Emotes } from './ChatEmotes';
 
-export const injectEmotes = (text: string): (string | React.ReactNode)[] => {
+export const injectTextWithEmotes = (text: string): (string | React.ReactNode)[] => {
 	return text.split(' ').flatMap((item, i) => {
 		if (EmoteKeys.includes(item))
 			return [

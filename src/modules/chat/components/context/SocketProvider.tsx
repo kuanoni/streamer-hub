@@ -3,7 +3,7 @@ import { Message, MessageWithoutTime } from 'types/socketio';
 import SocketIO, { Socket } from 'socket.io-client';
 import { useSession } from 'next-auth/react';
 import SocketContext from './SocketContext';
-import { SocketIface } from './SocketIface';
+import { SocketProviderIface } from './SocketProviderIface';
 import { MessageType, SocketEvents } from '../../common';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
@@ -54,7 +54,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		};
 	}, [data?.user?.role]);
 
-	const providerData: SocketIface = Object.freeze({
+	const providerData: SocketProviderIface = Object.freeze({
 		socket,
 		messageLogs,
 		writeMessage,

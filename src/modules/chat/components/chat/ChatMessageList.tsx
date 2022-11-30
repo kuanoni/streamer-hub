@@ -47,7 +47,7 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 	},
 });
 
-const ChatMessages = ({ closePopup }: { closePopup: Function }) => {
+const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	const socket = useContext(SocketContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
@@ -114,4 +114,4 @@ const ChatMessages = ({ closePopup }: { closePopup: Function }) => {
 	);
 };
 
-export default ChatMessages;
+export default ChatMessageList;

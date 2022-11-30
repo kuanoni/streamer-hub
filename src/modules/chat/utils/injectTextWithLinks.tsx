@@ -10,7 +10,7 @@ const StyledLink = styled('a', {
 	},
 });
 
-export const injectLinks = (text: string | (string | React.ReactNode)[]): (string | React.ReactNode)[] => {
+export const injectTextWithLinks = (text: string | (string | React.ReactNode)[]): (string | React.ReactNode)[] => {
 	if (Array.isArray(text))
 		return text.flatMap((item, i) => {
 			if (typeof item !== 'string') return item;

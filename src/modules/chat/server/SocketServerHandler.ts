@@ -1,7 +1,7 @@
 import { Server as IOServer } from 'socket.io';
 import { NextApiResponseWithSocket } from 'types/socketio';
 import { Role } from 'types/custom-auth';
-import { connectionHandler, messageHandler } from './ServerEventHandlers';
+import { connectionHandler, messageHandler } from './SocketEventHandlers';
 import { SocketRooms } from '../common';
 
 export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
