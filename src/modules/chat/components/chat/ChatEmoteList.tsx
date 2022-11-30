@@ -3,12 +3,7 @@ import { keyframes, styled, theme } from 'stiches.config';
 import { MessageBoxContainer } from '../../styles';
 import { EmoteKeys, Emotes } from '../../utils/ChatEmotes';
 
-const open = keyframes({
-	'0%': { transform: 'scale(1)' },
-	'100%': { transform: 'scale(1.5)' },
-});
-
-const StyledContainer = styled(MessageBoxContainer, {
+const Container = styled(MessageBoxContainer, {
 	padding: '.5rem',
 	backgroundColor: theme.colors.bgDarker,
 	border: '1px solid ' + theme.colors.bgDark,
@@ -42,10 +37,10 @@ const ChatEmoteList = ({ emotePicked }: { emotePicked: Function }) => {
 	}, []);
 
 	return (
-		<StyledContainer>
+		<Container>
 			<h2>Emotes</h2>
 			<div className='emotes'>{emoteButtons}</div>
-		</StyledContainer>
+		</Container>
 	);
 };
 

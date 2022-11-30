@@ -6,7 +6,7 @@ import { MessageBoxContainer } from '../../styles';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { Message } from 'types/socketio';
 
-const StyledContainer = styled('div', {
+const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column-reverse',
 	height: '100%',
@@ -96,7 +96,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 
 	return (
 		<>
-			<StyledContainer
+			<Container
 				ref={scrollableContainerRef}
 				onScroll={handleScroll}
 				onClick={handleClick}
@@ -104,7 +104,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			>
 				<div ref={bottomRef}></div>
 				<div className='messagesContainer'>{chatMessageList}</div>
-			</StyledContainer>
+			</Container>
 			<BottomContainer>
 				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
 					<RiArrowDownSLine />

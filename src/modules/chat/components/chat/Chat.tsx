@@ -5,7 +5,7 @@ import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
 import { useSession } from 'next-auth/react';
 
-const StyledContainer = styled('div', {
+const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
 	height: '100%',
@@ -25,13 +25,13 @@ export const Chat = () => {
 	};
 
 	return (
-		<StyledContainer>
+		<Container>
 			<SocketProvider>
 				<ChatMessageList closePopup={closePopup} />
 				{status === 'authenticated' && (
 					<ChatInput isEmotesOpen={isEmotesOpen} setIsEmotesOpen={setIsEmotesOpen} />
 				)}
 			</SocketProvider>
-		</StyledContainer>
+		</Container>
 	);
 };

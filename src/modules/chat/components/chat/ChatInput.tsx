@@ -8,7 +8,7 @@ import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
 import { MessageWithoutTime } from 'types/socketio';
 
-const StyledContainer = styled('div', {
+const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	height: 'auto',
@@ -18,7 +18,7 @@ const StyledContainer = styled('div', {
 	border: '1px solid $bgDark',
 });
 
-const StyledTextArea = styled('textarea', {
+const TextArea = styled('textarea', {
 	width: '100%',
 	height: 'inherit',
 	color: '$text',
@@ -120,8 +120,8 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 	return (
 		<>
 			<TopContainer>{isEmotesOpen && <EmoteSelector emotePicked={emotePicked} />}</TopContainer>
-			<StyledContainer>
-				<StyledTextArea
+			<Container>
+				<TextArea
 					ref={textAreaRef}
 					onChange={onChangeTextArea}
 					onKeyDown={handleOnKeyDown}
@@ -132,7 +132,7 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 					<IoIosSend className='btn send-btn' onClick={sendMessage} />
 					<RiEmotionFill className='btn emote-btn' onClick={toggleEmotePicker} />
 				</ButtonsContainer>
-			</StyledContainer>
+			</Container>
 		</>
 	);
 };

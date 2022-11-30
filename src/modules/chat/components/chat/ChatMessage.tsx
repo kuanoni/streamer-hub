@@ -27,7 +27,7 @@ const timeValueFormatter = new Intl.DateTimeFormat('default', {
 	hour12: false,
 });
 
-const StyledMessage = styled('div', {
+const Container = styled('div', {
 	display: 'flex',
 	fontSize: 13,
 	lineHeight: 1.75,
@@ -52,7 +52,7 @@ const StyledMessage = styled('div', {
 	},
 });
 
-const StyledAuthor = styled('span', {
+const Author = styled('span', {
 	display: 'flex',
 	alignItems: 'center',
 	'.author': {
@@ -72,7 +72,7 @@ const StyledAuthor = styled('span', {
 	},
 });
 
-const StyledText = styled('span', {
+const Text = styled('span', {
 	maxWidth: '100%',
 	wordWrap: 'break-word',
 });
@@ -96,24 +96,24 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 		const timeValue = timeValueFormatter.format(dateObj);
 
 		return (
-			<StyledMessage className='msg' data-author={msg.author}>
+			<Container className='msg' data-author={msg.author}>
 				<time title={timeTitle}>{timeValue}</time>
-				<StyledAuthor>
+				<Author>
 					<span className='author' onClick={() => setFocusedUser(msg.author)}>
 						{msg.author}
 					</span>
-				</StyledAuthor>
+				</Author>
 				<span className='separator'>:&nbsp;</span>
-				<StyledText>{newText}</StyledText>
-			</StyledMessage>
+				<Text>{newText}</Text>
+			</Container>
 		);
 	} else
 		return (
-			<StyledMessage type={msg.type}>
-				<StyledAuthor>{messageIcon[msg.type]}</StyledAuthor>
+			<Container type={msg.type}>
+				<Author>{messageIcon[msg.type]}</Author>
 				<span className='separator'>&nbsp;</span>
-				<StyledText>{msg.text}</StyledText>
-			</StyledMessage>
+				<Text>{msg.text}</Text>
+			</Container>
 		);
 });
 
