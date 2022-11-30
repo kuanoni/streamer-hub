@@ -6,19 +6,17 @@ import SocketContext from './SocketContext';
 import { SocketIface } from './SocketIface';
 import { MessageType, SocketEvents } from '../../common';
 
-interface Props {
-	children: React.ReactNode;
-}
-
-const SocketProvider = ({ children }: Props) => {
+const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
 	const [messageLogs, setMessageLogs] = useState<Array<Message>>([]);
 
+	// saves msg to messageLogs, which is a list that renders in MessageBox
 	const writeMessage = (msg: Message) => {
 		setMessageLogs((currentMessages) => [...currentMessages, msg]);
 	};
 
+	// send msg over socket connection
 	const sendMessage = (msg: MessageWithoutTime) => {
 		if (!data?.user) return;
 		socket?.emit(SocketEvents.CLIENT_SEND_MSG, msg, (res: { status: boolean }) => {
@@ -27,6 +25,7 @@ const SocketProvider = ({ children }: Props) => {
 	};
 
 	useEffect(() => {
+		// write 'Attempting to connect...' message
 		const msg: Message = {
 			type: MessageType.INFO,
 			time: new Date().toISOString(),
@@ -37,18 +36,19 @@ const SocketProvider = ({ children }: Props) => {
 
 		// make sure the server is running
 		fetch('/api/socket');
-		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 
+		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: Message) => writeMessage(msg));
 		newSocket.connect();
 
+		// save socket to state
 		setSocket((currentSocket) => {
 			currentSocket?.disconnect();
 			return newSocket;
 		});
 
+		// cleanup
 		return () => {
-			// cleanup
 			newSocket?.disconnect();
 			setMessageLogs([]);
 		};
