@@ -10,12 +10,14 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		const io = new IOServer(res.socket.server);
 
+		// assign socket to rooms based on passed user role
 		io.use(async (socket, next) => {
 			if (socket.handshake.auth.role === Role.ADMIN) socket.join(SocketRooms.ADMIN);
 			if (socket.handshake.auth.role === Role.MOD) socket.join(SocketRooms.MODERATOR);
 			next();
 		});
 
+		// add socket event listeners
 		io.on('connection', async (socket) => {
 			connectionHandler(socket);
 			messageHandler(socket);

@@ -34,8 +34,9 @@ export const messageHandler = async (socket: Socket) => {
 	const sentMessage = (msg: Message, callback: Function, room?: SocketRooms) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-		msg.type = type;
+		// message time is set server side
 		msg.time = new Date().toISOString();
+		// remove double spaces and line breaks
 		msg.text = msg.text.replace(/\s+/g, ' ').trim();
 
 		const { error, value } = messageSchema.validate(msg);
@@ -45,6 +46,7 @@ export const messageHandler = async (socket: Socket) => {
 			throw error;
 		}
 
+		// broadcast message globally or to room
 		if (room) socket.in(room).emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
 		else socket.nsp.emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
 

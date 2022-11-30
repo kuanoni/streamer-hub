@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { keyframes, styled, theme } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import { MessageBoxContainer } from '../../styles';
 import { EmoteKeys, Emotes } from '../../utils/ChatEmotes';
 
@@ -27,14 +27,15 @@ const EmoteButton = styled('div', {
 	cursor: 'pointer',
 });
 
-const ChatEmoteList = ({ emotePicked }: { emotePicked: Function }) => {
+const ChatEmoteList = ({ insertEmote }: { insertEmote: (emoteKey: string) => void }) => {
+	// wrap emotes in clickable buttons
 	const emoteButtons = useMemo(() => {
 		return EmoteKeys.map((emoteKey, i) => (
-			<EmoteButton key={i} title={emoteKey} onClick={() => emotePicked(emoteKey)}>
+			<EmoteButton key={i} title={emoteKey} onClick={() => insertEmote(emoteKey)}>
 				{Emotes[emoteKey]}
 			</EmoteButton>
 		));
-	}, []);
+	}, [EmoteKeys]);
 
 	return (
 		<Container>

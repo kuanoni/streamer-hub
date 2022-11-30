@@ -67,6 +67,7 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 		if (!ctx) return console.log('context undefined');
 		if (!data?.user) return console.log('user undefined');
 
+		// send message through socket connection
 		const msg: MessageWithoutTime = {
 			type: MessageType.PUBLIC,
 			author: data.user.displayName,
@@ -81,7 +82,8 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 		setIsEmotesOpen(false);
 	};
 
-	const toggleEmotePicker = () => {
+	// open and close EmoteList
+	const toggleEmoteList = () => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
 		textAreaRef.current.focus();
 
@@ -90,22 +92,29 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 		});
 	};
 
-	const emotePicked = (emoteKey: string) => {
+	// when button in ChatEmoteList is clicked
+	const insertEmote = (emoteKey: string) => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
 		const cursorStart = textAreaRef.current.selectionStart;
+
+		// insert emote text at current cursor position
 		textAreaRef.current.value =
 			textAreaRef.current.value.slice(0, cursorStart) +
 			emoteKey +
 			' ' +
 			textAreaRef.current.value.slice(cursorStart);
 
+		// update cursor position to the end of inserted text
 		textAreaRef.current.selectionEnd = cursorStart + emoteKey.length + 1;
 
 		textAreaRef.current.focus();
 	};
 
 	const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		// remove line breaks
 		e.target.value = e.target.value.replace(/[\r\n]+/gm, ' ');
+
+		// updates textarea height to fit its text content
 		e.target.style.height = 'inherit';
 		e.target.style.height = e.target.scrollHeight + 'px';
 	};
@@ -119,7 +128,7 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 
 	return (
 		<>
-			<TopContainer>{isEmotesOpen && <EmoteSelector emotePicked={emotePicked} />}</TopContainer>
+			<TopContainer>{isEmotesOpen && <EmoteSelector insertEmote={insertEmote} />}</TopContainer>
 			<Container>
 				<TextArea
 					ref={textAreaRef}
@@ -130,7 +139,7 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 				/>
 				<ButtonsContainer>
 					<IoIosSend className='btn send-btn' onClick={sendMessage} />
-					<RiEmotionFill className='btn emote-btn' onClick={toggleEmotePicker} />
+					<RiEmotionFill className='btn emote-btn' onClick={toggleEmoteList} />
 				</ButtonsContainer>
 			</Container>
 		</>
