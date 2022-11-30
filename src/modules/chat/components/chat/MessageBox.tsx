@@ -4,6 +4,7 @@ import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
 import { MessageBoxContainer } from '../../styles';
 import { RiArrowDownSLine } from 'react-icons/ri';
+import { Message } from 'types/socketio';
 
 const StyledContainer = styled('div', {
 	display: 'flex',
@@ -69,9 +70,8 @@ const ChatMessages = ({ closePopup }: { closePopup: Function }) => {
 	}, [focusedUser, focusedUserSelector]);
 
 	const chatMessageList = useMemo(() => {
-		return socket?.messageLogs.map((msg) => {
-			const time = typeof msg.time === 'string' ? msg.time : new Date(msg.time).toISOString();
-			return <ChatMessage key={time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
+		return socket?.messageLogs.map((msg: Message) => {
+			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
 	}, [socket?.messageLogs]);
 

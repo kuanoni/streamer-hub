@@ -6,6 +6,7 @@ import SocketContext from '../context/SocketContext';
 import EmoteSelector from './EmotePicker';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
+import { MessageWithoutTime } from 'types/socketio';
 
 const StyledContainer = styled('div', {
 	position: 'relative',
@@ -66,7 +67,11 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 		if (!ctx) return console.log('context undefined');
 		if (!data?.user) return console.log('user undefined');
 
-		const msg = ctx.createMessage(MessageType.PUBLIC, data?.user.displayName, textAreaRef.current?.value);
+		const msg: MessageWithoutTime = {
+			type: MessageType.PUBLIC,
+			author: data.user.displayName,
+			text: textAreaRef.current.value,
+		};
 		ctx.sendMessage(msg);
 
 		// recalculate textare height

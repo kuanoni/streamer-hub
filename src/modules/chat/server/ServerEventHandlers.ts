@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { Message } from 'types/socketio';
 import Joi from 'joi';
-import { MessageType } from '../common';
+import { MessageType, SocketRooms, SocketEvents } from '../common';
 
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),
@@ -31,10 +31,16 @@ const errorHandler = (handler: Function) => {
 };
 
 export const messageHandler = async (socket: Socket) => {
-	const createdMessage = (msg: Message, callback: Function) => {
+	const createdMessage = (
+		msg: Message,
+		callback: Function,
+		room?: SocketRooms,
+		type: MessageType = MessageType.PUBLIC
+	) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-		msg.time = new Date();
+		msg.type = type;
+		msg.time = new Date().toISOString();
 		msg.text = msg.text.replace(/\s+/g, ' ').trim();
 
 		const { error, value } = messageSchema.validate(msg);
@@ -44,7 +50,9 @@ export const messageHandler = async (socket: Socket) => {
 			throw error;
 		}
 
-		socket.nsp.emit('incomingMessage', value);
+		if (room) socket.in(room).emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
+		else socket.nsp.emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
+
 		// write to db
 
 		callback({
@@ -55,5 +63,14 @@ export const messageHandler = async (socket: Socket) => {
 	// find some way to persist an array of messages on the server side
 	// add new messages to it and then emit it to clients
 
-	socket.on('createdMessage', errorHandler(createdMessage));
+	socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(createdMessage));
+};
+
+export const connectionHandler = async (socket: Socket) => {
+	socket.emit(SocketEvents.CLIENT_RECEIVE_MSG, {
+		type: MessageType.INFO,
+		time: new Date(),
+		author: 'INFO',
+		text: 'You have connected.',
+	});
 };
