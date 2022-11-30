@@ -16,9 +16,12 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 	socket: SocketWithIO;
 }
 
-type Message = {
+type MessageWithoutTime = {
 	type: MessageType;
-	time?: string;
 	author: string;
 	text: string;
+};
+
+type Message = MessageWithoutTime & {
+	time: string;
 };

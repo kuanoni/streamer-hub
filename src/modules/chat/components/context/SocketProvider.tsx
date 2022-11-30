@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Message } from 'types/socketio';
+import { Message, MessageWithoutTime } from 'types/socketio';
 import SocketIO, { Socket } from 'socket.io-client';
 import { useSession } from 'next-auth/react';
 import SocketContext from './SocketContext';
@@ -19,7 +19,7 @@ const SocketProvider = ({ children }: Props) => {
 		setMessageLogs((currentMessages) => [...currentMessages, msg]);
 	};
 
-	const sendMessage = (msg: Message) => {
+	const sendMessage = (msg: MessageWithoutTime) => {
 		if (!data?.user) return;
 		socket?.emit('createdMessage', msg, (res: { status: boolean }) => {
 			if (!res) console.log('Failed to send chat message.');
@@ -57,7 +57,6 @@ const SocketProvider = ({ children }: Props) => {
 	const providerData: SocketIface = Object.freeze({
 		socket,
 		messageLogs,
-		createMessage,
 		writeMessage,
 		sendMessage,
 	});
