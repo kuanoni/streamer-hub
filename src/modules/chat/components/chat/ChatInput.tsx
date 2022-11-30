@@ -138,7 +138,12 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 					spellCheck={false}
 				/>
 				<ButtonsContainer>
-					<IoIosSend className='btn send-btn' onClick={sendMessage} />
+					<IoIosSend
+						className='btn send-btn'
+						onClick={() => {
+							if (textAreaRef.current?.value) sendMessage();
+						}}
+					/>
 					<RiEmotionFill className='btn emote-btn' onClick={toggleEmoteList} />
 				</ButtonsContainer>
 			</Container>
