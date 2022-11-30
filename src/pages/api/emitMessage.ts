@@ -1,3 +1,4 @@
+import { SocketEvents } from '@/modules/chat/common';
 import extractStringEnvVar from '@/utils/extractStringEnvVar';
 import { NextApiRequest } from 'next';
 import { NextApiResponseWithSocket } from 'types/socketio';
@@ -19,7 +20,7 @@ const emitMessage = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 
 	const newMessage = { ...body, time: new Date() };
 
-	res.socket.server.io.emit('incomingMessage', newMessage);
+	res.socket.server.io.emit(SocketEvents.CLIENT_RECEIVE_MSG, newMessage);
 
 	res.send({ status: 200 });
 	res.end();

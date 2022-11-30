@@ -4,7 +4,7 @@ import SocketIO, { Socket } from 'socket.io-client';
 import { useSession } from 'next-auth/react';
 import SocketContext from './SocketContext';
 import { SocketIface } from './SocketIface';
-import { MessageType } from '../../common';
+import { MessageType, SocketEvents } from '../../common';
 
 interface Props {
 	children: React.ReactNode;
@@ -21,7 +21,7 @@ const SocketProvider = ({ children }: Props) => {
 
 	const sendMessage = (msg: MessageWithoutTime) => {
 		if (!data?.user) return;
-		socket?.emit('createdMessage', msg, (res: { status: boolean }) => {
+		socket?.emit(SocketEvents.CLIENT_SEND_MSG, msg, (res: { status: boolean }) => {
 			if (!res) console.log('Failed to send chat message.');
 		});
 	};
@@ -39,7 +39,7 @@ const SocketProvider = ({ children }: Props) => {
 		fetch('/api/socket');
 		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
 
-		newSocket.on('incomingMessage', (msg: Message) => writeMessage(msg));
+		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: Message) => writeMessage(msg));
 		newSocket.connect();
 
 		setSocket((currentSocket) => {

@@ -10,3 +10,7 @@ export enum SocketRooms {
 	MODERATOR = 'moderator',
 }
 
+export enum SocketEvents {
+	CLIENT_SEND_MSG = 'CLIENT_SEND_MSG',
+	CLIENT_RECEIVE_MSG = 'CLIENT_RECEIVE_MSG',
+}

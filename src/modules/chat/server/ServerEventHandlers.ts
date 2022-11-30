@@ -1,7 +1,7 @@
-import { Socket, Server as IOServer } from 'socket.io';
+import { Socket } from 'socket.io';
 import { Message } from 'types/socketio';
 import Joi from 'joi';
-import { MessageType, SocketRooms } from '../common';
+import { MessageType, SocketRooms, SocketEvents } from '../common';
 
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),
@@ -50,8 +50,8 @@ export const messageHandler = async (socket: Socket) => {
 			throw error;
 		}
 
-		if (room) socket.in(room).emit('incomingMessage', value);
-		else socket.nsp.emit('incomingMessage', value);
+		if (room) socket.in(room).emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
+		else socket.nsp.emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
 
 		// write to db
 
@@ -63,11 +63,11 @@ export const messageHandler = async (socket: Socket) => {
 	// find some way to persist an array of messages on the server side
 	// add new messages to it and then emit it to clients
 
-	socket.on('createdMessage', errorHandler(createdMessage));
+	socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(createdMessage));
 };
 
 export const connectionHandler = async (socket: Socket) => {
-	socket.emit('incomingMessage', {
+	socket.emit(SocketEvents.CLIENT_RECEIVE_MSG, {
 		type: MessageType.INFO,
 		time: new Date(),
 		author: 'INFO',
