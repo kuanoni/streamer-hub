@@ -1,11 +1,11 @@
 import { styled } from 'stiches.config';
 import React, { useState } from 'react';
 import SocketProvider from '../context/SocketProvider';
-import ChatMessages from './MessageBox';
-import MessageSendForm from './MessageSendForm';
+import ChatMessageList from './ChatMessageList';
+import ChatInput from './ChatInput';
 import { useSession } from 'next-auth/react';
 
-const StyledContainer = styled('div', {
+const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
 	height: '100%',
@@ -25,13 +25,13 @@ export const Chat = () => {
 	};
 
 	return (
-		<StyledContainer>
+		<Container>
 			<SocketProvider>
-				<ChatMessages closePopup={closePopup} />
+				<ChatMessageList closePopup={closePopup} />
 				{status === 'authenticated' && (
-					<MessageSendForm isEmotesOpen={isEmotesOpen} setIsEmotesOpen={setIsEmotesOpen} />
+					<ChatInput isEmotesOpen={isEmotesOpen} setIsEmotesOpen={setIsEmotesOpen} />
 				)}
 			</SocketProvider>
-		</StyledContainer>
+		</Container>
 	);
 };

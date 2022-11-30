@@ -1,7 +1,7 @@
 import { Server as IOServer } from 'socket.io';
 import { NextApiResponseWithSocket } from 'types/socketio';
 import { Role } from 'types/custom-auth';
-import { connectionHandler, messageHandler } from './ServerEventHandlers';
+import { connectionHandler, messageHandler } from './SocketEventHandlers';
 import { SocketRooms } from '../common';
 
 export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
@@ -10,12 +10,14 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		const io = new IOServer(res.socket.server);
 
+		// assign socket to rooms based on passed user role
 		io.use(async (socket, next) => {
 			if (socket.handshake.auth.role === Role.ADMIN) socket.join(SocketRooms.ADMIN);
 			if (socket.handshake.auth.role === Role.MOD) socket.join(SocketRooms.MODERATOR);
 			next();
 		});
 
+		// add socket event listeners
 		io.on('connection', async (socket) => {
 			connectionHandler(socket);
 			messageHandler(socket);

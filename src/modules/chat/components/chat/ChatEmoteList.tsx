@@ -1,14 +1,9 @@
 import React, { useMemo } from 'react';
-import { keyframes, styled, theme } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import { MessageBoxContainer } from '../../styles';
-import { EmoteKeys, Emotes } from '../../utils/Emotes';
+import { EmoteKeys, Emotes } from '../../utils/ChatEmotes';
 
-const open = keyframes({
-	'0%': { transform: 'scale(1)' },
-	'100%': { transform: 'scale(1.5)' },
-});
-
-const StyledContainer = styled(MessageBoxContainer, {
+const Container = styled(MessageBoxContainer, {
 	padding: '.5rem',
 	backgroundColor: theme.colors.bgDarker,
 	border: '1px solid ' + theme.colors.bgDark,
@@ -32,21 +27,22 @@ const EmoteButton = styled('div', {
 	cursor: 'pointer',
 });
 
-const EmotePicker = ({ emotePicked }: { emotePicked: Function }) => {
+const ChatEmoteList = ({ insertEmote }: { insertEmote: (emoteKey: string) => void }) => {
+	// wrap emotes in clickable buttons
 	const emoteButtons = useMemo(() => {
 		return EmoteKeys.map((emoteKey, i) => (
-			<EmoteButton key={i} title={emoteKey} onClick={() => emotePicked(emoteKey)}>
+			<EmoteButton key={i} title={emoteKey} onClick={() => insertEmote(emoteKey)}>
 				{Emotes[emoteKey]}
 			</EmoteButton>
 		));
-	}, []);
+	}, [EmoteKeys]);
 
 	return (
-		<StyledContainer>
+		<Container>
 			<h2>Emotes</h2>
 			<div className='emotes'>{emoteButtons}</div>
-		</StyledContainer>
+		</Container>
 	);
 };
 
-export default EmotePicker;
+export default ChatEmoteList;

@@ -3,12 +3,12 @@ import { styled } from 'stiches.config';
 import { IoIosSend } from 'react-icons/io';
 import { RiEmotionFill } from 'react-icons/ri';
 import SocketContext from '../context/SocketContext';
-import EmoteSelector from './EmotePicker';
+import EmoteSelector from './ChatEmoteList';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
 import { MessageWithoutTime } from 'types/socketio';
 
-const StyledContainer = styled('div', {
+const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	height: 'auto',
@@ -18,7 +18,7 @@ const StyledContainer = styled('div', {
 	border: '1px solid $bgDark',
 });
 
-const StyledTextArea = styled('textarea', {
+const TextArea = styled('textarea', {
 	width: '100%',
 	height: 'inherit',
 	color: '$text',
@@ -57,7 +57,7 @@ const TopContainer = styled('div', {
 	margin: '0 .5rem',
 });
 
-const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
+const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
 	const ctx = useContext(SocketContext);
 	const { data } = useSession();
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
@@ -67,6 +67,7 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 		if (!ctx) return console.log('context undefined');
 		if (!data?.user) return console.log('user undefined');
 
+		// send message through socket connection
 		const msg: MessageWithoutTime = {
 			type: MessageType.PUBLIC,
 			author: data.user.displayName,
@@ -81,7 +82,8 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 		setIsEmotesOpen(false);
 	};
 
-	const toggleEmotePicker = () => {
+	// open and close EmoteList
+	const toggleEmoteList = () => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
 		textAreaRef.current.focus();
 
@@ -90,22 +92,29 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 		});
 	};
 
-	const emotePicked = (emoteKey: string) => {
+	// when button in ChatEmoteList is clicked
+	const insertEmote = (emoteKey: string) => {
 		if (!textAreaRef.current) return console.log('textarea undefined');
 		const cursorStart = textAreaRef.current.selectionStart;
+
+		// insert emote text at current cursor position
 		textAreaRef.current.value =
 			textAreaRef.current.value.slice(0, cursorStart) +
 			emoteKey +
 			' ' +
 			textAreaRef.current.value.slice(cursorStart);
 
+		// update cursor position to the end of inserted text
 		textAreaRef.current.selectionEnd = cursorStart + emoteKey.length + 1;
 
 		textAreaRef.current.focus();
 	};
 
 	const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		// remove line breaks
 		e.target.value = e.target.value.replace(/[\r\n]+/gm, ' ');
+
+		// updates textarea height to fit its text content
 		e.target.style.height = 'inherit';
 		e.target.style.height = e.target.scrollHeight + 'px';
 	};
@@ -119,9 +128,9 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 
 	return (
 		<>
-			<TopContainer>{isEmotesOpen && <EmoteSelector emotePicked={emotePicked} />}</TopContainer>
-			<StyledContainer>
-				<StyledTextArea
+			<TopContainer>{isEmotesOpen && <EmoteSelector insertEmote={insertEmote} />}</TopContainer>
+			<Container>
+				<TextArea
 					ref={textAreaRef}
 					onChange={onChangeTextArea}
 					onKeyDown={handleOnKeyDown}
@@ -130,11 +139,11 @@ const MessageSendForm = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: bool
 				/>
 				<ButtonsContainer>
 					<IoIosSend className='btn send-btn' onClick={sendMessage} />
-					<RiEmotionFill className='btn emote-btn' onClick={toggleEmotePicker} />
+					<RiEmotionFill className='btn emote-btn' onClick={toggleEmoteList} />
 				</ButtonsContainer>
-			</StyledContainer>
+			</Container>
 		</>
 	);
 };
 
-export default MessageSendForm;
+export default ChatInput;
