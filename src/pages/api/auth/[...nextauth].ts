@@ -3,9 +3,17 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/utils/mongodb';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import DiscordProvider from 'next-auth/providers/discord';
 import { AuthPerms, Rank } from 'types/custom-auth';
 
+const defaultProfile = {
+	displayName: '',
+	role: AuthPerms.USER,
+	rank: Rank.DEFAULT,
+};
+
 export const authOptions = {
+	debug: true,
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
 		GoogleProvider({
@@ -14,11 +22,17 @@ export const authOptions = {
 			profile(profile) {
 				return {
 					id: profile.sub,
-					displayName: '',
-					email: profile.email,
-					emailVerified: profile.email_verified,
-					role: AuthPerms.USER,
-					rank: Rank.DEFAULT,
+					...defaultProfile,
+				};
+			},
+		}),
+		DiscordProvider({
+			clientId: extractStringEnvVar('DISCORD_CLIENT_ID'),
+			clientSecret: extractStringEnvVar('DISCORD_CLIENT_SECRET'),
+			profile(profile) {
+				return {
+					id: profile.id,
+					...defaultProfile,
 				};
 			},
 		}),
