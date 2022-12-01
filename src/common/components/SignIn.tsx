@@ -25,6 +25,7 @@ const SignIn = ({ isOpen, setIsOpen }: Props) => {
 			<Container>
 				<h1>Sign In</h1>
 				<ProviderSignInButton provider='google'></ProviderSignInButton>
+				<ProviderSignInButton provider='discord'></ProviderSignInButton>
 			</Container>
 		</Modal>
 	);
