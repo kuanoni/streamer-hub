@@ -86,7 +86,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			};
 
 		return cssObj;
-	}, [focusedUser, focusedUserCssSelector, freeScroll]);
+	}, [focusedUser, focusedUserCssSelector]);
 
 	const messagesContainerCss = useMemo(() => {
 		let cssObj = {};
@@ -101,12 +101,18 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 		return cssObj;
 	}, [freeScroll]);
 
-	// rendered messages
-	const chatMessageList = useMemo(() => {
+	// live rendered messages
+	const liveMessages = useMemo(() => {
 		return ctx?.messageLogs.map((msg: Message) => {
 			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
 	}, [ctx?.messageLogs]);
+
+	// paused rendered messages
+	const pausedMessages = useMemo(() => {
+		if (freeScroll) return liveMessages;
+		else return [];
+	}, [freeScroll]);
 
 	// scrolls to bottom of chat
 	const scrollToBottom = () => {
@@ -122,11 +128,6 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 		setFreeScroll(!isScrolledToBottom);
 	};
 
-	const pausedMessages = useMemo(() => {
-		if (freeScroll) return chatMessageList;
-		else return [];
-	}, [freeScroll]);
-
 	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
 		if (focusedUser) setFocusedUser('');
 		closePopup();
@@ -138,7 +139,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 				{/* since container has a flex direction of column-reverse, bottomRef needs to be above mesage list */}
 				<div ref={bottomRef}></div>
 				<MessagesContainer css={messagesContainerCss}>
-					{freeScroll ? pausedMessages : chatMessageList}
+					{freeScroll ? pausedMessages : liveMessages}
 				</MessagesContainer>
 			</Container>
 			<BottomContainer>
