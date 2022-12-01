@@ -3,7 +3,7 @@ import { useSession, signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { styled } from 'stiches.config';
 import SignIn from './SignIn';
-import { Role } from 'types/custom-auth';
+import { AuthPerms } from 'types/custom-auth';
 
 const StyledNav = styled('nav', {
 	padding: '1rem 2rem',
@@ -51,7 +51,7 @@ const Navbar = () => {
 				<StyledLink href='/'>Home</StyledLink>
 				<StyledLink href='/stream'>Stream</StyledLink>
 				<StyledLink href='/videos'>Videos</StyledLink>
-				{data?.user?.role === Role.ADMIN && <StyledLink href='/admin'>Admin</StyledLink>}
+				{data?.user?.role === AuthPerms.ADMIN && <StyledLink href='/admin'>Admin</StyledLink>}
 				<span className='right'>
 					{status === 'authenticated' ? (
 						<>

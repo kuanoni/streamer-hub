@@ -3,7 +3,7 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/utils/mongodb';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import { Role } from 'types/custom-auth';
+import { AuthPerms } from 'types/custom-auth';
 
 export const authOptions = {
 	adapter: MongoDBAdapter(clientPromise),
@@ -17,7 +17,7 @@ export const authOptions = {
 					displayName: '',
 					email: profile.email,
 					emailVerified: profile.email_verified,
-					role: Role.USER,
+					role: AuthPerms.USER,
 				};
 			},
 		}),

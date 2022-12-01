@@ -2,14 +2,14 @@ import { NextComponentType } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { DefaultSession } from 'next-auth';
 
-export enum Role {
+export enum AuthPerms {
 	ADMIN,
 	MOD,
 	USER,
 }
 
 export interface PageAuthorizationOptions {
-	roleRequired: Role;
+	roleRequired: AuthPerms;
 	whileLoading: React.ReactNode;
 	unauthorizedRedirect: string;
 }
@@ -21,7 +21,7 @@ export type Page = NextComponentType & {
 
 export type User = DefaultSession['user'] & {
 	id: string;
-	role: Role;
+	role: AuthPerms;
 	displayName: string;
 };
 
