@@ -14,6 +14,7 @@ export enum Rank {
 	TIER_2 = 'TIER_2',
 	TIER_3 = 'TIER_3',
 	ORBITER = 'ORBITER',
+	OWNER = 'OWNER',
 }
 
 export interface PageAuthorizationOptions {
