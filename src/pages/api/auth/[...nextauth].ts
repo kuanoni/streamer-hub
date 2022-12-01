@@ -3,7 +3,14 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/utils/mongodb';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import DiscordProvider from 'next-auth/providers/discord';
 import { AuthPerms, Rank } from 'types/custom-auth';
+
+const defaultProfile = {
+	displayName: '',
+	role: AuthPerms.USER,
+	rank: Rank.DEFAULT,
+};
 
 export const authOptions = {
 	adapter: MongoDBAdapter(clientPromise),
