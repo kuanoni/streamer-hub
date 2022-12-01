@@ -5,6 +5,7 @@ import { MessageType } from '@/modules/chat/common';
 import { injectTextWithEmotes } from '../../utils/injectTextWithEmotes';
 import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
+import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
 
 interface Props {
@@ -53,10 +54,7 @@ const Container = styled('div', {
 	},
 });
 
-const AuthorContainer = styled('span', {
-	display: 'flex',
-	alignItems: 'center',
-});
+const AuthorContainer = styled('span', {});
 
 const Author = styled('span', {
 	height: '100%',
@@ -71,6 +69,10 @@ const Author = styled('span', {
 	'&:hover': {
 		textDecoration: 'underline',
 		cursor: 'pointer',
+	},
+	svg: {
+		verticalAlign: 'middle',
+		marginRight: '.25em',
 	},
 
 	variants: {
@@ -102,13 +104,15 @@ const Text = styled('span', {
 	wordWrap: 'break-word',
 });
 
-type MessageIconObject = {
-	[index: number]: React.ReactNode;
-};
-
-const messageIcon: MessageIconObject = {
+const messageIcon: { [index: number]: React.ReactNode } = {
 	[MessageType.SERVER]: <BsShieldFillExclamation />,
 	[MessageType.INFO]: <BsInfoCircleFill />,
+};
+
+const RankFlair: { [index: string]: React.ReactNode } = {
+	[Rank.TIER_1]: <GiRank1 />,
+	[Rank.TIER_2]: <GiRank2 />,
+	[Rank.TIER_3]: <GiRank3 />,
 };
 
 const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
@@ -120,14 +124,15 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 		const timeTitle = timeTitleFormatter.format(dateObj);
 		const timeValue = timeValueFormatter.format(dateObj);
 
+		const flair = RankFlair[msg.rank];
+
 		return (
 			<Container className='msg' data-author={msg.author}>
 				<time title={timeTitle}>{timeValue}</time>
-				<AuthorContainer>
-					<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
-						{msg.author}
-					</Author>
-				</AuthorContainer>
+				<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
+					{flair && flair}
+					{msg.author}
+				</Author>
 				<span className='separator'>:&nbsp;</span>
 				<Text>{newText}</Text>
 			</Container>
