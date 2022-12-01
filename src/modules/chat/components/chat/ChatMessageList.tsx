@@ -106,7 +106,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 		return ctx?.messageLogs.map((msg: Message) => {
 			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
-	}, [ctx?.messageLogs]);
+	}, [freeScroll ? null : ctx?.messageLogs]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
