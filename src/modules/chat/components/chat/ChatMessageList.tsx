@@ -89,9 +89,13 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 		if (!scrollableContainerRef.current) return;
 
 		const isScrolledToBottom = scrollableContainerRef.current?.scrollTop === 0;
-		if (isScrolledToBottom) setFreeScroll(false);
-		else setFreeScroll(true);
+		setFreeScroll(!isScrolledToBottom);
 	};
+
+	const pausedMessages = useMemo(() => {
+		if (freeScroll) return chatMessageList;
+		else return [];
+	}, [freeScroll]);
 
 	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
 		if (focusedUser) setFocusedUser('');
@@ -103,7 +107,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			<Container ref={scrollableContainerRef} onScroll={handleScroll} onClick={handleClick} css={containerCss}>
 				{/* since container has a flex direction of column-reverse, bottomRef needs to be above mesage list */}
 				<div ref={bottomRef}></div>
-				<div className='messagesContainer'>{chatMessageList}</div>
+				<div className='messagesContainer'>{freeScroll ? pausedMessages : chatMessageList}</div>
 			</Container>
 			<BottomContainer>
 				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
