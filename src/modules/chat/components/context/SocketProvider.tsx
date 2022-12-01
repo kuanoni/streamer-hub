@@ -13,7 +13,10 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	// saves msg to messageLogs, which is a list that renders in MessageBox
 	const writeMessage = (msg: Message) => {
-		setMessageLogs((currentMessages) => [...currentMessages, msg]);
+		setMessageLogs((currentMessages) => {
+			if (currentMessages.length < 50) return [...currentMessages, msg];
+			else return [...currentMessages.slice(1), msg];
+		});
 	};
 
 	// send msg over socket connection

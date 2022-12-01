@@ -1,4 +1,4 @@
-import { styled } from 'stiches.config';
+import { css, styled } from 'stiches.config';
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
@@ -7,16 +7,29 @@ import { RiArrowDownSLine } from 'react-icons/ri';
 import { Message } from 'types/socketio';
 
 const Container = styled('div', {
+	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column-reverse',
 	height: '100%',
 	overflowY: 'auto',
 	scrollbarWidth: 'thin',
+});
 
-	'.messagesContainer': {
-		position: 'relative',
-		display: 'flex',
-		flexDirection: 'column',
+const MessagesContainer = styled('div', {
+	position: 'relative',
+	display: 'flex',
+	flexDirection: 'column',
+
+	'&::after': {
+		content: '',
+		position: 'absolute',
+		width: '100%',
+		height: '100%',
+		zIndex: 1,
+		opacity: 0,
+		boxShadow: 'rgba(51, 51, 51, 0.81) inset 0px 0px 5px 4px',
+		transition: 'opacity .2s ease-out',
+		pointerEvents: 'none',
 	},
 });
 
@@ -59,8 +72,11 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 
 	// uses selector to highlight focusedUser messages and dim the rest
 	const containerCss = useMemo(() => {
+		let cssObj = {};
+
 		if (focusedUser)
-			return {
+			cssObj = {
+				...cssObj,
 				[focusedUserCssSelector]: {
 					opacity: '1 !important',
 				},
@@ -68,15 +84,35 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 					opacity: 0.3,
 				},
 			};
-		else return {};
+
+		return cssObj;
 	}, [focusedUser, focusedUserCssSelector]);
 
-	// rendered messages
-	const chatMessageList = useMemo(() => {
+	const messagesContainerCss = useMemo(() => {
+		let cssObj = {};
+		if (freeScroll)
+			cssObj = {
+				...cssObj,
+				'&::after': {
+					opacity: 1,
+				},
+			};
+
+		return cssObj;
+	}, [freeScroll]);
+
+	// live rendered messages
+	const liveMessages = useMemo(() => {
 		return ctx?.messageLogs.map((msg: Message) => {
 			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
-	}, [ctx?.messageLogs]);
+	}, [freeScroll ? null : ctx?.messageLogs]);
+
+	// paused rendered messages
+	const pausedMessages = useMemo(() => {
+		if (freeScroll) return liveMessages;
+		else return [];
+	}, [freeScroll]);
 
 	// scrolls to bottom of chat
 	const scrollToBottom = () => {
@@ -89,8 +125,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 		if (!scrollableContainerRef.current) return;
 
 		const isScrolledToBottom = scrollableContainerRef.current?.scrollTop === 0;
-		if (isScrolledToBottom) setFreeScroll(false);
-		else setFreeScroll(true);
+		setFreeScroll(!isScrolledToBottom);
 	};
 
 	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -103,7 +138,9 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			<Container ref={scrollableContainerRef} onScroll={handleScroll} onClick={handleClick} css={containerCss}>
 				{/* since container has a flex direction of column-reverse, bottomRef needs to be above mesage list */}
 				<div ref={bottomRef}></div>
-				<div className='messagesContainer'>{chatMessageList}</div>
+				<MessagesContainer css={messagesContainerCss}>
+					{freeScroll ? pausedMessages : liveMessages}
+				</MessagesContainer>
 			</Container>
 			<BottomContainer>
 				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
