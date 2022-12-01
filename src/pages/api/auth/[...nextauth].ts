@@ -13,7 +13,6 @@ const defaultProfile = {
 };
 
 export const authOptions = {
-	debug: true,
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
 		GoogleProvider({
