@@ -1,9 +1,9 @@
 import NextAuth from 'next-auth';
-import { Role } from './custom-auth';
+import { AuthPerms } from './custom-auth';
 
 declare module 'next-auth' {
 	interface User {
-		role: Role;
+		role: AuthPerms;
 		displayName: string;
 	}
 

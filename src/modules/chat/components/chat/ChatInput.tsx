@@ -71,6 +71,7 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 		const msg: MessageWithoutTime = {
 			type: MessageType.PUBLIC,
 			author: data.user.displayName,
+			rank: data.user.rank,
 			text: textAreaRef.current.value,
 		};
 		ctx.sendMessage(msg);

@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import SocketContext from './SocketContext';
 import { SocketProviderIface } from './SocketProviderIface';
 import { MessageType, SocketEvents } from '../../common';
+import { Rank } from 'types/custom-auth';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
@@ -33,6 +34,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			type: MessageType.INFO,
 			time: new Date().toISOString(),
 			author: 'INFO',
+			rank: Rank.DEFAULT,
 			text: 'Attempting to connect...',
 		};
 		writeMessage(msg);

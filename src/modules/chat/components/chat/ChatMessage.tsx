@@ -5,6 +5,7 @@ import { MessageType } from '@/modules/chat/common';
 import { injectTextWithEmotes } from '../../utils/injectTextWithEmotes';
 import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
+import { Rank } from 'types/custom-auth';
 
 interface Props {
 	msg: Message;
@@ -52,23 +53,47 @@ const Container = styled('div', {
 	},
 });
 
-const Author = styled('span', {
+const AuthorContainer = styled('span', {
 	display: 'flex',
 	alignItems: 'center',
-	'.author': {
-		height: '100%',
-		padding: 0,
-		paddingLeft: 3,
-		margin: 0,
-		border: 'none',
-		color: 'inherit',
-		background: 'none',
-		fontSize: 'inherit',
-		fontWeight: 900,
-	},
-	'.author:hover': {
+});
+
+const Author = styled('span', {
+	height: '100%',
+	padding: 0,
+	paddingLeft: 3,
+	margin: 0,
+	border: 'none',
+	color: 'inherit',
+	background: 'none',
+	fontSize: 'inherit',
+	fontWeight: 900,
+	'&:hover': {
 		textDecoration: 'underline',
 		cursor: 'pointer',
+	},
+
+	variants: {
+		rank: {
+			[Rank.DEFAULT]: {
+				color: 'rgb(255, 255, 255)',
+			},
+			[Rank.TIER_1]: {
+				color: 'rgb(72, 185, 190)',
+			},
+			[Rank.TIER_2]: {
+				color: 'rgb(72, 185, 240)',
+			},
+			[Rank.TIER_3]: {
+				color: 'rgb(20, 185, 255)',
+			},
+			[Rank.ORBITER]: {
+				color: 'rgb(240, 151, 72)',
+			},
+			[Rank.OWNER]: {
+				color: 'rgb(225, 53, 53)',
+			},
+		},
 	},
 });
 
@@ -98,11 +123,11 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 		return (
 			<Container className='msg' data-author={msg.author}>
 				<time title={timeTitle}>{timeValue}</time>
-				<Author>
-					<span className='author' onClick={() => setFocusedUser(msg.author)}>
+				<AuthorContainer>
+					<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
 						{msg.author}
-					</span>
-				</Author>
+					</Author>
+				</AuthorContainer>
 				<span className='separator'>:&nbsp;</span>
 				<Text>{newText}</Text>
 			</Container>
@@ -110,7 +135,7 @@ const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	} else
 		return (
 			<Container type={msg.type}>
-				<Author>{messageIcon[msg.type]}</Author>
+				<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
 				<span className='separator'>&nbsp;</span>
 				<Text>{msg.text}</Text>
 			</Container>
