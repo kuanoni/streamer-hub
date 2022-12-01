@@ -8,6 +8,14 @@ export enum AuthPerms {
 	USER,
 }
 
+export enum Rank {
+	DEFAULT = 'DEFAULT',
+	TIER_1 = 'TIER_1',
+	TIER_2 = 'TIER_2',
+	TIER_3 = 'TIER_3',
+	ORBITER = 'ORBITER',
+}
+
 export interface PageAuthorizationOptions {
 	roleRequired: AuthPerms;
 	whileLoading: React.ReactNode;
