@@ -13,6 +13,7 @@ const defaultProfile = {
 };
 
 export const authOptions = {
+	debug: true,
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
 		GoogleProvider({
@@ -21,11 +22,17 @@ export const authOptions = {
 			profile(profile) {
 				return {
 					id: profile.sub,
-					displayName: '',
-					email: profile.email,
-					emailVerified: profile.email_verified,
-					role: AuthPerms.USER,
-					rank: Rank.DEFAULT,
+					...defaultProfile,
+				};
+			},
+		}),
+		DiscordProvider({
+			clientId: extractStringEnvVar('DISCORD_CLIENT_ID'),
+			clientSecret: extractStringEnvVar('DISCORD_CLIENT_SECRET'),
+			profile(profile) {
+				return {
+					id: profile.id,
+					...defaultProfile,
 				};
 			},
 		}),
