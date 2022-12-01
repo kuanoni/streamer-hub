@@ -3,6 +3,7 @@ import type { Server as HTTPServer } from 'http';
 import type { Socket as NetSocket } from 'net';
 import { Server as IOServer, Socket } from 'socket.io';
 import { MessageType } from '@/modules/chat/common';
+import { Rank } from './custom-auth';
 
 interface SocketServer extends HTTPServer {
 	io?: IOServer | undefined;
@@ -19,6 +20,7 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 type MessageWithoutTime = {
 	type: MessageType;
 	author: string;
+	rank: Rank;
 	text: string;
 };
 
