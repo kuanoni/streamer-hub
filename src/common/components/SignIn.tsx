@@ -5,7 +5,7 @@ import ProviderSignInButton from './ProviderSignInButton';
 
 interface Props {
 	isOpen: Boolean;
-	setIsOpen: Function;
+	close: Function;
 }
 
 const Container = styled('div', {
@@ -19,9 +19,9 @@ const Container = styled('div', {
 	},
 });
 
-const SignIn = ({ isOpen, setIsOpen }: Props) => {
+const SignIn = ({ isOpen, close }: Props) => {
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+		<Modal isOpen={isOpen} closeModal={close}>
 			<Container>
 				<h1>Sign In</h1>
 				<ProviderSignInButton provider='google'></ProviderSignInButton>
