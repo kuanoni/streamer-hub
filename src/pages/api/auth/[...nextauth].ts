@@ -1,7 +1,7 @@
 import extractStringEnvVar from '@/utils/extractStringEnvVar';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/utils/mongodb';
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import DiscordProvider from 'next-auth/providers/discord';
 import { AuthPerms, Rank } from 'types/custom-auth';
@@ -12,7 +12,7 @@ const defaultProfile = {
 	rank: Rank.DEFAULT,
 };
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
 		GoogleProvider({
