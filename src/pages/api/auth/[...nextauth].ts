@@ -41,6 +41,9 @@ export const authOptions: NextAuthOptions = {
 			session.user = user; // Add role value to user object so it is passed along with session
 			return session;
 		},
+		async redirect({ url }: { url: string }) {
+			return url.split('#')[0];
+		},
 	},
 	pages: {
 		newUser: '/profile',
