@@ -55,7 +55,7 @@ const Navbar = () => {
 	};
 
 	useEffect(() => {
-		if (window.location.hash === '#signin' && status !== 'authenticated') setIsSignInOpen(true);
+		if (window.location.hash.startsWith('#signin') && status !== 'authenticated') setIsSignInOpen(true);
 		else setIsSignInOpen(false);
 	}, [router.asPath, setIsSignInOpen]);
 
