@@ -41,7 +41,7 @@ const ChatSigninPrompt = ({ setIsOpen }: { setIsOpen: Function }) => {
 		<Container>
 			You must sign in to chat
 			<ButtonsContainer>
-				<Link href={'/'} className='signin'>
+				<Link href={'#signin'} className='signin' onClick={() => setIsOpen(false)}>
 					Sign In
 				</Link>
 				<button className='close' onClick={() => setIsOpen(false)}>

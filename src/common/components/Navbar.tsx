@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'stiches.config';
 import SignIn from './SignIn';
 import { AuthPerms } from 'types/custom-auth';
+import { useRouter } from 'next/router';
 
 const StyledNav = styled('nav', {
 	padding: '1rem 2rem',
@@ -43,10 +44,24 @@ const StyledButton = styled('button', NavButtonLinkStyles);
 const Navbar = () => {
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
+	const router = useRouter();
+
+	const openSignIn = () => {
+		if (!window.location.hash) router.push({ hash: 'signin' });
+	};
+
+	const closeSignIn = () => {
+		router.push({ hash: '' });
+	};
+
+	useEffect(() => {
+		if (window.location.hash.startsWith('#signin') && status !== 'authenticated') setIsSignInOpen(true);
+		else setIsSignInOpen(false);
+	}, [router.asPath, setIsSignInOpen]);
 
 	return (
 		<StyledNav>
-			<SignIn isOpen={isSignInOpen} setIsOpen={setIsSignInOpen} />
+			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
 			<nav>
 				<StyledLink href='/'>Home</StyledLink>
 				<StyledLink href='/stream'>Stream</StyledLink>
@@ -59,7 +74,7 @@ const Navbar = () => {
 							<StyledLink href='/profile'>Profile</StyledLink>
 						</>
 					) : (
-						<StyledButton onClick={() => setIsSignInOpen(true)}>Sign In</StyledButton>
+						<StyledButton onClick={openSignIn}>Sign In</StyledButton>
 					)}
 				</span>
 			</nav>

@@ -20,7 +20,7 @@ const Container = styled('div', {
 
 export const Chat = () => {
 	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
-	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(true);
+	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(false);
 
 	const closePopup = () => {
 		setIsEmotesOpen(false);
