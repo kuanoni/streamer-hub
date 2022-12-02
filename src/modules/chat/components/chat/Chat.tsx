@@ -4,8 +4,10 @@ import SocketProvider from '../context/SocketProvider';
 import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
 import { useSession } from 'next-auth/react';
+import ChatSigninPrompt from './ChatSigninPrompt';
 
 const Container = styled('div', {
+	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column',
 	height: '100%',
@@ -17,8 +19,8 @@ const Container = styled('div', {
 });
 
 export const Chat = () => {
-	const { status } = useSession();
 	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
+	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(true);
 
 	const closePopup = () => {
 		setIsEmotesOpen(false);
@@ -27,10 +29,13 @@ export const Chat = () => {
 	return (
 		<Container>
 			<SocketProvider>
+				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
 				<ChatMessageList closePopup={closePopup} />
-				{status === 'authenticated' && (
-					<ChatInput isEmotesOpen={isEmotesOpen} setIsEmotesOpen={setIsEmotesOpen} />
-				)}
+				<ChatInput
+					isEmotesOpen={isEmotesOpen}
+					setIsEmotesOpen={setIsEmotesOpen}
+					setIsSigninPromptOpen={setIsSigninPromptOpen}
+				/>
 			</SocketProvider>
 		</Container>
 	);

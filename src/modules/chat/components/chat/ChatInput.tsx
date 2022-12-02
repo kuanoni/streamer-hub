@@ -57,15 +57,23 @@ const TopContainer = styled('div', {
 	margin: '0 .5rem',
 });
 
-const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; setIsEmotesOpen: Function }) => {
+const ChatInput = ({
+	isEmotesOpen,
+	setIsEmotesOpen,
+	setIsSigninPromptOpen,
+}: {
+	isEmotesOpen: boolean;
+	setIsEmotesOpen: Function;
+	setIsSigninPromptOpen: Function;
+}) => {
 	const ctx = useContext(SocketContext);
-	const { data } = useSession();
+	const { data, status } = useSession();
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
 	const sendMessage = () => {
-		if (!textAreaRef.current) return console.log('textarea undefined');
-		if (!ctx) return console.log('context undefined');
-		if (!data?.user) return console.log('user undefined');
+		if (!textAreaRef.current) throw new Error('textarea undefined');
+		if (!ctx) throw new Error('context undefined');
+		if (!data?.user) throw new Error('user undefined');
 
 		// send message through socket connection
 		const msg: MessageWithoutTime = {
@@ -85,7 +93,9 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 
 	// open and close EmoteList
 	const toggleEmoteList = () => {
-		if (!textAreaRef.current) return console.log('textarea undefined');
+		if (!textAreaRef.current) throw new Error('textarea undefined');
+		if (status !== 'authenticated') return setIsSigninPromptOpen(true);
+
 		textAreaRef.current.focus();
 
 		setIsEmotesOpen((isOpen: boolean) => {
@@ -95,7 +105,7 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 
 	// when button in ChatEmoteList is clicked
 	const insertEmote = (emoteKey: string) => {
-		if (!textAreaRef.current) return console.log('textarea undefined');
+		if (!textAreaRef.current) throw new Error('textarea undefined');
 		const cursorStart = textAreaRef.current.selectionStart;
 
 		// insert emote text at current cursor position
@@ -120,7 +130,14 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 		e.target.style.height = e.target.scrollHeight + 'px';
 	};
 
-	const handleOnKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+	const onFocusTextArea = () => {
+		if (status === 'unauthenticated') {
+			textAreaRef.current?.blur();
+			setIsSigninPromptOpen(true);
+		}
+	};
+
+	const onKeyDownTextArea = (e: React.KeyboardEvent<HTMLElement>) => {
 		if (e.code === 'Enter' || e.code === 'NumpadEnter') {
 			e.preventDefault();
 			if (textAreaRef.current?.value) sendMessage();
@@ -134,7 +151,8 @@ const ChatInput = ({ isEmotesOpen, setIsEmotesOpen }: { isEmotesOpen: boolean; s
 				<TextArea
 					ref={textAreaRef}
 					onChange={onChangeTextArea}
-					onKeyDown={handleOnKeyDown}
+					onFocus={onFocusTextArea}
+					onKeyDown={onKeyDownTextArea}
 					maxLength={500}
 					spellCheck={false}
 				/>
