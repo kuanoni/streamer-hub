@@ -31,9 +31,11 @@ export const Chat = () => {
 			<SocketProvider>
 				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
 				<ChatMessageList closePopup={closePopup} />
-				{status === 'authenticated' && (
-					<ChatInput isEmotesOpen={isEmotesOpen} setIsEmotesOpen={setIsEmotesOpen} />
-				)}
+				<ChatInput
+					isEmotesOpen={isEmotesOpen}
+					setIsEmotesOpen={setIsEmotesOpen}
+					setIsSigninPromptOpen={setIsSigninPromptOpen}
+				/>
 			</SocketProvider>
 		</Container>
 	);
