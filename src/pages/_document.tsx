@@ -2,6 +2,26 @@ import { Html, Head, Main, NextScript } from 'next/document';
 import { getCssText, globalCss } from 'stiches.config';
 
 const globalStyles = globalCss({
+	'@font-face': [
+		{
+			fontFamily: 'DM Sans',
+			fontStyle: 'normal',
+			fontWeight: 400,
+			src: 'local("DM Sans"), url("fonts/DMSans-Regular.ttf")',
+		},
+		{
+			fontFamily: 'DM Sans',
+			fontStyle: 'normal',
+			fontWeight: 500,
+			src: 'local("DM Sans"), url("fonts/DMSans-Medium.ttf")',
+		},
+		{
+			fontFamily: 'DM Sans',
+			fontStyle: 'normal',
+			fontWeight: 700,
+			src: 'local("DM Sans"), url("fonts/DMSans-Bold.ttf")',
+		},
+	],
 	'*, *::before, *::after': {
 		boxSizing: 'border-box',
 	},
@@ -10,7 +30,7 @@ const globalStyles = globalCss({
 		padding: 0,
 		color: '$text',
 		backgroundColor: '$bg',
-		fontFamily: `-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+		fontFamily: `DM Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
 		Helvetica Neue, sans-serif`,
 	},
 	a: {
