@@ -42,11 +42,7 @@ const Navbar = () => {
 				<NavButton link='/stream'>Stream</NavButton>
 				<NavButton link='/videos'>Videos</NavButton>
 				{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
-				{status === 'authenticated' ? (
-					<UserSignedIn status={status} />
-				) : (
-					<UserSignedIn status={status} openSignIn={openSignIn} />
-				)}
+				<UserSignedIn status={status} openSignIn={openSignIn} />
 			</StyledNav>
 		</>
 	);
