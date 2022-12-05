@@ -1,5 +1,7 @@
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import React, { useEffect } from 'react';
-import { BsBoxArrowLeft, BsGlobe, BsQuestionCircleFill } from 'react-icons/bs';
+import { BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill } from 'react-icons/bs';
 import { keyframes, styled } from 'stiches.config';
 
 const moveIn = keyframes({
@@ -17,9 +19,10 @@ const Options = styled('div', {
 	position: 'absolute',
 	bottom: -10,
 	right: '.5rem',
-	left: 0,
 	display: 'flex',
 	flexDirection: 'column',
+	width: '100%',
+	minWidth: '10rem',
 	padding: '.5rem 0',
 
 	backgroundColor: '$action',
@@ -29,13 +32,15 @@ const Options = styled('div', {
 	animation: `${moveIn} .25s`,
 });
 
-const LinkButton = styled('a', {
+const LinkButton = styled(Link, {
 	display: 'flex',
 	alignItems: 'center',
 	gap: '.5rem',
 	height: '2rem',
 	padding: '0 .5rem',
 	color: '$textDark',
+	backgroundColor: 'transparent',
+	border: 'none',
 	fontSize: '.875rem',
 	cursor: 'pointer',
 	'&:hover': {
@@ -73,21 +78,28 @@ const UserOptionsDropdown = React.forwardRef<HTMLDivElement, Props>((props, ref)
 
 	return (
 		<Options ref={ref} onClick={handleClickWithoutClosing}>
-			<LinkButton>
+			<LinkButton href='/support'>
 				<BsQuestionCircleFill />
 				Support
 			</LinkButton>
-			<LinkButton>
-				<BsGlobe />
-				Languages
-			</LinkButton>
 			<Separator />
 
-			{props.status === 'unauthenticated' && (
-				<LinkButton onClick={props.openSignIn}>
+			{props.status === 'unauthenticated' ? (
+				<LinkButton as={'button'} onClick={props.openSignIn}>
 					<BsBoxArrowLeft />
 					Sign In
 				</LinkButton>
+			) : (
+				<>
+					<LinkButton href='/profile' onClick={props.openSignIn}>
+						<BsPersonFill />
+						Profile
+					</LinkButton>
+					<LinkButton as={'button'} onClick={() => signOut()}>
+						<BsBoxArrowRight />
+						Sign Out
+					</LinkButton>
+				</>
 			)}
 		</Options>
 	);
