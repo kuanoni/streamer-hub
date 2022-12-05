@@ -1,15 +1,20 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { styled } from 'stiches.config';
 
 const NavLink = styled(Link, {
 	position: 'relative',
+	display: 'inline-flex',
+	alignItems: 'end',
 	padding: '16px 32px',
 	color: '$textDarker',
 	borderBottom: '1px solid $textDarker',
 	fontFamily: 'DM Sans',
 	fontSize: '1.25rem',
 	fontWeight: 500,
+	verticalAlign: 'bottom',
+	transform: 'translateY(1px)',
 	transition: 'color border-color background .2s ease',
 	'&::after': {
 		content: '',
@@ -42,10 +47,11 @@ const NavLink = styled(Link, {
 	},
 });
 
-const NavButton = ({ text, link, isActive }: { text: string; link: string; isActive?: boolean }) => {
+const NavButton = ({ link, children }: { link: string; children: React.ReactNode }) => {
+	const router = useRouter();
 	return (
-		<NavLink href={link} className={isActive ? 'current' : ''}>
-			{text}
+		<NavLink href={link} className={router.asPath.split('#')[0] === link ? 'current' : ''}>
+			{children}
 		</NavLink>
 	);
 };

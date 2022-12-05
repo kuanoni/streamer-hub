@@ -5,19 +5,14 @@ import { styled } from 'stiches.config';
 import SignIn from './SignIn';
 import { AuthPerms } from 'types/custom-auth';
 import { useRouter } from 'next/router';
+import NavButton from './new/NavButton';
 
 const StyledNav = styled('nav', {
-	padding: '1rem 2rem',
-	nav: {
-		display: 'flex',
-		width: '100%',
-		padding: '1rem',
-		backgroundColor: '$bgDarkest',
-		color: '$text',
-		'& .right': {
-			marginLeft: 'auto',
-		},
-	},
+	display: 'flex',
+	width: '100%',
+	height: 72,
+	color: '$text',
+	borderBottom: '1px solid $textDarker',
 });
 
 const NavButtonLinkStyles = {
@@ -60,12 +55,12 @@ const Navbar = () => {
 	}, [router.asPath, setIsSignInOpen]);
 
 	return (
-		<StyledNav>
+		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
-			<nav>
-				<StyledLink href='/'>Home</StyledLink>
-				<StyledLink href='/stream'>Stream</StyledLink>
-				<StyledLink href='/videos'>Videos</StyledLink>
+			<StyledNav>
+				<NavButton link='/'>Home</NavButton>
+				<NavButton link='/stream'>Stream</NavButton>
+				<NavButton link='/videos'>Videos</NavButton>
 				{data?.user?.role === AuthPerms.ADMIN && <StyledLink href='/admin'>Admin</StyledLink>}
 				<span className='right'>
 					{status === 'authenticated' ? (
@@ -77,8 +72,8 @@ const Navbar = () => {
 						<StyledButton onClick={openSignIn}>Sign In</StyledButton>
 					)}
 				</span>
-			</nav>
-		</StyledNav>
+			</StyledNav>
+		</>
 	);
 };
 
