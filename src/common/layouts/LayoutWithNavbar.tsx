@@ -11,6 +11,7 @@ const LayoutWithNavbar = ({ children }: Props) => {
 		display: 'grid',
 		minHeight: '100vh',
 		gridTemplateRows: 'auto 1fr',
+		padding: '2rem',
 	});
 
 	const Main = styled('main', {

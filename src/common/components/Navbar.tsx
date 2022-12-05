@@ -5,41 +5,16 @@ import { styled } from 'stiches.config';
 import SignIn from './SignIn';
 import { AuthPerms } from 'types/custom-auth';
 import { useRouter } from 'next/router';
+import NavButton from './new/NavButton';
+import UserSignedIn from './new/UserSignedIn';
 
 const StyledNav = styled('nav', {
-	padding: '1rem 2rem',
-	nav: {
-		display: 'flex',
-		width: '100%',
-		padding: '1rem',
-		backgroundColor: '$bgDarkest',
-		color: '$text',
-		'& .right': {
-			marginLeft: 'auto',
-		},
-	},
+	display: 'flex',
+	alignItems: 'center',
+	width: '100%',
+	color: '$text',
+	borderBottom: '1px solid $textDarker',
 });
-
-const NavButtonLinkStyles = {
-	border: 'none',
-	backgroundColor: 'transparent',
-	textDecoration: 'underline',
-	color: 'inherit',
-	fontSize: 'inherit',
-	cursor: 'pointer',
-	'&:not(:last-child)': {
-		marginRight: '2rem',
-	},
-	'&:hover': {
-		color: '$primary',
-	},
-	'&:active': {
-		color: '$textDark',
-	},
-};
-
-const StyledLink = styled(Link, NavButtonLinkStyles);
-const StyledButton = styled('button', NavButtonLinkStyles);
 
 const Navbar = () => {
 	const { data, status } = useSession();
@@ -60,25 +35,16 @@ const Navbar = () => {
 	}, [router.asPath, setIsSignInOpen]);
 
 	return (
-		<StyledNav>
+		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
-			<nav>
-				<StyledLink href='/'>Home</StyledLink>
-				<StyledLink href='/stream'>Stream</StyledLink>
-				<StyledLink href='/videos'>Videos</StyledLink>
-				{data?.user?.role === AuthPerms.ADMIN && <StyledLink href='/admin'>Admin</StyledLink>}
-				<span className='right'>
-					{status === 'authenticated' ? (
-						<>
-							<StyledButton onClick={() => signOut()}>Sign Out</StyledButton>
-							<StyledLink href='/profile'>Profile</StyledLink>
-						</>
-					) : (
-						<StyledButton onClick={openSignIn}>Sign In</StyledButton>
-					)}
-				</span>
-			</nav>
-		</StyledNav>
+			<StyledNav>
+				<NavButton link='/'>Home</NavButton>
+				<NavButton link='/stream'>Stream</NavButton>
+				<NavButton link='/videos'>Videos</NavButton>
+				{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
+				<UserSignedIn status={status} openSignIn={openSignIn} />
+			</StyledNav>
+		</>
 	);
 };
 
