@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, MouseEventHandler } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 import UserOptionsDropdown from './UserOptionsDropdown';
@@ -7,6 +7,7 @@ const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	gap: '1rem',
+	marginLeft: 'auto',
 });
 
 const SignInButton = styled('button', {
@@ -51,34 +52,31 @@ const SignedIn = styled('div', {
 
 interface Props {
 	status: 'authenticated' | 'loading' | 'unauthenticated';
+	openSignIn?: () => void;
 }
 
-const UserSignedInAndDropdown = ({ status }: Props) => {
+const UserSignedIn = ({ status, openSignIn }: Props) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const dropdownRef = useRef<HTMLDivElement>(null);
 	const signedInRef = useRef<HTMLDivElement>(null);
 
-	const handleClick = () => {
-		if (isDropdownOpen) document.addEventListener('click', handleOutsideClick);
-		else document.removeEventListener('click', handleOutsideClick);
-
-		setIsDropdownOpen(!isDropdownOpen);
-	};
-
-	const handleOutsideClick = (e: MouseEvent) => {
-		if (!signedInRef.current?.contains(e.target as Node)) handleClick();
+	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+		// prevents click event from being passed to newly created event listener in UserDropdownOptions
+		e.stopPropagation();
+		setIsDropdownOpen((cur) => !cur);
 	};
 
 	return (
 		<Container>
-			{status === 'unauthenticated' && <SignInButton>Sign In</SignInButton>}
+			{status === 'unauthenticated' && <SignInButton onClick={openSignIn}>Sign In</SignInButton>}
 			<SignedIn ref={signedInRef} onClick={handleClick}>
 				<BsPersonCircle className='profile-pic' />
 				<BsCaretDownFill className={'dropdown-caret' + (isDropdownOpen ? ' open' : '')} />
 			</SignedIn>
-			{isDropdownOpen && <UserOptionsDropdown ref={dropdownRef} />}
+			{isDropdownOpen && (
+				<UserOptionsDropdown setIsDropdownOpen={setIsDropdownOpen} status={status} openSignIn={openSignIn} />
+			)}
 		</Container>
 	);
 };
 
-export default UserSignedInAndDropdown;
+export default UserSignedIn;

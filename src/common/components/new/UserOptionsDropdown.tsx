@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsBoxArrowLeft, BsGlobe, BsQuestionCircleFill } from 'react-icons/bs';
 import { keyframes, styled } from 'stiches.config';
 
@@ -24,6 +24,7 @@ const Options = styled('div', {
 
 	backgroundColor: '$action',
 	borderRadius: 10,
+	zIndex: 1,
 	transform: 'translateY(100%)',
 	animation: `${moveIn} .25s`,
 });
@@ -52,9 +53,26 @@ const Separator = styled('div', {
 	borderBottom: '1px solid $textDarker',
 });
 
-const UserOptionsDropdown = React.forwardRef<HTMLDivElement>((props, ref) => {
+interface Props {
+	setIsDropdownOpen: (setState: React.SetStateAction<boolean>) => void;
+	status: 'authenticated' | 'loading' | 'unauthenticated';
+	openSignIn?: () => void;
+}
+
+const UserOptionsDropdown = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+	const handleClick = () => props.setIsDropdownOpen((cur) => !cur);
+
+	useEffect(() => {
+		document.addEventListener('click', handleClick);
+		return () => document.removeEventListener('click', handleClick);
+	}, []);
+
+	const handleClickWithoutClosing: React.MouseEventHandler = (e) => {
+		e.stopPropagation();
+	};
+
 	return (
-		<Options ref={ref}>
+		<Options ref={ref} onClick={handleClickWithoutClosing}>
 			<LinkButton>
 				<BsQuestionCircleFill />
 				Support
@@ -64,10 +82,13 @@ const UserOptionsDropdown = React.forwardRef<HTMLDivElement>((props, ref) => {
 				Languages
 			</LinkButton>
 			<Separator />
-			<LinkButton>
-				<BsBoxArrowLeft />
-				Sign In
-			</LinkButton>
+
+			{props.status === 'unauthenticated' && (
+				<LinkButton onClick={props.openSignIn}>
+					<BsBoxArrowLeft />
+					Sign In
+				</LinkButton>
+			)}
 		</Options>
 	);
 });
