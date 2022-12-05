@@ -64,8 +64,8 @@ interface Props {
 	openSignIn?: () => void;
 }
 
-const UserOptionsDropdown = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-	const handleClick = () => props.setIsDropdownOpen((cur) => !cur);
+const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) => {
+	const handleClick = () => setIsDropdownOpen((cur) => !cur);
 
 	useEffect(() => {
 		document.addEventListener('click', handleClick);
@@ -77,21 +77,21 @@ const UserOptionsDropdown = React.forwardRef<HTMLDivElement, Props>((props, ref)
 	};
 
 	return (
-		<Options ref={ref} onClick={handleClickWithoutClosing}>
+		<Options onClick={handleClickWithoutClosing}>
 			<LinkButton href='/support'>
 				<BsQuestionCircleFill />
 				Support
 			</LinkButton>
 			<Separator />
 
-			{props.status === 'unauthenticated' ? (
-				<LinkButton as={'button'} onClick={props.openSignIn}>
+			{status === 'unauthenticated' ? (
+				<LinkButton as={'button'} onClick={openSignIn}>
 					<BsBoxArrowLeft />
 					Sign In
 				</LinkButton>
 			) : (
 				<>
-					<LinkButton href='/profile' onClick={props.openSignIn}>
+					<LinkButton href='/profile' onClick={openSignIn}>
 						<BsPersonFill />
 						Profile
 					</LinkButton>
@@ -103,6 +103,6 @@ const UserOptionsDropdown = React.forwardRef<HTMLDivElement, Props>((props, ref)
 			)}
 		</Options>
 	);
-});
+};
 
 export default UserOptionsDropdown;
