@@ -1,6 +1,6 @@
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill } from 'react-icons/bs';
 import { keyframes, styled } from 'stiches.config';
 
@@ -65,12 +65,12 @@ interface Props {
 }
 
 const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) => {
-	const handleClick = () => setIsDropdownOpen((cur) => !cur);
+	const handleClick = useCallback(() => setIsDropdownOpen((cur) => !cur), [setIsDropdownOpen]);
 
 	useEffect(() => {
 		document.addEventListener('click', handleClick);
 		return () => document.removeEventListener('click', handleClick);
-	}, []);
+	}, [handleClick]);
 
 	const handleClickWithoutClosing: React.MouseEventHandler = (e) => {
 		e.stopPropagation();
