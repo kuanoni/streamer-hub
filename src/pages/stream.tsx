@@ -1,3 +1,4 @@
+import StreamSection from '@/modules/stream/components/StreamSection';
 import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
 import { Chat } from '@/modules/chat/components/chat/Chat';
 import React from 'react';
@@ -9,33 +10,24 @@ const RelativeContainer = styled('div', {
 	height: '100%',
 });
 
-const StyledContainer = styled('div', {
+const AbsoluteContainer = styled('div', {
 	position: 'absolute',
 	inset: '0 0 0 0',
-	display: 'grid',
-	gridTemplateColumns: '1fr auto',
 	height: '100%',
-	backgroundColor: '$bgDarker',
 });
 
-const StyledIframe = styled('iframe', {
-	color: 'transparent',
+const GridContainer = styled(AbsoluteContainer, {
+	display: 'grid',
+	gridTemplateColumns: '1fr auto',
 });
 
 const Stream = () => {
 	return (
 		<RelativeContainer>
-			<StyledContainer>
-				<div>
-					{/* <StyledIframe
-						src='https://player.twitch.tv/?channel=moistcr1tikal&parent=localhost'
-						width='100%'
-						height='100%'
-						title='Faker stream'
-					/> */}
-				</div>
+			<GridContainer>
+				<StreamSection />
 				<Chat />
-			</StyledContainer>
+			</GridContainer>
 		</RelativeContainer>
 	);
 };
