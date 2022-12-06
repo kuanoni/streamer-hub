@@ -11,7 +11,7 @@ const NavLink = styled(Link, {
 	color: '$textDarker',
 	borderBottom: '1px solid $textDarker',
 	fontFamily: 'DM Sans',
-	fontSize: '1.25rem',
+	fontSize: '1rem',
 	fontWeight: 500,
 	verticalAlign: 'bottom',
 	transform: 'translateY(1px)',
