@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { styled } from 'stiches.config';
 import SignIn from './SignIn';
@@ -9,9 +8,9 @@ import NavButton from './new/NavButton';
 import UserSignedIn from './new/UserSignedIn';
 
 const StyledNav = styled('nav', {
+	position: 'relative',
 	display: 'flex',
 	alignItems: 'center',
-	width: '100%',
 	color: '$text',
 	borderBottom: '1px solid $textDarker',
 });
