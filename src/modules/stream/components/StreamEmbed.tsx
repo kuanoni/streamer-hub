@@ -5,8 +5,7 @@ import { AbsoluteContainer, RelativeContainer } from '../styles';
 const StreamEmbedContainer = styled(AbsoluteContainer, {
 	display: 'flex',
 	alignItems: 'center',
-	padding: '.5rem',
-	paddingRight: '2rem',
+	paddingRight: '1rem',
 });
 
 const StreamEmbedWrapper = styled('div', {

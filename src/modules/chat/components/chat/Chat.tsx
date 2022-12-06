@@ -13,6 +13,8 @@ const Container = styled('div', {
 	height: '100%',
 	minWidth: 300,
 	width: 300,
+	paddingLeft: '1rem',
+	borderLeft: '1px solid $textDarker',
 	overflow: 'auto',
 });
 
