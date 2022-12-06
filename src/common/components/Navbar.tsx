@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { styled } from 'stiches.config';
 import SignIn from './SignIn';
 import { AuthPerms } from 'types/custom-auth';
@@ -15,7 +15,13 @@ const StyledNav = styled('nav', {
 	borderBottom: '1px solid $textDarker',
 });
 
-const Navbar = () => {
+const AlignRightContainer = styled('div', {
+	display: 'flex',
+	gap: '2rem',
+	marginLeft: 'auto',
+});
+
+const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 	const router = useRouter();
@@ -41,7 +47,10 @@ const Navbar = () => {
 				<NavButton link='/stream'>Stream</NavButton>
 				<NavButton link='/videos'>Videos</NavButton>
 				{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
-				<UserSignedIn status={status} openSignIn={openSignIn} />
+				<AlignRightContainer>
+					{children}
+					<UserSignedIn status={status} openSignIn={openSignIn} />
+				</AlignRightContainer>
 			</StyledNav>
 		</>
 	);
