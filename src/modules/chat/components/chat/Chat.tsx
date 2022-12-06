@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import SocketProvider from '../context/SocketProvider';
 import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
-import { useSession } from 'next-auth/react';
 import ChatSigninPrompt from './ChatSigninPrompt';
+import ChatControls from './ChatControls';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -13,8 +13,6 @@ const Container = styled('div', {
 	height: '100%',
 	minWidth: 300,
 	width: 300,
-	backgroundColor: '$bgDarkest',
-	border: '1px solid $bgDark',
 	overflow: 'auto',
 });
 
@@ -30,6 +28,8 @@ export const Chat = () => {
 		<Container>
 			<SocketProvider>
 				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
+
+				<ChatControls />
 				<ChatMessageList closePopup={closePopup} />
 				<ChatInput
 					isEmotesOpen={isEmotesOpen}
