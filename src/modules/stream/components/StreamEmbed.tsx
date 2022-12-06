@@ -1,17 +1,6 @@
 import React, { FC } from 'react';
 import { styled } from 'stiches.config';
-
-const RelativeContainer = styled('div', {
-	position: 'relative',
-	width: '100%',
-	height: '100%',
-});
-
-const AbsoluteContainer = styled('div', {
-	position: 'absolute',
-	inset: '0 0 0 0',
-	height: '100%',
-});
+import { AbsoluteContainer, RelativeContainer } from '../styles';
 
 const StreamEmbedContainer = styled(AbsoluteContainer, {
 	display: 'flex',
