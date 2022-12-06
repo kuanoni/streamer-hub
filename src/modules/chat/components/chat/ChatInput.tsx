@@ -1,21 +1,21 @@
 import React, { useContext, useRef } from 'react';
 import { styled } from 'stiches.config';
-import { IoIosSend } from 'react-icons/io';
-import { RiEmotionFill } from 'react-icons/ri';
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
 import { MessageWithoutTime } from 'types/socketio';
+import IconButton from '@/components/new/IconButton';
+import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	height: 'auto',
-	margin: '.5rem',
-	padding: '.4rem',
-	backgroundColor: '$bgDarker',
-	border: '1px solid $bgDark',
+	padding: '.5rem',
+	marginTop: '1rem',
+	border: '1px solid $textDarker',
+	borderRadius: 10,
 });
 
 const TextArea = styled('textarea', {
@@ -157,13 +157,17 @@ const ChatInput = ({
 					spellCheck={false}
 				/>
 				<ButtonsContainer>
-					<IoIosSend
-						className='btn send-btn'
+					<IconButton
+						size={36}
 						onClick={() => {
 							if (textAreaRef.current?.value) sendMessage();
 						}}
-					/>
-					<RiEmotionFill className='btn emote-btn' onClick={toggleEmoteList} />
+					>
+						<BsCursorFill />
+					</IconButton>
+					<IconButton size={36} onClick={toggleEmoteList}>
+						<BsEmojiSmileFill />
+					</IconButton>
 				</ButtonsContainer>
 			</Container>
 		</>
