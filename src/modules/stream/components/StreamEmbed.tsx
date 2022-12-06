@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import Script from 'next/script';
+import React, { FC, useContext, useMemo, useState } from 'react';
 import { styled } from 'stiches.config';
 import { AbsoluteContainer, RelativeContainer } from '../styles';
+import StreamContext from './context/StreamContext';
 
 const StreamEmbedContainer = styled(AbsoluteContainer, {
 	display: 'flex',
@@ -13,19 +15,17 @@ const StreamEmbedWrapper = styled('div', {
 	maxWidth: '100%',
 	maxHeight: '100%',
 	aspectRatio: '16 / 9',
-	boxShadow: '0px 0px 18px 1px rgba(117, 52, 223, 0.32)',
 });
 
 const StyledIframe = styled('iframe', {
-	color: 'transparent',
 	aspectRatio: '16 / 9',
+	border: 'medium none',
+	boxShadow: 'rgba(117, 52, 223, 0.22) 0px 0px 12px 1px',
 });
 
-interface Props {
-	streamSource: string;
-}
+const StreamEmbed: FC = () => {
+	const ctx = useContext(StreamContext);
 
-const StreamEmbed: FC<Props> = ({ streamSource }) => {
 	return (
 		<RelativeContainer>
 			<StreamEmbedContainer>

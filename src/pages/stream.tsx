@@ -3,6 +3,7 @@ import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
 import { Chat } from '@/modules/chat/components/chat/Chat';
 import React from 'react';
 import { styled } from 'stiches.config';
+import StreamPageLayout from '@/modules/stream/components/layouts/StreamPageLayout';
 
 const RelativeContainer = styled('div', {
 	position: 'relative',
@@ -35,5 +36,5 @@ const Stream = () => {
 export default Stream;
 
 Stream.getLayout = function getLayout(page: JSX.Element) {
-	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
+	return <StreamPageLayout>{page}</StreamPageLayout>;
 };
