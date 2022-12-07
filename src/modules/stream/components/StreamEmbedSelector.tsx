@@ -5,7 +5,7 @@ import { StreamSource } from './context/StreamContext';
 
 interface Props {
 	streamSource: StreamSource;
-	setStreamSource: Dispatch<SetStateAction<StreamSource>>;
+	setStreamSource?: Dispatch<SetStateAction<StreamSource>>;
 }
 
 const StreamEmbedSelector: FC<Props> = ({ streamSource, setStreamSource }) => {
@@ -17,7 +17,7 @@ const StreamEmbedSelector: FC<Props> = ({ streamSource, setStreamSource }) => {
 				facebook: <BsFacebook />,
 			}}
 			defaultChoice={streamSource}
-			onSelect={setStreamSource}
+			onSelect={setStreamSource || (() => {})}
 		/>
 	);
 };
