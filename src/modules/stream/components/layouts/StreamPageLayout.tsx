@@ -13,6 +13,7 @@ const Page = styled('div', {
 	minHeight: '100vh',
 	gridTemplateRows: 'auto 1fr',
 	padding: '2rem',
+	paddingBottom: '1rem',
 });
 
 const Main = styled('main', {
@@ -30,9 +31,7 @@ const StreamPageLayout = ({ children }: Props) => {
 	return (
 		<StreamContext.Provider value={providerValue}>
 			<Page>
-				<Navbar>
-					<StreamEmbedSelector streamSource={streamSource} setStreamSource={setStreamSource} />
-				</Navbar>
+				<Navbar />
 				<Main>{children}</Main>
 			</Page>
 		</StreamContext.Provider>
