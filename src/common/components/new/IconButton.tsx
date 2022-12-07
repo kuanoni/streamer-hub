@@ -20,7 +20,7 @@ const Container = styled('button', {
 		height: '55%',
 	},
 	'&:hover': {
-		color: '$primary',
+		color: '$textDarkerHighlighted',
 		backgroundColor: '$action',
 	},
 	'&:active': {

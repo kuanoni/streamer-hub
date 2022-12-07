@@ -31,6 +31,9 @@ const Button = styled('button', {
 			},
 		},
 	},
+	'&:hover': {
+		color: '$textDarkerHighlighted',
+	},
 	svg: {
 		width: '50%',
 		height: '50%',
