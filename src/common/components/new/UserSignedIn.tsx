@@ -34,7 +34,7 @@ const SignedIn = styled('div', {
 	cursor: 'pointer',
 	transition: 'color .1s ease',
 	'&:hover': {
-		color: '$text',
+		color: '$textDarkerHighlighted',
 	},
 	'.profile-pic': {
 		width: '2rem',
