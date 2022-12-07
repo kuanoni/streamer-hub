@@ -9,11 +9,14 @@ import IconButton from '@/components/new/IconButton';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {
-	position: 'relative',
+	padding: '.5rem',
+	height: 'auto',
+});
+
+const TextAreaWrapper = styled('div', {
 	display: 'flex',
 	height: 'auto',
 	padding: '.5rem',
-	marginTop: '1rem',
 	border: '1px solid $textDarker',
 	borderRadius: 10,
 });
@@ -86,7 +89,7 @@ const ChatInput = ({
 
 		// recalculate textare height
 		textAreaRef.current.value = '';
-		textAreaRef.current.style.height = 'inherit';
+		textAreaRef.current.style.height = 'auto';
 		textAreaRef.current.focus();
 		setIsEmotesOpen(false);
 	};
@@ -127,7 +130,7 @@ const ChatInput = ({
 
 		// updates textarea height to fit its text content
 		e.target.style.height = 'inherit';
-		e.target.style.height = e.target.scrollHeight + 'px';
+		e.target.style.height = e.target.scrollHeight - 1 + 'px';
 	};
 
 	const onFocusTextArea = () => {
@@ -148,27 +151,29 @@ const ChatInput = ({
 		<>
 			<TopContainer>{isEmotesOpen && <EmoteSelector insertEmote={insertEmote} />}</TopContainer>
 			<Container>
-				<TextArea
-					ref={textAreaRef}
-					onChange={onChangeTextArea}
-					onFocus={onFocusTextArea}
-					onKeyDown={onKeyDownTextArea}
-					maxLength={500}
-					spellCheck={false}
-				/>
-				<ButtonsContainer>
-					<IconButton
-						size={36}
-						onClick={() => {
-							if (textAreaRef.current?.value) sendMessage();
-						}}
-					>
-						<BsCursorFill />
-					</IconButton>
-					<IconButton size={36} onClick={toggleEmoteList}>
-						<BsEmojiSmileFill />
-					</IconButton>
-				</ButtonsContainer>
+				<TextAreaWrapper>
+					<TextArea
+						ref={textAreaRef}
+						onChange={onChangeTextArea}
+						onFocus={onFocusTextArea}
+						onKeyDown={onKeyDownTextArea}
+						maxLength={500}
+						spellCheck={false}
+					/>
+					<ButtonsContainer>
+						<IconButton
+							size={36}
+							onClick={() => {
+								if (textAreaRef.current?.value) sendMessage();
+							}}
+						>
+							<BsCursorFill />
+						</IconButton>
+						<IconButton size={36} onClick={toggleEmoteList}>
+							<BsEmojiSmileFill />
+						</IconButton>
+					</ButtonsContainer>
+				</TextAreaWrapper>
 			</Container>
 		</>
 	);
