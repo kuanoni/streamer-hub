@@ -4,7 +4,8 @@ import SocketProvider from '../context/SocketProvider';
 import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
 import ChatSigninPrompt from './ChatSigninPrompt';
-import ChatControls from './ChatControls';
+import ChatControlsTop from './ChatControlsTop';
+import ChatControlsBottom from './ChatControlsBottom';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -13,8 +14,7 @@ const Container = styled('div', {
 	height: '100%',
 	minWidth: 300,
 	width: 300,
-	paddingLeft: '1rem',
-	// borderLeft: '1px solid $textDarker',
+	background: 'linear-gradient(rgba(63, 88, 148, 0.05) 0%, rgba(63, 88, 148, 0.05) 100%)',
 	overflow: 'auto',
 });
 
@@ -30,14 +30,14 @@ export const Chat = () => {
 		<Container>
 			<SocketProvider>
 				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
-
-				<ChatControls />
+				<ChatControlsTop />
 				<ChatMessageList closePopup={closePopup} />
 				<ChatInput
 					isEmotesOpen={isEmotesOpen}
 					setIsEmotesOpen={setIsEmotesOpen}
 					setIsSigninPromptOpen={setIsSigninPromptOpen}
 				/>
+				<ChatControlsBottom />
 			</SocketProvider>
 		</Container>
 	);
