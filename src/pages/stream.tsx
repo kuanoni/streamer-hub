@@ -20,6 +20,7 @@ const AbsoluteContainer = styled('div', {
 const GridContainer = styled(AbsoluteContainer, {
 	display: 'grid',
 	gridTemplateColumns: '1fr auto',
+	gap: '2rem',
 });
 
 const Stream = () => {
