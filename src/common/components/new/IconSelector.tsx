@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 
 const containerGap = 8;
 
@@ -7,7 +7,7 @@ const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	gap: containerGap,
-	backgroundColor: '$cover',
+	backgroundColor: theme.colors.cover,
 	borderRadius: 10,
 });
 
@@ -18,7 +18,7 @@ const Button = styled('button', {
 	width: 36,
 	height: 36,
 	padding: 0,
-	color: '$textDarker',
+	color: theme.colors.grey500,
 	backgroundColor: 'transparent',
 	border: 'none',
 	borderRadius: 10,
@@ -27,12 +27,12 @@ const Button = styled('button', {
 	variants: {
 		selected: {
 			true: {
-				color: '$primary',
+				color: `${theme.colors.primary400} !important`,
 			},
 		},
 	},
 	'&:hover': {
-		color: '$textDarkerHighlighted',
+		color: theme.colors.grey300,
 	},
 	svg: {
 		width: '50%',
@@ -45,7 +45,7 @@ const Highlighter = styled('div', {
 	top: 0,
 	width: 36,
 	height: 36,
-	backgroundColor: '$action',
+	backgroundColor: theme.colors.action,
 	borderRadius: 10,
 	transformOrigin: 'center',
 	transition: '.1s ease',

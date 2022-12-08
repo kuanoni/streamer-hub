@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import { AbsoluteContainer, RelativeContainer } from '../styles';
 import StreamContext from './context/StreamContext';
 
@@ -22,6 +22,7 @@ const StreamEmbedWrapper = styled('div', {
 
 const StyledIframe = styled('iframe', {
 	aspectRatio: '16 / 9',
+	backgroundColor: theme.colors.cover,
 	border: 'none',
 	boxShadow: 'rgba(117, 52, 223, 0.22) 0px 0px 12px 1px',
 });

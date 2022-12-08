@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 
 const Container = styled('button', {
 	display: 'flex',
@@ -11,7 +11,7 @@ const Container = styled('button', {
 	width: 36,
 	border: 'none',
 	borderRadius: 10,
-	color: '$textDarker',
+	color: theme.colors.grey500,
 	backgroundColor: 'transparent',
 	cursor: 'pointer',
 	transition: 'background-color .1s ease-out, color .1s ease-out',
@@ -20,12 +20,12 @@ const Container = styled('button', {
 		height: '55%',
 	},
 	'&:hover': {
-		color: '$textDarkerHighlighted',
-		backgroundColor: '$action',
+		color: theme.colors.grey300,
+		backgroundColor: theme.colors.action,
 	},
 	'&:active': {
-		color: '$primaryLight',
-		backgroundColor: '$cover',
+		color: theme.colors.primary400,
+		backgroundColor: theme.colors.cover,
 	},
 });
 

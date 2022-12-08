@@ -1,6 +1,6 @@
 import React, { useRef, useState, MouseEventHandler } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import UserOptionsDropdown from './UserOptionsDropdown';
 
 const Container = styled('div', {
@@ -12,15 +12,15 @@ const Container = styled('div', {
 
 const SignInButton = styled('button', {
 	padding: '0 2rem',
-	color: '$text',
-	backgroundColor: '$primary',
+	color: theme.colors.textLight,
+	backgroundColor: theme.colors.primary500,
 	border: 'none',
 	borderRadius: 5,
 	fontSize: '1rem',
 	cursor: 'pointer',
 	transition: '.1s ease',
 	'&:hover': {
-		backgroundColor: '$primaryLight',
+		backgroundColor: theme.colors.primary400,
 	},
 });
 
@@ -30,11 +30,11 @@ const SignedIn = styled('div', {
 	gap: 2,
 	height: '100%',
 	margin: '0 .5rem',
-	color: '$textDarker',
+	color: theme.colors.grey400,
 	cursor: 'pointer',
 	transition: 'color .1s ease',
 	'&:hover': {
-		color: '$textDarkerHighlighted',
+		color: theme.colors.grey200,
 	},
 	'.profile-pic': {
 		width: '2rem',

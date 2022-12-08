@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
 import { MessageType } from '../../common';
@@ -17,14 +17,14 @@ const TextAreaWrapper = styled('div', {
 	display: 'flex',
 	height: 'auto',
 	padding: '.5rem',
-	border: '1px solid $textDarker',
+	border: `1px solid ${theme.colors.grey700}`,
 	borderRadius: 10,
 });
 
 const TextArea = styled('textarea', {
 	width: '100%',
 	height: 'inherit',
-	color: '$text',
+	color: theme.colors.textLight,
 	backgroundColor: 'transparent',
 	border: 'none',
 	overflow: 'hidden',
@@ -37,21 +37,6 @@ const ButtonsContainer = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '.35rem',
-
-	'.btn': {
-		minWidth: '1.75rem',
-		minHeight: '1.75rem',
-		padding: '.4rem',
-		border: 'none',
-		borderRadius: '6px',
-		color: '$text',
-		backgroundColor: '$bgDark',
-		cursor: 'pointer',
-	},
-	'.btn:hover': {
-		backgroundColor: '$bg',
-		color: '#fff',
-	},
 });
 
 const TopContainer = styled('div', {

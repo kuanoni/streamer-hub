@@ -14,7 +14,7 @@ const Container = styled('div', {
 	background: 'linear-gradient(180deg, rgba(63, 88, 148, 0.03) 0%, rgba(63, 88, 148, 0) 100%)',
 	overflowY: 'auto',
 	scrollbarWidth: 'thin',
-	scrollbarColor: theme.colors.primary + ' ' + theme.colors.cover,
+	scrollbarColor: `${theme.colors.primary400} ${theme.colors.cover}`,
 });
 
 const MessagesContainer = styled('div', {
@@ -44,7 +44,7 @@ const BottomContainer = styled('div', {
 const ScrollDownButton = styled(MessageBoxContainer, {
 	display: 'flex',
 	justifyContent: 'center',
-	backgroundColor: '$bgLightest',
+	backgroundColor: theme.colors.action,
 	opacity: 0.9,
 	transition: '.2s ease',
 	svg: {
@@ -52,7 +52,7 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 		height: '2rem',
 	},
 	'&:hover': {
-		color: '$text',
+		color: theme.colors.textLight,
 		opacity: 1,
 		cursor: 'pointer',
 	},

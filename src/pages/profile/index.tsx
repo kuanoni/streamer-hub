@@ -7,7 +7,6 @@ import DisplayNameInput from '@/components/DisplayNameInput';
 
 const Container = styled('div', {
 	padding: '1rem 2rem',
-	backgroundColor: '$bgDarkest',
 	h1: {
 		margin: 0,
 	},

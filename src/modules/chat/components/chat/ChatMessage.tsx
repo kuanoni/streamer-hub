@@ -1,4 +1,4 @@
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import React from 'react';
 import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
@@ -35,7 +35,7 @@ const Container = styled('div', {
 	padding: '.2em 1.2em .2em .6em',
 	time: {
 		display: 'none',
-		color: '$textDark',
+		color: theme.colors.textMedium,
 		fontSize: '.75em',
 		marginRight: 4,
 	},

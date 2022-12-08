@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 
 const Container = styled('div', {
 	position: 'absolute',
@@ -10,7 +10,7 @@ const Container = styled('div', {
 	justifyContent: 'center',
 	alignItems: 'center',
 	gap: '.5rem',
-	color: '#fff',
+	color: theme.colors.textLight,
 	backgroundColor: 'rgba(0,0,0,0.5)',
 	zIndex: 2,
 });
@@ -21,18 +21,22 @@ const ButtonsContainer = styled('div', {
 	'button, a': {
 		padding: '.25rem .75rem',
 		border: 'none',
-		color: '$text',
+		borderRadius: 5,
+		color: theme.colors.textLight,
 		fontSize: '1rem',
 		cursor: 'pointer',
 	},
-	'a.signin': {
-		backgroundColor: '#2c6d95',
+	'.signin': {
+		backgroundColor: theme.colors.primary500,
 	},
-	'button.close': {
-		backgroundColor: '$bg',
+	'.close': {
+		backgroundColor: theme.colors.grey500,
 	},
-	'button:hover, a:hover': {
-		filter: 'brightness(1.25)',
+	'.signin:hover': {
+		backgroundColor: theme.colors.primary400,
+	},
+	'.close:hover': {
+		backgroundColor: theme.colors.grey400,
 	},
 });
 

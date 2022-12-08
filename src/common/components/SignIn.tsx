@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from './Modal';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import ProviderSignInButton from './ProviderSignInButton';
 
 interface Props {
@@ -12,8 +12,9 @@ const Container = styled('div', {
 	maxWidth: '500px',
 	width: '450px',
 	padding: '2rem',
-	backgroundColor: '$bg',
-	color: '$text',
+	backgroundColor: theme.colors.action,
+	color: theme.colors.textLight,
+	border: `1px solid ${theme.colors.grey500}`,
 	'& h1': {
 		marginTop: 0,
 	},

@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import React, { FC, useEffect, useState } from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import SignIn from './SignIn';
 import { AuthPerms } from 'types/custom-auth';
 import { useRouter } from 'next/router';
@@ -11,8 +11,7 @@ const StyledNav = styled('nav', {
 	position: 'relative',
 	display: 'flex',
 	alignItems: 'center',
-	color: '$text',
-	borderBottom: '1px solid $textDarker',
+	borderBottom: `1px solid ${theme.colors.grey700}`,
 });
 
 const AlignRightContainer = styled('div', {
