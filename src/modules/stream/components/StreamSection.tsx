@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { RelativeContainer, GridContainer } from '../styles';
-import StreamControls from './StreamControls';
+import React from 'react';
+import { RelativeContainer, AbsoluteContainer } from '../styles';
 import StreamEmbed from './StreamEmbed';
 
 const StreamSection = () => {
 	return (
 		<RelativeContainer>
-			<GridContainer>
-				<StreamControls />
+			<AbsoluteContainer>
 				<StreamEmbed />
-			</GridContainer>
+			</AbsoluteContainer>
 		</RelativeContainer>
 	);
 };
