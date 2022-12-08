@@ -1,11 +1,10 @@
 import Navbar from '@/components/Navbar';
-import StreamEmbedSelector from '@/modules/stream/components/StreamEmbedSelector';
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from 'stiches.config';
-import StreamContext, { StreamSource, StreamProviderIface } from '../context/StreamContext';
+import StreamProvider from '../context/StreamProvider';
 
 type Props = {
-	children?: React.ReactNode;
+	children: React.ReactNode;
 };
 
 const Page = styled('div', {
@@ -21,20 +20,13 @@ const Main = styled('main', {
 });
 
 const StreamPageLayout = ({ children }: Props) => {
-	const [streamSource, setStreamSource] = useState<StreamSource>('twitch');
-
-	const providerValue: StreamProviderIface = {
-		streamSource,
-		setStreamSource,
-	};
-
 	return (
-		<StreamContext.Provider value={providerValue}>
+		<StreamProvider>
 			<Page>
 				<Navbar />
 				<Main>{children}</Main>
 			</Page>
-		</StreamContext.Provider>
+		</StreamProvider>
 	);
 };
 
