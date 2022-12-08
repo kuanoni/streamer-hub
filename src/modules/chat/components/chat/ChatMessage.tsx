@@ -1,4 +1,4 @@
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import React from 'react';
 import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
@@ -30,15 +30,17 @@ const timeValueFormatter = new Intl.DateTimeFormat('default', {
 });
 
 const Container = styled('div', {
-	display: 'flex',
 	fontSize: 13,
 	lineHeight: 1.75,
 	padding: '.2em 1.2em .2em .6em',
 	time: {
 		display: 'none',
-		color: '$textDark',
+		color: theme.colors.textMedium,
 		fontSize: '.75em',
 		marginRight: 4,
+	},
+	'.separator': {
+		display: 'inline',
 	},
 	variants: {
 		type: {
@@ -57,7 +59,7 @@ const Container = styled('div', {
 const AuthorContainer = styled('span', {});
 
 const Author = styled('span', {
-	height: '100%',
+	display: 'inline',
 	padding: 0,
 	paddingLeft: 3,
 	margin: 0,

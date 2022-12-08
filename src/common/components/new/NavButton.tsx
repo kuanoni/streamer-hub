@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 
 const NavLink = styled(Link, {
 	position: 'relative',
 	display: 'inline-flex',
 	alignItems: 'end',
 	padding: '16px 32px',
-	color: '$textDarker',
-	borderBottom: '1px solid $textDarker',
+	color: theme.colors.textMedium,
+	borderBottom: `1px solid transparent`,
 	fontFamily: 'DM Sans',
-	fontSize: '1.25rem',
+	fontSize: '1rem',
 	fontWeight: 500,
 	verticalAlign: 'bottom',
 	transform: 'translateY(1px)',
@@ -27,19 +27,20 @@ const NavLink = styled(Link, {
 		transition: 'height .1s ease-in',
 	},
 	'&:hover': {
-		borderColor: '$primary',
+		color: theme.colors.textMediumActive,
+		borderColor: theme.colors.primary400,
 	},
 	'&:hover::after': {
 		height: '100%',
 	},
 	'&:active': {
-		color: '$primaryLight',
+		color: theme.colors.textSecondary,
 	},
 	'&:active::after': {
 		background: 'linear-gradient(180deg, rgba(63, 88, 148, 0) 0%, rgba(63, 88, 148, 0.2) 50%)',
 	},
 	'&.current': {
-		color: '$primary',
+		color: theme.colors.textPrimary,
 	},
 	'&.current::after': {
 		height: '100%',

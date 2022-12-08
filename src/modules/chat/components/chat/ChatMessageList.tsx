@@ -1,4 +1,4 @@
-import { css, styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
@@ -11,8 +11,10 @@ const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column-reverse',
 	height: '100%',
+	background: 'linear-gradient(180deg, rgba(63, 88, 148, 0.03) 0%, rgba(63, 88, 148, 0) 100%)',
 	overflowY: 'auto',
 	scrollbarWidth: 'thin',
+	scrollbarColor: `${theme.colors.primary400} ${theme.colors.cover}`,
 });
 
 const MessagesContainer = styled('div', {
@@ -42,7 +44,7 @@ const BottomContainer = styled('div', {
 const ScrollDownButton = styled(MessageBoxContainer, {
 	display: 'flex',
 	justifyContent: 'center',
-	backgroundColor: '$bgLightest',
+	backgroundColor: theme.colors.action,
 	opacity: 0.9,
 	transition: '.2s ease',
 	svg: {
@@ -50,7 +52,7 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 		height: '2rem',
 	},
 	'&:hover': {
-		color: '$text',
+		color: theme.colors.textLight,
 		opacity: 1,
 		cursor: 'pointer',
 	},

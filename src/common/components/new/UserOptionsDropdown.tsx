@@ -2,7 +2,7 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useCallback, useEffect } from 'react';
 import { BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill } from 'react-icons/bs';
-import { keyframes, styled } from 'stiches.config';
+import { keyframes, styled, theme } from 'stiches.config';
 
 const moveIn = keyframes({
 	'0%': {
@@ -25,9 +25,9 @@ const Options = styled('div', {
 	minWidth: '10rem',
 	padding: '.5rem 0',
 
-	backgroundColor: '$action',
+	backgroundColor: theme.colors.action,
 	borderRadius: 10,
-	zIndex: 1,
+	zIndex: 2,
 	transform: 'translateY(100%)',
 	animation: `${moveIn} .25s`,
 });
@@ -38,14 +38,14 @@ const LinkButton = styled(Link, {
 	gap: '.5rem',
 	height: '2rem',
 	padding: '0 .5rem',
-	color: '$textDark',
+	color: theme.colors.textMedium,
 	backgroundColor: 'transparent',
 	border: 'none',
 	fontSize: '.875rem',
 	cursor: 'pointer',
 	'&:hover': {
-		color: '$text',
-		backgroundColor: '$primary',
+		color: theme.colors.textMediumActive,
+		backgroundColor: theme.colors.primary500,
 	},
 	svg: {
 		height: '50%',
@@ -55,7 +55,7 @@ const LinkButton = styled(Link, {
 const Separator = styled('div', {
 	height: 1,
 	margin: '.5rem',
-	borderBottom: '1px solid $textDarker',
+	borderBottom: `1px solid ${theme.colors.grey500}`,
 });
 
 interface Props {

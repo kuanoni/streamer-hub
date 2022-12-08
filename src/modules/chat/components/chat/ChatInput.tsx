@@ -1,27 +1,30 @@
 import React, { useContext, useRef } from 'react';
-import { styled } from 'stiches.config';
-import { IoIosSend } from 'react-icons/io';
-import { RiEmotionFill } from 'react-icons/ri';
+import { styled, theme } from 'stiches.config';
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
 import { MessageWithoutTime } from 'types/socketio';
+import IconButton from '@/components/new/IconButton';
+import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {
-	position: 'relative',
+	padding: '.5rem',
+	height: 'auto',
+});
+
+const TextAreaWrapper = styled('div', {
 	display: 'flex',
 	height: 'auto',
-	margin: '.5rem',
-	padding: '.4rem',
-	backgroundColor: '$bgDarker',
-	border: '1px solid $bgDark',
+	padding: '.5rem',
+	border: `1px solid ${theme.colors.grey700}`,
+	borderRadius: 10,
 });
 
 const TextArea = styled('textarea', {
 	width: '100%',
 	height: 'inherit',
-	color: '$text',
+	color: theme.colors.textLight,
 	backgroundColor: 'transparent',
 	border: 'none',
 	overflow: 'hidden',
@@ -34,21 +37,6 @@ const ButtonsContainer = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '.35rem',
-
-	'.btn': {
-		minWidth: '1.75rem',
-		minHeight: '1.75rem',
-		padding: '.4rem',
-		border: 'none',
-		borderRadius: '6px',
-		color: '$text',
-		backgroundColor: '$bgDark',
-		cursor: 'pointer',
-	},
-	'.btn:hover': {
-		backgroundColor: '$bg',
-		color: '#fff',
-	},
 });
 
 const TopContainer = styled('div', {
@@ -86,7 +74,7 @@ const ChatInput = ({
 
 		// recalculate textare height
 		textAreaRef.current.value = '';
-		textAreaRef.current.style.height = 'inherit';
+		textAreaRef.current.style.height = 'auto';
 		textAreaRef.current.focus();
 		setIsEmotesOpen(false);
 	};
@@ -127,7 +115,7 @@ const ChatInput = ({
 
 		// updates textarea height to fit its text content
 		e.target.style.height = 'inherit';
-		e.target.style.height = e.target.scrollHeight + 'px';
+		e.target.style.height = e.target.scrollHeight - 1 + 'px';
 	};
 
 	const onFocusTextArea = () => {
@@ -148,23 +136,29 @@ const ChatInput = ({
 		<>
 			<TopContainer>{isEmotesOpen && <EmoteSelector insertEmote={insertEmote} />}</TopContainer>
 			<Container>
-				<TextArea
-					ref={textAreaRef}
-					onChange={onChangeTextArea}
-					onFocus={onFocusTextArea}
-					onKeyDown={onKeyDownTextArea}
-					maxLength={500}
-					spellCheck={false}
-				/>
-				<ButtonsContainer>
-					<IoIosSend
-						className='btn send-btn'
-						onClick={() => {
-							if (textAreaRef.current?.value) sendMessage();
-						}}
+				<TextAreaWrapper>
+					<TextArea
+						ref={textAreaRef}
+						onChange={onChangeTextArea}
+						onFocus={onFocusTextArea}
+						onKeyDown={onKeyDownTextArea}
+						maxLength={500}
+						spellCheck={false}
 					/>
-					<RiEmotionFill className='btn emote-btn' onClick={toggleEmoteList} />
-				</ButtonsContainer>
+					<ButtonsContainer>
+						<IconButton
+							size={36}
+							onClick={() => {
+								if (textAreaRef.current?.value) sendMessage();
+							}}
+						>
+							<BsCursorFill />
+						</IconButton>
+						<IconButton size={36} onClick={toggleEmoteList}>
+							<BsEmojiSmileFill />
+						</IconButton>
+					</ButtonsContainer>
+				</TextAreaWrapper>
 			</Container>
 		</>
 	);
