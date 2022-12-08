@@ -3,14 +3,6 @@ import { createStitches } from '@stitches/react';
 export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme, config } = createStitches({
 	theme: {
 		colors: {
-			bgLightest: '#585858',
-			bgLighter: '#484848',
-			bgLight: '#383838',
-			bg: '#282828',
-			bgDark: '#222',
-			bgDarker: '#111',
-			bgDarkest: '#030303',
-
 			grey900: '#1C1A23',
 			grey800: '#2F2B3B',
 			grey700: '#423D52',
