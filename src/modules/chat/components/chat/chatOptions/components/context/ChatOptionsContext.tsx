@@ -1,6 +1,8 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
 export interface ChatOptions {
+	[index: string]: string | boolean;
+
 	showFlair: boolean;
 	showTime: boolean;
 	hideNsfw: boolean;
