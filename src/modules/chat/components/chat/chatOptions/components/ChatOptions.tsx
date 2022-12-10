@@ -1,5 +1,5 @@
 import OptionsCheckbox from './OptionsCheckbox';
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useContext, useMemo, useState } from 'react';
 import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 import OptionsDropdown from './OptionsDropdown';
@@ -58,15 +58,6 @@ const OptionsSection = styled('div', {
 	},
 });
 
-const initialState: { [index: string]: string | boolean } = {
-	showFlair: false,
-	showTime: true,
-	hideNsfw: true,
-	hideNsfl: true,
-	censorBadWords: false,
-	bannedMessages: 'censor',
-};
-
 const sectionsTemplate: Section[] = [
 	{
 		title: 'Messages',
@@ -112,46 +103,53 @@ type Props = {
 const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
 	const ctx = useContext(ChatOptionsContext);
 
-	const getOptionItemComponent = (item: OptionItem) => {
-		if (!ctx) return <></>;
+	const getOptionItemComponent = useCallback(
+		(item: OptionItem) => {
+			if (!ctx) return <></>;
 
-		switch (item.type) {
-			case 'checkbox': {
-				return (
-					<OptionsCheckbox
-						key={item.key}
-						optionKey={item.key}
-						value={ctx.chatOptions[item.key] as boolean}
-						setValue={ctx.changeOption}
-					>
-						{item.label}
-					</OptionsCheckbox>
-				);
+			switch (item.type) {
+				case 'checkbox': {
+					return (
+						<OptionsCheckbox
+							key={item.key}
+							optionKey={item.key}
+							value={ctx.chatOptions[item.key] as boolean}
+							setValue={ctx.changeOption}
+						>
+							{item.label}
+						</OptionsCheckbox>
+					);
+				}
+				case 'dropdown': {
+					return (
+						<OptionsDropdown
+							key={item.key}
+							optionKey={item.key}
+							options={item.options}
+							value={ctx.chatOptions[item.key] as string}
+							setValue={ctx.changeOption}
+						>
+							{item.label}
+						</OptionsDropdown>
+					);
+				}
 			}
-			case 'dropdown': {
-				return (
-					<OptionsDropdown
-						key={item.key}
-						optionKey={item.key}
-						options={item.options}
-						value={ctx.chatOptions[item.key] as string}
-						setValue={ctx.changeOption}
-					>
-						{item.label}
-					</OptionsDropdown>
-				);
-			}
-		}
-	};
+		},
+		[ctx]
+	);
 
-	const Sections = sectionsTemplate.map((section) => {
-		return (
-			<OptionsSection key={section.title}>
-				<div className='title'>{section.title}</div>
-				{section.content.map((item: OptionItem) => getOptionItemComponent(item))}
-			</OptionsSection>
-		);
-	});
+	const sectionsComponents = useMemo(
+		() =>
+			sectionsTemplate.map((section) => {
+				return (
+					<OptionsSection key={section.title}>
+						<div className='title'>{section.title}</div>
+						{section.content.map((item: OptionItem) => getOptionItemComponent(item))}
+					</OptionsSection>
+				);
+			}),
+		[getOptionItemComponent]
+	);
 
 	return (
 		<Container>
@@ -161,7 +159,7 @@ const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
 					<BsX />
 				</CloseButton>
 			</Header>
-			<OptionsContent>{Sections}</OptionsContent>
+			<OptionsContent>{sectionsComponents}</OptionsContent>
 		</Container>
 	);
 };
