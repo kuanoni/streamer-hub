@@ -81,7 +81,7 @@ type Props = {
 	optionKey: string;
 	options: string[];
 	value: string;
-	setValue(valueObj: { [index: string]: string }): void;
+	setValue(key: string, value: string | boolean): void;
 };
 
 const OptionsDropdown: FC<PropsWithChildren<Props>> = ({ optionKey, options, value, setValue, children }) => {
@@ -91,7 +91,7 @@ const OptionsDropdown: FC<PropsWithChildren<Props>> = ({ optionKey, options, val
 		if (!isOpen) return;
 		const target = e.target as HTMLDivElement;
 
-		if (options.includes(target.innerText)) setValue({ [optionKey]: target.innerText });
+		if (options.includes(target.innerText)) setValue(optionKey, target.innerText);
 		else console.log('Dropdown option not found');
 	};
 

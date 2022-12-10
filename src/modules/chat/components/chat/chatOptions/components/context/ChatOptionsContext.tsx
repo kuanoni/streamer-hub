@@ -19,7 +19,7 @@ export interface ChatOptions {
 
 export interface ChatOptionsIface {
 	chatOptions: ChatOptions;
-	setChatOptions: Dispatch<SetStateAction<ChatOptions>>;
+	changeOption(key: string, value: string | boolean): void;
 }
 
 const ChatOptionsContext = createContext<ChatOptionsIface | null>(null);

@@ -1,10 +1,11 @@
 import OptionsCheckbox from './OptionsCheckbox';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 import OptionsDropdown from './OptionsDropdown';
 import { AbsoluteContainer } from '@/modules/chat/styles';
 import { Section, OptionItem } from '../types';
+import ChatOptionsContext from './context/ChatOptionsContext';
 
 const Container = styled(AbsoluteContainer, {
 	backgroundColor: theme.colors.cover,
@@ -66,7 +67,7 @@ const initialState: { [index: string]: string | boolean } = {
 	bannedMessages: 'censor',
 };
 
-const sections: Section[] = [
+const sectionsTemplate: Section[] = [
 	{
 		title: 'Messages',
 		content: [
@@ -109,21 +110,19 @@ type Props = {
 };
 
 const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
-	const [options, setOptions] = useState(initialState);
-
-	const setOption = (valueObj: { [index: string]: boolean | string }) => {
-		setOptions((current) => ({ ...current, ...valueObj }));
-	};
+	const ctx = useContext(ChatOptionsContext);
 
 	const getOptionItemComponent = (item: OptionItem) => {
+		if (!ctx) return <></>;
+
 		switch (item.type) {
 			case 'checkbox': {
 				return (
 					<OptionsCheckbox
 						key={item.key}
 						optionKey={item.key}
-						value={options[item.key] as boolean}
-						setValue={setOption}
+						value={ctx.chatOptions[item.key] as boolean}
+						setValue={ctx.changeOption}
 					>
 						{item.label}
 					</OptionsCheckbox>
@@ -135,8 +134,8 @@ const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
 						key={item.key}
 						optionKey={item.key}
 						options={item.options}
-						value={options[item.key] as string}
-						setValue={setOption}
+						value={ctx.chatOptions[item.key] as string}
+						setValue={ctx.changeOption}
 					>
 						{item.label}
 					</OptionsDropdown>
@@ -145,7 +144,7 @@ const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
 		}
 	};
 
-	const Sections = sections.map((section) => {
+	const Sections = sectionsTemplate.map((section) => {
 		return (
 			<OptionsSection key={section.title}>
 				<div className='title'>{section.title}</div>

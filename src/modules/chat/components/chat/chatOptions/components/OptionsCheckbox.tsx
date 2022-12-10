@@ -62,12 +62,12 @@ const Container = styled('div', {
 type Props = {
 	optionKey: string;
 	value: boolean;
-	setValue(valueObj: { [index: string]: boolean }): void;
+	setValue(key: string, value: string | boolean): void;
 };
 
-const OptionsCheckbox: FC<PropsWithChildren<Props>> = ({ optionKey, value, setValue, children }) => {
+const OptionsCheckbox = ({ optionKey, value, setValue, children }: PropsWithChildren<Props>) => {
 	const onClick = () => {
-		setValue({ [optionKey]: !value });
+		setValue(optionKey, !value);
 	};
 
 	return (
