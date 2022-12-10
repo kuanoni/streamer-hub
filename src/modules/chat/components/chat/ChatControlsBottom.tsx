@@ -1,5 +1,5 @@
 import IconButton from '@/components/new/IconButton';
-import React, { FC } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
@@ -11,10 +11,14 @@ const Container = styled('div', {
 	backgroundColor: 'transparent',
 });
 
-const ChatControlsBottom: FC = () => {
+type Props = {
+	setIsChatOptionsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const ChatControlsBottom = ({ setIsChatOptionsOpen }: Props) => {
 	return (
 		<Container>
-			<IconButton onClick={() => {}}>
+			<IconButton onClick={() => setIsChatOptionsOpen((current) => !current)}>
 				<BsFillGearFill />
 			</IconButton>
 			<IconButton onClick={() => {}}>

@@ -51,7 +51,7 @@ export const Chat = () => {
 					setIsEmotesOpen={setIsEmotesOpen}
 					setIsSigninPromptOpen={setIsSigninPromptOpen}
 				/>
-				<ChatControlsBottom />
+				<ChatControlsBottom setIsChatOptionsOpen={setIsChatOptionsOpen} />
 			</SocketProvider>
 		</Container>
 	);
