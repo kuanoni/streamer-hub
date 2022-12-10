@@ -65,7 +65,7 @@ type Props = {
 	setValue(key: string, value: string | boolean): void;
 };
 
-const OptionsCheckbox = ({ optionKey, value, setValue, children }: PropsWithChildren<Props>) => {
+const OptionsCheckbox = React.memo(({ optionKey, value, setValue, children: label }: PropsWithChildren<Props>) => {
 	const onClick = () => {
 		setValue(optionKey, !value);
 	};
@@ -75,9 +75,9 @@ const OptionsCheckbox = ({ optionKey, value, setValue, children }: PropsWithChil
 			<Checkbox active={value}>
 				<BsCheckSquareFill />
 			</Checkbox>
-			<span>{children}</span>
+			<span>{label}</span>
 		</Container>
 	);
-};
+});
 
 export default OptionsCheckbox;

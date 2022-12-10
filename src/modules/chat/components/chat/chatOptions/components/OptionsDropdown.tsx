@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import React, { MouseEvent, PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import { BsCaretDownFill } from 'react-icons/bs';
 import { keyframes, styled, theme } from 'stiches.config';
 
@@ -84,15 +84,11 @@ type Props = {
 	setValue(key: string, value: string | boolean): void;
 };
 
-const OptionsDropdown: FC<PropsWithChildren<Props>> = ({ optionKey, options, value, setValue, children }) => {
+const OptionsDropdown = ({ optionKey, options, value, setValue, children: label }: PropsWithChildren<Props>) => {
 	const [isOpen, setIsOpen] = useState(false);
 
-	const changeValue = (e: Event | MouseEvent) => {
-		if (!isOpen) return;
-		const target = e.target as HTMLDivElement;
-
-		if (options.includes(target.innerText)) setValue(optionKey, target.innerText);
-		else console.log('Dropdown option not found');
+	const changeValue = (newValue: string) => {
+		setValue(optionKey, newValue);
 	};
 
 	const handleInputClick = (e: MouseEvent) => {
@@ -102,6 +98,7 @@ const OptionsDropdown: FC<PropsWithChildren<Props>> = ({ optionKey, options, val
 
 	const handleDocumentClick = useCallback(() => setIsOpen(false), [setIsOpen]);
 
+	// add eventListener on mount to close dropdown on any click
 	useEffect(() => {
 		document.addEventListener('click', handleDocumentClick);
 		return () => document.removeEventListener('click', handleDocumentClick);
@@ -113,7 +110,7 @@ const OptionsDropdown: FC<PropsWithChildren<Props>> = ({ optionKey, options, val
 
 	return (
 		<Container>
-			{children}
+			{label}
 			<InputBox onClick={handleInputClick}>
 				{value}
 				<BsCaretDownFill />
@@ -124,7 +121,7 @@ const OptionsDropdown: FC<PropsWithChildren<Props>> = ({ optionKey, options, val
 						<DropdownOption
 							key={option}
 							className={option === value ? 'selected' : ''}
-							onClick={changeValue}
+							onClick={() => changeValue(option)}
 						>
 							{option}
 						</DropdownOption>
