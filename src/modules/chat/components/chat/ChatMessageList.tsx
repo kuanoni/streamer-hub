@@ -5,6 +5,7 @@ import ChatMessage from './ChatMessage';
 import { MessageBoxContainer } from '../../styles';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { Message } from 'types/socketio';
+import ChatOptionsContext from './chatOptions/components/context/ChatOptionsContext';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -63,7 +64,8 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 });
 
 const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
-	const ctx = useContext(SocketContext);
+	const socketCtx = useContext(SocketContext);
+	const optionsCtx = useContext(ChatOptionsContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const [focusedUser, setFocusedUser] = useState('');
@@ -105,10 +107,10 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 
 	// live rendered messages
 	const liveMessages = useMemo(() => {
-		return ctx?.messageLogs.map((msg: Message) => {
+		return socketCtx?.messageLogs.map((msg: Message) => {
 			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
 		});
-	}, [freeScroll ? null : ctx?.messageLogs]);
+	}, [freeScroll ? null : socketCtx?.messageLogs]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
