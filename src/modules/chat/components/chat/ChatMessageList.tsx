@@ -14,7 +14,7 @@ const Container = styled('div', {
 	background: 'linear-gradient(180deg, rgba(63, 88, 148, 0.03) 0%, rgba(63, 88, 148, 0) 100%)',
 	overflowY: 'auto',
 	scrollbarWidth: 'thin',
-	scrollbarColor: `${theme.colors.primary400} ${theme.colors.cover}`,
+	scrollbarColor: `${theme.colors.primary300} ${theme.colors.cover}`,
 });
 
 const MessagesContainer = styled('div', {

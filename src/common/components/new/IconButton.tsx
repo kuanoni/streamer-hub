@@ -24,7 +24,7 @@ const Container = styled('button', {
 		backgroundColor: theme.colors.action,
 	},
 	'&:active': {
-		color: theme.colors.primary400,
+		color: theme.colors.primary300,
 		backgroundColor: theme.colors.cover,
 	},
 });
