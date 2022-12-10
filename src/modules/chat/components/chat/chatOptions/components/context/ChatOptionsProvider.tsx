@@ -5,11 +5,11 @@ type Props = {
 	children: React.ReactNode;
 };
 
-const initialState: ChatOptions = {
+const defaultOptions: ChatOptions = {
 	showFlair: false,
-	showTime: true,
-	hideNsfw: true,
-	hideNsfl: true,
+	showTime: false,
+	hideNsfw: false,
+	hideNsfl: false,
 	censorBadWords: false,
 	bannedMessages: 'censor',
 	closeShortPeriod: false,
@@ -21,10 +21,10 @@ const initialState: ChatOptions = {
 };
 
 const ChatOptionsProvider = ({ children }: Props) => {
-	const [chatOptions, setChatOptions] = useState<ChatOptions>(initialState);
+	const [chatOptions, setChatOptions] = useState<ChatOptions>(defaultOptions);
 
 	useEffect(() => {
-		const options = { ...initialState };
+		const options = { ...defaultOptions };
 
 		Object.keys(options).forEach((key) => {
 			const value = localStorage.getItem(key) || options[key];
@@ -36,17 +36,17 @@ const ChatOptionsProvider = ({ children }: Props) => {
 		});
 
 		setChatOptions(options);
-	}, []);
+	}, [defaultOptions, setChatOptions]);
 
 	const changeOption = (key: string, value: string | boolean) => {
 		setChatOptions((currentOptions) => ({ ...currentOptions, ...{ [key]: value } }));
 		localStorage.setItem(key, value.toString());
 	};
 
-	const providerValue: ChatOptionsIface = {
+	const providerValue: ChatOptionsIface = Object.freeze({
 		chatOptions,
 		changeOption,
-	};
+	});
 
 	return <ChatOptionsContext.Provider value={providerValue}>{children}</ChatOptionsContext.Provider>;
 };
