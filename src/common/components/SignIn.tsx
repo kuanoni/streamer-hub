@@ -1,30 +1,32 @@
 import React from 'react';
 import Modal from './Modal';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import ProviderSignInButton from './ProviderSignInButton';
 
 interface Props {
 	isOpen: Boolean;
-	setIsOpen: Function;
+	close: Function;
 }
 
 const Container = styled('div', {
 	maxWidth: '500px',
 	width: '450px',
 	padding: '2rem',
-	backgroundColor: '$bg',
-	color: '$text',
+	backgroundColor: theme.colors.action,
+	color: theme.colors.textLight,
+	border: `1px solid ${theme.colors.grey500}`,
 	'& h1': {
 		marginTop: 0,
 	},
 });
 
-const SignIn = ({ isOpen, setIsOpen }: Props) => {
+const SignIn = ({ isOpen, close }: Props) => {
 	return (
-		<Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+		<Modal isOpen={isOpen} closeModal={close}>
 			<Container>
 				<h1>Sign In</h1>
 				<ProviderSignInButton provider='google'></ProviderSignInButton>
+				<ProviderSignInButton provider='discord'></ProviderSignInButton>
 			</Container>
 		</Modal>
 	);

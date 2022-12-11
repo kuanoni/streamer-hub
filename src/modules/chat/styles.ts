@@ -13,3 +13,9 @@ export const StyledEmote = styled(Image, {
 	verticalAlign: 'middle',
 	maxHeight: 32,
 });
+
+export const AbsoluteContainer = styled('div', {
+	position: 'absolute',
+	inset: '0 0 0 0',
+	height: '100%',
+});

@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import AuthorizedPageWrapper from '@/components/AuthorizedPageWrapper';
 import { Page } from 'types/custom-auth';
+import { useMemo } from 'react';
 
 interface PageAppProps extends AppProps {
 	Component: Page;

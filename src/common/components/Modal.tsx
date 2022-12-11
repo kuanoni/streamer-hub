@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-
-interface props {
-	isOpen: Boolean;
-	setIsOpen: Function;
-	children: React.ReactNode;
-}
-
 import { createPortal } from 'react-dom';
 import { styled } from '@stitches/react';
 import { keyframes } from 'stiches.config';
+
+interface props {
+	isOpen: Boolean;
+	closeModal: Function;
+	children: React.ReactNode;
+}
 
 const fadeIn = keyframes({
 	'0%': { backgroundColor: 'rgba(0, 0, 0, 0)' },
@@ -42,13 +41,13 @@ const StyledModal = styled('div', {
 	animation: `${moveIn} .25s`,
 });
 
-const Modal = ({ isOpen, setIsOpen, children }: props) => {
+const Modal = ({ isOpen, closeModal, children }: props) => {
 	const portalRef = useRef<Element | null>(null);
 	const overlayRef = useRef(null);
 	const [mounted, setMounted] = useState(false);
 
 	const handleOverlayClick = (e: React.MouseEvent<HTMLElement>) => {
-		if (overlayRef.current === e.target) setIsOpen(false);
+		if (overlayRef.current === e.target) closeModal();
 	};
 
 	useEffect(() => {

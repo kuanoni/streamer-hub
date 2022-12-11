@@ -1,11 +1,18 @@
 import extractStringEnvVar from '@/utils/extractStringEnvVar';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/utils/mongodb';
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import { Role } from 'types/custom-auth';
+import DiscordProvider from 'next-auth/providers/discord';
+import { AuthPerms, Rank } from 'types/custom-auth';
 
-export const authOptions = {
+const defaultProfile = {
+	displayName: '',
+	role: AuthPerms.USER,
+	rank: Rank.DEFAULT,
+};
+
+export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
 		GoogleProvider({
@@ -14,10 +21,17 @@ export const authOptions = {
 			profile(profile) {
 				return {
 					id: profile.sub,
-					displayName: '',
-					email: profile.email,
-					emailVerified: profile.email_verified,
-					role: Role.USER,
+					...defaultProfile,
+				};
+			},
+		}),
+		DiscordProvider({
+			clientId: extractStringEnvVar('DISCORD_CLIENT_ID'),
+			clientSecret: extractStringEnvVar('DISCORD_CLIENT_SECRET'),
+			profile(profile) {
+				return {
+					id: profile.id,
+					...defaultProfile,
 				};
 			},
 		}),
@@ -27,9 +41,13 @@ export const authOptions = {
 			session.user = user; // Add role value to user object so it is passed along with session
 			return session;
 		},
+		async redirect({ url }: { url: string }) {
+			return url.split('#')[0];
+		},
 	},
 	pages: {
 		newUser: '/profile',
+		signIn: '/#signin',
 	},
 };
 
