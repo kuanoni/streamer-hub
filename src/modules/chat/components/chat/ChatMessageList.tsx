@@ -72,7 +72,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	const [freeScroll, setFreeScroll] = useState(false);
 
 	// uses css selector to target focusedUser messages
-	const focusedUserCssSelector = '.msg[data-author=' + focusedUser + ']';
+	const focusedUserCssSelector = '.msg[data-author="' + focusedUser.toString() + '"]';
 
 	// uses selector to highlight focusedUser messages and dim the rest
 	const containerCss = useMemo(() => {
