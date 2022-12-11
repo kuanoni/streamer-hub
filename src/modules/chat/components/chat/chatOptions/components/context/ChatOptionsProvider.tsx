@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ChatOptionsContext, { ChatOptions, ChatOptionsIface } from './ChatOptionsContext';
 
 type Props = {
@@ -38,10 +38,10 @@ const ChatOptionsProvider = ({ children }: Props) => {
 		setChatOptions(options);
 	}, [defaultOptions, setChatOptions]);
 
-	const changeOption = (key: string, value: string | boolean) => {
+	const changeOption = useCallback((key: string, value: string | boolean) => {
 		setChatOptions((currentOptions) => ({ ...currentOptions, ...{ [key]: value } }));
 		localStorage.setItem(key, value.toString());
-	};
+	}, []);
 
 	const providerValue: ChatOptionsIface = Object.freeze({
 		chatOptions,
