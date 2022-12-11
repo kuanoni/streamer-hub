@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { styled } from 'stiches.config';
 
 const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
@@ -10,27 +11,40 @@ const StyledLink = styled('a', {
 	},
 });
 
-export const injectTextWithLinks = (text: string | (string | React.ReactNode)[]): (string | React.ReactNode)[] => {
+type InjectTextWithLinks = (
+	text: string | (string | ReactNode)[]
+) => [injectedText: (string | ReactNode)[], hasLinks: boolean];
+
+export const injectTextWithLinks: InjectTextWithLinks = (text) => {
+	let hasLinks = false;
+	let injectedText = text;
+
 	if (Array.isArray(text))
-		return text.flatMap((item, i) => {
+		injectedText = text.flatMap((item, i) => {
 			if (typeof item !== 'string') return item;
 
-			if (item.match(regex))
+			if (item.match(regex)) {
+				hasLinks = true;
+
 				return (
 					<StyledLink key={i} href={item}>
 						{item}
 					</StyledLink>
 				);
-			else return ' ' + item + ' ';
+			} else return ' ' + item + ' ';
 		});
 	else
-		return text.split(' ').flatMap((item, i) => {
-			if (item.match(regex))
+		injectedText = text.split(' ').flatMap((item, i) => {
+			if (item.match(regex)) {
+				hasLinks = true;
+
 				return (
 					<StyledLink key={i} href={item}>
 						{item}
 					</StyledLink>
 				);
-			else return ' ' + item + ' ';
+			} else return ' ' + item + ' ';
 		});
+
+	return [injectedText, hasLinks];
 };
