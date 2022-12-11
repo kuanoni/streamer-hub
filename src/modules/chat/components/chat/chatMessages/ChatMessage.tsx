@@ -1,13 +1,11 @@
 import { styled, theme } from 'stiches.config';
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
-import { injectTextWithEmotes } from '../../utils/injectTextWithEmotes';
-import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
 import ChatMessageText from './ChatMessageText';
+import React from 'react';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
