@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
 const containerGap = 8;
@@ -62,10 +62,13 @@ const IconSelector = ({
 }) => {
 	const [selected, setSelected] = useState(defaultChoice);
 
-	const selectChoice = (choice: string) => {
-		setSelected(choice);
-		onSelect(choice);
-	};
+	const selectChoice = useCallback(
+		(choice: string) => {
+			setSelected(choice);
+			onSelect(choice);
+		},
+		[setSelected, onSelect]
+	);
 
 	const choiceButtons = useMemo(() => {
 		return Object.keys(choices).map((key) => {
@@ -75,7 +78,7 @@ const IconSelector = ({
 				</Button>
 			);
 		});
-	}, [choices, selected]);
+	}, [choices, selected, selectChoice]);
 
 	const SelectionHighlighter = useMemo(() => {
 		const choicesArr = Object.keys(choices);

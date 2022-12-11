@@ -36,7 +36,7 @@ const ChatOptionsProvider = ({ children }: Props) => {
 		});
 
 		setChatOptions(options);
-	}, [defaultOptions, setChatOptions]);
+	}, [setChatOptions]);
 
 	const changeOption = useCallback((key: string, value: string | boolean) => {
 		setChatOptions((currentOptions) => ({ ...currentOptions, ...{ [key]: value } }));

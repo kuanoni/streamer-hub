@@ -126,7 +126,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			/>
 		));
 	}, [
-		freeScroll ? null : socketCtx?.messageLogs,
+		socketCtx?.messageLogs,
 		optionsCtx?.chatOptions.showTime,
 		optionsCtx?.chatOptions.showFlair,
 		optionsCtx?.chatOptions.hideNsfw,
@@ -138,7 +138,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	const pausedMessages = useMemo(() => {
 		if (freeScroll) return liveMessages;
 		else return [];
-	}, [freeScroll]);
+	}, [freeScroll, liveMessages]);
 
 	// scrolls to bottom of chat
 	const scrollToBottom = () => {

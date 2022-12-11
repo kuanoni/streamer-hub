@@ -45,7 +45,7 @@ const ChatEmoteList = ({ insertEmote }: { insertEmote: (emoteKey: string) => voi
 				{Emotes[emoteKey]}
 			</EmoteButton>
 		));
-	}, [EmoteKeys, insertEmote]);
+	}, [insertEmote]);
 
 	return (
 		<Container>

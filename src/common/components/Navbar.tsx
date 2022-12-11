@@ -36,7 +36,7 @@ const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
 	useEffect(() => {
 		if (window.location.hash.startsWith('#signin') && status !== 'authenticated') setIsSignInOpen(true);
 		else setIsSignInOpen(false);
-	}, [router.asPath, setIsSignInOpen]);
+	}, [router.asPath, setIsSignInOpen, status]);
 
 	return (
 		<>
