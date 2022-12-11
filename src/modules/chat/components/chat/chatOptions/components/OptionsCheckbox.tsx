@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { BsCheckSquareFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
