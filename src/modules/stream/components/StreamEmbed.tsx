@@ -28,7 +28,7 @@ const StyledIframe = styled('iframe', {
 	boxShadow: 'rgba(117, 52, 223, 0.22) 0px 0px 12px 1px',
 });
 
-const StreamEmbed: FC = () => {
+const StreamEmbed = () => {
 	const ctx = useContext(StreamContext);
 
 	return (
