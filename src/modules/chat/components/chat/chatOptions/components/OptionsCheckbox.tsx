@@ -80,4 +80,6 @@ const OptionsCheckbox = React.memo(({ optionKey, value, setValue, children: labe
 	);
 });
 
+OptionsCheckbox.displayName = 'OptionsCheckbox';
+
 export default OptionsCheckbox;

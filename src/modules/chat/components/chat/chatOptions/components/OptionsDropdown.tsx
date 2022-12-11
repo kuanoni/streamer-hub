@@ -134,4 +134,6 @@ const OptionsDropdown = React.memo(
 	}
 );
 
+OptionsDropdown.displayName = 'OptionsDropdown';
+
 export default OptionsDropdown;
