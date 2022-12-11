@@ -105,14 +105,6 @@ const Text = styled('span', {
 	wordWrap: 'break-word',
 });
 
-const CensoredText = styled('span', {
-	color: theme.colors.secondary400,
-	'&:hover': {
-		textDecoration: 'underline',
-		cursor: 'pointer',
-	},
-});
-
 const messageIcon: { [index: number]: React.ReactNode } = {
 	[MessageType.SERVER]: <BsShieldFillExclamation />,
 	[MessageType.INFO]: <BsInfoCircleFill />,
