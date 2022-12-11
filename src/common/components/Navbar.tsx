@@ -6,12 +6,19 @@ import { AuthPerms } from 'types/custom-auth';
 import { useRouter } from 'next/router';
 import NavButton from './new/NavButton';
 import UserSignedIn from './new/UserSignedIn';
+import BrandLogo from './BrandLogo';
 
-const StyledNav = styled('nav', {
+const Topbar = styled('div', {
 	position: 'relative',
 	display: 'flex',
+});
+
+const Nav = styled('nav', {
+	display: 'flex',
 	alignItems: 'center',
-	borderBottom: `1px solid ${theme.colors.grey700}`,
+	width: '100%',
+	marginTop: 'auto',
+	borderBottom: `1px solid ${theme.colors.grey900}`,
 });
 
 const AlignRightContainer = styled('div', {
@@ -41,16 +48,19 @@ const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
 	return (
 		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
-			<StyledNav>
-				<NavButton link='/'>Home</NavButton>
-				<NavButton link='/stream'>Stream</NavButton>
-				<NavButton link='/videos'>Videos</NavButton>
-				{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
-				<AlignRightContainer>
-					{children}
-					<UserSignedIn status={status} openSignIn={openSignIn} />
-				</AlignRightContainer>
-			</StyledNav>
+			<Topbar>
+				<BrandLogo />
+				<Nav>
+					<NavButton link='/'>Home</NavButton>
+					<NavButton link='/stream'>Stream</NavButton>
+					<NavButton link='/videos'>Videos</NavButton>
+					{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
+					<AlignRightContainer>
+						{children}
+						<UserSignedIn status={status} openSignIn={openSignIn} />
+					</AlignRightContainer>
+				</Nav>
+			</Topbar>
 		</>
 	);
 };
