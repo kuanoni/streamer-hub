@@ -108,10 +108,11 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	// live rendered messages
 	const liveMessages = useMemo(() => {
 		const showFlair = optionsCtx?.chatOptions.showFlair === true;
-		const showTime = optionsCtx?.chatOptions.showFlair === true;
+		const showTime = optionsCtx?.chatOptions.showTime === true;
 		const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
 		const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
+
 		return socketCtx?.messageLogs.map((msg: Message) => (
 			<ChatMessage
 				key={msg.time + msg.author}
