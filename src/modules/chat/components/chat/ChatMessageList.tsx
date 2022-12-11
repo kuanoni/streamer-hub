@@ -107,10 +107,31 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 
 	// live rendered messages
 	const liveMessages = useMemo(() => {
-		return socketCtx?.messageLogs.map((msg: Message) => {
-			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
-		});
-	}, [freeScroll ? null : socketCtx?.messageLogs]);
+		const showFlair = optionsCtx?.chatOptions.showFlair === true;
+		const showTime = optionsCtx?.chatOptions.showFlair === true;
+		const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
+		const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
+		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
+		return socketCtx?.messageLogs.map((msg: Message) => (
+			<ChatMessage
+				key={msg.time + msg.author}
+				showFlair={showFlair}
+				showTime={showTime}
+				hideNsfw={hideNsfw}
+				hideNsfl={hideNsfl}
+				censorBadWords={censorBadWords}
+				msg={msg}
+				setFocusedUser={setFocusedUser}
+			/>
+		));
+	}, [
+		freeScroll ? null : socketCtx?.messageLogs,
+		optionsCtx?.chatOptions.showTime,
+		optionsCtx?.chatOptions.showFlair,
+		optionsCtx?.chatOptions.hideNsfw,
+		optionsCtx?.chatOptions.hideNsfl,
+		optionsCtx?.chatOptions.censorBadWords,
+	]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
@@ -140,7 +161,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	return (
 		<>
 			<Container ref={scrollableContainerRef} onScroll={handleScroll} onClick={handleClick} css={containerCss}>
-				{/* since container has a flex direction of column-reverse, bottomRef needs to be above mesage list */}
+				{/* since container has a flex direction of column-reverse, bottomRef needs to be at the top */}
 				<div ref={bottomRef}></div>
 				<MessagesContainer css={messagesContainerCss}>
 					{freeScroll ? pausedMessages : liveMessages}
