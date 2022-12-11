@@ -27,7 +27,7 @@ const Button = styled('button', {
 	variants: {
 		selected: {
 			true: {
-				color: `${theme.colors.primary400} !important`,
+				color: `${theme.colors.primary300} !important`,
 			},
 		},
 	},

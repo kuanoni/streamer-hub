@@ -4,8 +4,10 @@ import SocketProvider from '../context/SocketProvider';
 import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
 import ChatSigninPrompt from './ChatSigninPrompt';
-import ChatControlsTop from './ChatControlsTop';
 import ChatControlsBottom from './ChatControlsBottom';
+import ChatControlsTop from './ChatControlsTop';
+import ChatOptions from './chatOptions/components/ChatOptions';
+import ChatOptionsProvider from './chatOptions/components/context/ChatOptionsProvider';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -18,8 +20,15 @@ const Container = styled('div', {
 	overflow: 'auto',
 });
 
+const MessagesSection = styled('div', {
+	position: 'relative',
+	height: '100%',
+	minHeight: 0,
+});
+
 export const Chat = () => {
 	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
+	const [isChatOptionsOpen, setIsChatOptionsOpen] = useState(false);
 	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(false);
 
 	const closePopup = () => {
@@ -31,13 +40,18 @@ export const Chat = () => {
 			<SocketProvider>
 				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
 				<ChatControlsTop />
-				<ChatMessageList closePopup={closePopup} />
+				<ChatOptionsProvider>
+					<MessagesSection>
+						<ChatMessageList closePopup={closePopup} />
+						{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
+					</MessagesSection>
+				</ChatOptionsProvider>
 				<ChatInput
 					isEmotesOpen={isEmotesOpen}
 					setIsEmotesOpen={setIsEmotesOpen}
 					setIsSigninPromptOpen={setIsSigninPromptOpen}
 				/>
-				<ChatControlsBottom />
+				<ChatControlsBottom setIsChatOptionsOpen={setIsChatOptionsOpen} />
 			</SocketProvider>
 		</Container>
 	);

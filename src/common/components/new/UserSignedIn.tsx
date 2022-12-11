@@ -13,14 +13,14 @@ const Container = styled('div', {
 const SignInButton = styled('button', {
 	padding: '0 2rem',
 	color: theme.colors.textLight,
-	backgroundColor: theme.colors.primary500,
+	backgroundColor: theme.colors.primary400,
 	border: 'none',
 	borderRadius: 5,
 	fontSize: '1rem',
 	cursor: 'pointer',
 	transition: '.1s ease',
 	'&:hover': {
-		backgroundColor: theme.colors.primary400,
+		backgroundColor: theme.colors.primary300,
 	},
 });
 

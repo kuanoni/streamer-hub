@@ -27,13 +27,13 @@ const ButtonsContainer = styled('div', {
 		cursor: 'pointer',
 	},
 	'.signin': {
-		backgroundColor: theme.colors.primary500,
+		backgroundColor: theme.colors.primary400,
 	},
 	'.close': {
 		backgroundColor: theme.colors.grey500,
 	},
 	'.signin:hover': {
-		backgroundColor: theme.colors.primary400,
+		backgroundColor: theme.colors.primary300,
 	},
 	'.close:hover': {
 		backgroundColor: theme.colors.grey400,

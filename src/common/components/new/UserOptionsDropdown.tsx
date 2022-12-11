@@ -45,7 +45,7 @@ const LinkButton = styled(Link, {
 	cursor: 'pointer',
 	'&:hover': {
 		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.primary500,
+		backgroundColor: theme.colors.primary400,
 	},
 	svg: {
 		height: '50%',
