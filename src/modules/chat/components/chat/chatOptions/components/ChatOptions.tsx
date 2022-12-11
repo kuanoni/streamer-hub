@@ -64,14 +64,14 @@ const sectionsTemplate: Section[] = [
 		content: [
 			{ label: 'Show flair', key: 'showFlair', type: 'checkbox' },
 			{ label: 'Show time', key: 'showTime', type: 'checkbox' },
-			{ label: 'Hide messages with nsfw', key: 'hideNsfw', type: 'checkbox' },
-			{ label: 'Hide messages with nsfl', key: 'hideNsfl', type: 'checkbox' },
+			{ label: 'Censor NSFW links', key: 'hideNsfw', type: 'checkbox' },
+			{ label: 'Censor NSFL links', key: 'hideNsfl', type: 'checkbox' },
 			{ label: 'Censor bad words', key: 'censorBadWords', type: 'checkbox' },
 			{
 				label: 'Banned messages',
 				key: 'bannedMessages',
 				type: 'dropdown',
-				options: ['show', 'censor', 'remove'],
+				options: ['censor', 'remove'],
 			},
 		],
 	},
