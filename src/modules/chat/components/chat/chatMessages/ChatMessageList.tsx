@@ -1,11 +1,11 @@
 import { styled, theme } from 'stiches.config';
 import React, { useContext, useMemo, useRef, useState } from 'react';
-import SocketContext from '../context/SocketContext';
 import ChatMessage from './ChatMessage';
-import { MessageBoxContainer } from '../../styles';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { Message } from 'types/socketio';
-import ChatOptionsContext from './chatOptions/components/context/ChatOptionsContext';
+import { MessageBoxContainer } from '@/modules/chat/styles';
+import SocketContext from '../../context/SocketContext';
+import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -72,7 +72,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	const [freeScroll, setFreeScroll] = useState(false);
 
 	// uses css selector to target focusedUser messages
-	const focusedUserCssSelector = '.msg[data-author=' + focusedUser + ']';
+	const focusedUserCssSelector = '.msg[data-author="' + focusedUser.toString() + '"]';
 
 	// uses selector to highlight focusedUser messages and dim the rest
 	const containerCss = useMemo(() => {
@@ -107,10 +107,32 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 
 	// live rendered messages
 	const liveMessages = useMemo(() => {
-		return socketCtx?.messageLogs.map((msg: Message) => {
-			return <ChatMessage key={msg.time + msg.author} msg={msg} setFocusedUser={setFocusedUser} />;
-		});
-	}, [freeScroll ? null : socketCtx?.messageLogs]);
+		const showFlair = optionsCtx?.chatOptions.showFlair === true;
+		const showTime = optionsCtx?.chatOptions.showTime === true;
+		const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
+		const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
+		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
+
+		return socketCtx?.messageLogs.map((msg: Message) => (
+			<ChatMessage
+				key={msg.time + msg.author}
+				showFlair={showFlair}
+				showTime={showTime}
+				hideNsfw={hideNsfw}
+				hideNsfl={hideNsfl}
+				censorBadWords={censorBadWords}
+				msg={msg}
+				setFocusedUser={setFocusedUser}
+			/>
+		));
+	}, [
+		freeScroll ? null : socketCtx?.messageLogs,
+		optionsCtx?.chatOptions.showTime,
+		optionsCtx?.chatOptions.showFlair,
+		optionsCtx?.chatOptions.hideNsfw,
+		optionsCtx?.chatOptions.hideNsfl,
+		optionsCtx?.chatOptions.censorBadWords,
+	]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
@@ -140,7 +162,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	return (
 		<>
 			<Container ref={scrollableContainerRef} onScroll={handleScroll} onClick={handleClick} css={containerCss}>
-				{/* since container has a flex direction of column-reverse, bottomRef needs to be above mesage list */}
+				{/* since container has a flex direction of column-reverse, bottomRef needs to be at the top */}
 				<div ref={bottomRef}></div>
 				<MessagesContainer css={messagesContainerCss}>
 					{freeScroll ? pausedMessages : liveMessages}

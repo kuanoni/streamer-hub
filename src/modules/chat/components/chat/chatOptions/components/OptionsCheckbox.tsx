@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { BsCheckSquareFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
@@ -79,5 +79,7 @@ const OptionsCheckbox = React.memo(({ optionKey, value, setValue, children: labe
 		</Container>
 	);
 });
+
+OptionsCheckbox.displayName = 'OptionsCheckbox';
 
 export default OptionsCheckbox;

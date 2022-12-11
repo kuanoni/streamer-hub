@@ -1,17 +1,11 @@
 import { styled, theme } from 'stiches.config';
-import React from 'react';
 import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
-import { injectTextWithEmotes } from '../../utils/injectTextWithEmotes';
-import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
-
-interface Props {
-	msg: Message;
-	setFocusedUser: (user: string) => void;
-}
+import ChatMessageText from './ChatMessageText';
+import React from 'react';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -38,6 +32,9 @@ const Container = styled('div', {
 		color: theme.colors.textMedium,
 		fontSize: '.75em',
 		marginRight: 4,
+	},
+	'time.show': {
+		display: 'inline-block',
 	},
 	'.separator': {
 		display: 'inline',
@@ -117,37 +114,52 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 	[Rank.TIER_3]: <GiRank3 />,
 };
 
-const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
-	let newText = injectTextWithEmotes(msg.text);
-	newText = injectTextWithLinks(newText);
+interface Props {
+	msg: Message;
+	setFocusedUser: (user: string) => void;
+	showFlair: boolean;
+	showTime: boolean;
+	hideNsfw: boolean;
+	hideNsfl: boolean;
+	censorBadWords: boolean;
+}
 
-	if (msg.type === MessageType.PUBLIC) {
-		const dateObj = new Date(msg.time);
-		const timeTitle = timeTitleFormatter.format(dateObj);
-		const timeValue = timeValueFormatter.format(dateObj);
+// try getting options from local storage instead of context
+// might have trouble deciding when to re-render though???
+// individual options items could set the local storage from inside the component, thus preventing re-rendering of ChatOptions
 
-		const flair = RankFlair[msg.rank];
+const ChatMessage = React.memo(
+	({ msg, setFocusedUser, showFlair, showTime, hideNsfw, hideNsfl, censorBadWords }: Props) => {
+		if (msg.type === MessageType.PUBLIC) {
+			const dateObj = new Date(msg.time);
+			const timeTitle = timeTitleFormatter.format(dateObj);
+			const timeValue = timeValueFormatter.format(dateObj);
 
-		return (
-			<Container className='msg' data-author={msg.author}>
-				<time title={timeTitle}>{timeValue}</time>
-				<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
-					{flair && flair}
-					{msg.author}
-				</Author>
-				<span className='separator'>:&nbsp;</span>
-				<Text>{newText}</Text>
-			</Container>
-		);
-	} else
-		return (
-			<Container type={msg.type}>
-				<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
-				<span className='separator'>&nbsp;</span>
-				<Text>{msg.text}</Text>
-			</Container>
-		);
-});
+			const flair = RankFlair[msg.rank];
+
+			return (
+				<Container className='msg' data-author={msg.author}>
+					<time className={showTime ? 'show' : ''} title={timeTitle}>
+						{timeValue}
+					</time>
+					<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
+						{showFlair && flair ? flair : null}
+						{msg.author}
+					</Author>
+					<span className='separator'>:&nbsp;</span>
+					<ChatMessageText text={msg.text} hideNsfw={hideNsfw} hideNsfl={hideNsfl} />
+				</Container>
+			);
+		} else
+			return (
+				<Container type={msg.type}>
+					<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
+					<span className='separator'>&nbsp;</span>
+					<Text>{msg.text}</Text>
+				</Container>
+			);
+	}
+);
 
 ChatMessage.displayName = 'ChatMessage';
 

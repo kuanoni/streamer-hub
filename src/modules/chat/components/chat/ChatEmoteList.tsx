@@ -25,7 +25,6 @@ const Container = styled(MessageBoxContainer, {
 	'.emotes': {
 		display: 'flex',
 		flexWrap: 'wrap',
-		justifyContent: 'space-around',
 		gap: '.5rem',
 	},
 });
