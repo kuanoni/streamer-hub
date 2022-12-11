@@ -84,52 +84,54 @@ type Props = {
 	setValue(key: string, value: string | boolean): void;
 };
 
-const OptionsDropdown = ({ optionKey, options, value, setValue, children: label }: PropsWithChildren<Props>) => {
-	const [isOpen, setIsOpen] = useState(false);
+const OptionsDropdown = React.memo(
+	({ optionKey, options, value, setValue, children: label }: PropsWithChildren<Props>) => {
+		const [isOpen, setIsOpen] = useState(false);
 
-	const changeValue = (newValue: string) => {
-		setValue(optionKey, newValue);
-	};
+		const changeValue = (newValue: string) => {
+			setValue(optionKey, newValue);
+		};
 
-	const handleInputClick = (e: MouseEvent) => {
-		setIsOpen(!isOpen);
-		e.stopPropagation();
-	};
+		const handleInputClick = (e: MouseEvent) => {
+			setIsOpen(!isOpen);
+			e.stopPropagation();
+		};
 
-	const handleDocumentClick = useCallback(() => setIsOpen(false), [setIsOpen]);
+		const handleDocumentClick = useCallback(() => setIsOpen(false), [setIsOpen]);
 
-	// add eventListener on mount to close dropdown on any click
-	useEffect(() => {
-		document.addEventListener('click', handleDocumentClick);
-		return () => document.removeEventListener('click', handleDocumentClick);
-	}, [handleDocumentClick]);
+		// add eventListener on mount to close dropdown on any click
+		useEffect(() => {
+			document.addEventListener('click', handleDocumentClick);
+			return () => document.removeEventListener('click', handleDocumentClick);
+		}, [handleDocumentClick]);
 
-	useEffect(() => {
-		setIsOpen(false);
-	}, [value, setIsOpen]);
+		useEffect(() => {
+			setIsOpen(false);
+		}, [value, setIsOpen]);
 
-	return (
-		<Container>
-			{label}
-			<InputBox onClick={handleInputClick}>
-				{value}
-				<BsCaretDownFill />
-			</InputBox>
-			<DropdownWrapper>
-				<Dropdown className={isOpen ? 'open' : ''}>
-					{options.map((option) => (
-						<DropdownOption
-							key={option}
-							className={option === value ? 'selected' : ''}
-							onClick={() => changeValue(option)}
-						>
-							{option}
-						</DropdownOption>
-					))}
-				</Dropdown>
-			</DropdownWrapper>
-		</Container>
-	);
-};
+		return (
+			<Container>
+				{label}
+				<InputBox onClick={handleInputClick}>
+					{value}
+					<BsCaretDownFill />
+				</InputBox>
+				<DropdownWrapper>
+					<Dropdown className={isOpen ? 'open' : ''}>
+						{options.map((option) => (
+							<DropdownOption
+								key={option}
+								className={option === value ? 'selected' : ''}
+								onClick={() => changeValue(option)}
+							>
+								{option}
+							</DropdownOption>
+						))}
+					</Dropdown>
+				</DropdownWrapper>
+			</Container>
+		);
+	}
+);
 
 export default OptionsDropdown;
