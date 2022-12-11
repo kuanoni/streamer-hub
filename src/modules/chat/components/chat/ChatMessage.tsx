@@ -1,5 +1,5 @@
 import { styled, theme } from 'stiches.config';
-import React from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Message } from 'types/socketio';
 import { MessageType } from '@/modules/chat/common';
 import { injectTextWithEmotes } from '../../utils/injectTextWithEmotes';
@@ -7,11 +7,6 @@ import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
-
-interface Props {
-	msg: Message;
-	setFocusedUser: (user: string) => void;
-}
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -38,6 +33,9 @@ const Container = styled('div', {
 		color: theme.colors.textMedium,
 		fontSize: '.75em',
 		marginRight: 4,
+	},
+	'time.show': {
+		display: 'inline-block',
 	},
 	'.separator': {
 		display: 'inline',
@@ -106,6 +104,14 @@ const Text = styled('span', {
 	wordWrap: 'break-word',
 });
 
+const CensoredText = styled('span', {
+	color: theme.colors.secondary400,
+	'&:hover': {
+		textDecoration: 'underline',
+		cursor: 'pointer',
+	},
+});
+
 const messageIcon: { [index: number]: React.ReactNode } = {
 	[MessageType.SERVER]: <BsShieldFillExclamation />,
 	[MessageType.INFO]: <BsInfoCircleFill />,
@@ -117,37 +123,85 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 	[Rank.TIER_3]: <GiRank3 />,
 };
 
-const ChatMessage = React.memo(({ msg, setFocusedUser }: Props) => {
-	let newText = injectTextWithEmotes(msg.text);
-	newText = injectTextWithLinks(newText);
+const hasNsfw = (textArr: ReactNode[]) =>
+	!textArr.every((text) => {
+		if (typeof text !== 'string') return true;
+		return text.trim().toUpperCase() !== 'NSFW';
+	});
 
-	if (msg.type === MessageType.PUBLIC) {
-		const dateObj = new Date(msg.time);
-		const timeTitle = timeTitleFormatter.format(dateObj);
-		const timeValue = timeValueFormatter.format(dateObj);
+const hasNsfl = (textArr: ReactNode[]) =>
+	!textArr.every((text) => {
+		if (typeof text !== 'string') return true;
+		return text.trim().toUpperCase() !== 'NSFL';
+	});
 
-		const flair = RankFlair[msg.rank];
+interface Props {
+	msg: Message;
+	setFocusedUser: (user: string) => void;
+	showFlair: boolean;
+	showTime: boolean;
+	hideNsfw: boolean;
+	hideNsfl: boolean;
+	censorBadWords: boolean;
+}
 
-		return (
-			<Container className='msg' data-author={msg.author}>
-				<time title={timeTitle}>{timeValue}</time>
-				<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
-					{flair && flair}
-					{msg.author}
-				</Author>
-				<span className='separator'>:&nbsp;</span>
-				<Text>{newText}</Text>
-			</Container>
+// try getting options from local storage instead of context
+// might have trouble deciding when to re-render though???
+// individual options items could set the local storage from inside the component, thus preventing re-rendering of ChatOptions
+
+const ChatMessage = React.memo(
+	({ msg, setFocusedUser, showFlair, showTime, hideNsfw, hideNsfl, censorBadWords }: Props) => {
+		const [textWithEmotes, hasEmotes] = injectTextWithEmotes(msg.text);
+		const [textWithLinks, hasLinks] = injectTextWithLinks(textWithEmotes);
+		const newText = textWithLinks;
+
+		const textHasNsfw = hasNsfw(newText);
+		const textHasNsfl = hasNsfl(newText);
+
+		const [isCensored, setIsCensored] = useState(
+			hasLinks && ((textHasNsfw && hideNsfw) || (textHasNsfl && hideNsfl))
 		);
-	} else
-		return (
-			<Container type={msg.type}>
-				<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
-				<span className='separator'>&nbsp;</span>
-				<Text>{msg.text}</Text>
-			</Container>
-		);
-});
+
+		useEffect(() => {
+			setIsCensored(hasLinks && ((textHasNsfw && hideNsfw) || (textHasNsfl && hideNsfl)));
+		}, [hasLinks, textHasNsfw, hideNsfw, textHasNsfl, hideNsfl]);
+
+		if (msg.type === MessageType.PUBLIC) {
+			const dateObj = new Date(msg.time);
+			const timeTitle = timeTitleFormatter.format(dateObj);
+			const timeValue = timeValueFormatter.format(dateObj);
+
+			const flair = RankFlair[msg.rank];
+
+			return (
+				<Container className='msg' data-author={msg.author}>
+					<time className={showTime ? 'show' : ''} title={timeTitle}>
+						{timeValue}
+					</time>
+					<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
+						{showFlair && flair ? flair : null}
+						{msg.author}
+					</Author>
+					<span className='separator'>:&nbsp;</span>
+					{isCensored ? (
+						<CensoredText onClick={() => setIsCensored(false)}>
+							{textHasNsfl ? '<nsfl>' : textHasNsfw ? '<nsfw>' : '<censored>'}
+						</CensoredText>
+					) : (
+						<Text>{newText}</Text>
+					)}
+				</Container>
+			);
+		} else
+			return (
+				<Container type={msg.type}>
+					<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
+					<span className='separator'>&nbsp;</span>
+					<Text>{msg.text}</Text>
+				</Container>
+			);
+	}
+);
 
 ChatMessage.displayName = 'ChatMessage';
 
