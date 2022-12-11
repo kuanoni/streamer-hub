@@ -6,38 +6,25 @@ import { AuthPerms } from 'types/custom-auth';
 import { useRouter } from 'next/router';
 import NavButton from './new/NavButton';
 import UserSignedIn from './new/UserSignedIn';
+import BrandLogo from './BrandLogo';
 
 const Topbar = styled('div', {
+	position: 'relative',
 	display: 'flex',
 });
 
 const Nav = styled('nav', {
-	position: 'relative',
 	display: 'flex',
 	alignItems: 'center',
 	width: '100%',
 	marginTop: 'auto',
-	borderBottom: `1px solid ${theme.colors.grey700}`,
+	borderBottom: `1px solid ${theme.colors.grey900}`,
 });
 
 const AlignRightContainer = styled('div', {
 	display: 'flex',
 	gap: '2rem',
 	marginLeft: 'auto',
-});
-
-const BrandLogo = styled('div', {
-	display: 'inline-block',
-	padding: '.5rem',
-	marginRight: '1rem',
-	color: theme.colors.primary400,
-	border: `4px solid ${theme.colors.primary400}`,
-	verticalAlign: 'middle',
-	fontSize: '2rem',
-	lineHeight: 1,
-	whiteSpace: 'nowrap',
-	textTransform: 'uppercase',
-	userSelect: 'none',
 });
 
 const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
@@ -62,7 +49,7 @@ const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
 		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
 			<Topbar>
-				<BrandLogo>Stream Hub</BrandLogo>
+				<BrandLogo />
 				<Nav>
 					<NavButton link='/'>Home</NavButton>
 					<NavButton link='/stream'>Stream</NavButton>
