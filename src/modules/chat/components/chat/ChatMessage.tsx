@@ -7,6 +7,7 @@ import { injectTextWithLinks } from '../../utils/injectTextWithLinks';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
+import ChatMessageText from './ChatMessageText';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -123,18 +124,6 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 	[Rank.TIER_3]: <GiRank3 />,
 };
 
-const hasNsfw = (textArr: ReactNode[]) =>
-	!textArr.every((text) => {
-		if (typeof text !== 'string') return true;
-		return text.trim().toUpperCase() !== 'NSFW';
-	});
-
-const hasNsfl = (textArr: ReactNode[]) =>
-	!textArr.every((text) => {
-		if (typeof text !== 'string') return true;
-		return text.trim().toUpperCase() !== 'NSFL';
-	});
-
 interface Props {
 	msg: Message;
 	setFocusedUser: (user: string) => void;
@@ -151,21 +140,6 @@ interface Props {
 
 const ChatMessage = React.memo(
 	({ msg, setFocusedUser, showFlair, showTime, hideNsfw, hideNsfl, censorBadWords }: Props) => {
-		const [textWithEmotes, hasEmotes] = injectTextWithEmotes(msg.text);
-		const [textWithLinks, hasLinks] = injectTextWithLinks(textWithEmotes);
-		const newText = textWithLinks;
-
-		const textHasNsfw = hasNsfw(newText);
-		const textHasNsfl = hasNsfl(newText);
-
-		const [isCensored, setIsCensored] = useState(
-			hasLinks && ((textHasNsfw && hideNsfw) || (textHasNsfl && hideNsfl))
-		);
-
-		useEffect(() => {
-			setIsCensored(hasLinks && ((textHasNsfw && hideNsfw) || (textHasNsfl && hideNsfl)));
-		}, [hasLinks, textHasNsfw, hideNsfw, textHasNsfl, hideNsfl]);
-
 		if (msg.type === MessageType.PUBLIC) {
 			const dateObj = new Date(msg.time);
 			const timeTitle = timeTitleFormatter.format(dateObj);
@@ -183,13 +157,7 @@ const ChatMessage = React.memo(
 						{msg.author}
 					</Author>
 					<span className='separator'>:&nbsp;</span>
-					{isCensored ? (
-						<CensoredText onClick={() => setIsCensored(false)}>
-							{textHasNsfl ? '<nsfl>' : textHasNsfw ? '<nsfw>' : '<censored>'}
-						</CensoredText>
-					) : (
-						<Text>{newText}</Text>
-					)}
+					<ChatMessageText text={msg.text} hideNsfw={hideNsfw} hideNsfl={hideNsfl} />
 				</Container>
 			);
 		} else
