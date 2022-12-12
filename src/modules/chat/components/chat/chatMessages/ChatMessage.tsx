@@ -32,13 +32,10 @@ const Container = styled('div', {
 	lineHeight: 1.75,
 	padding: '.2em 1.2em .2em .6em',
 	time: {
-		display: 'none',
+		display: 'inline-block',
 		color: theme.colors.textMedium,
 		fontSize: '.75em',
 		marginRight: 4,
-	},
-	'time.show': {
-		display: 'inline-block',
 	},
 	'.separator': {
 		display: 'inline',
@@ -86,7 +83,6 @@ const Author = styled('span', {
 });
 
 const Text = styled('span', {
-	maxWidth: '100%',
 	wordWrap: 'break-word',
 });
 
@@ -104,49 +100,37 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 interface Props {
 	msg: Message;
 	setFocusedUser: (user: string) => void;
-	showFlair: boolean;
-	showTime: boolean;
-	hideNsfw: boolean;
-	hideNsfl: boolean;
 	censorBadWords: boolean;
 }
 
-// try getting options from local storage instead of context
-// might have trouble deciding when to re-render though???
-// individual options items could set the local storage from inside the component, thus preventing re-rendering of ChatOptions
+const ChatMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) => {
+	if (msg.type === MessageType.PUBLIC) {
+		const dateObj = new Date(msg.time);
+		const timeTitle = timeTitleFormatter.format(dateObj);
+		const timeValue = timeValueFormatter.format(dateObj);
 
-const ChatMessage = React.memo(
-	({ msg, setFocusedUser, showFlair, showTime, hideNsfw, hideNsfl, censorBadWords }: Props) => {
-		if (msg.type === MessageType.PUBLIC) {
-			const dateObj = new Date(msg.time);
-			const timeTitle = timeTitleFormatter.format(dateObj);
-			const timeValue = timeValueFormatter.format(dateObj);
+		const flair = RankFlair[msg.rank];
 
-			const flair = RankFlair[msg.rank];
-
-			return (
-				<Container className='msg' data-author={msg.author}>
-					<time className={showTime ? 'show' : ''} title={timeTitle}>
-						{timeValue}
-					</time>
-					<Author rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
-						{showFlair && flair ? flair : null}
-						{msg.author}
-					</Author>
-					<span className='separator'>:&nbsp;</span>
-					<ChatMessageText text={msg.text} hideNsfw={hideNsfw} hideNsfl={hideNsfl} />
-				</Container>
-			);
-		} else
-			return (
-				<Container type={msg.type}>
-					<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
-					<span className='separator'>&nbsp;</span>
-					<Text>{msg.text}</Text>
-				</Container>
-			);
-	}
-);
+		return (
+			<Container className='msg' data-author={msg.author}>
+				<time title={timeTitle}>{timeValue}</time>
+				<Author className='author' rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
+					{flair}
+					{msg.author}
+				</Author>
+				<span className='separator'>:&nbsp;</span>
+				<ChatMessageText text={msg.text} />
+			</Container>
+		);
+	} else
+		return (
+			<Container type={msg.type}>
+				<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
+				<span className='separator'>&nbsp;</span>
+				<Text>{msg.text}</Text>
+			</Container>
+		);
+});
 
 ChatMessage.displayName = 'ChatMessage';
 

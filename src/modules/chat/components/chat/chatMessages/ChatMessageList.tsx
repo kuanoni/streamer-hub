@@ -21,17 +21,6 @@ const MessagesContainer = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column',
-
-	'&::after': {
-		content: '',
-		position: 'absolute',
-		width: '100%',
-		height: '100%',
-		opacity: 0,
-		zIndex: 1,
-		transition: 'opacity .2s ease-out',
-		pointerEvents: 'none',
-	},
 });
 
 const BottomContainer = styled('div', {
@@ -74,12 +63,18 @@ interface Props {
 }
 
 const ChatMessageList = ({ closePopup, hide }: Props) => {
-	const socketCtx = useContext(SocketContext);
-	const optionsCtx = useContext(ChatOptionsContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const [focusedUser, setFocusedUser] = useState('');
 	const [freeScroll, setFreeScroll] = useState(false);
+
+	const socketCtx = useContext(SocketContext);
+	const optionsCtx = useContext(ChatOptionsContext);
+
+	const showFlair = optionsCtx?.chatOptions.showFlair === true;
+	const showTime = optionsCtx?.chatOptions.showTime === true;
+	const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
+	const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 
 	// uses css selector to target focusedUser messages
 	const focusedUserCssSelector = '.msg[data-author="' + focusedUser.toString() + '"]';
@@ -92,9 +87,6 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 			cssObj = {
 				...cssObj,
 				visibility: 'hidden',
-				[`${ScrollDownButton}`]: {
-					visibility: 'hidden',
-				},
 			};
 
 		if (focusedUser)
@@ -111,49 +103,78 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 		return cssObj;
 	}, [hide, focusedUser, focusedUserCssSelector]);
 
+	// control how messages are rendered through css selectors rather than re-rendering components
 	const messagesContainerCss = useMemo(() => {
 		let cssObj = {};
-		if (freeScroll)
+
+		if (!showFlair)
 			cssObj = {
 				...cssObj,
-				'&::after': {
-					opacity: 1,
+				'.author img': {
+					display: 'none',
+				},
+			};
+
+		if (!showTime)
+			cssObj = {
+				...cssObj,
+				time: {
+					display: 'none',
+				},
+			};
+
+		if (hideNsfw)
+			cssObj = {
+				...cssObj,
+				'& .nsfw': {
+					fontSize: 0,
+				},
+				'& .nsfw::before': {
+					content: '<NSFW>',
+					fontSize: '13px',
+					backgroundColor: theme.colors.grey800,
+				},
+				'& .nsfw:hover::before': {
+					backgroundColor: theme.colors.grey700,
+					cursor: 'pointer',
+				},
+			};
+
+		if (hideNsfl)
+			cssObj = {
+				...cssObj,
+				'& .nsfl': {
+					fontSize: 0,
+				},
+				'& .nsfl::before': {
+					content: '<NSFL>',
+					fontSize: '13px',
+					backgroundColor: theme.colors.grey800,
+				},
+				'& .nsfl:hover::before': {
+					backgroundColor: theme.colors.grey700,
+					cursor: 'pointer',
 				},
 			};
 
 		return cssObj;
-	}, [freeScroll]);
+	}, [freeScroll, showFlair, showTime, hideNsfw, hideNsfl]);
 
-	const shouldRenderLiveMessages = freeScroll ? null : socketCtx?.messageLogs;
+	const shouldReRenderLiveMessages = freeScroll ? null : socketCtx?.messageLogs;
 
 	// live rendered messages
 	const liveMessages = useMemo(() => {
-		const showFlair = optionsCtx?.chatOptions.showFlair === true;
-		const showTime = optionsCtx?.chatOptions.showTime === true;
-		const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
-		const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
 
 		return socketCtx?.messageLogs.map((msg: Message) => (
 			<ChatMessage
 				key={msg.time + msg.author}
-				showFlair={showFlair}
-				showTime={showTime}
-				hideNsfw={hideNsfw}
-				hideNsfl={hideNsfl}
 				censorBadWords={censorBadWords}
 				msg={msg}
 				setFocusedUser={setFocusedUser}
 			/>
 		));
-	}, [
-		shouldRenderLiveMessages,
-		optionsCtx?.chatOptions.showTime,
-		optionsCtx?.chatOptions.showFlair,
-		optionsCtx?.chatOptions.hideNsfw,
-		optionsCtx?.chatOptions.hideNsfl,
-		optionsCtx?.chatOptions.censorBadWords,
-	]);
+	}, [shouldReRenderLiveMessages, optionsCtx?.chatOptions.censorBadWords]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
