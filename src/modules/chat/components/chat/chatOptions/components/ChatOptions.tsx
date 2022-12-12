@@ -8,7 +8,8 @@ import { Section, OptionItem } from '../types';
 import ChatOptionsContext from './context/ChatOptionsContext';
 
 const Container = styled(AbsoluteContainer, {
-	backgroundColor: theme.colors.cover,
+	display: 'flex',
+	flexDirection: 'column',
 });
 
 const Header = styled('div', {
@@ -16,8 +17,8 @@ const Header = styled('div', {
 	justifyContent: 'space-between',
 	alignItems: 'center',
 	padding: '.5rem 1rem',
-	backgroundColor: theme.colors.action,
-	borderBottom: `1px solid ${theme.colors.grey700}`,
+	backgroundColor: theme.colors.primary900,
+	borderBottom: `1px solid ${theme.colors.trinary700}`,
 	h2: {
 		margin: 0,
 		fontSize: '1.25rem',
@@ -43,7 +44,10 @@ const CloseButton = styled('button', {
 });
 
 const OptionsContent = styled('div', {
+	height: '100%',
 	padding: '.5rem 0',
+	overflowY: 'scroll',
+	scrollbarWidth: 'thin',
 });
 
 const OptionsSection = styled('div', {

@@ -25,8 +25,8 @@ const Options = styled('div', {
 	minWidth: '10rem',
 	padding: '.5rem 0',
 
-	backgroundColor: theme.colors.action,
-	borderRadius: 10,
+	backgroundColor: theme.colors.primary900,
+	borderRadius: theme.space.borderRad,
 	zIndex: 2,
 	transform: 'translateY(100%)',
 	animation: `${moveIn} .25s`,
@@ -45,7 +45,7 @@ const LinkButton = styled(Link, {
 	cursor: 'pointer',
 	'&:hover': {
 		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.primary400,
+		backgroundColor: theme.colors.primary600,
 	},
 	svg: {
 		height: '50%',

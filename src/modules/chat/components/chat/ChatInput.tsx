@@ -9,7 +9,7 @@ import IconButton from '@/components/new/IconButton';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {
-	padding: '.5rem',
+	padding: '.5rem 0',
 	height: 'auto',
 });
 
@@ -17,8 +17,8 @@ const TextAreaWrapper = styled('div', {
 	display: 'flex',
 	height: 'auto',
 	padding: '.5rem',
-	border: `1px solid ${theme.colors.grey700}`,
-	borderRadius: 10,
+	border: `1px solid ${theme.colors.grey900}`,
+	borderRadius: theme.space.borderRad,
 });
 
 const TextArea = styled('textarea', {

@@ -21,7 +21,7 @@ const ButtonsContainer = styled('div', {
 	'button, a': {
 		padding: '.25rem .75rem',
 		border: 'none',
-		borderRadius: 5,
+		borderRadius: theme.space.borderRadHalf,
 		color: theme.colors.textLight,
 		fontSize: '1rem',
 		cursor: 'pointer',

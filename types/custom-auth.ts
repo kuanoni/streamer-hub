@@ -24,6 +24,7 @@ export interface PageAuthorizationOptions {
 }
 
 export type Page = NextComponentType & {
+	title?: string;
 	getLayout?: (page: ReactElement) => ReactNode;
 	authorizationOptions?: PageAuthorizationOptions | undefined;
 };
@@ -31,6 +32,7 @@ export type Page = NextComponentType & {
 export type User = DefaultSession['user'] & {
 	id: string;
 	role: AuthPerms;
+	rank: Rank;
 	displayName: string;
 };
 

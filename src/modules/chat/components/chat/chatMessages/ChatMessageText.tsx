@@ -1,62 +1,40 @@
 import { injectTextWithEmotes } from '@/modules/chat/utils/injectTextWithEmotes';
 import { injectTextWithLinks } from '@/modules/chat/utils/injectTextWithLinks';
-import React, { ReactNode, useEffect, useState } from 'react';
-import { styled, theme } from 'stiches.config';
+import React, { ReactNode, useState } from 'react';
+import { styled } from 'stiches.config';
 
 const Text = styled('span', {
 	maxWidth: '100%',
 	wordWrap: 'break-word',
 });
 
-const CensoredText = styled('span', {
-	color: theme.colors.secondary400,
-	'&:hover': {
-		textDecoration: 'underline',
-		cursor: 'pointer',
-	},
-});
-
-const hasNsfw = (textArr: ReactNode[]) =>
+const containsWord = (textArr: ReactNode[], word: string) =>
 	!textArr.every((text) => {
 		if (typeof text !== 'string') return true;
-		return text.trim().toUpperCase() !== 'NSFW';
-	});
-
-const hasNsfl = (textArr: ReactNode[]) =>
-	!textArr.every((text) => {
-		if (typeof text !== 'string') return true;
-		return text.trim().toUpperCase() !== 'NSFL';
+		return text.trim().toUpperCase() !== word.trim().toUpperCase();
 	});
 
 interface Props {
 	text: string;
-	hideNsfw: boolean;
-	hideNsfl: boolean;
 }
 
-const ChatMessageText = ({ text, hideNsfw, hideNsfl }: Props) => {
+const ChatMessageText = ({ text }: Props) => {
+	const [isCensored, setIsCensored] = useState(true);
+
 	const [textWithEmotes, hasEmotes] = injectTextWithEmotes(text);
 	const [textWithLinks, hasLinks] = injectTextWithLinks(textWithEmotes);
 	const newText = textWithLinks;
 
-	const textHasNsfw = hasNsfw(newText);
-	const textHasNsfl = hasNsfl(newText);
+	const textHasNsfw = containsWord(newText, 'nsfw');
+	const textHasNsfl = containsWord(newText, 'nsfl');
 
-	const [isCensored, setIsCensored] = useState(hasLinks && ((textHasNsfw && hideNsfw) || (textHasNsfl && hideNsfl)));
+	const censoredClass = hasLinks && textHasNsfl ? 'nsfl' : hasLinks && textHasNsfw ? 'nsfw' : '';
 
-	// re-censors or un-censors when hideNsfw or hideNsfl options change
-	useEffect(() => {
-		setIsCensored(hasLinks && ((textHasNsfw && hideNsfw) || (textHasNsfl && hideNsfl)));
-	}, [hasLinks, textHasNsfw, hideNsfw, textHasNsfl, hideNsfl]);
-
-	if (isCensored)
-		return (
-			<CensoredText onClick={() => setIsCensored(false)}>
-				{textHasNsfl ? '<nsfl>' : textHasNsfw ? '<nsfw>' : '<censored>'}
-			</CensoredText>
-		);
-
-	return <Text>{newText}</Text>;
+	return (
+		<Text className={isCensored ? censoredClass : ''} onClick={() => setIsCensored(false)}>
+			{newText}
+		</Text>
+	);
 };
 
 export default ChatMessageText;

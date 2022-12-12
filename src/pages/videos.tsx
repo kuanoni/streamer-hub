@@ -10,3 +10,5 @@ export default Videos;
 Videos.getLayout = function getLayout(page: JSX.Element) {
 	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
 };
+
+Videos.title = 'Videos';

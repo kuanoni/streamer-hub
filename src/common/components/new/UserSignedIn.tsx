@@ -1,6 +1,8 @@
+import { RankColors } from '@/modules/chat/common';
 import React, { useRef, useState, MouseEventHandler } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
+import { User } from 'types/custom-auth';
 import UserOptionsDropdown from './UserOptionsDropdown';
 
 const Container = styled('div', {
@@ -10,12 +12,19 @@ const Container = styled('div', {
 	marginLeft: 'auto',
 });
 
+const Username = styled('span', {
+	marginRight: '1rem',
+	variants: {
+		rank: RankColors,
+	},
+});
+
 const SignInButton = styled('button', {
 	padding: '0 2rem',
 	color: theme.colors.textLight,
 	backgroundColor: theme.colors.primary400,
 	border: 'none',
-	borderRadius: 5,
+	borderRadius: theme.space.borderRadHalf,
 	fontSize: '1rem',
 	cursor: 'pointer',
 	transition: '.1s ease',
@@ -36,6 +45,9 @@ const SignedIn = styled('div', {
 	'&:hover': {
 		color: theme.colors.grey200,
 	},
+	[`&:hover ${Username}`]: {
+		textDecoration: 'underline',
+	},
 	'.profile-pic': {
 		width: '2rem',
 		height: '2rem',
@@ -51,13 +63,13 @@ const SignedIn = styled('div', {
 });
 
 interface Props {
+	user: User;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
 	openSignIn?: () => void;
 }
 
-const UserSignedIn = ({ status, openSignIn }: Props) => {
+const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const signedInRef = useRef<HTMLDivElement>(null);
 
 	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
 		// prevents click event from being passed to newly created event listener in UserDropdownOptions
@@ -68,7 +80,8 @@ const UserSignedIn = ({ status, openSignIn }: Props) => {
 	return (
 		<Container>
 			{status === 'unauthenticated' && <SignInButton onClick={openSignIn}>Sign In</SignInButton>}
-			<SignedIn ref={signedInRef} onClick={handleClick}>
+			<SignedIn onClick={handleClick}>
+				{status === 'authenticated' && <Username rank={user.rank}>{user.displayName}</Username>}
 				<BsPersonCircle className='profile-pic' />
 				<BsCaretDownFill className={'dropdown-caret' + (isDropdownOpen ? ' open' : '')} />
 			</SignedIn>

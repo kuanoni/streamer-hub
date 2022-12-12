@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import { signIn } from 'next-auth/react';
 import React from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 import google from '../../../public/images/providers/google.png';
 import discord from '../../../public/images/providers/discord.png';
 
@@ -23,7 +23,7 @@ const Button = styled('button', {
 	fontSize: '1.25rem',
 	lineHeight: 1.5,
 	borderStyle: 'none',
-	borderRadius: '6px',
+	borderRadius: theme.space.borderRadHalf,
 	cursor: 'pointer',
 	img: {
 		width: '1rem',

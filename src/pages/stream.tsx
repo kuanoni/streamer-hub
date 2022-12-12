@@ -4,6 +4,7 @@ import { Chat } from '@/modules/chat/components/chat/Chat';
 import React from 'react';
 import { styled } from 'stiches.config';
 import StreamPageLayout from '@/modules/stream/components/layouts/StreamPageLayout';
+import Head from 'next/head';
 
 const RelativeContainer = styled('div', {
 	position: 'relative',
@@ -39,3 +40,5 @@ export default Stream;
 Stream.getLayout = function getLayout(page: JSX.Element) {
 	return <StreamPageLayout>{page}</StreamPageLayout>;
 };
+
+Stream.title = 'Stream';

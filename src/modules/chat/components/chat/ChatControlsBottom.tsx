@@ -7,7 +7,6 @@ const Container = styled('div', {
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	padding: '.5rem',
 	backgroundColor: 'transparent',
 });
 

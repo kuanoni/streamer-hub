@@ -9,6 +9,7 @@ const Checkbox = styled('button', {
 	padding: 0,
 	backgroundColor: 'transparent',
 	border: 'none',
+	cursor: 'pointer',
 	variants: {
 		active: {
 			true: {
@@ -18,7 +19,7 @@ const Checkbox = styled('button', {
 			},
 			false: {
 				'&::after': {
-					backgroundColor: theme.colors.primary400,
+					backgroundColor: theme.colors.primary700,
 				},
 			},
 		},
@@ -30,7 +31,7 @@ const Checkbox = styled('button', {
 		right: '.25rem',
 		width: '50%',
 		height: '50%',
-		backgroundColor: theme.colors.primary400,
+		backgroundColor: theme.colors.primary700,
 		transition: 'background-color .1s ease',
 	},
 	svg: {
@@ -39,7 +40,7 @@ const Checkbox = styled('button', {
 		left: 0,
 		width: '100%',
 		height: '100%',
-		color: theme.colors.primary400,
+		color: theme.colors.primary700,
 		zIndex: 1,
 	},
 });

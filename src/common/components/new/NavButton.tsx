@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { styled, theme } from 'stiches.config';
 
 const NavLink = styled(Link, {
@@ -23,28 +22,28 @@ const NavLink = styled(Link, {
 		left: 0,
 		right: 0,
 		height: '0%',
-		background: 'linear-gradient(180deg, rgba(63, 88, 148, 0) 0%, rgba(63, 88, 148, 0.2) 100%)',
+		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 100%)',
 		transition: 'height .1s ease-in',
 	},
 	'&:hover': {
 		color: theme.colors.textMediumActive,
-		borderColor: theme.colors.primary300,
+		borderColor: theme.colors.primary400,
 	},
 	'&:hover::after': {
 		height: '100%',
 	},
 	'&:active': {
-		color: theme.colors.textSecondary,
+		color: theme.colors.trinary000,
 	},
 	'&:active::after': {
-		background: 'linear-gradient(180deg, rgba(63, 88, 148, 0) 0%, rgba(63, 88, 148, 0.2) 50%)',
+		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 50%)',
 	},
 	'&.current': {
-		color: theme.colors.textPrimary,
+		color: theme.colors.primary400,
 	},
 	'&.current::after': {
 		height: '100%',
-		background: 'linear-gradient(180deg, rgba(63, 88, 148, 0) 0%, rgba(63, 88, 148, 0.2) 50%)',
+		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 50%)',
 	},
 });
 

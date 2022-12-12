@@ -12,28 +12,15 @@ const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column-reverse',
 	height: '100%',
-	background: 'linear-gradient(180deg, rgba(63, 88, 148, 0.03) 0%, rgba(63, 88, 148, 0) 100%)',
-	overflowY: 'auto',
+	overflowY: 'scroll',
 	scrollbarWidth: 'thin',
-	scrollbarColor: `${theme.colors.primary300} ${theme.colors.cover}`,
+	scrollbarColor: `${theme.colors.primary900} ${theme.colors.grey900}`,
 });
 
 const MessagesContainer = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column',
-
-	'&::after': {
-		content: '',
-		position: 'absolute',
-		width: '100%',
-		height: '100%',
-		zIndex: 1,
-		opacity: 0,
-		boxShadow: 'rgba(51, 51, 51, 0.81) inset 0px 0px 5px 4px',
-		transition: 'opacity .2s ease-out',
-		pointerEvents: 'none',
-	},
 });
 
 const BottomContainer = styled('div', {
@@ -45,12 +32,15 @@ const BottomContainer = styled('div', {
 const ScrollDownButton = styled(MessageBoxContainer, {
 	display: 'flex',
 	justifyContent: 'center',
-	backgroundColor: theme.colors.action,
+	alignItems: 'center',
+	padding: '.25rem',
+	backgroundColor: theme.colors.primary900,
+	fontWeight: 700,
 	opacity: 0.9,
-	transition: '.2s ease',
+	transition: 'opacity .2s ease',
 	svg: {
-		width: '2rem',
-		height: '2rem',
+		width: '1.5rem',
+		height: '1.5rem',
 	},
 	'&:hover': {
 		color: theme.colors.textLight,
@@ -61,15 +51,30 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 		opacity: 0,
 		pointerEvents: 'none',
 	},
+	'&.really-hide': {
+		visibility: 'hidden',
+		pointerEvents: 'none',
+	},
 });
 
-const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
-	const socketCtx = useContext(SocketContext);
-	const optionsCtx = useContext(ChatOptionsContext);
+interface Props {
+	closePopup: () => void;
+	hide: boolean;
+}
+
+const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const [focusedUser, setFocusedUser] = useState('');
 	const [freeScroll, setFreeScroll] = useState(false);
+
+	const socketCtx = useContext(SocketContext);
+	const optionsCtx = useContext(ChatOptionsContext);
+
+	const showFlair = optionsCtx?.chatOptions.showFlair === true;
+	const showTime = optionsCtx?.chatOptions.showTime === true;
+	const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
+	const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 
 	// uses css selector to target focusedUser messages
 	const focusedUserCssSelector = '.msg[data-author="' + focusedUser.toString() + '"]';
@@ -77,6 +82,12 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	// uses selector to highlight focusedUser messages and dim the rest
 	const containerCss = useMemo(() => {
 		let cssObj = {};
+
+		if (hide)
+			cssObj = {
+				...cssObj,
+				visibility: 'hidden',
+			};
 
 		if (focusedUser)
 			cssObj = {
@@ -90,55 +101,86 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			};
 
 		return cssObj;
-	}, [focusedUser, focusedUserCssSelector]);
+	}, [hide, focusedUser, focusedUserCssSelector]);
 
+	// control how messages are rendered through css selectors rather than re-rendering components
 	const messagesContainerCss = useMemo(() => {
 		let cssObj = {};
-		if (freeScroll)
+
+		if (!showFlair)
 			cssObj = {
 				...cssObj,
-				'&::after': {
-					opacity: 1,
+				'.author img': {
+					display: 'none',
+				},
+			};
+
+		if (!showTime)
+			cssObj = {
+				...cssObj,
+				time: {
+					display: 'none',
+				},
+			};
+
+		if (hideNsfw)
+			cssObj = {
+				...cssObj,
+				'& .nsfw': {
+					fontSize: 0,
+				},
+				'& .nsfw::before': {
+					content: '<NSFW>',
+					fontSize: '13px',
+					backgroundColor: theme.colors.grey800,
+				},
+				'& .nsfw:hover::before': {
+					backgroundColor: theme.colors.grey700,
+					cursor: 'pointer',
+				},
+			};
+
+		if (hideNsfl)
+			cssObj = {
+				...cssObj,
+				'& .nsfl': {
+					fontSize: 0,
+				},
+				'& .nsfl::before': {
+					content: '<NSFL>',
+					fontSize: '13px',
+					backgroundColor: theme.colors.grey800,
+				},
+				'& .nsfl:hover::before': {
+					backgroundColor: theme.colors.grey700,
+					cursor: 'pointer',
 				},
 			};
 
 		return cssObj;
-	}, [freeScroll]);
+	}, [freeScroll, showFlair, showTime, hideNsfw, hideNsfl]);
+
+	const shouldReRenderLiveMessages = freeScroll ? null : socketCtx?.messageLogs;
 
 	// live rendered messages
 	const liveMessages = useMemo(() => {
-		const showFlair = optionsCtx?.chatOptions.showFlair === true;
-		const showTime = optionsCtx?.chatOptions.showTime === true;
-		const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
-		const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
 
 		return socketCtx?.messageLogs.map((msg: Message) => (
 			<ChatMessage
 				key={msg.time + msg.author}
-				showFlair={showFlair}
-				showTime={showTime}
-				hideNsfw={hideNsfw}
-				hideNsfl={hideNsfl}
 				censorBadWords={censorBadWords}
 				msg={msg}
 				setFocusedUser={setFocusedUser}
 			/>
 		));
-	}, [
-		socketCtx?.messageLogs,
-		optionsCtx?.chatOptions.showTime,
-		optionsCtx?.chatOptions.showFlair,
-		optionsCtx?.chatOptions.hideNsfw,
-		optionsCtx?.chatOptions.hideNsfl,
-		optionsCtx?.chatOptions.censorBadWords,
-	]);
+	}, [shouldReRenderLiveMessages, optionsCtx?.chatOptions.censorBadWords]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
 		if (freeScroll) return liveMessages;
 		else return [];
-	}, [freeScroll, liveMessages]);
+	}, [freeScroll]);
 
 	// scrolls to bottom of chat
 	const scrollToBottom = () => {
@@ -169,7 +211,9 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 				</MessagesContainer>
 			</Container>
 			<BottomContainer>
-				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
+				<ScrollDownButton onClick={scrollToBottom} className={hide ? 'really-hide' : freeScroll ? '' : 'hide'}>
+					<RiArrowDownSLine />
+					UNPAUSE
 					<RiArrowDownSLine />
 				</ScrollDownButton>
 			</BottomContainer>
