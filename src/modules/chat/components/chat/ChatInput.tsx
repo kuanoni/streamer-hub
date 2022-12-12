@@ -17,8 +17,7 @@ const TextAreaWrapper = styled('div', {
 	display: 'flex',
 	height: 'auto',
 	padding: '.5rem',
-	border: `1px solid ${theme.colors.grey700}`,
-	borderRadius: 10,
+	border: `1px solid ${theme.colors.grey900}`,
 	borderRadius: theme.space.borderRad,
 });
 

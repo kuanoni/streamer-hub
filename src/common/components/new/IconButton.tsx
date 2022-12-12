@@ -10,8 +10,8 @@ const Container = styled('button', {
 	height: 36,
 	width: 36,
 	border: 'none',
-	color: theme.colors.grey500,
 	borderRadius: theme.space.borderRad,
+	color: theme.colors.grey700,
 	backgroundColor: 'transparent',
 	cursor: 'pointer',
 	transition: 'background-color .1s ease-out, color .1s ease-out',
@@ -21,11 +21,11 @@ const Container = styled('button', {
 	},
 	'&:hover': {
 		color: theme.colors.grey300,
-		backgroundColor: theme.colors.action,
+		backgroundColor: theme.colors.grey900,
 	},
 	'&:active': {
-		color: theme.colors.primary300,
-		backgroundColor: theme.colors.cover,
+		color: theme.colors.primary500,
+		backgroundColor: theme.colors.grey800,
 	},
 });
 

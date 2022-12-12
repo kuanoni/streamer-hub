@@ -16,8 +16,8 @@ const Header = styled('div', {
 	justifyContent: 'space-between',
 	alignItems: 'center',
 	padding: '.5rem 1rem',
-	backgroundColor: theme.colors.action,
-	borderBottom: `1px solid ${theme.colors.grey700}`,
+	backgroundColor: theme.colors.primary900,
+	borderBottom: `1px solid ${theme.colors.trinary700}`,
 	h2: {
 		margin: 0,
 		fontSize: '1.25rem',

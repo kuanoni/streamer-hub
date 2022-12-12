@@ -16,8 +16,7 @@ const moveIn = keyframes({
 
 const Container = styled(MessageBoxContainer, {
 	padding: '.5rem',
-	backgroundColor: theme.colors.action,
-	border: '1px solid ' + theme.colors.grey700,
+	backgroundColor: theme.colors.grey900,
 	animation: `${moveIn} .25s`,
 	h2: {
 		marginTop: 0,
