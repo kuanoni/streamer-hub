@@ -9,7 +9,7 @@ const Container = styled('div', {
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	padding: '.5rem',
+	padding: '.5rem 0',
 	backgroundColor: 'transparent',
 });
 

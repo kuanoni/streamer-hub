@@ -9,7 +9,7 @@ import IconButton from '@/components/new/IconButton';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {
-	padding: '.5rem',
+	padding: '.5rem 0',
 	height: 'auto',
 });
 

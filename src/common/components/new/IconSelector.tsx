@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
+const buttonSize = 36;
 const containerGap = 8;
 
 const Container = styled('div', {
+	visibility: 'hidden',
 	position: 'relative',
-	display: 'flex',
-	gap: containerGap,
-	backgroundColor: theme.colors.cover,
+	backgroundColor: theme.colors.primary900,
 	borderRadius: theme.space.borderRad,
 });
 
@@ -15,10 +15,10 @@ const Button = styled('button', {
 	display: 'inline-flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	width: 36,
-	height: 36,
+	width: buttonSize,
+	height: buttonSize,
 	padding: 0,
-	color: theme.colors.grey500,
+	color: theme.colors.textMedium,
 	backgroundColor: 'transparent',
 	border: 'none',
 	borderRadius: theme.space.borderRad,
@@ -27,9 +27,12 @@ const Button = styled('button', {
 	variants: {
 		selected: {
 			true: {
-				color: `${theme.colors.primary300} !important`,
+				color: `${theme.colors.textLightActive} !important`,
 			},
 		},
+	},
+	'&:not(:last-child)': {
+		marginRight: containerGap,
 	},
 	'&:hover': {
 		color: theme.colors.grey300,
@@ -37,15 +40,16 @@ const Button = styled('button', {
 	svg: {
 		width: '50%',
 		height: '50%',
+		zIndex: 1,
 	},
 });
 
 const Highlighter = styled('div', {
 	position: 'absolute',
 	top: 0,
-	width: 36,
-	height: 36,
-	backgroundColor: theme.colors.action,
+	width: buttonSize,
+	height: buttonSize,
+	backgroundColor: theme.colors.secondary900,
 	borderRadius: theme.space.borderRad,
 	transformOrigin: 'center',
 	transition: '.1s ease',

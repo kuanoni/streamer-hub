@@ -12,8 +12,7 @@ const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column-reverse',
 	height: '100%',
-	background: 'linear-gradient(180deg, rgba(63, 88, 148, 0.03) 0%, rgba(63, 88, 148, 0) 100%)',
-	overflowY: 'auto',
+	overflowY: 'scroll',
 	scrollbarWidth: 'thin',
 	scrollbarColor: `${theme.colors.primary900} ${theme.colors.grey900}`,
 });
@@ -28,9 +27,8 @@ const MessagesContainer = styled('div', {
 		position: 'absolute',
 		width: '100%',
 		height: '100%',
-		zIndex: 1,
 		opacity: 0,
-		boxShadow: 'rgba(51, 51, 51, 0.81) inset 0px 0px 5px 4px',
+		zIndex: 1,
 		transition: 'opacity .2s ease-out',
 		pointerEvents: 'none',
 	},
@@ -45,12 +43,15 @@ const BottomContainer = styled('div', {
 const ScrollDownButton = styled(MessageBoxContainer, {
 	display: 'flex',
 	justifyContent: 'center',
+	alignItems: 'center',
+	padding: '.25rem',
 	backgroundColor: theme.colors.primary900,
+	fontWeight: 700,
 	opacity: 0.9,
 	transition: '.2s ease',
 	svg: {
-		width: '2rem',
-		height: '2rem',
+		width: '1.5rem',
+		height: '1.5rem',
 	},
 	'&:hover': {
 		color: theme.colors.textLight,
@@ -170,6 +171,8 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			</Container>
 			<BottomContainer>
 				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
+					<RiArrowDownSLine />
+					UNPAUSE
 					<RiArrowDownSLine />
 				</ScrollDownButton>
 			</BottomContainer>
