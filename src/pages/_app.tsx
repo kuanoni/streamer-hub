@@ -3,6 +3,8 @@ import { SessionProvider } from 'next-auth/react';
 import AuthorizedPageWrapper from '@/components/AuthorizedPageWrapper';
 import { Page } from 'types/custom-auth';
 import Head from 'next/head';
+import NextNProgress from 'nextjs-progressbar';
+import { theme } from 'stiches.config';
 
 interface PageAppProps extends AppProps {
 	Component: Page;
@@ -18,6 +20,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 				<title>{pageTitle}</title>
 				<meta property='og:title' content={pageTitle} key='title' />
 			</Head>
+
+			<NextNProgress color={theme.colors.trinary500.toString()} />
 			{Component.authorizationOptions
 				? getLayout(
 						<AuthorizedPageWrapper authorizationOptions={Component.authorizationOptions}>
