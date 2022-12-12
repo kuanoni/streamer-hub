@@ -1,6 +1,6 @@
 import { styled, theme } from 'stiches.config';
 import { Message } from 'types/socketio';
-import { MessageType } from '@/modules/chat/common';
+import { MessageType, RankColors } from '@/modules/chat/common';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
 import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
@@ -75,26 +75,7 @@ const Author = styled('span', {
 	},
 
 	variants: {
-		rank: {
-			[Rank.DEFAULT]: {
-				color: 'rgb(255, 255, 255)',
-			},
-			[Rank.TIER_1]: {
-				color: 'rgb(72, 185, 190)',
-			},
-			[Rank.TIER_2]: {
-				color: 'rgb(72, 185, 240)',
-			},
-			[Rank.TIER_3]: {
-				color: 'rgb(20, 185, 255)',
-			},
-			[Rank.ORBITER]: {
-				color: 'rgb(240, 151, 72)',
-			},
-			[Rank.OWNER]: {
-				color: 'rgb(225, 53, 53)',
-			},
-		},
+		rank: RankColors,
 	},
 });
 
