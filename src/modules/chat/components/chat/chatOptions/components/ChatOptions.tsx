@@ -10,6 +10,7 @@ import ChatOptionsContext from './context/ChatOptionsContext';
 const Container = styled(AbsoluteContainer, {
 	display: 'flex',
 	flexDirection: 'column',
+	fontSize: '.9rem',
 });
 
 const Header = styled('div', {
@@ -51,12 +52,12 @@ const OptionsContent = styled('div', {
 });
 
 const OptionsSection = styled('div', {
-	padding: '.5rem 0',
+	padding: '.5em 0',
 	'.title': {
-		padding: '0 .5rem',
-		paddingBottom: '.25rem',
+		padding: '0 .5em',
+		paddingBottom: '.25em',
 		color: theme.colors.textDark,
-		fontSize: '.94rem',
+		fontSize: '.94em',
 		fontWeight: 700,
 		textTransform: 'uppercase',
 	},
