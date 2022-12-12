@@ -26,7 +26,7 @@ const Options = styled('div', {
 	padding: '.5rem 0',
 
 	backgroundColor: theme.colors.action,
-	borderRadius: 10,
+	borderRadius: theme.space.borderRad,
 	zIndex: 2,
 	transform: 'translateY(100%)',
 	animation: `${moveIn} .25s`,

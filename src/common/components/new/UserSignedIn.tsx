@@ -15,7 +15,7 @@ const SignInButton = styled('button', {
 	color: theme.colors.textLight,
 	backgroundColor: theme.colors.primary400,
 	border: 'none',
-	borderRadius: 5,
+	borderRadius: theme.space.borderRadHalf,
 	fontSize: '1rem',
 	cursor: 'pointer',
 	transition: '.1s ease',

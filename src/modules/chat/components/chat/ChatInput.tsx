@@ -19,6 +19,7 @@ const TextAreaWrapper = styled('div', {
 	padding: '.5rem',
 	border: `1px solid ${theme.colors.grey700}`,
 	borderRadius: 10,
+	borderRadius: theme.space.borderRad,
 });
 
 const TextArea = styled('textarea', {

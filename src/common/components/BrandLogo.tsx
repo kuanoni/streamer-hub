@@ -10,7 +10,7 @@ const Container = styled(Link, {
 	display: 'grid',
 	gridTemplateColumns: 'repeat(4, 1fr)',
 	gridTemplateRows: 'repeat(4, 1fr)',
-	borderRadius: 10,
+	borderRadius: theme.space.borderRad,
 	overflow: 'hidden',
 	transition: '.2s ease',
 	'&:hover': {

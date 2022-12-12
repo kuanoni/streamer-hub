@@ -8,7 +8,7 @@ const Container = styled('div', {
 	display: 'flex',
 	gap: containerGap,
 	backgroundColor: theme.colors.cover,
-	borderRadius: 10,
+	borderRadius: theme.space.borderRad,
 });
 
 const Button = styled('button', {
@@ -21,7 +21,7 @@ const Button = styled('button', {
 	color: theme.colors.grey500,
 	backgroundColor: 'transparent',
 	border: 'none',
-	borderRadius: 10,
+	borderRadius: theme.space.borderRad,
 	zIndex: 1,
 	cursor: 'pointer',
 	variants: {
@@ -46,7 +46,7 @@ const Highlighter = styled('div', {
 	width: 36,
 	height: 36,
 	backgroundColor: theme.colors.action,
-	borderRadius: 10,
+	borderRadius: theme.space.borderRad,
 	transformOrigin: 'center',
 	transition: '.1s ease',
 });

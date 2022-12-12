@@ -23,7 +23,7 @@ const Button = styled('button', {
 	fontSize: '1.25rem',
 	lineHeight: 1.5,
 	borderStyle: 'none',
-	borderRadius: '6px',
+	borderRadius: theme.space.borderRadHalf,
 	cursor: 'pointer',
 	img: {
 		width: '1rem',
