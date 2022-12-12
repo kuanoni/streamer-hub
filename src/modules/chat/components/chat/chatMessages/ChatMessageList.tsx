@@ -124,6 +124,8 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 		return cssObj;
 	}, [freeScroll]);
 
+	const shouldRenderLiveMessages = freeScroll ? null : socketCtx?.messageLogs;
+
 	// live rendered messages
 	const liveMessages = useMemo(() => {
 		const showFlair = optionsCtx?.chatOptions.showFlair === true;
@@ -145,7 +147,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 			/>
 		));
 	}, [
-		socketCtx?.messageLogs,
+		shouldRenderLiveMessages,
 		optionsCtx?.chatOptions.showTime,
 		optionsCtx?.chatOptions.showFlair,
 		optionsCtx?.chatOptions.hideNsfw,
@@ -157,7 +159,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const pausedMessages = useMemo(() => {
 		if (freeScroll) return liveMessages;
 		else return [];
-	}, [freeScroll, liveMessages]);
+	}, [freeScroll]);
 
 	// scrolls to bottom of chat
 	const scrollToBottom = () => {
