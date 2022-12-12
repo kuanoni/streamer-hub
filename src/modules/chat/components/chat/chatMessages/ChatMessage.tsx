@@ -2,10 +2,14 @@ import { styled, theme } from 'stiches.config';
 import { Message } from 'types/socketio';
 import { MessageType, RankColors } from '@/modules/chat/common';
 import { BsShieldFillExclamation, BsInfoCircleFill } from 'react-icons/bs';
-import { GiRank1, GiRank2, GiRank3 } from 'react-icons/gi';
 import { Rank } from 'types/custom-auth';
 import ChatMessageText from './ChatMessageText';
 import React from 'react';
+
+import Tier1 from '../../../../../../public/images/flairs/tier_1.png';
+import Tier2 from '../../../../../../public/images/flairs/tier_2.png';
+import Tier3 from '../../../../../../public/images/flairs/tier_3.png';
+import Image from 'next/image';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -69,7 +73,9 @@ const Author = styled('span', {
 		textDecoration: 'underline',
 		cursor: 'pointer',
 	},
-	svg: {
+	[`svg, img`]: {
+		maxWidth: '1rem',
+		maxHeight: '1rem',
 		verticalAlign: 'middle',
 		marginRight: '.25em',
 	},
@@ -90,9 +96,9 @@ const messageIcon: { [index: number]: React.ReactNode } = {
 };
 
 const RankFlair: { [index: string]: React.ReactNode } = {
-	[Rank.TIER_1]: <GiRank1 />,
-	[Rank.TIER_2]: <GiRank2 />,
-	[Rank.TIER_3]: <GiRank3 />,
+	[Rank.TIER_1]: <Image src={Tier1} alt='Tier 1 subscriber' />,
+	[Rank.TIER_2]: <Image src={Tier2} alt='Tier 2 subscriber' />,
+	[Rank.TIER_3]: <Image src={Tier3} alt='Tier 3 subscriber' />,
 };
 
 interface Props {
