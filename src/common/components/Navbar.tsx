@@ -57,7 +57,7 @@ const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
 					{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					<AlignRightContainer>
 						{children}
-						<UserSignedIn status={status} openSignIn={openSignIn} />
+						<UserSignedIn user={data?.user} status={status} openSignIn={openSignIn} />
 					</AlignRightContainer>
 				</Nav>
 			</Topbar>
