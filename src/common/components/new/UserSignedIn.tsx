@@ -1,6 +1,8 @@
+import { RankColors } from '@/modules/chat/common';
 import React, { useRef, useState, MouseEventHandler } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
+import { User } from 'types/custom-auth';
 import UserOptionsDropdown from './UserOptionsDropdown';
 
 const Container = styled('div', {
@@ -8,6 +10,13 @@ const Container = styled('div', {
 	display: 'flex',
 	gap: '1rem',
 	marginLeft: 'auto',
+});
+
+const Username = styled('span', {
+	marginRight: '1rem',
+	variants: {
+		rank: RankColors,
+	},
 });
 
 const SignInButton = styled('button', {
@@ -36,6 +45,9 @@ const SignedIn = styled('div', {
 	'&:hover': {
 		color: theme.colors.grey200,
 	},
+	[`&:hover ${Username}`]: {
+		textDecoration: 'underline',
+	},
 	'.profile-pic': {
 		width: '2rem',
 		height: '2rem',
@@ -51,11 +63,12 @@ const SignedIn = styled('div', {
 });
 
 interface Props {
+	user: User;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
 	openSignIn?: () => void;
 }
 
-const UserSignedIn = ({ status, openSignIn }: Props) => {
+const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const signedInRef = useRef<HTMLDivElement>(null);
 
@@ -69,6 +82,7 @@ const UserSignedIn = ({ status, openSignIn }: Props) => {
 		<Container>
 			{status === 'unauthenticated' && <SignInButton onClick={openSignIn}>Sign In</SignInButton>}
 			<SignedIn ref={signedInRef} onClick={handleClick}>
+				<Username rank={user.rank}>{user.displayName}</Username>
 				<BsPersonCircle className='profile-pic' />
 				<BsCaretDownFill className={'dropdown-caret' + (isDropdownOpen ? ' open' : '')} />
 			</SignedIn>
