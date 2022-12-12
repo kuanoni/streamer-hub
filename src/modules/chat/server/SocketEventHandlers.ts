@@ -7,7 +7,7 @@ import { Rank } from 'types/custom-auth';
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),
 	time: Joi.date().required(),
-	author: Joi.string().max(25).required(),
+	author: Joi.string().min(5).max(15).required(),
 	rank: Joi.string().valid(...Object.values(Rank)),
 	text: Joi.string().max(500).required(),
 });

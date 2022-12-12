@@ -12,10 +12,16 @@ const StyledInput = styled('input', {
 	display: 'block',
 });
 
+const displayNameRegex = /^[a-zA-Z0-9]+$/;
 const DisplayNameInput = ({ user }: Props) => {
 	const [displayNameValue, setDisplayNameValue] = useState('');
+	const submitDisplayName = async () => {
+		if (displayNameValue.length > 15) return console.log('Display name too long');
 
-	const changeDisplayName = async () => {
+		// validate display name here
+		if (!displayNameRegex.test(displayNameValue))
+			return console.log('Display name musr only containe letters or numbers');
+
 		const res = await fetch('/api/db/userSetDisplayName', {
 			method: 'PATCH',
 			body: JSON.stringify({ _id: user?.id, displayName: displayNameValue }),
