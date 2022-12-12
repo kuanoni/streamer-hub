@@ -16,7 +16,6 @@ const Container = styled('div', {
 	height: '100%',
 	minWidth: 300,
 	width: 300,
-	background: 'linear-gradient(rgba(63, 88, 148, 0.05) 0%, rgba(63, 88, 148, 0.05) 100%)',
 	overflow: 'auto',
 });
 
@@ -39,10 +38,10 @@ export const Chat = () => {
 		<Container>
 			<SocketProvider>
 				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
-				<ChatControlsTop />
+				{!isChatOptionsOpen && <ChatControlsTop />}
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<ChatMessageList closePopup={closePopup} />
+						{!isChatOptionsOpen && <ChatMessageList closePopup={closePopup} />}
 						{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
 					</MessagesSection>
 				</ChatOptionsProvider>
