@@ -24,6 +24,7 @@ export interface PageAuthorizationOptions {
 }
 
 export type Page = NextComponentType & {
+	title?: string;
 	getLayout?: (page: ReactElement) => ReactNode;
 	authorizationOptions?: PageAuthorizationOptions | undefined;
 };
