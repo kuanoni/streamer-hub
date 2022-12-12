@@ -48,7 +48,7 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 	backgroundColor: theme.colors.primary900,
 	fontWeight: 700,
 	opacity: 0.9,
-	transition: '.2s ease',
+	transition: 'opacity .2s ease',
 	svg: {
 		width: '1.5rem',
 		height: '1.5rem',
@@ -62,9 +62,18 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 		opacity: 0,
 		pointerEvents: 'none',
 	},
+	'&.really-hide': {
+		visibility: 'hidden',
+		pointerEvents: 'none',
+	},
 });
 
-const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
+interface Props {
+	closePopup: () => void;
+	hide: boolean;
+}
+
+const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const socketCtx = useContext(SocketContext);
 	const optionsCtx = useContext(ChatOptionsContext);
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
@@ -79,6 +88,15 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 	const containerCss = useMemo(() => {
 		let cssObj = {};
 
+		if (hide)
+			cssObj = {
+				...cssObj,
+				visibility: 'hidden',
+				[`${ScrollDownButton}`]: {
+					visibility: 'hidden',
+				},
+			};
+
 		if (focusedUser)
 			cssObj = {
 				...cssObj,
@@ -91,7 +109,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 			};
 
 		return cssObj;
-	}, [focusedUser, focusedUserCssSelector]);
+	}, [hide, focusedUser, focusedUserCssSelector]);
 
 	const messagesContainerCss = useMemo(() => {
 		let cssObj = {};
@@ -170,7 +188,7 @@ const ChatMessageList = ({ closePopup }: { closePopup: Function }) => {
 				</MessagesContainer>
 			</Container>
 			<BottomContainer>
-				<ScrollDownButton onClick={scrollToBottom} className={freeScroll ? '' : 'hide'}>
+				<ScrollDownButton onClick={scrollToBottom} className={hide ? 'really-hide' : freeScroll ? '' : 'hide'}>
 					<RiArrowDownSLine />
 					UNPAUSE
 					<RiArrowDownSLine />

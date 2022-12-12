@@ -41,7 +41,7 @@ export const Chat = () => {
 				{!isChatOptionsOpen && <ChatControlsTop />}
 				<ChatOptionsProvider>
 					<MessagesSection>
-						{!isChatOptionsOpen && <ChatMessageList closePopup={closePopup} />}
+						<ChatMessageList closePopup={closePopup} hide={isChatOptionsOpen} />
 						{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
 					</MessagesSection>
 				</ChatOptionsProvider>
