@@ -70,7 +70,6 @@ interface Props {
 
 const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const signedInRef = useRef<HTMLDivElement>(null);
 
 	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
 		// prevents click event from being passed to newly created event listener in UserDropdownOptions
@@ -81,8 +80,8 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 	return (
 		<Container>
 			{status === 'unauthenticated' && <SignInButton onClick={openSignIn}>Sign In</SignInButton>}
-			<SignedIn ref={signedInRef} onClick={handleClick}>
-				<Username rank={user.rank}>{user.displayName}</Username>
+			<SignedIn onClick={handleClick}>
+				{status === 'authenticated' && <Username rank={user.rank}>{user.displayName}</Username>}
 				<BsPersonCircle className='profile-pic' />
 				<BsCaretDownFill className={'dropdown-caret' + (isDropdownOpen ? ' open' : '')} />
 			</SignedIn>
