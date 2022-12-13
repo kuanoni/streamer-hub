@@ -6,7 +6,7 @@ import BUNGER from '@images/emotes/BUNGER.gif';
 import Clap from '@images/emotes/Clap.gif';
 import CoolCat from '@images/emotes/CoolCat.png';
 import EZY from '@images/emotes/EZY.png';
-import ForsenGun from '@images/emotes/ForsenGun.png';
+import ForsenGun from '@images/emotes/forsenGun.png';
 import LUL from '@images/emotes/LUL.png';
 import MonkaW from '@images/emotes/MonkaW.png';
 import OMEGALUL from '@images/emotes/OMEGALUL.png';
