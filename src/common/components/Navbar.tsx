@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 import SignIn from './SignIn';
 import { AuthPerms } from 'types/custom-auth';
@@ -11,6 +11,12 @@ import BrandLogo from './BrandLogo';
 const Topbar = styled('div', {
 	position: 'relative',
 	display: 'flex',
+	width: '100%',
+	maxWidth: theme.space.pageWidth,
+	margin: '0 auto',
+	'&.full-width': {
+		maxWidth: 'none',
+	},
 });
 
 const Nav = styled('nav', {
@@ -27,7 +33,12 @@ const AlignRightContainer = styled('div', {
 	marginLeft: 'auto',
 });
 
-const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
+interface Props {
+	fullWidth?: boolean;
+	children?: ReactNode;
+}
+
+const Navbar = ({ fullWidth = false, children }: Props) => {
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 	const router = useRouter();
@@ -48,7 +59,7 @@ const Navbar: FC<{ children?: React.ReactNode }> = ({ children }) => {
 	return (
 		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
-			<Topbar>
+			<Topbar className={fullWidth ? 'full-width' : ''}>
 				<BrandLogo />
 				<Nav>
 					<NavButton link='/'>Home</NavButton>
