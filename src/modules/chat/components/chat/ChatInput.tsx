@@ -4,8 +4,8 @@ import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
 import { MessageType } from '../../common';
 import { useSession } from 'next-auth/react';
-import { MessageWithoutTime } from 'types/socketio';
-import IconButton from '@/components/new/IconButton';
+import { MessageWithoutTime } from '@types/socketio';
+import IconButton from '@components/new/IconButton';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {

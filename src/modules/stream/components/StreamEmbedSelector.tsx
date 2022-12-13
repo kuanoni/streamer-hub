@@ -1,4 +1,4 @@
-import IconSelector from '@/components/new/IconSelector';
+import IconSelector from '@components/new/IconSelector';
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import { BsTwitch, BsYoutube, BsFacebook } from 'react-icons/bs';
 import { StreamSource } from './context/StreamContext';

@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io';
-import { Message } from 'types/socketio';
+import { Message } from '@types/socketio';
 import Joi from 'joi';
 import { MessageType, SocketRooms, SocketEvents } from '../common';
-import { Rank } from 'types/custom-auth';
+import { Rank } from '@types/custom-auth';
 
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),

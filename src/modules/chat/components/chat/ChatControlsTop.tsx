@@ -1,6 +1,6 @@
-import IconButton from '@/components/new/IconButton';
-import StreamContext from '@/modules/stream/components/context/StreamContext';
-import StreamEmbedSelector from '@/modules/stream/components/StreamEmbedSelector';
+import IconButton from '@components/new/IconButton';
+import StreamContext from '@modules/stream/components/context/StreamContext';
+import StreamEmbedSelector from '@modules/stream/components/StreamEmbedSelector';
 import React, { FC, useContext } from 'react';
 import { BsArrowUpRightSquareFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';

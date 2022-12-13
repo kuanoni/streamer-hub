@@ -1,9 +1,9 @@
-import StreamSection from '@/modules/stream/components/StreamSection';
-import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
-import { Chat } from '@/modules/chat/components/chat/Chat';
+import StreamSection from '@modules/stream/components/StreamSection';
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
+import { Chat } from '@modules/chat/components/chat/Chat';
 import React from 'react';
 import { styled } from 'stiches.config';
-import StreamPageLayout from '@/modules/stream/components/layouts/StreamPageLayout';
+import StreamPageLayout from '@modules/stream/components/layouts/StreamPageLayout';
 import Head from 'next/head';
 
 const RelativeContainer = styled('div', {

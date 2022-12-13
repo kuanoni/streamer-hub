@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react';
 import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 import SignIn from './SignIn';
-import { AuthPerms } from 'types/custom-auth';
+import { AuthPerms } from '@types/custom-auth';
 import { useRouter } from 'next/router';
 import NavButton from './new/NavButton';
 import UserSignedIn from './new/UserSignedIn';

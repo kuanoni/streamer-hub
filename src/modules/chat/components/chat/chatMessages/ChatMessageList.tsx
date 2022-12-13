@@ -2,8 +2,8 @@ import { styled, theme } from 'stiches.config';
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import { Message } from 'types/socketio';
-import { MessageBoxContainer } from '@/modules/chat/styles';
+import { Message } from '@types/socketio';
+import { MessageBoxContainer } from '@modules/chat/styles';
 import SocketContext from '../../context/SocketContext';
 import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
 

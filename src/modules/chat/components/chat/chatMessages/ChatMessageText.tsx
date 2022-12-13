@@ -1,5 +1,5 @@
-import { injectTextWithEmotes } from '@/modules/chat/utils/injectTextWithEmotes';
-import { injectTextWithLinks } from '@/modules/chat/utils/injectTextWithLinks';
+import { injectTextWithEmotes } from '@modules/chat/utils/injectTextWithEmotes';
+import { injectTextWithLinks } from '@modules/chat/utils/injectTextWithLinks';
 import React, { ReactNode, useState } from 'react';
 import { styled } from 'stiches.config';
 

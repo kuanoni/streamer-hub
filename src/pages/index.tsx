@@ -1,4 +1,4 @@
-import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 
 export default function Home() {
 	return <div>home</div>;

@@ -1,4 +1,4 @@
-import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import React from 'react';
 
 const Videos = () => {

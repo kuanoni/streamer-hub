@@ -1,4 +1,4 @@
-import clientPromise from '@/utils/mongodb';
+import clientPromise from '@utils/mongodb';
 import { ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 

@@ -1,10 +1,10 @@
-import extractStringEnvVar from '@/utils/extractStringEnvVar';
+import extractStringEnvVar from '@utils/extractStringEnvVar';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from '@/utils/mongodb';
+import clientPromise from '@utils/mongodb';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import DiscordProvider from 'next-auth/providers/discord';
-import { AuthPerms, Rank } from 'types/custom-auth';
+import { AuthPerms, Rank } from '@types/custom-auth';
 
 const defaultProfile = {
 	displayName: '',

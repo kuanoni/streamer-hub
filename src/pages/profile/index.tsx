@@ -1,9 +1,9 @@
-import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 import { styled } from 'stiches.config';
-import { AuthPerms } from 'types/custom-auth';
-import DisplayNameInput from '@/components/DisplayNameInput';
+import { AuthPerms } from '@types/custom-auth';
+import DisplayNameInput from '@components/DisplayNameInput';
 
 const Container = styled('div', {
 	padding: '1rem 2rem',
