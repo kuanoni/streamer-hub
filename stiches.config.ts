@@ -58,6 +58,8 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			border: '#270043',
 		},
 		space: {
+			pageWidth: '1140px',
+
 			borderRad: '5px',
 			borderRadHalf: '2.5px',
 		},
