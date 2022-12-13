@@ -6,7 +6,7 @@ type Props = {
 };
 
 const StreamProvider = ({ children }: Props) => {
-	const [streamSource, setStreamSource] = useState<StreamSource>('twitch');
+	const [streamSource, setStreamSource] = useState<StreamSource>('facebook');
 
 	const providerValue: StreamProviderIface = {
 		streamSource,
