@@ -1,5 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { styled, theme } from 'stiches.config';
+
 import { AbsoluteContainer, RelativeContainer } from '../styles';
 import StreamContext from './context/StreamContext';
 

@@ -1,4 +1,4 @@
-import { Rank } from 'types/custom-auth';
+import { Rank } from '@globalTypes/custom-auth';
 
 export enum MessageType {
 	SERVER,

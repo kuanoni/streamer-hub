@@ -1,5 +1,6 @@
 import { Socket } from 'socket.io-client';
-import { Message, MessageWithoutTime } from 'types/socketio';
+
+import { Message, MessageWithoutTime } from '@globalTypes/socketio';
 
 export interface SocketProviderIface {
 	readonly socket: Socket | null;

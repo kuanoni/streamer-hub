@@ -1,7 +1,8 @@
-import { SocketEvents } from '@/modules/chat/common';
-import extractStringEnvVar from '@/utils/extractStringEnvVar';
 import { NextApiRequest } from 'next';
-import { NextApiResponseWithSocket } from 'types/socketio';
+
+import { NextApiResponseWithSocket } from '@globalTypes/socketio';
+import { SocketEvents } from '@modules/chat/common';
+import extractStringEnvVar from '@utils/extractStringEnvVar';
 
 const emitMessage = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 	if (!res.socket.server.io) return res.send({ status: 500, message: 'Socket server not running' });

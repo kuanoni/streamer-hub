@@ -1,5 +1,6 @@
-import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
 import React from 'react';
+
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 
 const Videos = () => {
 	return <div>Videos</div>;

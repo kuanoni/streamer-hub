@@ -1,6 +1,8 @@
-import Navbar from '@/components/Navbar';
 import React from 'react';
 import { styled } from 'stiches.config';
+
+import Navbar from '@components/Navbar';
+
 import StreamProvider from '../context/StreamProvider';
 
 type Props = {

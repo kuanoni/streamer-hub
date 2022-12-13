@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import StreamContext, { StreamSource, StreamProviderIface } from './StreamContext';
+
+import StreamContext, { StreamProviderIface, StreamSource } from './StreamContext';
 
 type Props = {
 	children: React.ReactNode;

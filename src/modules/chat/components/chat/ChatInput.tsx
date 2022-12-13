@@ -1,12 +1,14 @@
+import { useSession } from 'next-auth/react';
 import React, { useContext, useRef } from 'react';
+import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
+
+import IconButton from '@components/new/IconButton';
+import { MessageWithoutTime } from '@globalTypes/socketio';
+
+import { MessageType } from '../../common';
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
-import { MessageType } from '../../common';
-import { useSession } from 'next-auth/react';
-import { MessageWithoutTime } from 'types/socketio';
-import IconButton from '@/components/new/IconButton';
-import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 
 const Container = styled('div', {
 	padding: '.5rem 0',

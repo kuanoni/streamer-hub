@@ -1,7 +1,8 @@
-import { injectTextWithEmotes } from '@/modules/chat/utils/injectTextWithEmotes';
-import { injectTextWithLinks } from '@/modules/chat/utils/injectTextWithLinks';
 import React, { ReactNode, useState } from 'react';
 import { styled } from 'stiches.config';
+
+import { injectTextWithEmotes } from '@modules/chat/utils/injectTextWithEmotes';
+import { injectTextWithLinks } from '@modules/chat/utils/injectTextWithLinks';
 
 const Text = styled('span', {
 	maxWidth: '100%',

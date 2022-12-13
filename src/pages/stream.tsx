@@ -1,10 +1,11 @@
-import StreamSection from '@/modules/stream/components/StreamSection';
-import LayoutWithNavbar from '@/layouts/LayoutWithNavbar';
-import { Chat } from '@/modules/chat/components/chat/Chat';
+import Head from 'next/head';
 import React from 'react';
 import { styled } from 'stiches.config';
-import StreamPageLayout from '@/modules/stream/components/layouts/StreamPageLayout';
-import Head from 'next/head';
+
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
+import { Chat } from '@modules/chat/components/chat/Chat';
+import StreamPageLayout from '@modules/stream/components/layouts/StreamPageLayout';
+import StreamSection from '@modules/stream/components/StreamSection';
 
 const RelativeContainer = styled('div', {
 	position: 'relative',

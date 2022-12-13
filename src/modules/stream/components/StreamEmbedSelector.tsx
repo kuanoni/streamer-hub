@@ -1,6 +1,8 @@
-import IconSelector from '@/components/new/IconSelector';
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { BsTwitch, BsYoutube, BsFacebook } from 'react-icons/bs';
+import { BsFacebook, BsTwitch, BsYoutube } from 'react-icons/bs';
+
+import IconSelector from '@components/new/IconSelector';
+
 import { StreamSource } from './context/StreamContext';
 
 interface Props {

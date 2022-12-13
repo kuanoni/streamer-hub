@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'stiches.config';
-import { RelativeContainer, AbsoluteContainer } from '../styles';
+
+import { AbsoluteContainer, RelativeContainer } from '../styles';
 import StreamEmbed from './StreamEmbed';
 
 const StreamEmbedContainer = styled(AbsoluteContainer, {
