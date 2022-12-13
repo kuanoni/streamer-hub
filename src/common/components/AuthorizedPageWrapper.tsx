@@ -1,6 +1,6 @@
-import { useSession } from 'next-auth/react';
+import { PageAuthorizationOptions } from '@globalTypes/custom-auth';
 import { useRouter } from 'next/router';
-import { PageAuthorizationOptions } from '@types/custom-auth';
+import { useSession } from 'next-auth/react';
 
 type Props = {
 	authorizationOptions: PageAuthorizationOptions;

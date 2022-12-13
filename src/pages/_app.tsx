@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
-import { SessionProvider } from 'next-auth/react';
 import AuthorizedPageWrapper from '@components/AuthorizedPageWrapper';
-import { Page } from '@types/custom-auth';
 import Head from 'next/head';
 import NextNProgress from 'nextjs-progressbar';
+import { Page } from '@globalTypes/custom-auth';
+import { SessionProvider } from 'next-auth/react';
 import { theme } from 'stiches.config';
 
 interface PageAppProps extends AppProps {

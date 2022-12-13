@@ -22,7 +22,7 @@
         "@pages/*": ["src/pages/*"],
         "@modules/*": ["src/modules/*"],
         "@images/*": ["public/images/*"],
-        "@types/*": ["types/*"]
+        "@globalTypes/*": ["types/*"]
     },
     "typeRoots": ["./types"]
   },
