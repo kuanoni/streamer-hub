@@ -21,6 +21,7 @@
         "@/utils/*": ["src/common/utils/*"],
         "@/pages/*": ["src/pages/*"],
         "@/modules/*": ["src/modules/*"],
+        "@/images/*": ["public/images/*"]
     },
     "typeRoots": ["./types"]
   },

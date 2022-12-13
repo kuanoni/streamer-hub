@@ -6,9 +6,9 @@ import { Rank } from 'types/custom-auth';
 import ChatMessageText from './ChatMessageText';
 import React from 'react';
 
-import Tier1 from '../../../../../../public/images/flairs/tier_1.png';
-import Tier2 from '../../../../../../public/images/flairs/tier_2.png';
-import Tier3 from '../../../../../../public/images/flairs/tier_3.png';
+import Tier1 from '@/images/flairs/tier_1.png';
+import Tier2 from '@/images/flairs/tier_2.png';
+import Tier3 from '@/images/flairs/tier_3.png';
 import Image from 'next/image';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
