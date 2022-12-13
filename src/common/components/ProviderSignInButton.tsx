@@ -1,9 +1,10 @@
-import Image, { StaticImageData } from 'next/image';
 import { signIn } from 'next-auth/react';
+import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
-import google from '@images/providers/google.png';
+
 import discord from '@images/providers/discord.png';
+import google from '@images/providers/google.png';
 
 interface Props {
 	provider: string;

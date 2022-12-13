@@ -1,4 +1,5 @@
 import { NextApiRequest } from 'next';
+
 import { NextApiResponseWithSocket } from '@globalTypes/socketio';
 import { SocketEvents } from '@modules/chat/common';
 import extractStringEnvVar from '@utils/extractStringEnvVar';

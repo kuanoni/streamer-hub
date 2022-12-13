@@ -1,12 +1,13 @@
-import { Message, MessageWithoutTime } from '@globalTypes/socketio';
-import { MessageType, SocketEvents } from '../../common';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
 import { Rank } from '@globalTypes/custom-auth';
+import { Message, MessageWithoutTime } from '@globalTypes/socketio';
+
+import { MessageType, SocketEvents } from '../../common';
 import SocketContext from './SocketContext';
 import { SocketProviderIface } from './SocketProviderIface';
-import { useSession } from 'next-auth/react';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();

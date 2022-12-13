@@ -1,7 +1,7 @@
-import { AuthPerms, Page } from '@globalTypes/custom-auth';
-
-import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import React from 'react';
+
+import { AuthPerms, Page } from '@globalTypes/custom-auth';
+import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 
 const Admin: Page = () => {
 	return <div>Admin</div>;

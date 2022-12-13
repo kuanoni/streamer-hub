@@ -1,7 +1,9 @@
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useCallback, useEffect } from 'react';
-import { BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill } from 'react-icons/bs';
+import {
+    BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill
+} from 'react-icons/bs';
 import { keyframes, styled, theme } from 'stiches.config';
 
 const moveIn = keyframes({

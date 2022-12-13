@@ -1,7 +1,7 @@
+import Router from 'next/router';
 import React, { useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
-import Router from 'next/router';
 import { User } from '@globalTypes/custom-auth';
 
 interface Props {

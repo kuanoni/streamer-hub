@@ -1,6 +1,7 @@
-import Navbar from '@components/Navbar';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
+
+import Navbar from '@components/Navbar';
 
 type Props = {
 	children?: React.ReactNode;

@@ -1,11 +1,13 @@
-import OptionsCheckbox from './OptionsCheckbox';
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
-import OptionsDropdown from './OptionsDropdown';
+
 import { AbsoluteContainer } from '@modules/chat/styles';
-import { Section, OptionItem } from '../types';
+
+import { OptionItem, Section } from '../types';
 import ChatOptionsContext from './context/ChatOptionsContext';
+import OptionsCheckbox from './OptionsCheckbox';
+import OptionsDropdown from './OptionsDropdown';
 
 const Container = styled(AbsoluteContainer, {
 	display: 'flex',

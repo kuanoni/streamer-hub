@@ -1,19 +1,20 @@
 import { StaticImageData } from 'next/image';
-import ResidentSleeper from '@images/emotes/ResidentSleeper.png';
-import LUL from '@images/emotes/LUL.png';
-import BUNGER from '@images/emotes/BUNGER.gif';
-import BibleThump from '@images/emotes/BibleThump.png';
-import CoolCat from '@images/emotes/CoolCat.png';
+
 import BabyRage from '@images/emotes/BabyRage.png';
+import BibleThump from '@images/emotes/BibleThump.png';
+import BUNGER from '@images/emotes/BUNGER.gif';
+import Clap from '@images/emotes/Clap.gif';
+import CoolCat from '@images/emotes/CoolCat.png';
 import EZY from '@images/emotes/EZY.png';
+import ForsenGun from '@images/emotes/ForsenGun.png';
+import LUL from '@images/emotes/LUL.png';
 import MonkaW from '@images/emotes/MonkaW.png';
 import OMEGALUL from '@images/emotes/OMEGALUL.png';
 import Pog from '@images/emotes/Pog.png';
 import POGGERS from '@images/emotes/POGGERS.png';
-import Clap from '@images/emotes/Clap.gif';
-import ForsenGun from '@images/emotes/ForsenGun.png';
-
+import ResidentSleeper from '@images/emotes/ResidentSleeper.png';
 import { CSS } from '@stitches/react';
+
 import { StyledEmote } from '../styles';
 
 interface EmotesIface {

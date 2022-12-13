@@ -1,7 +1,8 @@
-import IconButton from '@components/new/IconButton';
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import { BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
+
+import IconButton from '@components/new/IconButton';
 
 const Container = styled('div', {
 	display: 'flex',

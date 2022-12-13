@@ -1,9 +1,10 @@
-import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import React, { MouseEventHandler, useRef, useState } from 'react';
+import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import { RankColors } from '@modules/chat/common';
 import { User } from '@globalTypes/custom-auth';
+import { RankColors } from '@modules/chat/common';
+
 import UserOptionsDropdown from './UserOptionsDropdown';
 
 const Container = styled('div', {

@@ -1,15 +1,16 @@
+import Image from 'next/image';
+import React from 'react';
 import { BsInfoCircleFill, BsShieldFillExclamation } from 'react-icons/bs';
-import { MessageType, RankColors } from '@modules/chat/common';
 import { styled, theme } from 'stiches.config';
 
-import ChatMessageText from './ChatMessageText';
-import Image from 'next/image';
-import { Message } from '@globalTypes/socketio';
 import { Rank } from '@globalTypes/custom-auth';
-import React from 'react';
+import { Message } from '@globalTypes/socketio';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
+import { MessageType, RankColors } from '@modules/chat/common';
+
+import ChatMessageText from './ChatMessageText';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',

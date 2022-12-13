@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { styled } from '@stitches/react';
 import { keyframes } from 'stiches.config';
+
+import { styled } from '@stitches/react';
 
 interface props {
 	isOpen: Boolean;

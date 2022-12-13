@@ -1,13 +1,14 @@
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { AuthPerms } from '@globalTypes/custom-auth';
+
 import BrandLogo from './BrandLogo';
 import NavButton from './new/NavButton';
-import SignIn from './SignIn';
 import UserSignedIn from './new/UserSignedIn';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import SignIn from './SignIn';
 
 const Topbar = styled('div', {
 	position: 'relative',

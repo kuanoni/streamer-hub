@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+
 import extractStringEnvVar from './extractStringEnvVar';
 
 declare global {

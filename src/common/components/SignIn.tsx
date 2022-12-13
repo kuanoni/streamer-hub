@@ -1,6 +1,7 @@
 import React from 'react';
-import Modal from './Modal';
 import { styled, theme } from 'stiches.config';
+
+import Modal from './Modal';
 import ProviderSignInButton from './ProviderSignInButton';
 
 interface Props {

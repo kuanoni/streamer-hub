@@ -1,12 +1,13 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
+import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import ChatMessage from './ChatMessage';
-import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
 import { Message } from '@globalTypes/socketio';
 import { MessageBoxContainer } from '@modules/chat/styles';
-import { RiArrowDownSLine } from 'react-icons/ri';
+
 import SocketContext from '../../context/SocketContext';
+import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
+import ChatMessage from './ChatMessage';
 
 const Container = styled('div', {
 	position: 'relative',
