@@ -8,7 +8,7 @@ const Container = styled('div', {
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	backgroundColor: 'transparent',
+	paddingRight: '.5rem',
 });
 
 type Props = {
