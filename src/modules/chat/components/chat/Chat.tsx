@@ -39,7 +39,7 @@ export const Chat = () => {
 		<Container>
 			<SocketProvider>
 				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
-				{!isChatOptionsOpen && <ChatControlsTop />}
+				<ChatControlsTop />
 				<ChatOptionsProvider>
 					<MessagesSection>
 						<ChatMessageList closePopup={closePopup} hide={isChatOptionsOpen} />
