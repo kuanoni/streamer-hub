@@ -1,6 +1,6 @@
 import { NextComponentType } from 'next';
-import { ReactElement, ReactNode } from 'react';
 import { DefaultSession } from 'next-auth';
+import { ReactElement, ReactNode } from 'react';
 
 export enum AuthPerms {
 	ADMIN,
@@ -34,6 +34,7 @@ export type User = DefaultSession['user'] & {
 	role: AuthPerms;
 	rank: Rank;
 	displayName: string;
+	avatar: string;
 };
 
 export interface Session {
