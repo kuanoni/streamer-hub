@@ -1,10 +1,10 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { BsArrowUpRightSquareFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 import Dropdown from '@components/ui/Dropdown';
-import StreamContext, { StreamSource } from '@modules/stream/components/context/StreamContext';
+import StreamContext from '@modules/stream/components/context/StreamContext';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -14,21 +14,19 @@ const Container = styled('div', {
 	backgroundColor: 'transparent',
 });
 
-const ChatControlsTop: FC = () => {
+const ChatControlsTop = () => {
 	const ctx = useContext(StreamContext);
-	const [streamEmbedSource, setStreamEmbedSource] = useState<StreamSource>(ctx?.streamSource || 'facebook');
 
-	useEffect(() => {
-		if (ctx?.streamSource !== streamEmbedSource) ctx?.setStreamSource(streamEmbedSource);
-	}, [ctx?.streamSource, ctx?.setStreamSource, streamEmbedSource]);
+	const streamSource = ctx?.isLoaded ? ctx.streamSource : '--------';
+	const changeStreamSource = ctx?.isLoaded ? ctx.changeStreamSource : () => {};
 
 	return (
 		<Container>
 			<Dropdown
 				color='dark'
 				options={['twitch', 'youtube', 'facebook']}
-				value={streamEmbedSource}
-				chooseOption={setStreamEmbedSource}
+				value={streamSource}
+				chooseOption={changeStreamSource}
 			/>
 			<Button color='dark' content='icon' onClick={() => {}}>
 				<BsArrowUpRightSquareFill />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import StreamContext, { StreamProviderIface, StreamSource } from './StreamContext';
 
@@ -7,11 +7,23 @@ type Props = {
 };
 
 const StreamProvider = ({ children }: Props) => {
-	const [streamSource, setStreamSource] = useState<StreamSource>('facebook');
+	const [streamSource, setStreamSource] = useState<StreamSource>('twitch');
+	const [isLoaded, setIsLoaded] = useState(false);
+
+	const changeStreamSource = (newSource: StreamSource) => {
+		localStorage.setItem('streamEmbedSource', newSource);
+		setStreamSource(newSource);
+	};
+
+	useEffect(() => {
+		setStreamSource(localStorage.getItem('streamEmbedSource') as StreamSource);
+		setIsLoaded(true);
+	}, [setStreamSource, setIsLoaded]);
 
 	const providerValue: StreamProviderIface = {
+		isLoaded,
 		streamSource,
-		setStreamSource,
+		changeStreamSource,
 	};
 
 	return <StreamContext.Provider value={providerValue}>{children}</StreamContext.Provider>;
