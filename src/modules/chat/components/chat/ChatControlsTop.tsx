@@ -1,10 +1,10 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { BsArrowUpRightSquareFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
 import IconButton from '@components/new/IconButton';
-import StreamContext from '@modules/stream/components/context/StreamContext';
-import StreamEmbedSelector from '@modules/stream/components/StreamEmbedSelector';
+import Dropdown from '@components/ui/Dropdown';
+import StreamContext, { StreamSource } from '@modules/stream/components/context/StreamContext';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -16,10 +16,20 @@ const Container = styled('div', {
 
 const ChatControlsTop: FC = () => {
 	const ctx = useContext(StreamContext);
+	const [streamEmbedSource, setStreamEmbedSource] = useState<StreamSource>(ctx?.streamSource || 'facebook');
+
+	useEffect(() => {
+		if (ctx?.streamSource !== streamEmbedSource) ctx?.setStreamSource(streamEmbedSource);
+	}, [ctx?.streamSource, ctx?.setStreamSource, streamEmbedSource]);
 
 	return (
 		<Container>
-			<StreamEmbedSelector streamSource={ctx?.streamSource || 'twitch'} setStreamSource={ctx?.setStreamSource} />
+			<Dropdown
+				color='dark'
+				options={['twitch', 'youtube', 'facebook']}
+				value={streamEmbedSource}
+				chooseOption={setStreamEmbedSource}
+			/>
 			<IconButton onClick={() => {}}>
 				<BsArrowUpRightSquareFill />
 			</IconButton>

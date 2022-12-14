@@ -46,7 +46,7 @@ const StreamEmbed = () => {
 						<StyledIframe
 							width='100%'
 							height='100%'
-							src='https://www.youtube.com/embed/live_stream?channel=UCM2fsEsL6rW99JYMPFmwgtA'
+							src='https://www.youtube.com/embed/j_A_jAsuZD8/embed/live_stream?channel=UCM2fsEsL6rW99JYMPFmwgtA&origin=http://localhost:3000/'
 						/>
 					) : (
 						''
