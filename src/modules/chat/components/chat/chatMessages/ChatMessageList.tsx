@@ -23,6 +23,7 @@ const MessagesContainer = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column',
+	paddingBottom: '.25rem',
 });
 
 const BottomContainer = styled('div', {
