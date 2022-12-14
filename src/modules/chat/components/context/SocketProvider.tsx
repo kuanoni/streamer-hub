@@ -6,8 +6,7 @@ import { Rank } from '@globalTypes/custom-auth';
 import { Message, MessageWithoutTime } from '@globalTypes/socketio';
 
 import { MessageType, SocketEvents } from '../../common';
-import SocketContext from './SocketContext';
-import { SocketProviderIface } from './SocketProviderIface';
+import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
@@ -62,7 +61,6 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	}, [data?.user?.role]);
 
 	const providerData: SocketProviderIface = Object.freeze({
-		socket,
 		messageLogs,
 		writeMessage,
 		sendMessage,
