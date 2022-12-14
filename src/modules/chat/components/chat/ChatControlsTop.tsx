@@ -2,8 +2,8 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { BsArrowUpRightSquareFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
+import Button from '@components/ui/Button';
 import Dropdown from '@components/ui/Dropdown';
-import IconButton from '@components/ui/IconButton';
 import StreamContext, { StreamSource } from '@modules/stream/components/context/StreamContext';
 
 const Container = styled('div', {
@@ -30,9 +30,9 @@ const ChatControlsTop: FC = () => {
 				value={streamEmbedSource}
 				chooseOption={setStreamEmbedSource}
 			/>
-			<IconButton onClick={() => {}}>
+			<Button color='dark' content='icon' onClick={() => {}}>
 				<BsArrowUpRightSquareFill />
-			</IconButton>
+			</Button>
 		</Container>
 	);
 };
