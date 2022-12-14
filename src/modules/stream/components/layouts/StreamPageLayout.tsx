@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'stiches.config';
 
-import Navbar from '@components/Navbar';
+import Navbar from '@components/Navbar/Navbar';
 
 import StreamProvider from '../context/StreamProvider';
 

@@ -5,10 +5,10 @@ import { styled, theme } from 'stiches.config';
 
 import { AuthPerms } from '@globalTypes/custom-auth';
 
+import SignIn from '../SignInModal';
 import BrandLogo from './BrandLogo';
-import NavButton from './new/NavButton';
-import UserSignedIn from './new/UserSignedIn';
-import SignIn from './SignIn';
+import NavButton from './NavButton';
+import UserSignedIn from './UserSignedIn';
 
 const Topbar = styled('div', {
 	position: 'relative',

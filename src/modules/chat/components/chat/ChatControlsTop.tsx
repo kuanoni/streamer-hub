@@ -2,8 +2,8 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { BsArrowUpRightSquareFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
-import IconButton from '@components/new/IconButton';
 import Dropdown from '@components/ui/Dropdown';
+import IconButton from '@components/ui/IconButton';
 import StreamContext, { StreamSource } from '@modules/stream/components/context/StreamContext';
 
 const Container = styled('div', {

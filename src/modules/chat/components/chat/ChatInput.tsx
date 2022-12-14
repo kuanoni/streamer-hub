@@ -3,7 +3,7 @@ import React, { useContext, useRef } from 'react';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import IconButton from '@components/new/IconButton';
+import IconButton from '@components/ui/IconButton';
 import { MessageWithoutTime } from '@globalTypes/socketio';
 
 import { MessageType } from '../../common';
