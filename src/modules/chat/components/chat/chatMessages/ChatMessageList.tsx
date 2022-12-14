@@ -55,6 +55,7 @@ const ScrollDownButton = styled(MessageBoxContainer, {
 		pointerEvents: 'none',
 	},
 	'&.really-hide': {
+		opacity: 0,
 		visibility: 'hidden',
 		pointerEvents: 'none',
 	},
