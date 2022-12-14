@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
-import DiscordProvider from 'next-auth/providers/discord';
-import GoogleProvider from 'next-auth/providers/google';
+import DiscordProvider, { DiscordProfile } from 'next-auth/providers/discord';
+import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
 
 import { AuthPerms, Rank } from '@globalTypes/custom-auth';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
@@ -19,9 +19,11 @@ export const authOptions: NextAuthOptions = {
 		GoogleProvider({
 			clientId: extractStringEnvVar('GOOGLE_ID'),
 			clientSecret: extractStringEnvVar('GOOGLE_SECRET'),
-			profile(profile) {
+			profile(profile: GoogleProfile) {
 				return {
 					id: profile.sub,
+					email: profile.email,
+					avatar: profile.picture,
 					...defaultProfile,
 				};
 			},
@@ -29,9 +31,14 @@ export const authOptions: NextAuthOptions = {
 		DiscordProvider({
 			clientId: extractStringEnvVar('DISCORD_CLIENT_ID'),
 			clientSecret: extractStringEnvVar('DISCORD_CLIENT_SECRET'),
-			profile(profile) {
+			profile(profile: DiscordProfile) {
+				const avatar = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.webp`;
+
 				return {
 					id: profile.id,
+					email: profile.email,
+					emailVerified: profile.verified,
+					avatar,
 					...defaultProfile,
 				};
 			},
