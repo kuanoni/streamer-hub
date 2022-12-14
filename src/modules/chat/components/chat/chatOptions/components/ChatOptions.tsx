@@ -3,16 +3,27 @@ import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { AbsoluteContainer } from '@modules/chat/styles';
+import { keyframes } from '@stitches/react';
 
 import { OptionItem, Section } from '../types';
 import ChatOptionsContext from './context/ChatOptionsContext';
 import OptionsCheckbox from './OptionsCheckbox';
 import OptionsDropdown from './OptionsDropdown';
 
+const fadeIn = keyframes({
+	'0%': {
+		opacity: 0.6,
+	},
+	'100%': {
+		opacity: 1,
+	},
+});
+
 const Container = styled(AbsoluteContainer, {
 	display: 'flex',
 	flexDirection: 'column',
 	fontSize: '.9rem',
+	animation: `${fadeIn} .1s`,
 });
 
 const Header = styled('div', {
