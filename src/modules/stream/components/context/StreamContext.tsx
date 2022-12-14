@@ -1,10 +1,10 @@
-import { createContext, Dispatch, SetStateAction } from 'react';
+import { createContext } from 'react';
 
 export type StreamSource = 'twitch' | 'youtube' | 'facebook';
 
 export interface StreamProviderIface {
 	streamSource: StreamSource;
-	setStreamSource: Dispatch<SetStateAction<StreamSource>>;
+	changeStreamSource(newSource: StreamSource): void;
 }
 
 const StreamContext = createContext<StreamProviderIface | null>(null);
