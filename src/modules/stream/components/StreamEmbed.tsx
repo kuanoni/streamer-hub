@@ -35,21 +35,23 @@ const StreamEmbed = () => {
 		<RelativeContainer>
 			<StreamEmbedContainer>
 				<StreamEmbedWrapper>
-					{ctx?.streamSource === 'twitch' ? (
+					{!ctx?.isLoaded ? (
+						<></>
+					) : ctx.streamSource === 'twitch' ? (
 						<StyledIframe
 							src='https://player.twitch.tv/?channel=public_domain_television&parent=localhost'
 							width='100%'
 							height='100%'
 							title='Faker stream'
 						/>
-					) : ctx?.streamSource === 'youtube' ? (
+					) : ctx.streamSource === 'youtube' ? (
 						<StyledIframe
 							width='100%'
 							height='100%'
 							src='https://www.youtube.com/embed/j_A_jAsuZD8/embed/live_stream?channel=UCM2fsEsL6rW99JYMPFmwgtA&origin=http://localhost:3000/'
 						/>
 					) : (
-						''
+						<></>
 					)}
 				</StreamEmbedWrapper>
 			</StreamEmbedContainer>
