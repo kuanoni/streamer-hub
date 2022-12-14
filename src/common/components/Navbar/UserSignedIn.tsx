@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { MouseEventHandler, useState } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import BeatLoader from 'react-spinners/BeatLoader';
@@ -13,12 +14,15 @@ import UserOptionsDropdown from './UserOptionsDropdown';
 const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
-	gap: '1rem',
+	alignItems: 'center',
 });
 
-const DisplayName = styled('span', {
+const DisplayName = styled(Link, {
 	variants: {
 		rank: RankColors,
+	},
+	'&:hover': {
+		textDecoration: 'underline',
 	},
 });
 
@@ -33,9 +37,6 @@ const SignedIn = styled('div', {
 	transition: 'color .1s ease',
 	'&:hover': {
 		color: theme.colors.grey200,
-	},
-	[`&:hover ${DisplayName}`]: {
-		textDecoration: 'underline',
 	},
 });
 
@@ -73,21 +74,25 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 
 	return (
 		<Container>
+			{status === 'authenticated' && (
+				<DisplayName href={'/profile'} rank={user.rank}>
+					{user.displayName}
+				</DisplayName>
+			)}
+			{status === 'unauthenticated' && (
+				<Button color='primary' onClick={openSignIn}>
+					Sign In
+				</Button>
+			)}
+			{status === 'loading' && (
+				<BeatLoader
+					color={theme.colors.grey400.toString()}
+					loading={true}
+					size='.75rem'
+					cssOverride={{ marginRight: '1rem' }}
+				/>
+			)}
 			<SignedIn onClick={handleClick}>
-				{status === 'authenticated' && <DisplayName rank={user.rank}>{user.displayName}</DisplayName>}
-				{status === 'unauthenticated' && (
-					<Button color='primary' onClick={openSignIn}>
-						Log In
-					</Button>
-				)}
-				{status === 'loading' && (
-					<BeatLoader
-						color={theme.colors.grey400.toString()}
-						loading={true}
-						size='.75rem'
-						cssOverride={{ marginRight: '1rem' }}
-					/>
-				)}
 				{status === 'authenticated' && user?.avatar ? (
 					<ProfilePic as='img' src={user.avatar} />
 				) : (
