@@ -52,11 +52,12 @@ const DisplayNameInput = ({ user }: Props) => {
 	const [showFocusIndicator, setShowFocusIndicator] = useState(false);
 
 	const submitDisplayName = async () => {
+		if (displayNameValue.length < 5) return console.log('Display name too short');
 		if (displayNameValue.length > 15) return console.log('Display name too long');
 
 		// validate display name here
 		if (!displayNameRegex.test(displayNameValue))
-			return console.log('Display name musr only containe letters or numbers');
+			return console.log('Display name must only contain letters or numbers');
 
 		const res = await fetch('/api/db/userSetDisplayName', {
 			method: 'PATCH',
