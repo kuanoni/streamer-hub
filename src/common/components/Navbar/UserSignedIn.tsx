@@ -1,4 +1,5 @@
-import React, { MouseEventHandler, useRef, useState } from 'react';
+import Image from 'next/image';
+import React, { MouseEventHandler, useState } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { styled, theme } from 'stiches.config';
@@ -36,16 +37,13 @@ const SignedIn = styled('div', {
 	[`&:hover ${DisplayName}`]: {
 		textDecoration: 'underline',
 	},
-	'.dropdown-caret': {},
-	'.dropdown-caret.open': {
-		transform: 'rotate(180deg)',
-	},
 });
 
 const ProfilePic = styled(BsPersonCircle, {
-	width: '2rem',
-	height: '2rem',
+	width: '2.5rem',
+	height: '2.5rem',
 	marginLeft: '1rem',
+	borderRadius: '50%',
 });
 
 const DropdownCaret = styled(BsCaretDownFill, {
@@ -90,8 +88,11 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 						cssOverride={{ marginRight: '1rem' }}
 					/>
 				)}
-
-				<ProfilePic />
+				{status === 'authenticated' && user?.avatar ? (
+					<ProfilePic as='img' src={user.avatar} />
+				) : (
+					<ProfilePic />
+				)}
 				<DropdownCaret className={isDropdownOpen ? 'open' : ''} />
 			</SignedIn>
 			{isDropdownOpen && (
