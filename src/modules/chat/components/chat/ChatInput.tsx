@@ -3,7 +3,7 @@ import React, { useContext, useRef } from 'react';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import IconButton from '@components/ui/IconButton';
+import Button from '@components/ui/Button';
 import { MessageWithoutTime } from '@globalTypes/socketio';
 
 import { MessageType } from '../../common';
@@ -148,17 +148,18 @@ const ChatInput = ({
 						spellCheck={false}
 					/>
 					<ButtonsContainer>
-						<IconButton
-							size={36}
+						<Button
+							color='dark'
+							content='icon'
 							onClick={() => {
 								if (textAreaRef.current?.value) sendMessage();
 							}}
 						>
 							<BsCursorFill />
-						</IconButton>
-						<IconButton size={36} onClick={toggleEmoteList}>
+						</Button>
+						<Button color='dark' content='icon' onClick={toggleEmoteList}>
 							<BsEmojiSmileFill />
-						</IconButton>
+						</Button>
 					</ButtonsContainer>
 				</TextAreaWrapper>
 			</Container>

@@ -2,6 +2,7 @@ import React, { MouseEventHandler, useRef, useState } from 'react';
 import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
+import Button from '@components/ui/Button';
 import { User } from '@globalTypes/custom-auth';
 import { RankColors } from '@modules/chat/common';
 
@@ -18,20 +19,6 @@ const Username = styled('span', {
 	marginRight: '1rem',
 	variants: {
 		rank: RankColors,
-	},
-});
-
-const SignInButton = styled('button', {
-	padding: '0 2rem',
-	color: theme.colors.textLight,
-	backgroundColor: theme.colors.primary400,
-	border: 'none',
-	borderRadius: theme.space.borderRadHalf,
-	fontSize: '1rem',
-	cursor: 'pointer',
-	transition: '.1s ease',
-	'&:hover': {
-		backgroundColor: theme.colors.primary300,
 	},
 });
 
@@ -67,7 +54,7 @@ const SignedIn = styled('div', {
 interface Props {
 	user: User;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
-	openSignIn?: () => void;
+	openSignIn: () => void;
 }
 
 const UserSignedIn = ({ user, status, openSignIn }: Props) => {
@@ -81,7 +68,11 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 
 	return (
 		<Container>
-			{status === 'unauthenticated' && <SignInButton onClick={openSignIn}>Sign In</SignInButton>}
+			{status === 'unauthenticated' && (
+				<Button color='primary' onClick={openSignIn}>
+					Log In
+				</Button>
+			)}
 			<SignedIn onClick={handleClick}>
 				{status === 'authenticated' && <Username rank={user.rank}>{user.displayName}</Username>}
 				<BsPersonCircle className='profile-pic' />

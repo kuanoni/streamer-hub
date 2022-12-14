@@ -1,8 +1,8 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
-import IconButton from '@components/ui/IconButton';
+import Button from '@components/ui/Button';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -18,12 +18,12 @@ type Props = {
 const ChatControlsBottom = ({ setIsChatOptionsOpen }: Props) => {
 	return (
 		<Container>
-			<IconButton onClick={() => setIsChatOptionsOpen((current) => !current)}>
+			<Button color='dark' content='icon' onClick={() => setIsChatOptionsOpen((current) => !current)}>
 				<BsFillGearFill />
-			</IconButton>
-			<IconButton onClick={() => {}}>
+			</Button>
+			<Button color='dark' content='icon' onClick={() => {}}>
 				<BsPeopleFill />
-			</IconButton>
+			</Button>
 		</Container>
 	);
 };
