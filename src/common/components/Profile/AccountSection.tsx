@@ -1,15 +1,25 @@
-import React from 'react';
-import { styled, theme } from 'stiches.config';
+import { useState } from 'react';
+
+import TextInput from '@components/ui/TextInput';
+import { User } from '@globalTypes/custom-auth';
 
 import ProfileSection from './ProfileSection';
+import { Info, Label } from './styles';
 
+interface Props {
+	user: User;
+}
 
+const AccountSection = ({ user }: Props) => {
+	const [displayName, setDisplayName] = useState(user.displayName);
+	const [email, setEmail] = useState(user.email);
 
-const AccountSection = () => {
 	return (
 		<ProfileSection title='Account'>
-			<Label>Joined</Label>
-			<Info>6th June, 2021 at 21:47 pm</Info>
+			<Label>Username</Label>
+			<TextInput value={displayName} setValue={setDisplayName} placeholder={'Enter username...'} disabled />
+			<Label>Email</Label>
+			<TextInput value={email} setValue={setEmail} placeholder='Enter email...' />
 			<Label>Subscription</Label>
 			<Info>You have no active subscriptions.</Info>
 		</ProfileSection>
