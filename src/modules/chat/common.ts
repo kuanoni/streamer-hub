@@ -19,7 +19,7 @@ export enum SocketEvents {
 
 export const RankColors = {
 	[Rank.DEFAULT]: {
-		color: 'rgb(255, 255, 255)',
+		color: 'var(--colors-textLight)',
 	},
 	[Rank.TIER_1]: {
 		color: 'rgb(72, 185, 190)',
