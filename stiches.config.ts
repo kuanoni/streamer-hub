@@ -58,7 +58,7 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			border: '#270043',
 
 			frosted: 'rgba(255, 255, 255, 0.15)',
-			frostedPrimary: 'rgba(183, 79, 255, 0.15)',
+			frostedPrimary: 'rgba(187, 89, 255, 0.25)',
 		},
 		space: {
 			pageWidth: '1140px',
