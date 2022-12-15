@@ -4,6 +4,7 @@ import { styled, theme } from 'stiches.config';
 
 import DisplayNameInput from '@components/DisplayNameInput';
 import AccountSection from '@components/Profile/AccountSection';
+import SubscriptionSection from '@components/Profile/SubscriptionSection';
 import Button from '@components/ui/Button';
 import { AuthPerms, Rank, User } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
@@ -140,9 +141,8 @@ const ProfileDashboard = () => {
 					<Info>{rank}</Info>
 				</SubHeaderInfo>
 			</SubHeader>
-			<AccountSection />
-			<AccountSection />
-			<AccountSection />
+			<AccountSection user={user} />
+			<SubscriptionSection />
 		</Container>
 	);
 };
