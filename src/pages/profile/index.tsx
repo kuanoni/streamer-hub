@@ -129,9 +129,7 @@ const ProfileDashboard = () => {
 				) : (
 					<DisplayNameInput user={user} />
 				)}
-				<Button onClick={() => {}}>Edit Profile</Button>
 			</Header>
-
 			<SubHeader>
 				<Avatar src={user.avatar} alt='profile picture' referrerPolicy='no-referrer' />
 				<SubHeaderInfo>
@@ -141,8 +139,12 @@ const ProfileDashboard = () => {
 					<Info>{rank}</Info>
 				</SubHeaderInfo>
 			</SubHeader>
-			<AccountSection user={user} />
-			<SubscriptionSection />
+			{user.displayName && (
+				<>
+					<AccountSection user={user} />
+					<SubscriptionSection />
+				</>
+			)}
 		</Container>
 	);
 };
