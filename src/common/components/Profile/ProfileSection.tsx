@@ -7,6 +7,11 @@ const Section = styled('article', {
 	margin: '2rem',
 	marginBottom: 0,
 	borderRadius: theme.space.borderRad,
+	border: `1px solid ${theme.colors.grey800}`,
+	transition: '.35s ease',
+	'&.collapse': {
+		borderColor: 'transparent',
+	},
 });
 
 const SectionHeader = styled('header', {
@@ -15,15 +20,16 @@ const SectionHeader = styled('header', {
 	justifyContent: 'space-between',
 	padding: '.75rem 2rem',
 	color: theme.colors.textLightActive,
-	backgroundColor: theme.colors.primary900,
-	borderTopRightRadius: theme.space.borderRad,
-	borderTopLeftRadius: theme.space.borderRad,
-	transition: '.2s ease',
+	backgroundColor: theme.colors.frostedPrimary,
+	borderRadius: theme.space.borderRad,
+	transition: 'background-color .35s ease, color .35s ease',
 	cursor: 'pointer',
 	'&.collapse': {
 		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.primary900,
-		borderRadius: theme.space.borderRad,
+		backgroundColor: theme.colors.frosted,
+	},
+	'&:hover': {
+		color: theme.colors.textLightActive,
 	},
 	h2: {
 		margin: 0,
@@ -32,7 +38,6 @@ const SectionHeader = styled('header', {
 
 const SectionBody = styled('div', {
 	height: 0,
-	backgroundColor: theme.colors.grey900,
 	borderBottomRightRadius: theme.space.borderRad,
 	borderBottomLeftRadius: theme.space.borderRad,
 	overflow: 'hidden',
@@ -61,7 +66,7 @@ const ProfileSection = ({ title, children }: PropsWithChildren<Props>) => {
 	};
 
 	return (
-		<Section>
+		<Section className={isCollapsed ? 'collapse' : ''}>
 			<SectionHeader className={isCollapsed ? 'collapse' : ''} onClick={handleClick}>
 				<h2>{title}</h2>
 				<Button content='icon' onClick={() => {}}>
