@@ -4,7 +4,6 @@ import { styled, theme } from 'stiches.config';
 
 import DisplayNameInput from '@components/DisplayNameInput';
 import AccountSection from '@components/Profile/AccountSection';
-import ProfileSection from '@components/Profile/ProfileSection';
 import Button from '@components/ui/Button';
 import { AuthPerms, Rank, User } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
@@ -133,7 +132,7 @@ const ProfileDashboard = () => {
 			</Header>
 
 			<SubHeader>
-				<Avatar src={user.avatar} alt='profile picture' />
+				<Avatar src={user.avatar} alt='profile picture' referrerPolicy='no-referrer' />
 				<SubHeaderInfo>
 					<Label>Joined</Label>
 					<Info>6th June, 2021 at 21:47 pm</Info>
