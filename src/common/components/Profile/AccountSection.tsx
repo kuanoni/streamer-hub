@@ -4,7 +4,7 @@ import TextInput from '@components/ui/TextInput';
 import { User } from '@globalTypes/custom-auth';
 
 import ProfileSection from './ProfileSection';
-import { Info, Label } from './styles';
+import { Info, Label, StyledLink, SubLabel } from './styles';
 
 interface Props {
 	user: User;
@@ -17,6 +17,9 @@ const AccountSection = ({ user }: Props) => {
 	return (
 		<ProfileSection title='Account'>
 			<Label>Username</Label>
+			<SubLabel>
+				You can request a name change <StyledLink href='/'>here.</StyledLink>
+			</SubLabel>
 			<TextInput value={displayName} setValue={setDisplayName} placeholder={'Enter username...'} disabled />
 			<Label>Email</Label>
 			<TextInput value={email} setValue={setEmail} placeholder='Enter email...' />
