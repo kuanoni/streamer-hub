@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useRef, useState } from 'react';
+import { BsDash, BsPlus } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
@@ -33,6 +34,10 @@ const SectionHeader = styled('header', {
 	},
 	h2: {
 		margin: 0,
+	},
+	svg: {
+		width: '1.5rem',
+		height: '1.5rem',
 	},
 });
 
@@ -69,9 +74,7 @@ const ProfileSection = ({ title, children }: PropsWithChildren<Props>) => {
 		<Section className={isCollapsed ? 'collapse' : ''}>
 			<SectionHeader className={isCollapsed ? 'collapse' : ''} onClick={handleClick}>
 				<h2>{title}</h2>
-				<Button content='icon' onClick={() => {}}>
-					+
-				</Button>
+				{isCollapsed ? <BsPlus /> : <BsDash />}
 			</SectionHeader>
 			<SectionBody ref={bodyRef} className={isCollapsed ? 'collapse' : ''}>
 				<SectionBodyContent>{children}</SectionBodyContent>
