@@ -2,14 +2,12 @@ import React, { PropsWithChildren, useRef, useState } from 'react';
 import { BsDash, BsPlus } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
-
 const Section = styled('article', {
 	margin: '2rem',
 	marginBottom: 0,
 	borderRadius: theme.space.borderRad,
 	border: `1px solid ${theme.colors.grey800}`,
-	transition: '.35s ease',
+	transition: '.2s ease',
 	'&.collapse': {
 		borderColor: 'transparent',
 	},
@@ -23,7 +21,7 @@ const SectionHeader = styled('header', {
 	color: theme.colors.textLightActive,
 	backgroundColor: theme.colors.frostedPrimary,
 	borderRadius: theme.space.borderRad,
-	transition: 'background-color .35s ease, color .35s ease',
+	transition: 'background-color .2s ease, color .2s ease',
 	cursor: 'pointer',
 	'&.collapse': {
 		color: theme.colors.textMediumActive,
@@ -46,7 +44,7 @@ const SectionBody = styled('div', {
 	borderBottomRightRadius: theme.space.borderRad,
 	borderBottomLeftRadius: theme.space.borderRad,
 	overflow: 'hidden',
-	transition: '.5s ease',
+	transition: '.35s ease',
 });
 
 const SectionBodyContent = styled('div', {
