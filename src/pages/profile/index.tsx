@@ -15,7 +15,18 @@ const Container = styled('div', {
 	marginTop: '2rem',
 	paddingBottom: '2rem',
 	borderRadius: theme.space.borderRad,
-	backgroundColor: theme.colors.frosted,
+	background: `
+    radial-gradient(
+            20.01% 20.78% at 80.58% 81.62%, 
+            rgba(8, 255, 0, 0.04) 21.39%,
+            rgba(33, 17, 38, 0) 100%
+        ), 
+        radial-gradient(
+            35.36% 170.61% at 22.03% 20.19%, 
+            rgba(151, 0, 255, 0.08) 16.22%, 
+            rgba(45, 50, 72, 0) 100%
+        ), 
+        rgba(255, 255, 255, 0.03)`,
 });
 
 const TopCutout = styled('div', {
@@ -25,7 +36,7 @@ const TopCutout = styled('div', {
 	width: '14rem',
 	height: '6rem',
 	borderTopLeftRadius: theme.space.borderRad,
-	backgroundImage: `radial-gradient(circle at 50% 8rem, transparent 6rem, ${theme.colors.primary900} 0)`,
+	backgroundImage: `radial-gradient(circle at 50% 8.2rem, transparent 6rem, ${theme.colors.primary900} 0)`,
 });
 
 const Header = styled('header', {
@@ -130,6 +141,8 @@ const ProfileDashboard = () => {
 					<Info>{rank}</Info>
 				</SubHeaderInfo>
 			</SubHeader>
+			<AccountSection />
+			<AccountSection />
 			<AccountSection />
 		</Container>
 	);
