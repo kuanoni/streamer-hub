@@ -47,7 +47,7 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			trinary100: '#62FF5D',
 			trinary000: '#83FF7E',
 
-			textLight: '#E2E2E4',
+			textLight: '#E2E4E4',
 			textLightActive: '#FFFFFF',
 			textMedium: '#C2BCD3',
 			textMediumActive: '#DDDAE7',
