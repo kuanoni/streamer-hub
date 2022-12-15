@@ -31,9 +31,10 @@ export type Page = NextComponentType & {
 
 export type User = DefaultSession['user'] & {
 	id: string;
+	email: string;
+	displayName: string;
 	role: AuthPerms;
 	rank: Rank;
-	displayName: string;
 	avatar: string;
 };
 
