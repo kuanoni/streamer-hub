@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useRef, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 import { BsDash, BsPlus } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
@@ -59,18 +59,29 @@ const ProfileSection = ({ title, children }: PropsWithChildren<Props>) => {
 	const [isCollapsed, setIsCollapsed] = useState(true);
 	const bodyRef = useRef<HTMLDivElement>(null);
 
-	const handleClick = () => {
-		if (!bodyRef.current) return;
+	const toggleCollapse = useCallback(
+		(forceOpen: boolean = false) => {
+			if (!bodyRef.current) return;
 
-		if (isCollapsed) bodyRef.current.style.height = bodyRef.current.scrollHeight + 'px';
-		else bodyRef.current.style.height = '0px';
+			setIsCollapsed((current) => {
+				// altering bodyRef is done here to avoid adding isCollapsed to callback dependacy
+				if (!bodyRef.current) return !(current || forceOpen);
+				if (current || forceOpen) bodyRef.current.style.height = bodyRef.current.scrollHeight + 'px';
+				else bodyRef.current.style.height = '0px';
+				return !(current || forceOpen);
+			});
+		},
+		[setIsCollapsed]
+	);
 
-		setIsCollapsed((current) => !current);
-	};
+	useEffect(() => {
+		// open section if hash matches section title
+		if (window.location.hash.startsWith(`#${title.toLowerCase()}`)) toggleCollapse(true);
+	}, [title, toggleCollapse]);
 
 	return (
 		<Section className={isCollapsed ? 'collapse' : ''}>
-			<SectionHeader className={isCollapsed ? 'collapse' : ''} onClick={handleClick}>
+			<SectionHeader className={isCollapsed ? 'collapse' : ''} onClick={() => toggleCollapse()}>
 				<h2>{title}</h2>
 				{isCollapsed ? <BsPlus /> : <BsDash />}
 			</SectionHeader>
