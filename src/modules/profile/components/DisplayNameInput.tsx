@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
 import PulseLoader from 'react-spinners/PulseLoader';
@@ -8,9 +8,9 @@ import { keyframes, styled, theme } from 'stiches.config';
 
 import { User } from '@globalTypes/custom-auth';
 
-import { List } from '../../modules/profile/styles';
-import Button from './ui/Button';
-import TextInput from './ui/TextInput';
+import Button from '../../../common/components/ui/Button';
+import TextInput from '../../../common/components/ui/TextInput';
+import { List } from '../styles';
 
 interface Props {
 	user: User;
@@ -65,23 +65,36 @@ const validateDisplayName = (name: string) => {
 	return errors;
 };
 
+const checkNameAvailability = async (name: string) => {
+	const res = await fetch(`/api/db/checkDisplayName?name=${name}`, {
+		method: 'GET',
+	}).then((res) => res.json());
+
+	console.log(res);
+};
+
 const DisplayNameInput = ({ user }: Props) => {
 	const [displayNameValue, setDisplayNameValue] = useState('');
-	const debouncedDisplayName = useDebounce(displayNameValue, 300);
+	const [errors, setErrors] = useState<string[]>([]);
+	const debouncedDisplayName = useDebounce(displayNameValue, 800);
 	const isDebounced = displayNameValue === debouncedDisplayName;
 
-	const errorList = useMemo(() => {
+	const nameAvailableIndicator = useMemo(async () => {
 		const validationErrors = validateDisplayName(debouncedDisplayName);
-		return validationErrors.map((item) => <li key={item}>{item}</li>);
+		if (validationErrors.length) return setErrors(validationErrors);
+		const isAvailable = await checkNameAvailability(debouncedDisplayName);
 	}, [debouncedDisplayName]);
+
+	// useEffect(() => {
+	// 	const validationErrors = validateDisplayName(debouncedDisplayName);
+	// 	if (validationErrors.length) return setErrors(validationErrors);
+	// }, [debouncedDisplayName, setErrors]);
 
 	const submitDisplayName = async () => {
 		if (displayNameValue !== debouncedDisplayName) return;
 
 		const validationErrors = validateDisplayName(displayNameValue);
 		if (validationErrors.length) return;
-
-		// check db is displayName is already taken
 
 		const res = await fetch('/api/db/userSetDisplayName', {
 			method: 'PATCH',
@@ -104,7 +117,7 @@ const DisplayNameInput = ({ user }: Props) => {
 					color='transparent'
 					size='huge'
 				/>
-				{!errorList.length && isDebounced && (
+				{!errors && isDebounced && (
 					<ButtonContainer>
 						<Button content='icon' size='fill' onClick={submitDisplayName}>
 							<BsFillHandThumbsUpFill />
@@ -118,7 +131,11 @@ const DisplayNameInput = ({ user }: Props) => {
 				)}
 			</InputContainer>
 			<ErrorsContainer>
-				<List>{errorList}</List>
+				<List>
+					{errors.map((item) => (
+						<li key={item}>{item}</li>
+					))}
+				</List>
 			</ErrorsContainer>
 		</Container>
 	);

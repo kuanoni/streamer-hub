@@ -1,8 +1,8 @@
 import { styled, theme } from 'stiches.config';
 
-import DisplayNameInput from '@components/DisplayNameInput';
 import { Rank, User } from '@globalTypes/custom-auth';
 import { RankColors } from '@modules/chat/common';
+import DisplayNameInput from '@modules/profile/components/DisplayNameInput';
 
 import { Info, Label, List } from '../styles';
 
