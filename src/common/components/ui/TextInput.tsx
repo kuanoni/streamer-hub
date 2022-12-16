@@ -4,6 +4,10 @@ const Input = styled('input', {
 	width: '100%',
 	margin: 0,
 	fontFamily: 'inherit',
+	outlineColor: 'transparent',
+	outlineStyle: 'solid',
+	outlineWidth: 1,
+	outlineOffset: -1,
 
 	transition: 'outline-color .2s ease',
 
@@ -16,10 +20,6 @@ const Input = styled('input', {
 				borderLeft: `1px solid ${theme.colors.border}`,
 				borderRight: `1px solid ${theme.colors.grey800}`,
 				borderBottom: `1px solid ${theme.colors.grey800}`,
-				outlineColor: 'transparent',
-				outlineStyle: 'solid',
-				outlineWidth: 1,
-				outlineOffset: -1,
 				'&:focus': {
 					color: theme.colors.textMediumActive,
 					outlineColor: theme.colors.grey400,
@@ -34,11 +34,18 @@ const Input = styled('input', {
 				color: theme.colors.textLight,
 				backgroundColor: 'transparent',
 				border: 'none',
+				borderRadius: theme.space.borderRad,
+				outlineStyle: 'ridge',
+				outlineOffset: 2,
+				outlineWidth: 2,
+				'&:focus': {
+					outlineColor: theme.colors.textMedium,
+				},
 			},
 		},
 		size: {
 			form: {
-				marginLeft: '-.4rem',
+				marginLeft: -2,
 				padding: '.4rem',
 				borderRadius: theme.space.borderRadHalf,
 				fontSize: '1rem',
