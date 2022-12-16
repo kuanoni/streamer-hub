@@ -3,13 +3,12 @@ import React from 'react';
 import { styled, theme } from 'stiches.config';
 
 import DisplayNameInput from '@components/DisplayNameInput';
-import AccountSection from '@components/Profile/AccountSection';
-import { Info, Label, List } from '@components/Profile/styles';
-import SubscriptionSection from '@components/Profile/SubscriptionSection';
-import Button from '@components/ui/Button';
 import { AuthPerms, Rank, User } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import { RankColors } from '@modules/chat/common';
+import AccountSection from '@modules/profile/components/AccountSection';
+import SubscriptionSection from '@modules/profile/components/SubscriptionSection';
+import { Info, Label, List } from '@modules/profile/styles';
 
 const Container = styled('div', {
 	position: 'relative',

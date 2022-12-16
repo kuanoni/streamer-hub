@@ -8,7 +8,7 @@ import { keyframes, styled, theme } from 'stiches.config';
 
 import { User } from '@globalTypes/custom-auth';
 
-import { List } from './Profile/styles';
+import { List } from '../../modules/profile/styles';
 import Button from './ui/Button';
 import TextInput from './ui/TextInput';
 
