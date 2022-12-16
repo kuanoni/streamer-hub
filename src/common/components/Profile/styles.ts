@@ -19,4 +19,10 @@ export const StyledLink = styled(Link, {
 	textDecoration: 'underline',
 });
 
+export const List = styled('ul', {
+	margin: 0,
+	padding: 0,
+	paddingLeft: '1rem',
+});
+
 export const Info = styled('div', {});
