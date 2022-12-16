@@ -4,6 +4,7 @@ import { styled, theme } from 'stiches.config';
 
 import DisplayNameInput from '@components/DisplayNameInput';
 import AccountSection from '@components/Profile/AccountSection';
+import { Info, Label, List } from '@components/Profile/styles';
 import SubscriptionSection from '@components/Profile/SubscriptionSection';
 import Button from '@components/ui/Button';
 import { AuthPerms, Rank, User } from '@globalTypes/custom-auth';
@@ -50,7 +51,6 @@ const Header = styled('header', {
 	alignItems: 'end',
 	height: '6rem',
 	paddingBottom: '.75rem',
-	paddingRight: '3rem',
 	borderTopRightRadius: theme.space.borderRad,
 	backgroundColor: theme.colors.primary900,
 	fontSize: '2rem',
@@ -82,14 +82,6 @@ const SubHeader = styled('div', {
 
 const SubHeaderInfo = styled('div', {
 	paddingTop: '4rem',
-});
-
-const Label = styled('div', {
-	fontWeight: 700,
-});
-
-const Info = styled('div', {
-	marginBottom: '.5rem',
 });
 
 const ProfileDashboard = () => {
@@ -137,10 +129,25 @@ const ProfileDashboard = () => {
 			<SubHeader>
 				<Avatar src={user.avatar} alt='profile picture' referrerPolicy='no-referrer' />
 				<SubHeaderInfo>
-					<Label>Joined</Label>
-					<Info>6th June, 2021 at 21:47 pm</Info>
-					<Label>Subscription</Label>
-					<Info>{rank}</Info>
+					{displayNameMissing && (
+						<>
+							<Label>Your username must:</Label>
+							<List>
+								<li>Be at least 5 characters long</li>
+								<li>Be at most 15 characters long</li>
+								<li>{'Have no special characters (!?_-.@&$) or spaces'}</li>
+								<li>{'Have no bad words'}</li>
+							</List>
+						</>
+					)}
+					{!displayNameMissing && (
+						<>
+							<Label>Joined</Label>
+							<Info>6th June, 2021 at 21:47 pm</Info>
+							<Label>Subscription</Label>
+							<Info>{rank}</Info>
+						</>
+					)}
 				</SubHeaderInfo>
 			</SubHeader>
 			<AccountSection user={user} locked={displayNameMissing} />
