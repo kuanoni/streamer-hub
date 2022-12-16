@@ -4,8 +4,8 @@ import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
 import { User } from '@globalTypes/custom-auth';
 
-import { Footer, Label, StyledLink, SubLabel } from '../styles';
-import ProfileSection from './ProfileSection';
+import { Footer, Label, StyledLink, SubLabel } from '../../styles';
+import ProfileSection from '../ProfileSection';
 
 interface Props {
 	user: User;

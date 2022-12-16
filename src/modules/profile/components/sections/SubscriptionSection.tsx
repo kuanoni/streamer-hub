@@ -1,5 +1,5 @@
-import { Info } from '../styles';
-import ProfileSection from './ProfileSection';
+import { Info } from '../../styles';
+import ProfileSection from '../ProfileSection';
 
 interface Props {
 	locked?: boolean;
