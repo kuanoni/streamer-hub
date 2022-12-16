@@ -20,6 +20,10 @@ const Input = styled('input', {
 				borderLeft: `1px solid ${theme.colors.border}`,
 				borderRight: `1px solid ${theme.colors.grey800}`,
 				borderBottom: `1px solid ${theme.colors.grey800}`,
+				outlineColor: 'transparent',
+				outlineStyle: 'solid',
+				outlineWidth: 1,
+				outlineOffset: -1,
 				'&:focus': {
 					color: theme.colors.textMediumActive,
 					outlineColor: theme.colors.grey400,
@@ -46,7 +50,7 @@ const Input = styled('input', {
 			huge: {
 				height: '1em',
 				padding: 0,
-				fontSize: '2rem',
+				fontSize: '3rem',
 				fontWeight: 700,
 			},
 		},
