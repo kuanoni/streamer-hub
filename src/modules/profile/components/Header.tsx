@@ -60,25 +60,22 @@ const SubHeaderInfo = styled('div', {
 	paddingTop: '4rem',
 });
 
+const RankDescription: { [index: string]: string } = {
+	[Rank.DEFAULT]: 'You have no active subscriptions.',
+	[Rank.TIER_1]: 'Tier 1 Subscriber',
+	[Rank.TIER_2]: 'Tier 2 Subscriber',
+	[Rank.TIER_3]: 'Tier 3 Subscriber',
+	[Rank.ORBITER]: 'Orbiter',
+	[Rank.OWNER]: 'Owner',
+};
+
 interface Props {
 	user: User;
 }
+
 const ProfileHeader = ({ user }: Props) => {
 	const displayNameMissing = user.displayName === '';
-	const rank =
-		user.rank === Rank.DEFAULT
-			? 'You have no active subscriptions.'
-			: user.rank === Rank.TIER_1
-			? 'Tier 1 Subscriber'
-			: user.rank === Rank.TIER_2
-			? 'Tier 2 Subscriber'
-			: user.rank === Rank.TIER_3
-			? 'Tier 3 Subscriber'
-			: user.rank === Rank.ORBITER
-			? 'Orbiter'
-			: user.rank === Rank.OWNER
-			? 'Owner'
-			: '';
+	const rank = RankDescription[user.rank];
 
 	return (
 		<>
