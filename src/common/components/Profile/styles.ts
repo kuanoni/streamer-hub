@@ -4,7 +4,7 @@ import { styled, theme } from 'stiches.config';
 export const Label = styled('div', {
 	fontWeight: 700,
 	'&:not(:first-child)': {
-		marginTop: '.5rem',
+		marginTop: '1rem',
 	},
 });
 
@@ -26,3 +26,7 @@ export const List = styled('ul', {
 });
 
 export const Info = styled('div', {});
+
+export const Footer = styled('div', {
+	marginTop: '1rem',
+});
