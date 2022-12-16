@@ -5,10 +5,6 @@ const Input = styled('input', {
 	margin: 0,
 	fontFamily: 'inherit',
 
-	outlineColor: 'transparent',
-	outlineStyle: 'solid',
-	outlineWidth: 1,
-	outlineOffset: -1,
 	transition: 'outline-color .2s ease',
 
 	variants: {
@@ -62,13 +58,24 @@ interface Props {
 	setValue: Function;
 	placeholder: string;
 	disabled?: boolean;
+	autoFocus?: boolean;
+	maxLength?: number;
 	color?: 'dark' | 'transparent';
 	size?: 'form' | 'huge';
 }
 
-const TextInput = ({ value, setValue, placeholder, disabled = false, color = 'dark', size = 'form' }: Props) => {
-	const handleChange = (e: React.ChangeEvent) => {
-		setValue(e.target.nodeValue);
+const TextInput = ({
+	value,
+	setValue,
+	placeholder,
+	disabled = false,
+	autoFocus = false,
+	maxLength,
+	color = 'dark',
+	size = 'form',
+}: Props) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setValue(e.target.value);
 	};
 
 	return (
@@ -78,6 +85,8 @@ const TextInput = ({ value, setValue, placeholder, disabled = false, color = 'da
 			onChange={handleChange}
 			placeholder={placeholder}
 			disabled={disabled}
+			autoFocus={autoFocus}
+			maxLength={maxLength || 999}
 			color={color}
 			size={size}
 		/>
