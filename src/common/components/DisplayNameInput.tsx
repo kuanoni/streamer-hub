@@ -1,55 +1,37 @@
 import Router from 'next/router';
 import React, { useState } from 'react';
+import { BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { User } from '@globalTypes/custom-auth';
+
+import Button from './ui/Button';
+import TextInput from './ui/TextInput';
 
 interface Props {
 	user: User;
 }
 
 const Container = styled('div', {
-	width: 200,
-	padding: '.25rem 0',
+	position: 'relative',
+	width: '65%',
+	borderBottom: `1px solid ${theme.colors.grey400}`,
 });
 
-const StyledLabel = styled('div', {
-	display: 'block',
-});
-
-const StyledInput = styled('input', {
-	display: 'block',
-	width: '100%',
-	padding: '.35rem',
-	color: theme.colors.textLight,
-	backgroundColor: theme.colors.primary700,
-	border: 'none',
-	fontSize: '1rem',
-	transition: '.2s ease',
-	'&:focus': {
-		outline: 'none',
-		backgroundColor: theme.colors.primary600,
-	},
-});
-
-const FocusIndicator = styled('div', {
-	display: 'block',
-	backgroundColor: theme.colors.trinary600,
-	width: '100%',
-	height: 2,
-	transition: '.1s ease',
-	transform: 'scaleX(0%)',
-	transformOrigin: 'left',
-	'&.show': {
-		transform: 'scaleX(100%)',
-	},
+const ButtonContainer = styled('div', {
+	position: 'absolute',
+	top: 0,
+	right: 0,
+	display: 'flex',
+	height: '100%',
+	padding: '.25rem',
+	aspectRatio: 1,
 });
 
 const displayNameRegex = /^[a-zA-Z0-9]+$/;
 
 const DisplayNameInput = ({ user }: Props) => {
 	const [displayNameValue, setDisplayNameValue] = useState('');
-	const [showFocusIndicator, setShowFocusIndicator] = useState(false);
 
 	const submitDisplayName = async () => {
 		if (displayNameValue.length < 5) return console.log('Display name too short');
@@ -65,24 +47,25 @@ const DisplayNameInput = ({ user }: Props) => {
 		}).then((res) => res.json());
 
 		if (res.status === 200) Router.reload();
+		// handle response errors here
 	};
 
 	return (
 		<Container>
-			<StyledLabel>
-				<StyledInput
-					type='text'
-					placeholder='Display Name'
-					required
-					minLength={5}
-					maxLength={15}
-					onChange={(e) => setDisplayNameValue(e.target.value)}
-					onFocus={() => setShowFocusIndicator(true)}
-					onBlur={() => setShowFocusIndicator(false)}
-				/>
-			</StyledLabel>
-			<FocusIndicator className={showFocusIndicator ? 'show' : ''} />
-			<button onClick={submitDisplayName}>Set display name</button>
+			<TextInput
+				value={displayNameValue}
+				setValue={setDisplayNameValue}
+				placeholder={'Enter username...'}
+				autoFocus
+				maxLength={15}
+				color='transparent'
+				size='huge'
+			/>
+			<ButtonContainer>
+				<Button content='icon' size='fill' onClick={submitDisplayName}>
+					<BsFillHandThumbsUpFill />
+				</Button>
+			</ButtonContainer>
 		</Container>
 	);
 };
