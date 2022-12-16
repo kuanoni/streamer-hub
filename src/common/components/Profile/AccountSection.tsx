@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
+import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
 import { User } from '@globalTypes/custom-auth';
 
 import ProfileSection from './ProfileSection';
-import { Info, Label, StyledLink, SubLabel } from './styles';
+import { Footer, Label, StyledLink, SubLabel } from './styles';
 
 interface Props {
 	user: User;
@@ -12,18 +13,22 @@ interface Props {
 }
 
 const AccountSection = ({ user, locked = false }: Props) => {
-	const [displayName, setDisplayName] = useState(user.displayName);
 	const [email, setEmail] = useState(user.email);
+
+	const saveAccount = () => {};
 
 	return (
 		<ProfileSection title='Account' locked={locked}>
 			<Label>Username</Label>
+			<TextInput value={user.displayName} setValue={() => {}} placeholder={'Enter username...'} disabled />
 			<SubLabel>
 				You can request a name change <StyledLink href='/'>here.</StyledLink>
 			</SubLabel>
-			<TextInput value={displayName} setValue={setDisplayName} placeholder={'Enter username...'} disabled />
 			<Label>Email</Label>
 			<TextInput value={email} setValue={setEmail} placeholder='Enter email...' />
+			<Footer>
+				<Button onClick={saveAccount}>Save</Button>
+			</Footer>
 		</ProfileSection>
 	);
 };
