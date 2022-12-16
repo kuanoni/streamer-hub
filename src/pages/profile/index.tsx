@@ -53,6 +53,7 @@ const Header = styled('header', {
 	paddingRight: '3rem',
 	borderTopRightRadius: theme.space.borderRad,
 	backgroundColor: theme.colors.primary900,
+	fontSize: '2rem',
 });
 
 const Avatar = styled('img', {
@@ -65,6 +66,7 @@ const Avatar = styled('img', {
 
 const DisplayName = styled('h1', {
 	margin: 0,
+	fontSize: '3rem',
 	lineHeight: '1em',
 	variants: { rank: RankColors },
 });
@@ -96,6 +98,8 @@ const ProfileDashboard = () => {
 
 	if (!user) return <>Loading...</>; // replace with skeleton
 
+	const displayNameMissing = user.displayName === '';
+
 	const rank =
 		user.rank === Rank.DEFAULT
 			? 'You have no active subscriptions.'
@@ -124,10 +128,10 @@ const ProfileDashboard = () => {
 		<Container>
 			<TopCutout />
 			<Header>
-				{user.displayName ? (
-					<DisplayName rank={user.rank}>{user.displayName}</DisplayName>
-				) : (
+				{displayNameMissing ? (
 					<DisplayNameInput user={user} />
+				) : (
+					<DisplayName rank={user.rank}>{user.displayName}</DisplayName>
 				)}
 			</Header>
 			<SubHeader>
@@ -139,12 +143,8 @@ const ProfileDashboard = () => {
 					<Info>{rank}</Info>
 				</SubHeaderInfo>
 			</SubHeader>
-			{user.displayName && (
-				<>
-					<AccountSection user={user} />
-					<SubscriptionSection />
-				</>
-			)}
+			<AccountSection user={user} locked={displayNameMissing} />
+			<SubscriptionSection locked={displayNameMissing} />
 		</Container>
 	);
 };
