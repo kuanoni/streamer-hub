@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
 import PulseLoader from 'react-spinners/PulseLoader';
-import { useDebounce } from 'src/hooks/useDebounce';
+import { useDebounce } from 'src/common/hooks/useDebounce';
 import { keyframes, styled, theme } from 'stiches.config';
 
 import { User } from '@globalTypes/custom-auth';
