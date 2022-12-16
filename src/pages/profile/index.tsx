@@ -2,14 +2,11 @@ import { useSession } from 'next-auth/react';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import DisplayNameInput from '@components/DisplayNameInput';
 import { AuthPerms, Rank, User } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
-import { RankColors } from '@modules/chat/common';
 import ProfileHeader from '@modules/profile/components/Header';
 import AccountSection from '@modules/profile/components/sections/AccountSection';
 import SubscriptionSection from '@modules/profile/components/sections/SubscriptionSection';
-import { Info, Label, List } from '@modules/profile/styles';
 
 const Container = styled('div', {
 	position: 'relative',
