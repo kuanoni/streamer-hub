@@ -8,14 +8,15 @@ import { Info, Label, StyledLink, SubLabel } from './styles';
 
 interface Props {
 	user: User;
+	locked?: boolean;
 }
 
-const AccountSection = ({ user }: Props) => {
+const AccountSection = ({ user, locked = false }: Props) => {
 	const [displayName, setDisplayName] = useState(user.displayName);
 	const [email, setEmail] = useState(user.email);
 
 	return (
-		<ProfileSection title='Account'>
+		<ProfileSection title='Account' locked={locked}>
 			<Label>Username</Label>
 			<SubLabel>
 				You can request a name change <StyledLink href='/'>here.</StyledLink>
@@ -23,8 +24,6 @@ const AccountSection = ({ user }: Props) => {
 			<TextInput value={displayName} setValue={setDisplayName} placeholder={'Enter username...'} disabled />
 			<Label>Email</Label>
 			<TextInput value={email} setValue={setEmail} placeholder='Enter email...' />
-			<Label>Subscription</Label>
-			<Info>You have no active subscriptions.</Info>
 		</ProfileSection>
 	);
 };

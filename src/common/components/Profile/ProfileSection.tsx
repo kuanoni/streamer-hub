@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
-import { BsDash, BsPlus } from 'react-icons/bs';
+import { BsDash, BsLockFill, BsPlus } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 const Section = styled('article', {
@@ -53,9 +53,10 @@ const SectionBodyContent = styled('div', {
 
 interface Props {
 	title: string;
+	locked?: boolean;
 }
 
-const ProfileSection = ({ title, children }: PropsWithChildren<Props>) => {
+const ProfileSection = ({ title, locked = false, children }: PropsWithChildren<Props>) => {
 	const [isCollapsed, setIsCollapsed] = useState(true);
 	const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -75,19 +76,23 @@ const ProfileSection = ({ title, children }: PropsWithChildren<Props>) => {
 	);
 
 	useEffect(() => {
+		if (locked) return;
 		// open section if hash matches section title
 		if (window.location.hash.startsWith(`#${title.toLowerCase()}`)) toggleCollapse(true);
 	}, [title, toggleCollapse]);
 
 	return (
-		<Section className={isCollapsed ? 'collapse' : ''}>
-			<SectionHeader className={isCollapsed ? 'collapse' : ''} onClick={() => toggleCollapse()}>
+		<Section className={isCollapsed || locked ? 'collapse' : ''}>
+			<SectionHeader className={isCollapsed || locked ? 'collapse' : ''} onClick={() => toggleCollapse()}>
 				<h2>{title}</h2>
-				{isCollapsed ? <BsPlus /> : <BsDash />}
+				{locked ? <BsLockFill /> : isCollapsed ? <BsPlus /> : <BsDash />}
 			</SectionHeader>
-			<SectionBody ref={bodyRef} className={isCollapsed ? 'collapse' : ''}>
-				<SectionBodyContent>{children}</SectionBodyContent>
-			</SectionBody>
+
+			{!locked && (
+				<SectionBody ref={bodyRef} className={isCollapsed ? 'collapse' : ''}>
+					<SectionBodyContent>{children}</SectionBodyContent>
+				</SectionBody>
+			)}
 		</Section>
 	);
 };

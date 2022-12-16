@@ -1,9 +1,13 @@
 import ProfileSection from './ProfileSection';
 import { Info } from './styles';
 
-const SubscriptionSection = () => {
+interface Props {
+	locked?: boolean;
+}
+
+const SubscriptionSection = ({ locked = false }: Props) => {
 	return (
-		<ProfileSection title='Subscription'>
+		<ProfileSection title='Subscription' locked={locked}>
 			<Info>You have no active subscriptions.</Info>
 		</ProfileSection>
 	);
