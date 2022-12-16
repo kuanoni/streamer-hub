@@ -67,8 +67,7 @@ const validateDisplayName = (name: string) => {
 
 const DisplayNameInput = ({ user }: Props) => {
 	const [displayNameValue, setDisplayNameValue] = useState('');
-	const [errors, setErrors] = useState<string[]>([]);
-	const debouncedDisplayName = useDebounce(displayNameValue, 1000);
+	const debouncedDisplayName = useDebounce(displayNameValue, 300);
 	const isDebounced = displayNameValue === debouncedDisplayName;
 
 	const errorList = useMemo(() => {
