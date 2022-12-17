@@ -58,18 +58,25 @@ const Btn = styled('button', {
 				},
 			},
 		},
+		size: {
+			fill: {
+				width: '100%',
+				height: '100%',
+			},
+		},
 	},
 });
 
 interface Props {
 	color?: 'primary' | 'dark';
 	content?: 'text' | 'icon';
+	size?: 'fill' | undefined;
 	onClick: () => void;
 }
 
-const Button = ({ color = 'primary', content = 'text', onClick, children: label }: PropsWithChildren<Props>) => {
+const Button = ({ color = 'primary', content = 'text', onClick, size, children: label }: PropsWithChildren<Props>) => {
 	return (
-		<Btn color={color} content={content} onClick={onClick}>
+		<Btn color={color} content={content} size={size} onClick={onClick}>
 			{label}
 		</Btn>
 	);

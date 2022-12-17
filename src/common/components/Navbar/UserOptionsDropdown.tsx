@@ -2,7 +2,7 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useCallback, useEffect } from 'react';
 import {
-    BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill
+	BsBoxArrowLeft, BsBoxArrowRight, BsPersonFill, BsQuestionCircleFill
 } from 'react-icons/bs';
 import { keyframes, styled, theme } from 'stiches.config';
 
@@ -93,7 +93,7 @@ const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) =
 				</LinkButton>
 			) : (
 				<>
-					<LinkButton href='/profile' onClick={openSignIn}>
+					<LinkButton href='/profile'>
 						<BsPersonFill />
 						Profile
 					</LinkButton>

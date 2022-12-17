@@ -94,7 +94,7 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 			)}
 			<SignedIn onClick={handleClick}>
 				{status === 'authenticated' && user?.avatar ? (
-					<ProfilePic as='img' src={user.avatar} />
+					<ProfilePic as='img' src={user.avatar} referrerPolicy='no-referrer' />
 				) : (
 					<ProfilePic />
 				)}
