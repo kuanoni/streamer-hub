@@ -14,8 +14,8 @@ const checkDisplayName = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { value, error } = displayNameSchema.validate(displayName, {
 		abortEarly: false,
 		messages: {
-			'string.min': `Has too few characters`,
-			'string.max': `Has too many characters`,
+			'string.min': `Has too few characters ${displayName.length}/5`,
+			'string.max': `Has too many characters ${displayName.length}/15`,
 			'string.token': `Contains special characters`,
 		},
 	});
