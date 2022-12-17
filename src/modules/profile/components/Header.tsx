@@ -90,17 +90,6 @@ const ProfileHeader = ({ user }: Props) => {
 			<SubHeader>
 				<Avatar src={user.avatar} alt='profile picture' referrerPolicy='no-referrer' />
 				<SubHeaderInfo>
-					{displayNameMissing && (
-						<>
-							<Label>Your username must:</Label>
-							<List>
-								<li>Be at least 5 characters long</li>
-								<li>Be at most 15 characters long</li>
-								<li>{'Have no special characters (!?_-.@&$) or spaces'}</li>
-								<li>{'Have no bad words'}</li>
-							</List>
-						</>
-					)}
 					{!displayNameMissing && (
 						<>
 							<Label>Joined</Label>
