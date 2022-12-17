@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { styled, theme } from 'stiches.config';
 
 export const Label = styled('div', {
+	color: theme.colors.textLight,
 	fontWeight: 700,
 	'&:not(:first-child)': {
 		marginTop: '1rem',
