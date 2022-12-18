@@ -23,6 +23,13 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		});
 	};
 
+	const writeClientMessage = (msg: ClientOnlyMessage) => {
+		setMessageLogs((currentMessages) => {
+			if (currentMessages.length < 50) return [...currentMessages, msg];
+			else return [...currentMessages.slice(1), msg];
+		});
+	};
+
 	// send msg over socket connection
 	const sendMessage = (msg: ServerMessage) => {
 		if (!data?.user) return;
@@ -36,6 +43,18 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			switch (error.context?.key) {
 				case 'author': {
 					console.log('Your username is missing!');
+					const msg: ClientOnlyMessage = {
+						scope: MessageScope.CLIENT,
+						type: MessageType.SERVER,
+						time: new Date().toISOString(),
+						text: [
+							'Your username is missing! Click',
+							<Link href={'/profile'}>here</Link>,
+							'to set a username.',
+						],
+					};
+
+					writeClientMessage(msg);
 				}
 			}
 		});
@@ -49,7 +68,8 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			time: new Date().toISOString(),
 			text: 'Attempting to connect...',
 		};
-		writeMessage(msg);
+
+		writeClientMessage(msg);
 
 		// make sure the server is running
 		fetch('/api/socket');
