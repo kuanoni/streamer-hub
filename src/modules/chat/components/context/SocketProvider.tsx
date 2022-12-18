@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
@@ -24,8 +25,18 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	// send msg over socket connection
 	const sendMessage = (msg: MessageWithoutTime) => {
 		if (!data?.user) return;
-		socket?.emit(SocketEvents.CLIENT_SEND_MSG, msg, (res: { status: boolean }) => {
-			if (!res) console.log('Failed to send chat message.');
+		socket?.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
+	};
+
+	const sendMessageErrorHandler = (res: { ok: boolean; errors: Joi.ValidationErrorItem[] }) => {
+		if (res.ok) return;
+
+		res.errors.forEach((error) => {
+			switch (error.context?.key) {
+				case 'author': {
+					console.log('Your username is missing!');
+				}
+			}
 		});
 	};
 

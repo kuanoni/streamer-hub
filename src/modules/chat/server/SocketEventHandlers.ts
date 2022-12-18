@@ -46,7 +46,10 @@ export const messageHandler = async (socket: Socket) => {
 		const { error, value } = messageSchema.validate(msg);
 
 		if (error) {
-			callback();
+			callback({
+				ok: false,
+				errors: error.details,
+			});
 			throw error;
 		}
 
@@ -57,7 +60,7 @@ export const messageHandler = async (socket: Socket) => {
 		// write to db
 
 		callback({
-			status: 'OK',
+			ok: true,
 		});
 	};
 
