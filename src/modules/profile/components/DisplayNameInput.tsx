@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
 import { keyframes, styled, theme } from 'stiches.config';
@@ -8,39 +8,11 @@ import { User } from '@globalTypes/custom-auth';
 
 import Button from '../../../common/components/ui/Button';
 import TextInput from '../../../common/components/ui/TextInput';
-import { Label, List } from '../styles';
-
-interface Props {
-	user: User;
-}
 
 const Container = styled('div', {
 	display: 'flex',
 	gap: '1rem',
 	width: '100%',
-});
-
-const moveIn = keyframes({
-	'0%': {
-		opacity: 0,
-		transform: 'translateY(-2px)',
-	},
-	'100%': {
-		opacity: 1,
-		transform: 'translateY(0px)',
-	},
-});
-
-const FeedbackContainer = styled('div', {
-	position: 'absolute',
-	bottom: 0,
-	paddingTop: '1rem',
-	color: theme.colors.textMedium,
-	fontSize: '1rem',
-	transform: 'translateY(100%)',
-	'.title, li': {
-		animation: `${moveIn} .2s`,
-	},
 });
 
 const InputContainer = styled('div', {
@@ -82,13 +54,15 @@ const setDisplayName = async (id: string, name: string) =>
 		body: JSON.stringify({ _id: id, displayName: name }),
 	}).then((res) => res.json());
 
-const DisplayNameInput = ({ user }: Props) => {
+interface Props {
+	user: User;
+	setFeedback: Dispatch<SetStateAction<string[]>>;
+}
+
+const DisplayNameInput = ({ user, setFeedback }: Props) => {
 	const [displayNameValue, setDisplayNameValue] = useState('');
 	const [debouncedDisplayName, setDebouncedDisplayName] = useState('');
-	const [feedback, setFeedback] = useState<string[]>([]);
 	const [isNameAvailable, setIsNameAvailable] = useState(false);
-
-	const hasFeedback = feedback.length !== 0;
 
 	// debounce validateDisplayName when displayNameValue changes
 	useEffect(() => {
@@ -126,22 +100,6 @@ const DisplayNameInput = ({ user }: Props) => {
 			setFeedback(['There is a problem with the server right now. Please try again later.']);
 		}
 	};
-
-	const renderFeedback = useMemo(() => {
-		if (isNameAvailable) return <Label className='title'>That username is available!</Label>;
-		if (hasFeedback)
-			return (
-				<>
-					<Label className='title'>Unfortunately, that username...</Label>
-					<List>
-						{feedback.map((item) => (
-							<li key={item}>{item}</li>
-						))}
-					</List>
-				</>
-			);
-		else return <></>;
-	}, [feedback, hasFeedback, isNameAvailable]);
 
 	const submitDisplayName = async () => {
 		if (!isNameAvailable) return;
@@ -183,16 +141,6 @@ const DisplayNameInput = ({ user }: Props) => {
 					</ButtonContainer>
 				)}
 			</InputContainer>
-			<FeedbackContainer>
-				<Label className='title'>Your username must be...</Label>
-				<List>
-					<li>Be at least 5 characters long</li>
-					<li>Be at most 15 characters long</li>
-					<li>{'Have no special characters (!?-.@&$) or spaces'}</li>
-					<li>{'Have no bad words'}</li>
-				</List>
-				{renderFeedback}
-			</FeedbackContainer>
 		</Container>
 	);
 };

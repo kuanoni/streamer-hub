@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { Rank, User } from '@globalTypes/custom-auth';
@@ -49,7 +50,6 @@ const DisplayName = styled('h1', {
 
 const SubHeader = styled('div', {
 	display: 'flex',
-	alignItems: 'center',
 	gap: '2rem',
 	padding: '2rem',
 	paddingTop: '3rem',
@@ -58,6 +58,9 @@ const SubHeader = styled('div', {
 
 const SubHeaderInfo = styled('div', {
 	paddingTop: '4rem',
+	'.title': {
+		fontSize: '1.1em',
+	},
 });
 
 const RankDescription: { [index: string]: string } = {
@@ -74,6 +77,7 @@ interface Props {
 }
 
 const ProfileHeader = ({ user }: Props) => {
+	const [feedback, setFeedback] = useState<string[]>([]);
 	const displayNameMissing = user.displayName === '';
 	const rank = RankDescription[user.rank];
 
@@ -82,7 +86,7 @@ const ProfileHeader = ({ user }: Props) => {
 			<TopCutout />
 			<Header>
 				{displayNameMissing ? (
-					<DisplayNameInput user={user} />
+					<DisplayNameInput user={user} setFeedback={setFeedback} />
 				) : (
 					<DisplayName rank={user.rank}>{user.displayName}</DisplayName>
 				)}
@@ -90,7 +94,28 @@ const ProfileHeader = ({ user }: Props) => {
 			<SubHeader>
 				<Avatar src={user.avatar} alt='profile picture' referrerPolicy='no-referrer' />
 				<SubHeaderInfo>
-					{!displayNameMissing && (
+					{displayNameMissing ? (
+						feedback.length ? (
+							<>
+								<Label className='title'>Unfortunately, that username...</Label>
+								<List>
+									{feedback.map((item) => (
+										<li key={item}>{item}</li>
+									))}
+								</List>
+							</>
+						) : (
+							<>
+								<Label className='title'>Your username must be...</Label>
+								<List>
+									<li>Be at least 5 characters long</li>
+									<li>Be at most 15 characters long</li>
+									<li>{'Have no special characters (!?-.@&$) or spaces'}</li>
+									<li>{'Have no bad words'}</li>
+								</List>
+							</>
+						)
+					) : (
 						<>
 							<Label>Joined</Label>
 							<Info>6th June, 2021 at 21:47 pm</Info>
