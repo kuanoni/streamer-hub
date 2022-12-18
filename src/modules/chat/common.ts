@@ -1,10 +1,15 @@
 import { Rank } from '@globalTypes/custom-auth';
 
 export enum MessageType {
+	DEFAULT,
 	SERVER,
 	INFO,
-	PRIVATE,
+}
+
+export enum MessageScope {
 	PUBLIC,
+	CLIENT,
+	PRIVATE,
 }
 
 export enum SocketRooms {
