@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-import { ClientMessage, ServerMessage } from '@globalTypes/socketio';
+import { ClientMessage, ClientOnlyMessage, ServerMessage } from '@globalTypes/socketio';
 
 export interface SocketProviderIface {
-	readonly messageLogs: ClientMessage[];
+	readonly messageLogs: (ClientMessage | ClientOnlyMessage)[];
 	writeMessage: (msg: ClientMessage) => void;
 	sendMessage: (msg: ServerMessage) => void;
 }

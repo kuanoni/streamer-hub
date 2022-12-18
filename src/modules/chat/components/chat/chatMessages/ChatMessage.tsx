@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import React from 'react';
-import { BsInfoCircleFill, BsShieldFillExclamation } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { Rank } from '@globalTypes/custom-auth';
@@ -50,12 +49,9 @@ const Container = styled('div', {
 			[MessageType.INFO]: {
 				color: '#45d3ff',
 			},
-			[MessageType.PRIVATE]: {},
 		},
 	},
 });
-
-const AuthorContainer = styled('span', {});
 
 const Author = styled('span', {
 	display: 'inline',
@@ -83,15 +79,6 @@ const Author = styled('span', {
 	},
 });
 
-const Text = styled('span', {
-	wordWrap: 'break-word',
-});
-
-const messageIcon: { [index: number]: React.ReactNode } = {
-	[MessageType.SERVER]: <BsShieldFillExclamation />,
-	[MessageType.INFO]: <BsInfoCircleFill />,
-};
-
 const RankFlair: { [index: string]: React.ReactNode } = {
 	[Rank.TIER_1]: <Image src={Tier1} alt='Tier 1 subscriber' />,
 	[Rank.TIER_2]: <Image src={Tier2} alt='Tier 2 subscriber' />,
@@ -105,32 +92,23 @@ interface Props {
 }
 
 const ChatMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) => {
-	if (msg.type === MessageType.PUBLIC) {
-		const dateObj = new Date(msg.time);
-		const timeTitle = timeTitleFormatter.format(dateObj);
-		const timeValue = timeValueFormatter.format(dateObj);
+	const dateObj = new Date(msg.time);
+	const timeTitle = timeTitleFormatter.format(dateObj);
+	const timeValue = timeValueFormatter.format(dateObj);
 
-		const flair = RankFlair[msg.rank];
+	const flair = RankFlair[msg.rank];
 
-		return (
-			<Container className='msg' data-author={msg.author}>
-				<time title={timeTitle}>{timeValue}</time>
-				<Author className='author' rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
-					{flair}
-					{msg.author}
-				</Author>
-				<span className='separator'>:&nbsp;</span>
-				<ChatMessageText text={msg.text} />
-			</Container>
-		);
-	} else
-		return (
-			<Container type={msg.type}>
-				<AuthorContainer>{messageIcon[msg.type]}</AuthorContainer>
-				<span className='separator'>&nbsp;</span>
-				<Text>{msg.text}</Text>
-			</Container>
-		);
+	return (
+		<Container className='msg' data-author={msg.author}>
+			<time title={timeTitle}>{timeValue}</time>
+			<Author className='author' rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
+				{flair}
+				{msg.author}
+			</Author>
+			<span className='separator'>:&nbsp;</span>
+			<ChatMessageText text={msg.text} />
+		</Container>
+	);
 });
 
 ChatMessage.displayName = 'ChatMessage';
