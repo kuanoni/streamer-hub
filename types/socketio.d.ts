@@ -1,10 +1,13 @@
 import { NextApiResponse } from 'next';
-import type { Server as HTTPServer } from 'http';
-import type { Socket as NetSocket } from 'net';
+import { ReactNode } from 'react';
 import { Server as IOServer, Socket } from 'socket.io';
+
 import { MessageType } from '@/modules/chat/common';
+
 import { Rank } from './custom-auth';
 
+import type { Server as HTTPServer } from 'http';
+import type { Socket as NetSocket } from 'net';
 interface SocketServer extends HTTPServer {
 	io?: IOServer | undefined;
 }
@@ -17,13 +20,17 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 	socket: SocketWithIO;
 }
 
-type MessageWithoutTime = {
+type ClientMessage = {
+	type: MessageType;
+	time: string;
+	author: string;
+	rank: Rank;
+	text: string | (string | ReactNode)[];
+};
+
+type ServerMessage = {
 	type: MessageType;
 	author: string;
 	rank: Rank;
 	text: string;
-};
-
-type Message = MessageWithoutTime & {
-	time: string;
 };

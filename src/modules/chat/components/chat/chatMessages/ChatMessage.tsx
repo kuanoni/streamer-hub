@@ -4,7 +4,7 @@ import { BsInfoCircleFill, BsShieldFillExclamation } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { Message } from '@globalTypes/socketio';
+import { ClientMessage } from '@globalTypes/socketio';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
@@ -99,7 +99,7 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 };
 
 interface Props {
-	msg: Message;
+	msg: ClientMessage;
 	setFocusedUser: (user: string) => void;
 	censorBadWords: boolean;
 }

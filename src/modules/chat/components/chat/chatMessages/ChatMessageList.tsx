@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { Message } from '@globalTypes/socketio';
+import { ClientMessage } from '@globalTypes/socketio';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
 import SocketContext from '../../context/SocketContext';
@@ -170,7 +170,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const liveMessages = useMemo(() => {
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
 
-		return socketCtx?.messageLogs.map((msg: Message) => (
+		return socketCtx?.messageLogs.map((msg: ClientMessage) => (
 			<ChatMessage
 				key={msg.time + msg.author}
 				censorBadWords={censorBadWords}

@@ -16,7 +16,7 @@ const containsWord = (textArr: ReactNode[], word: string) =>
 	});
 
 interface Props {
-	text: string;
+	text: string | (string | ReactNode)[];
 }
 
 const ChatMessageText = ({ text }: Props) => {

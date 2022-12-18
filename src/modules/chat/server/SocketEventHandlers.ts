@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { Socket } from 'socket.io';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { Message } from '@globalTypes/socketio';
+import { ClientMessage, ServerMessage } from '@globalTypes/socketio';
 
 import { MessageType, SocketEvents, SocketRooms } from '../common';
 
@@ -35,15 +35,16 @@ const errorHandler = (handler: Function) => {
 };
 
 export const messageHandler = async (socket: Socket) => {
-	const sentMessage = (msg: Message, callback: Function, room?: SocketRooms) => {
+	const sentMessage = (msg: ServerMessage, callback: Function, room?: SocketRooms) => {
 		if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-		// message time is set server side
-		msg.time = new Date().toISOString();
-		// remove double spaces and line breaks
-		msg.text = msg.text.replace(/\s+/g, ' ').trim();
+		const newMsg: ClientMessage = {
+			...msg,
+			time: new Date().toISOString(),
+			text: msg.text.replace(/\s+/g, ' ').trim(),
+		};
 
-		const { error, value } = messageSchema.validate(msg);
+		const { error, value: validatedMsg } = messageSchema.validate(newMsg);
 
 		if (error) {
 			callback({
@@ -54,8 +55,8 @@ export const messageHandler = async (socket: Socket) => {
 		}
 
 		// broadcast message globally or to room
-		if (room) socket.in(room).emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
-		else socket.nsp.emit(SocketEvents.CLIENT_RECEIVE_MSG, value);
+		if (room) socket.in(room).emit(SocketEvents.CLIENT_RECEIVE_MSG, validatedMsg);
+		else socket.nsp.emit(SocketEvents.CLIENT_RECEIVE_MSG, validatedMsg);
 
 		// write to db
 

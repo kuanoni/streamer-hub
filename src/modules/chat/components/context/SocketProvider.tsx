@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { Message, MessageWithoutTime } from '@globalTypes/socketio';
+import { ClientMessage, ServerMessage } from '@globalTypes/socketio';
 
 import { MessageType, SocketEvents } from '../../common';
 import SocketContext, { SocketProviderIface } from './SocketContext';
@@ -12,10 +12,10 @@ import SocketContext, { SocketProviderIface } from './SocketContext';
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const [messageLogs, setMessageLogs] = useState<Array<Message>>([]);
+	const [messageLogs, setMessageLogs] = useState<Array<ClientMessage>>([]);
 
 	// saves msg to messageLogs, which is a list that renders in MessageBox
-	const writeMessage = (msg: Message) => {
+	const writeMessage = (msg: ClientMessage) => {
 		setMessageLogs((currentMessages) => {
 			if (currentMessages.length < 50) return [...currentMessages, msg];
 			else return [...currentMessages.slice(1), msg];
@@ -23,7 +23,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	// send msg over socket connection
-	const sendMessage = (msg: MessageWithoutTime) => {
+	const sendMessage = (msg: ServerMessage) => {
 		if (!data?.user) return;
 		socket?.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
 	};
@@ -42,7 +42,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	useEffect(() => {
 		// write 'Attempting to connect...' message
-		const msg: Message = {
+		const msg: ClientMessage = {
 			type: MessageType.INFO,
 			time: new Date().toISOString(),
 			author: 'INFO',
@@ -55,7 +55,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		fetch('/api/socket');
 
 		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
-		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: Message) => writeMessage(msg));
+		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: ClientMessage) => writeMessage(msg));
 		newSocket.connect();
 
 		// save socket to state
