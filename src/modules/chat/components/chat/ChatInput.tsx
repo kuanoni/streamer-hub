@@ -67,7 +67,7 @@ const ChatInput = ({
 
 		// send message through socket connection
 		const msg: MessageWithoutTime = {
-			type: MessageType.PUBLIC,
+			type: MessageType.DEFAULT,
 			author: data.user.displayName,
 			rank: data.user.rank,
 			text: textAreaRef.current.value,
