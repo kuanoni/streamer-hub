@@ -4,7 +4,7 @@ import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
-import { MessageWithoutTime } from '@globalTypes/socketio';
+import { ServerMessage } from '@globalTypes/socketio';
 
 import { MessageType } from '../../common';
 import SocketContext from '../context/SocketContext';
@@ -66,8 +66,7 @@ const ChatInput = ({
 		if (!data?.user) throw new Error('user undefined');
 
 		// send message through socket connection
-		const msg: MessageWithoutTime = {
-			type: MessageType.DEFAULT,
+		const msg: ServerMessage = {
 			author: data.user.displayName,
 			rank: data.user.rank,
 			text: textAreaRef.current.value,
