@@ -28,6 +28,7 @@ const NavLink = styled(Link, {
 	'&:hover': {
 		color: theme.colors.textMediumActive,
 		borderColor: theme.colors.primary400,
+		textDecoration: 'none',
 	},
 	'&:hover::after': {
 		height: '100%',
