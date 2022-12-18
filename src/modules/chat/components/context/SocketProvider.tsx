@@ -1,18 +1,19 @@
 import Joi from 'joi';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { ClientMessage, ServerMessage } from '@globalTypes/socketio';
+import { ClientMessage, ClientOnlyMessage, ServerMessage } from '@globalTypes/socketio';
 
-import { MessageType, SocketEvents } from '../../common';
+import { MessageScope, MessageType, SocketEvents } from '../../common';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const [messageLogs, setMessageLogs] = useState<Array<ClientMessage>>([]);
+	const [messageLogs, setMessageLogs] = useState<(ClientMessage | ClientOnlyMessage)[]>([]);
 
 	// saves msg to messageLogs, which is a list that renders in MessageBox
 	const writeMessage = (msg: ClientMessage) => {
@@ -42,11 +43,10 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	useEffect(() => {
 		// write 'Attempting to connect...' message
-		const msg: ClientMessage = {
+		const msg: ClientOnlyMessage = {
+			scope: MessageScope.CLIENT,
 			type: MessageType.INFO,
 			time: new Date().toISOString(),
-			author: 'INFO',
-			rank: Rank.DEFAULT,
 			text: 'Attempting to connect...',
 		};
 		writeMessage(msg);
