@@ -30,7 +30,8 @@ const Header = styled('div', {
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	padding: '.5rem 1rem',
+	padding: '.5rem',
+	paddingLeft: '1rem',
 	backgroundColor: theme.colors.primary900,
 	borderBottom: `1px solid ${theme.colors.trinary700}`,
 	h2: {
