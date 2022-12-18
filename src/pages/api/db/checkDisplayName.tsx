@@ -8,7 +8,7 @@ const displayNameSchema = Joi.string().min(5).max(15).token().required();
 const checkDisplayName = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== 'GET') return res.json({ status: 500, message: 'Request must be GET.' });
 	if (!req.query.displayName) return res.json({ status: 500, message: 'Request query "displayName" missing.' });
-	const displayName = (req.query.displayName as string).trim();
+	const displayName = req.query.displayName;
 
 	// validate displayName
 	const { value, error } = displayNameSchema.validate(displayName, {
@@ -16,7 +16,7 @@ const checkDisplayName = async (req: NextApiRequest, res: NextApiResponse) => {
 		messages: {
 			'string.min': `Has too few characters ${displayName.length}/5`,
 			'string.max': `Has too many characters ${displayName.length}/15`,
-			'string.token': `Contains special characters`,
+			'string.token': `Contains special characters or spaces`,
 		},
 	});
 
