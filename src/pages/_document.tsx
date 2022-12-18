@@ -35,7 +35,11 @@ const globalStyles = globalCss({
 	},
 	a: {
 		textDecoration: 'none',
-		color: 'inherit',
+		// color: 'inherit',
+		color: 'rgb(19, 125, 215)',
+		'&:hover': {
+			textDecoration: 'underline',
+		},
 	},
 });
 

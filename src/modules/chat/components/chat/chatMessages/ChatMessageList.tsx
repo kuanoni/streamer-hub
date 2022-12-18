@@ -2,11 +2,13 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { Message } from '@globalTypes/socketio';
+import { ClientMessage, ClientOnlyMessage } from '@globalTypes/socketio';
+import { MessageScope, MessageType } from '@modules/chat/common';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
 import SocketContext from '../../context/SocketContext';
 import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
+import ChatClientMessage from './ChatClientMessage';
 import ChatMessage from './ChatMessage';
 
 const Container = styled('div', {
@@ -170,14 +172,27 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const liveMessages = useMemo(() => {
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
 
-		return socketCtx?.messageLogs.map((msg: Message) => (
-			<ChatMessage
-				key={msg.time + msg.author}
-				censorBadWords={censorBadWords}
-				msg={msg}
-				setFocusedUser={setFocusedUser}
-			/>
-		));
+		return socketCtx?.messageLogs.map((msg: ClientMessage | ClientOnlyMessage) => {
+			if (msg.scope === MessageScope.CLIENT)
+				return (
+					<ChatClientMessage
+						key={msg.time}
+						censorBadWords={censorBadWords}
+						msg={msg}
+						setFocusedUser={setFocusedUser}
+					/>
+				);
+
+			if (msg.scope === MessageScope.PUBLIC)
+				return (
+					<ChatMessage
+						key={msg.time + (msg as ClientMessage).author}
+						censorBadWords={censorBadWords}
+						msg={msg as ClientMessage}
+						setFocusedUser={setFocusedUser}
+					/>
+				);
+		});
 	}, [shouldReRenderLiveMessages, optionsCtx?.chatOptions.censorBadWords]);
 
 	// paused rendered messages

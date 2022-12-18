@@ -1,31 +1,18 @@
 import Router from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { BsFillHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
-import PulseLoader from 'react-spinners/PulseLoader';
-import { useDebounce } from 'src/common/hooks/useDebounce';
 import { keyframes, styled, theme } from 'stiches.config';
 
 import { User } from '@globalTypes/custom-auth';
 
 import Button from '../../../common/components/ui/Button';
 import TextInput from '../../../common/components/ui/TextInput';
-import { List } from '../styles';
-
-interface Props {
-	user: User;
-}
 
 const Container = styled('div', {
 	display: 'flex',
 	gap: '1rem',
 	width: '100%',
-});
-
-const ErrorsContainer = styled('div', {
-	color: theme.colors.textMedium,
-	fontSize: '.9rem',
-	paddingRight: '2rem',
 });
 
 const InputContainer = styled('div', {
@@ -54,55 +41,79 @@ const ButtonContainer = styled('div', {
 	animation: `${fadeIn} .2s`,
 });
 
-const displayNameRegex = /^[a-zA-Z0-9 ]+$/;
+type Response200 = { status: 200; available: boolean; validationErrors: string[] };
+type Response500 = { status: 500; message: string };
+type Response<T extends 200 | 500> = T extends 200 ? Response200 : Response500;
 
-const validateDisplayName = (name: string) => {
-	const errors = [];
-	if (name.length < 5) errors.push(`At least 5 characters. (${name.length}/5)`);
-	if (name.length > 15) errors.push(`At most 15 characters. (${name.length}/15)`);
-	if (!displayNameRegex.test(name) && name.length) errors.push('Only letters or numbers');
-	if (name.includes(' ')) errors.push('No spaces');
-	return errors;
-};
+const checkDisplayName = async (name: string): Promise<Response<200 | 500>> =>
+	await fetch(`/api/db/checkDisplayName?displayName=${name}`).then((res) => res.json());
 
-const checkNameAvailability = async (name: string) => {
-	const res = await fetch(`/api/db/checkDisplayName?name=${name}`, {
-		method: 'GET',
+const setDisplayName = async (id: string, name: string) =>
+	await fetch('/api/db/userSetDisplayName', {
+		method: 'PATCH',
+		body: JSON.stringify({ _id: id, displayName: name }),
 	}).then((res) => res.json());
 
-	console.log(res);
-};
+interface Props {
+	user: User;
+	setFeedback: Dispatch<SetStateAction<string[]>>;
+}
 
-const DisplayNameInput = ({ user }: Props) => {
+const DisplayNameInput = ({ user, setFeedback }: Props) => {
 	const [displayNameValue, setDisplayNameValue] = useState('');
-	const [errors, setErrors] = useState<string[]>([]);
-	const debouncedDisplayName = useDebounce(displayNameValue, 800);
-	const isDebounced = displayNameValue === debouncedDisplayName;
+	const [debouncedDisplayName, setDebouncedDisplayName] = useState('');
+	const [isNameAvailable, setIsNameAvailable] = useState(false);
 
-	const nameAvailableIndicator = useMemo(async () => {
-		const validationErrors = validateDisplayName(debouncedDisplayName);
-		if (validationErrors.length) return setErrors(validationErrors);
-		const isAvailable = await checkNameAvailability(debouncedDisplayName);
-	}, [debouncedDisplayName]);
+	// debounce validateDisplayName when displayNameValue changes
+	useEffect(() => {
+		const debounceTimeout = setTimeout(() => {
+			validateDisplayName(displayNameValue);
+			setDebouncedDisplayName(displayNameValue);
+		}, 800);
 
-	// useEffect(() => {
-	// 	const validationErrors = validateDisplayName(debouncedDisplayName);
-	// 	if (validationErrors.length) return setErrors(validationErrors);
-	// }, [debouncedDisplayName, setErrors]);
+		return () => {
+			clearTimeout(debounceTimeout);
+		};
+	}, [displayNameValue]);
+
+	const validateDisplayName = async (name: string) => {
+		const newFeedback: string[] = [];
+
+		// if input is empty, remove all feedback
+		if (name === '') {
+			setIsNameAvailable(false);
+			return setFeedback([]);
+		}
+
+		// spaces must be replaced to be sent as a URL query
+		const res = await checkDisplayName(name.replaceAll(' ', '%20'));
+
+		// retry fetching if failed
+
+		if (res.status === 200) {
+			if (res.validationErrors) setFeedback([...newFeedback, ...res.validationErrors]);
+			setIsNameAvailable(res.available);
+		}
+
+		if (res.status === 500) {
+			console.log(res);
+			setFeedback(['There is a problem with the server right now. Please try again later.']);
+		}
+	};
 
 	const submitDisplayName = async () => {
-		if (displayNameValue !== debouncedDisplayName) return;
+		if (!isNameAvailable) return;
 
-		const validationErrors = validateDisplayName(displayNameValue);
-		if (validationErrors.length) return;
+		// SET DISPLAY NAME
+		const setDisplayNameResponse = await setDisplayName(user.id, debouncedDisplayName);
+		if (setDisplayNameResponse.status === 200) Router.reload();
+		if (setDisplayNameResponse.status === 500)
+			return setFeedback(['There is a problem with the server right now. Please try again later.']);
+	};
 
-		const res = await fetch('/api/db/userSetDisplayName', {
-			method: 'PATCH',
-			body: JSON.stringify({ _id: user?.id, displayName: displayNameValue }),
-		}).then((res) => res.json());
-
-		if (res.status === 200) Router.reload();
-		// handle response errors here
+	const handleInputChange = (val: string) => {
+		setDisplayNameValue(val);
+		setIsNameAvailable(false);
 	};
 
 	return (
@@ -110,33 +121,26 @@ const DisplayNameInput = ({ user }: Props) => {
 			<InputContainer>
 				<TextInput
 					value={displayNameValue}
-					setValue={setDisplayNameValue}
+					setValue={handleInputChange}
 					placeholder={'Enter username...'}
 					autoFocus
 					maxLength={15}
 					color='transparent'
 					size='huge'
 				/>
-				{!errors && isDebounced && (
+				{isNameAvailable && (
 					<ButtonContainer>
 						<Button content='icon' size='fill' onClick={submitDisplayName}>
 							<BsFillHandThumbsUpFill />
 						</Button>
 					</ButtonContainer>
 				)}
-				{!isDebounced && (
+				{false && (
 					<ButtonContainer>
 						<MoonLoader color={theme.colors.textLight.toString()} loading={true} size={30} />
 					</ButtonContainer>
 				)}
 			</InputContainer>
-			<ErrorsContainer>
-				<List>
-					{errors.map((item) => (
-						<li key={item}>{item}</li>
-					))}
-				</List>
-			</ErrorsContainer>
 		</Container>
 	);
 };

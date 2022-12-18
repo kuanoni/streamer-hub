@@ -16,7 +16,7 @@ const containsWord = (textArr: ReactNode[], word: string) =>
 	});
 
 interface Props {
-	text: string;
+	text: string | (string | ReactNode)[];
 }
 
 const ChatMessageText = ({ text }: Props) => {
@@ -33,7 +33,9 @@ const ChatMessageText = ({ text }: Props) => {
 
 	return (
 		<Text className={isCensored ? censoredClass : ''} onClick={() => setIsCensored(false)}>
-			{newText}
+			{newText.map((item, i) => (
+				<React.Fragment key={i}>{item}</React.Fragment>
+			))}
 		</Text>
 	);
 };

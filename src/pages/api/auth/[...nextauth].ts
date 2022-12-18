@@ -22,7 +22,6 @@ export const authOptions: NextAuthOptions = {
 			profile(profile: GoogleProfile) {
 				return {
 					id: profile.sub,
-					email: profile.email,
 					avatar: profile.picture,
 					...defaultProfile,
 				};
@@ -36,8 +35,6 @@ export const authOptions: NextAuthOptions = {
 
 				return {
 					id: profile.id,
-					email: profile.email,
-					emailVerified: profile.verified,
 					avatar,
 					...defaultProfile,
 				};
