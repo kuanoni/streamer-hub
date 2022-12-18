@@ -21,12 +21,7 @@ const userSetDisplayName = async (req: NextApiRequest, res: NextApiResponse) => 
 		if (!docById) return res.json({ status: 500, message: 'Invalid user id.' });
 		if (docById.displayName) return res.json({ status: 500, message: 'Display name has already been set.' });
 
-		const updated = await collection.updateOne(
-			{ _id: new ObjectId(_id) },
-			{
-				$set: { displayName },
-			}
-		);
+		const updatedRes = await collection.updateOne({ _id: new ObjectId(_id) }, { $set: { displayName } });
 
 		res.json({ status: 200, message: 'Display name set successfully.' });
 	} catch (err) {
