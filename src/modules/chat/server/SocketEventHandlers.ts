@@ -4,7 +4,7 @@ import { Socket } from 'socket.io';
 import { Rank } from '@globalTypes/custom-auth';
 import { ClientMessage, ServerMessage } from '@globalTypes/socketio';
 
-import { MessageType, SocketEvents, SocketRooms } from '../common';
+import { MessageScope, MessageType, SocketEvents, SocketRooms } from '../common';
 
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),
@@ -40,6 +40,8 @@ export const messageHandler = async (socket: Socket) => {
 
 		const newMsg: ClientMessage = {
 			...msg,
+			scope: MessageScope.PUBLIC,
+			type: MessageType.DEFAULT,
 			time: new Date().toISOString(),
 			text: msg.text.replace(/\s+/g, ' ').trim(),
 		};
@@ -73,6 +75,7 @@ export const messageHandler = async (socket: Socket) => {
 
 export const connectionHandler = async (socket: Socket) => {
 	socket.emit(SocketEvents.CLIENT_RECEIVE_MSG, {
+		scope: MessageScope.CLIENT,
 		type: MessageType.INFO,
 		time: new Date(),
 		author: 'INFO',
