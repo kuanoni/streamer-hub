@@ -49,7 +49,9 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 						time: new Date().toISOString(),
 						text: [
 							'Your username is missing! Click',
-							<Link href={'/profile'}>here</Link>,
+							<Link key='link' href={'/profile'}>
+								here
+							</Link>,
 							'to set a username.',
 						],
 					};
