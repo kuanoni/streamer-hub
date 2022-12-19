@@ -4,9 +4,11 @@ import { styled, theme } from 'stiches.config';
 
 import { AuthPerms, User } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
-import ProfileHeader from '@modules/profile/components/Header';
+import ProfileHeaderContainer from '@modules/profile/components/HeaderContainer';
+import HeaderInfo from '@modules/profile/components/HeaderInfo';
 import AccountSection from '@modules/profile/components/sections/AccountSection';
 import SubscriptionSection from '@modules/profile/components/sections/SubscriptionSection';
+import UsernameInput from '@modules/profile/components/UsernameInput';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -25,6 +27,7 @@ const Container = styled('div', {
             rgba(45, 50, 72, 0) 100%
         ), 
         rgba(255, 255, 255, 0.03)`,
+	overflow: 'hidden',
 });
 
 const ProfileDashboard = () => {
@@ -37,7 +40,10 @@ const ProfileDashboard = () => {
 
 	return (
 		<Container>
-			<ProfileHeader user={user} />
+			<ProfileHeaderContainer user={user}>
+				{/* <HeaderInfo user={user} /> */}
+				<UsernameInput user={user} />
+			</ProfileHeaderContainer>
 			<AccountSection user={user} locked={displayNameMissing} />
 			<SubscriptionSection locked={displayNameMissing} />
 		</Container>
