@@ -13,7 +13,7 @@ interface Props {
 }
 
 const AccountSection = ({ user, locked = false }: Props) => {
-	const [email, setEmail] = useState(user.email);
+	const [email, setEmail] = useState(user.email === null ? '' : user.email);
 
 	const saveAccount = () => {};
 
