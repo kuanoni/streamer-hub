@@ -47,6 +47,13 @@ const ProfilePic = styled(BsPersonCircle, {
 	borderRadius: '50%',
 });
 
+const ProfilePicImage = styled(Image, {
+	width: '2.5rem',
+	height: '2.5rem',
+	marginLeft: '1rem',
+	borderRadius: '50%',
+});
+
 const DropdownCaret = styled(BsCaretDownFill, {
 	width: '1rem',
 	height: '1rem',
@@ -94,7 +101,15 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 			)}
 			<SignedIn onClick={handleClick}>
 				{status === 'authenticated' && user?.avatar ? (
-					<ProfilePic as='img' src={user.avatar} referrerPolicy='no-referrer' />
+					<ProfilePicImage
+						src={user.avatar}
+						alt='avatar'
+						width={40}
+						height={40}
+						placeholder='blur'
+						blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII='
+						referrerPolicy='no-referrer'
+					/>
 				) : (
 					<ProfilePic />
 				)}
