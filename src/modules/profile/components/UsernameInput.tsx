@@ -1,16 +1,49 @@
 import { useCallback, useEffect, useState } from 'react';
-import { styled, theme } from 'stiches.config';
+import { BsHandThumbsUpFill } from 'react-icons/bs';
+import { MoonLoader } from 'react-spinners';
+import { keyframes, styled, theme } from 'stiches.config';
 
+import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
 import { User } from '@globalTypes/custom-auth';
 
 import { Label, List } from '../styles';
 
-const InputContainer = styled('form', {
+const Form = styled('form', {
+	position: 'relative',
 	display: 'flex',
 	alignItems: 'end',
 	padding: '.5rem 1rem',
 	backgroundColor: theme.colors.primary900,
+	'& > input': {
+		minWidth: '10ch',
+		maxWidth: '65%',
+		paddingRight: '4rem',
+	},
+});
+
+const InputContainer = styled('div', {
+	position: 'relative',
+});
+
+const fadeIn = keyframes({
+	'0%': {
+		opacity: 0.6,
+	},
+	'100%': {
+		opacity: 1,
+	},
+});
+
+const ButtonContainer = styled('div', {
+	position: 'absolute',
+	top: 0,
+	right: 0,
+	display: 'flex',
+	height: '100%',
+	padding: '.25rem',
+	aspectRatio: 1,
+	animation: `${fadeIn} .2s`,
 });
 
 const FeedbackContainer = styled('div', {
@@ -30,51 +63,73 @@ interface Props {
 
 const UsernameInput = ({ user }: Props) => {
 	const [inputValue, setInputValue] = useState('');
-	const [isFetching, setIsFetching] = useState(false);
-	const [usernameFeedback, setUsernameFeedback] = useState<string[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isNameAvailable, setIsNameAvailable] = useState(false);
+	const [validationFeedback, setValidationFeedback] = useState<string[]>([]);
 
-	const hasErrors = usernameFeedback.length !== 0;
+	const hasFeedback = validationFeedback.length !== 0;
 
 	const setDebouncedFeedback = useCallback(() => {
-		if (inputValue === '') return setUsernameFeedback([]);
+		if (inputValue === '') {
+			setValidationFeedback([]);
+			setIsLoading(false);
+			return;
+		}
 
-		setIsFetching(true);
 		checkDisplayName(inputValue).then((result) => {
-			setIsFetching(false);
+			setIsLoading(false);
 			console.log(result);
 
-			if (result.status === 200 && !result.available) setUsernameFeedback(result.validationErrors);
+			if (result.status === 200)
+				if (result.available) {
+					setIsNameAvailable(true);
+					setValidationFeedback([]);
+				} else setValidationFeedback(result.validationErrors);
 		});
-	}, [inputValue, setUsernameFeedback, setIsFetching]);
+	}, [inputValue, setValidationFeedback, setIsLoading]);
 
-	// set debounce timer
 	useEffect(() => {
+		setIsLoading(true);
+		setIsNameAvailable(false);
+
 		const debounceTimeout = setTimeout(setDebouncedFeedback, 800);
 
 		return () => {
 			clearTimeout(debounceTimeout);
 		};
-	}, [inputValue, setDebouncedFeedback]);
+	}, [inputValue, setDebouncedFeedback, setIsLoading]);
 
 	return (
 		<>
-			<InputContainer>
-				<TextInput
-					value={inputValue}
-					setValue={setInputValue}
-					placeholder={'Enter username...'}
-					autoFocus
-					maxLength={15}
-					color='transparent'
-					size='huge'
-				/>
-			</InputContainer>
+			<Form>
+				<InputContainer>
+					<TextInput
+						value={inputValue}
+						setValue={setInputValue}
+						placeholder={'Enter username...'}
+						autoFocus
+						maxLength={15}
+						color='transparent'
+						size='huge'
+					/>
+					<ButtonContainer>
+						{isLoading ? (
+							<MoonLoader color={theme.colors.textLight.toString()} loading={true} size={30} />
+						) : null}
+						{isNameAvailable ? (
+							<Button content='icon' size='fill' onClick={() => {}}>
+								<BsHandThumbsUpFill />
+							</Button>
+						) : null}
+					</ButtonContainer>
+				</InputContainer>
+			</Form>
 			<FeedbackContainer>
-				{hasErrors ? (
+				{hasFeedback ? (
 					<>
 						<Label className='title'>That username...</Label>
 						<List>
-							{usernameFeedback.map((item) => (
+							{validationFeedback.map((item) => (
 								<li key={item}>{item}</li>
 							))}
 						</List>
