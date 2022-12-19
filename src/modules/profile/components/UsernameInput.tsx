@@ -50,9 +50,9 @@ const FeedbackContainer = styled('div', {
 	padding: '1rem',
 });
 
-type Response200 = { status: 200; available: boolean; validationErrors: string[] };
-type Response500 = { status: 500; message: string };
-type Response<T extends 200 | 500> = T extends 200 ? Response200 : Response500;
+type SuccessResponse = { status: 200; available: boolean; validationErrors: string[] };
+type ErrorResponse = { status: 500; message: string };
+type Response<T extends number> = T extends 200 ? SuccessResponse : ErrorResponse;
 
 const checkDisplayName = async (name: string): Promise<Response<200 | 500>> =>
 	await fetch(`/api/db/checkDisplayName?displayName=${name}`).then((res) => res.json());
