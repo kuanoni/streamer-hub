@@ -5,7 +5,7 @@ import clientPromise from '@utils/mongodb';
 
 const displayNameSchema = Joi.string().min(5).max(15).token().required();
 
-const checkDisplayName = async (req: NextApiRequest, res: NextApiResponse) => {
+const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== 'GET') return res.json({ status: 500, message: 'Request must be GET.' });
 	if (!req.query.displayName) return res.json({ status: 500, message: 'Request query "displayName" missing.' });
 	const displayName = req.query.displayName;
@@ -46,4 +46,4 @@ const checkDisplayName = async (req: NextApiRequest, res: NextApiResponse) => {
 	res.json({ success: false, message: 'Display name checked' });
 };
 
-export default checkDisplayName;
+export default checkUsername;

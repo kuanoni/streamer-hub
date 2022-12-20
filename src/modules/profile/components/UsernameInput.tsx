@@ -61,10 +61,10 @@ type ErrorResponse = { status: 500; message: string };
 type Response<T extends number> = T extends 200 ? SuccessResponse : ErrorResponse;
 
 const checkDisplayName = async (name: string): Promise<Response<200 | 500>> =>
-	await fetch(`/api/db/checkDisplayName?displayName=${name}`).then((res) => res.json());
+	await fetch(`/api/db/checkUsername?displayName=${name}`).then((res) => res.json());
 
 const setUsername = async (id: string, name: string) =>
-	await fetch('/api/db/userSetDisplayName', {
+	await fetch('/api/db/setUsername', {
 		method: 'PATCH',
 		body: JSON.stringify({ _id: id, displayName: name }),
 	}).then((res) => res.json());
