@@ -12,16 +12,16 @@ const setUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 		const collection = db.collection('users');
 
 		if (!req.body) return res.json({ status: 500, message: 'No request body.' });
-		const { _id, displayName } = JSON.parse(req.body);
+		const { _id, username } = JSON.parse(req.body);
 
-		const docByDisplayName = await collection.findOne({ displayName });
+		const docByDisplayName = await collection.findOne({ username });
 		if (docByDisplayName) return res.json({ status: 500, message: 'Display name is already taken.' });
 
 		const docById = await collection.findOne({ _id: new ObjectId(_id) });
 		if (!docById) return res.json({ status: 500, message: 'Invalid user id.' });
-		if (docById.displayName) return res.json({ status: 500, message: 'Display name has already been set.' });
+		if (docById.username) return res.json({ status: 500, message: 'Display name has already been set.' });
 
-		const updatedRes = await collection.updateOne({ _id: new ObjectId(_id) }, { $set: { displayName } });
+		const updatedRes = await collection.updateOne({ _id: new ObjectId(_id) }, { $set: { username } });
 
 		res.json({ status: 200, message: 'Display name set successfully.' });
 	} catch (err) {

@@ -3,19 +3,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import clientPromise from '@utils/mongodb';
 
-const displayNameSchema = Joi.string().min(5).max(15).token().required();
+const usernameSchema = Joi.string().min(5).max(15).token().required();
 
 const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== 'GET') return res.json({ status: 500, message: 'Request must be GET.' });
-	if (!req.query.displayName) return res.json({ status: 500, message: 'Request query "displayName" missing.' });
-	const displayName = req.query.displayName;
+	if (!req.query.username) return res.json({ status: 500, message: 'Request query "username" missing.' });
+	const username = req.query.username;
 
-	// validate displayName
-	const { value, error } = displayNameSchema.validate(displayName, {
+	// validate username
+	const { value, error } = usernameSchema.validate(username, {
 		abortEarly: false,
 		messages: {
-			'string.min': `Has too few characters ${displayName.length}/5`,
-			'string.max': `Has too many characters ${displayName.length}/15`,
+			'string.min': `Has too few characters ${username.length}/5`,
+			'string.max': `Has too many characters ${username.length}/15`,
 			'string.token': `Contains special characters or spaces`,
 		},
 	});
@@ -27,15 +27,15 @@ const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 			validationErrors: error.details.map((detail) => detail.message),
 		});
 
-	// check displayName for bad words and such
+	// check username for bad words and such
 
-	// check if displayName is already taken
+	// check if username is already taken
 	try {
 		const client = await clientPromise;
 		const db = client.db('auth');
 		const collection = db.collection('users');
 
-		const docByDisplayName = await collection.findOne({ displayName });
+		const docByDisplayName = await collection.findOne({ username });
 
 		if (docByDisplayName)
 			return res.json({ status: 200, available: false, validationErrors: ['Username is already taken'] });

@@ -8,7 +8,7 @@ import extractStringEnvVar from '@utils/extractStringEnvVar';
 import clientPromise from '@utils/mongodb';
 
 const defaultProfile = {
-	displayName: '',
+	username: '',
 	role: AuthPerms.USER,
 	rank: Rank.DEFAULT,
 };

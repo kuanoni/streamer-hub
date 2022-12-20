@@ -67,7 +67,7 @@ const ChatInput = ({
 
 		// send message through socket connection
 		const msg: ServerMessage = {
-			author: data.user.displayName,
+			author: data.user.username,
 			rank: data.user.rank,
 			text: textAreaRef.current.value,
 		};

@@ -36,15 +36,15 @@ const ProfileDashboard = () => {
 
 	if (!user) return <>Loading...</>; // replace with skeleton
 
-	const displayNameMissing = user.displayName === '';
+	const usernameMissing = user.username === '';
 
 	return (
 		<Container>
 			<ProfileHeaderContainer user={user}>
-				{displayNameMissing ? <UsernameInput user={user} /> : <HeaderInfo user={user} />}
+				{usernameMissing ? <UsernameInput user={user} /> : <HeaderInfo user={user} />}
 			</ProfileHeaderContainer>
-			<AccountSection user={user} locked={displayNameMissing} />
-			<SubscriptionSection locked={displayNameMissing} />
+			<AccountSection user={user} locked={usernameMissing} />
+			<SubscriptionSection locked={usernameMissing} />
 		</Container>
 	);
 };
