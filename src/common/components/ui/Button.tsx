@@ -71,7 +71,7 @@ interface Props {
 	color?: 'primary' | 'dark';
 	content?: 'text' | 'icon';
 	size?: 'fill' | undefined;
-	onClick: () => void;
+	onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({ color = 'primary', content = 'text', onClick, size, children: label }: PropsWithChildren<Props>) => {
