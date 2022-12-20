@@ -41,8 +41,7 @@ const ProfileDashboard = () => {
 	return (
 		<Container>
 			<ProfileHeaderContainer user={user}>
-				{/* <HeaderInfo user={user} /> */}
-				<UsernameInput user={user} />
+				{displayNameMissing ? <UsernameInput user={user} /> : <HeaderInfo user={user} />}
 			</ProfileHeaderContainer>
 			<AccountSection user={user} locked={displayNameMissing} />
 			<SubscriptionSection locked={displayNameMissing} />
