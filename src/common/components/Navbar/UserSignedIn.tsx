@@ -1,3 +1,4 @@
+import { User } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { MouseEventHandler, useState } from 'react';
@@ -6,7 +7,6 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
-import { User } from '@globalTypes/custom-auth';
 import { RankColors } from '@modules/chat/common';
 
 import UserOptionsDropdown from './UserOptionsDropdown';

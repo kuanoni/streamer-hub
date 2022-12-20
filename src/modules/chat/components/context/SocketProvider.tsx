@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
-import { Rank } from '@globalTypes/custom-auth';
 import { ClientMessage, ClientOnlyMessage, ServerMessage } from '@globalTypes/socketio';
 
 import { MessageScope, MessageType, SocketEvents } from '../../common';

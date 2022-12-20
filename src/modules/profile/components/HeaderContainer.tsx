@@ -1,8 +1,7 @@
+import { User } from 'next-auth';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 import { styled, theme } from 'stiches.config';
-
-import { User } from '@globalTypes/custom-auth';
 
 const Grid = styled('div', {
 	display: 'grid',
@@ -34,6 +33,7 @@ interface Props {
 }
 
 const ProfileHeaderContainer = ({ user, children }: PropsWithChildren<Props>) => {
+	if (!user) return <></>;
 	return (
 		<Grid>
 			<TopCutout />

@@ -1,5 +1,4 @@
 import { NextComponentType } from 'next';
-import { DefaultSession } from 'next-auth';
 import { ReactElement, ReactNode } from 'react';
 
 export enum AuthPerms {
@@ -19,7 +18,7 @@ export enum Rank {
 
 export interface PageAuthorizationOptions {
 	roleRequired: AuthPerms;
-	whileLoading: React.ReactNode;
+	whileLoading: ReactNode;
 	unauthorizedRedirect: string;
 }
 
@@ -28,17 +27,3 @@ export type Page = NextComponentType & {
 	getLayout?: (page: ReactElement) => ReactNode;
 	authorizationOptions?: PageAuthorizationOptions | undefined;
 };
-
-export type User = DefaultSession['user'] & {
-	id: string;
-	email: string;
-	username: string;
-	joined: Date;
-	authLevel: AuthPerms;
-	rank: Rank;
-	avatar: string;
-};
-
-export interface Session {
-	user: User;
-}
