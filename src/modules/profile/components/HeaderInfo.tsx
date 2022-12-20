@@ -36,13 +36,14 @@ interface Props {
 
 const HeaderInfo = ({ user }: Props) => {
 	const rank = RankDescription[user.rank];
+	const joined = new Date(user.joined);
 
 	return (
 		<>
 			<DisplayName rank={user.rank}>{user.username}</DisplayName>
 			<UserInfo>
 				<Label>Joined</Label>
-				<Info>6th June, 2021 at 21:47 pm</Info>
+				<Info>{joined.toDateString()}</Info>
 				<Label>Subscription</Label>
 				<Info>{rank}</Info>
 			</UserInfo>

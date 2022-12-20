@@ -33,7 +33,7 @@ export type User = DefaultSession['user'] & {
 	id: string;
 	email: string;
 	username: string;
-	role: AuthPerms;
+	joined: Date;
 	rank: Rank;
 	avatar: string;
 };
