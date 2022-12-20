@@ -49,18 +49,15 @@ const ButtonContainer = styled('div', {
 
 const FeedbackContainer = styled('div', {
 	padding: '0 1rem',
-	transition: '.2s ease',
-	'&:not(:empty)': {},
-	'& *': {
-		animation: `${fadeIn} .2s`,
-	},
+	transition: 'max-height .2s ease',
+	overflow: 'hidden',
 });
 
 type SuccessResponse = { status: 200; available: boolean; validationErrors: string[] };
 type ErrorResponse = { status: 500; message: string };
 type Response<T extends number> = T extends 200 ? SuccessResponse : ErrorResponse;
 
-const checkDisplayName = async (name: string): Promise<Response<200 | 500>> =>
+const checkUsername = async (name: string): Promise<Response<200 | 500>> =>
 	await fetch(`/api/db/checkUsername?displayName=${name}`).then((res) => res.json());
 
 const setUsername = async (id: string, name: string) =>
@@ -82,9 +79,9 @@ const UsernameInput = ({ user }: Props) => {
 
 	const hasFeedback = validationFeedback.length !== 0;
 
+	// attempt to set username using an API call
 	const submitUsername: MouseEventHandler<HTMLButtonElement> = async (e) => {
 		e.preventDefault();
-
 		if (!isNameAvailable) return;
 
 		const res = await setUsername(user.id, inputValue);
@@ -94,6 +91,7 @@ const UsernameInput = ({ user }: Props) => {
 			return setValidationFeedback(['There is a problem with the server right now. Please try again later.']);
 	};
 
+	// populates validationFeedback using an API call
 	const setDebouncedFeedback = useCallback(() => {
 		if (inputValue === '') {
 			setValidationFeedback([]);
@@ -101,9 +99,8 @@ const UsernameInput = ({ user }: Props) => {
 			return;
 		}
 
-		checkDisplayName(inputValue).then((result) => {
+		checkUsername(inputValue).then((result) => {
 			setIsLoading(false);
-			// console.log(result);
 
 			if (result.status === 200)
 				if (result.available) {
@@ -122,13 +119,14 @@ const UsernameInput = ({ user }: Props) => {
 		return () => clearTimeout(debounceTimeout);
 	}, [inputValue, setDebouncedFeedback, setIsLoading, setIsNameAvailable]);
 
+	// animate container height when valiadtionFeedback changes
 	useEffect(() => {
 		if (!feedbackContainerRef.current) return;
 		const container = feedbackContainerRef.current;
 
 		container.style.height = 'auto';
 		container.style.maxHeight = `${container.scrollHeight}px`;
-		container.style.height = '1000px';
+		container.style.height = '9999px';
 	}, [validationFeedback]);
 
 	return (
@@ -157,23 +155,25 @@ const UsernameInput = ({ user }: Props) => {
 				</InputContainer>
 			</Form>
 			<FeedbackContainer ref={feedbackContainerRef}>
+				<Label weight='bold'>Your username must be...</Label>
+				<List>
+					<li>Be at least 5 characters long</li>
+					<li>Be at most 15 characters long</li>
+					<li>Have no special characters [!?-.@&$] or spaces</li>
+					<li>Have no bad words</li>
+				</List>
 				{hasFeedback ? (
-					<div>
-						<Label className='title'>That username...</Label>
-						<List>
+					<>
+						<Label color='error' weight='bold'>
+							That username...
+						</Label>
+						<List color='error'>
 							{validationFeedback.map((item) => (
 								<li key={item}>{item}</li>
 							))}
 						</List>
-					</div>
+					</>
 				) : null}
-				<Label className='title'>Your username must be...</Label>
-				<List>
-					<li>Be at least 5 characters long</li>
-					<li>Be at most 15 characters long</li>
-					<li>{'Have no special characters (!?-.@&$) or spaces'}</li>
-					<li>{'Have no bad words'}</li>
-				</List>
 			</FeedbackContainer>
 		</>
 	);
