@@ -23,6 +23,7 @@ export const authOptions: NextAuthOptions = {
 				return {
 					id: profile.sub,
 					avatar: profile.picture,
+					joined: new Date(),
 					...defaultProfile,
 				};
 			},
@@ -36,6 +37,7 @@ export const authOptions: NextAuthOptions = {
 				return {
 					id: profile.id,
 					avatar,
+					joined: new Date(),
 					...defaultProfile,
 				};
 			},
