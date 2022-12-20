@@ -34,6 +34,7 @@ export type User = DefaultSession['user'] & {
 	email: string;
 	username: string;
 	joined: Date;
+	authLevel: AuthPerms;
 	rank: Rank;
 	avatar: string;
 };

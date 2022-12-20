@@ -11,7 +11,7 @@ type Props = {
 const AuthorizedPageWrapper = ({ authorizationOptions, children }: Props) => {
 	const router = useRouter();
 	const { data, status } = useSession();
-	const userRole = data?.user?.role;
+	const userRole = data?.user?.authLevel;
 
 	const { roleRequired, whileLoading, unauthorizedRedirect } = authorizationOptions;
 

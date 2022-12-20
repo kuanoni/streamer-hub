@@ -9,7 +9,7 @@ import clientPromise from '@utils/mongodb';
 
 const defaultProfile = {
 	username: '',
-	role: AuthPerms.USER,
+	authLevel: AuthPerms.USER,
 	rank: Rank.DEFAULT,
 };
 

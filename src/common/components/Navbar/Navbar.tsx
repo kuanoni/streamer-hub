@@ -67,7 +67,7 @@ const Navbar = ({ fullWidth = false, children }: Props) => {
 					<NavButton link='/'>Home</NavButton>
 					<NavButton link='/stream'>Stream</NavButton>
 					<NavButton link='/videos'>Videos</NavButton>
-					{data?.user?.role === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
+					{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					<AlignRightContainer>
 						{children}
 						<UserSignedIn user={data?.user} status={status} openSignIn={openSignIn} />
