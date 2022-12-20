@@ -8,6 +8,7 @@ import { MessageScope, MessageType, SocketEvents, SocketRooms } from '../common'
 
 const messageSchema = Joi.object({
 	type: Joi.number().valid(...Object.values(MessageType)),
+	scope: Joi.number().valid(...Object.values(MessageScope)),
 	time: Joi.date().required(),
 	author: Joi.string().min(5).max(15).required(),
 	rank: Joi.string().valid(...Object.values(Rank)),
