@@ -1,4 +1,3 @@
-import Router from 'next/router';
 import { MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { BsHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
@@ -7,6 +6,7 @@ import { keyframes, styled, theme } from 'stiches.config';
 import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
 import { User } from '@globalTypes/custom-auth';
+import reloadAuthSession from '@utils/reloadAuthSession';
 
 import { Label, List } from '../styles';
 
@@ -83,12 +83,16 @@ const UsernameInput = ({ user }: Props) => {
 	const submitUsername: MouseEventHandler<HTMLButtonElement> = async (e) => {
 		e.preventDefault();
 		if (!isNameAvailable) return;
+		setIsLoading(true);
+		setIsNameAvailable(false);
 
 		const res = await setUsername(user.id, inputValue);
 
-		if (res.status === 200) Router.reload();
+		if (res.status === 200) reloadAuthSession();
 		if (res.status === 500)
 			return setValidationFeedback(['There is a problem with the server right now. Please try again later.']);
+
+		setIsLoading(false);
 	};
 
 	// populates validationFeedback using an API call
