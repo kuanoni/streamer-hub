@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import Router from 'next/router';
+import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 import { BsHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
 import { keyframes, styled, theme } from 'stiches.config';
@@ -15,15 +16,13 @@ const Form = styled('form', {
 	alignItems: 'end',
 	padding: '.5rem 1rem',
 	backgroundColor: theme.colors.primary900,
-	'& > input': {
-		minWidth: '10ch',
-		maxWidth: '65%',
-		paddingRight: '4rem',
-	},
 });
 
 const InputContainer = styled('div', {
 	position: 'relative',
+	'& > input': {
+		paddingRight: '4rem',
+	},
 });
 
 const fadeIn = keyframes({
@@ -57,6 +56,12 @@ type Response<T extends number> = T extends 200 ? SuccessResponse : ErrorRespons
 const checkDisplayName = async (name: string): Promise<Response<200 | 500>> =>
 	await fetch(`/api/db/checkDisplayName?displayName=${name}`).then((res) => res.json());
 
+const setUsername = async (id: string, name: string) =>
+	await fetch('/api/db/userSetDisplayName', {
+		method: 'PATCH',
+		body: JSON.stringify({ _id: id, displayName: name }),
+	}).then((res) => res.json());
+
 interface Props {
 	user: User;
 }
@@ -69,6 +74,19 @@ const UsernameInput = ({ user }: Props) => {
 
 	const hasFeedback = validationFeedback.length !== 0;
 
+	const submitUsername: MouseEventHandler<HTMLButtonElement> = async (e) => {
+		e.preventDefault();
+
+		if (!isNameAvailable) return;
+
+		const res = await setUsername(user.id, inputValue);
+		console.log(res);
+
+		// if (setDisplayNameResponse.status === 200) Router.reload();
+		if (res.status === 500)
+			return setValidationFeedback(['There is a problem with the server right now. Please try again later.']);
+	};
+
 	const setDebouncedFeedback = useCallback(() => {
 		if (inputValue === '') {
 			setValidationFeedback([]);
@@ -78,7 +96,7 @@ const UsernameInput = ({ user }: Props) => {
 
 		checkDisplayName(inputValue).then((result) => {
 			setIsLoading(false);
-			console.log(result);
+			// console.log(result);
 
 			if (result.status === 200)
 				if (result.available) {
@@ -88,16 +106,14 @@ const UsernameInput = ({ user }: Props) => {
 		});
 	}, [inputValue, setValidationFeedback, setIsLoading]);
 
+	// start debounce timeout when inputValue changes
 	useEffect(() => {
 		setIsLoading(true);
 		setIsNameAvailable(false);
 
 		const debounceTimeout = setTimeout(setDebouncedFeedback, 800);
-
-		return () => {
-			clearTimeout(debounceTimeout);
-		};
-	}, [inputValue, setDebouncedFeedback, setIsLoading]);
+		return () => clearTimeout(debounceTimeout);
+	}, [inputValue, setDebouncedFeedback, setIsLoading, setIsNameAvailable]);
 
 	return (
 		<>
@@ -117,7 +133,7 @@ const UsernameInput = ({ user }: Props) => {
 							<MoonLoader color={theme.colors.textLight.toString()} loading={true} size={30} />
 						) : null}
 						{isNameAvailable ? (
-							<Button content='icon' size='fill' onClick={() => {}}>
+							<Button content='icon' size='fill' onClick={submitUsername}>
 								<BsHandThumbsUpFill />
 							</Button>
 						) : null}
