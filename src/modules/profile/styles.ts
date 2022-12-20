@@ -4,9 +4,7 @@ import { styled, theme } from 'stiches.config';
 export const Label = styled('div', {
 	color: theme.colors.textLight,
 	fontWeight: 700,
-	'&:not(:first-child)': {
-		marginTop: '1rem',
-	},
+	marginTop: '1rem',
 });
 
 export const SubLabel = styled('div', {

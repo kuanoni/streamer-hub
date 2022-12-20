@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import { MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { BsHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
 import { keyframes, styled, theme } from 'stiches.config';
@@ -9,6 +9,15 @@ import TextInput from '@components/ui/TextInput';
 import { User } from '@globalTypes/custom-auth';
 
 import { Label, List } from '../styles';
+
+const fadeIn = keyframes({
+	'0%': {
+		opacity: 0.6,
+	},
+	'100%': {
+		opacity: 1,
+	},
+});
 
 const Form = styled('form', {
 	position: 'relative',
@@ -25,15 +34,6 @@ const InputContainer = styled('div', {
 	},
 });
 
-const fadeIn = keyframes({
-	'0%': {
-		opacity: 0.6,
-	},
-	'100%': {
-		opacity: 1,
-	},
-});
-
 const ButtonContainer = styled('div', {
 	position: 'absolute',
 	top: 0,
@@ -42,11 +42,18 @@ const ButtonContainer = styled('div', {
 	height: '100%',
 	padding: '.25rem',
 	aspectRatio: 1,
-	animation: `${fadeIn} .2s`,
+	button: {
+		animation: `${fadeIn} .2s`,
+	},
 });
 
 const FeedbackContainer = styled('div', {
-	padding: '1rem',
+	padding: '0 1rem',
+	transition: '.2s ease',
+	'&:not(:empty)': {},
+	'& *': {
+		animation: `${fadeIn} .2s`,
+	},
 });
 
 type SuccessResponse = { status: 200; available: boolean; validationErrors: string[] };
@@ -71,6 +78,7 @@ const UsernameInput = ({ user }: Props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isNameAvailable, setIsNameAvailable] = useState(false);
 	const [validationFeedback, setValidationFeedback] = useState<string[]>([]);
+	const feedbackContainerRef = useRef<HTMLDivElement>(null);
 
 	const hasFeedback = validationFeedback.length !== 0;
 
@@ -80,9 +88,8 @@ const UsernameInput = ({ user }: Props) => {
 		if (!isNameAvailable) return;
 
 		const res = await setUsername(user.id, inputValue);
-		console.log(res);
 
-		// if (setDisplayNameResponse.status === 200) Router.reload();
+		if (res.status === 200) Router.reload();
 		if (res.status === 500)
 			return setValidationFeedback(['There is a problem with the server right now. Please try again later.']);
 	};
@@ -115,6 +122,15 @@ const UsernameInput = ({ user }: Props) => {
 		return () => clearTimeout(debounceTimeout);
 	}, [inputValue, setDebouncedFeedback, setIsLoading, setIsNameAvailable]);
 
+	useEffect(() => {
+		if (!feedbackContainerRef.current) return;
+		const container = feedbackContainerRef.current;
+
+		container.style.height = 'auto';
+		container.style.maxHeight = `${container.scrollHeight}px`;
+		container.style.height = '1000px';
+	}, [validationFeedback]);
+
 	return (
 		<>
 			<Form>
@@ -140,16 +156,16 @@ const UsernameInput = ({ user }: Props) => {
 					</ButtonContainer>
 				</InputContainer>
 			</Form>
-			<FeedbackContainer>
+			<FeedbackContainer ref={feedbackContainerRef}>
 				{hasFeedback ? (
-					<>
+					<div>
 						<Label className='title'>That username...</Label>
 						<List>
 							{validationFeedback.map((item) => (
 								<li key={item}>{item}</li>
 							))}
 						</List>
-					</>
+					</div>
 				) : null}
 				<Label className='title'>Your username must be...</Label>
 				<List>
