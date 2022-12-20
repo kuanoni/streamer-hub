@@ -58,12 +58,12 @@ type ErrorResponse = { status: 500; message: string };
 type Response<T extends number> = T extends 200 ? SuccessResponse : ErrorResponse;
 
 const checkUsername = async (name: string): Promise<Response<200 | 500>> =>
-	await fetch(`/api/db/checkUsername?displayName=${name}`).then((res) => res.json());
+	await fetch(`/api/db/checkUsername?username=${name}`).then((res) => res.json());
 
 const setUsername = async (id: string, name: string) =>
 	await fetch('/api/db/setUsername', {
 		method: 'PATCH',
-		body: JSON.stringify({ _id: id, displayName: name }),
+		body: JSON.stringify({ _id: id, username: name }),
 	}).then((res) => res.json());
 
 interface Props {

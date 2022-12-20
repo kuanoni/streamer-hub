@@ -20,7 +20,7 @@ const AccountSection = ({ user, locked = false }: Props) => {
 	return (
 		<ProfileSection title='Account' locked={locked}>
 			<Label>Username</Label>
-			<TextInput value={user.displayName} setValue={() => {}} placeholder={'Enter username...'} disabled />
+			<TextInput value={user.username} setValue={() => {}} placeholder={'Enter username...'} disabled />
 			<SubLabel>
 				You can request a name change <StyledLink href='/'>here.</StyledLink>
 			</SubLabel>

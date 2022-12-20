@@ -39,7 +39,7 @@ const HeaderInfo = ({ user }: Props) => {
 
 	return (
 		<>
-			<DisplayName rank={user.rank}>{user.displayName}</DisplayName>
+			<DisplayName rank={user.rank}>{user.username}</DisplayName>
 			<UserInfo>
 				<Label>Joined</Label>
 				<Info>6th June, 2021 at 21:47 pm</Info>

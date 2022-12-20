@@ -83,7 +83,7 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 		<Container>
 			{status === 'authenticated' && (
 				<DisplayName href={'/profile'} rank={user.rank}>
-					{user.displayName ? user.displayName : 'Enter username here'}
+					{user.username ? user.username : 'Enter username here'}
 				</DisplayName>
 			)}
 			{status === 'unauthenticated' && (
