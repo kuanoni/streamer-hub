@@ -1,3 +1,4 @@
+import { User } from 'next-auth';
 import { MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { BsHandThumbsUpFill } from 'react-icons/bs';
 import { MoonLoader } from 'react-spinners';
@@ -5,7 +6,6 @@ import { keyframes, styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
-import { User } from '@globalTypes/custom-auth';
 import reloadAuthSession from '@utils/reloadAuthSession';
 
 import { Label, List } from '../styles';

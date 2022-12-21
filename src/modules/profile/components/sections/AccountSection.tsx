@@ -1,8 +1,8 @@
+import { User } from 'next-auth';
 import { useState } from 'react';
 
 import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
-import { User } from '@globalTypes/custom-auth';
 
 import { Footer, Label, StyledLink, SubLabel } from '../../styles';
 import ProfileSection from '../ProfileSection';
