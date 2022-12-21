@@ -1,8 +1,9 @@
+import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { AuthPerms, User } from '@globalTypes/custom-auth';
+import { AuthPerms } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import ProfileHeaderContainer from '@modules/profile/components/HeaderContainer';
 import HeaderInfo from '@modules/profile/components/HeaderInfo';
@@ -32,7 +33,7 @@ const Container = styled('div', {
 
 const ProfileDashboard = () => {
 	const { data } = useSession();
-	const user: User = data?.user;
+	const user: User | undefined = data?.user;
 
 	if (!user) return <>Loading...</>; // replace with skeleton
 

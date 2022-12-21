@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
-import { Rank } from '@globalTypes/custom-auth';
 import { ClientMessage, ClientOnlyMessage, ServerMessage } from '@globalTypes/socketio';
 
 import { MessageScope, MessageType, SocketEvents } from '../../common';
@@ -76,7 +75,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// make sure the server is running
 		fetch('/api/socket');
 
-		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.role } });
+		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.authLevel } });
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: ClientMessage) => writeMessage(msg));
 		newSocket.connect();
 
@@ -91,7 +90,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			newSocket?.disconnect();
 			setMessageLogs([]);
 		};
-	}, [data?.user?.role]);
+	}, [data?.user?.authLevel]);
 
 	const providerData: SocketProviderIface = Object.freeze({
 		messageLogs,

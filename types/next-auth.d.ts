@@ -1,14 +1,24 @@
 import NextAuth from 'next-auth';
 
-import { AuthPerms } from './custom-auth';
+import { AuthPerms, Rank } from './custom-auth';
 
 declare module 'next-auth' {
-	interface User {
-		role: AuthPerms;
+	type User = {
+		id: string;
 		username: string;
-	}
+		email: string | null;
+		avatar: string;
+
+		joined: Date;
+		rank: Rank;
+
+		bannedUntil: Date | null;
+
+		authLevel: AuthPerms;
+	};
 
 	interface Session {
-		user: User & DefaultSession['user'];
+		user: User;
+		expires: ISODateString;
 	}
 }
