@@ -1,7 +1,8 @@
+import { User } from 'next-auth';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { Rank, User } from '@globalTypes/custom-auth';
+import { Rank } from '@globalTypes/custom-auth';
 import { RankColors } from '@modules/chat/common';
 
 import { Info, Label } from '../styles';
