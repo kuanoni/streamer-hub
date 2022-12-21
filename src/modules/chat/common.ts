@@ -12,6 +12,11 @@ export enum MessageScope {
 	PRIVATE,
 }
 
+export const ChatCommands = {
+	ban: { desc: 'Ban User: /ban [username]' },
+	whoami: { desc: 'Returns your username: /whoami' },
+};
+
 export enum SocketRooms {
 	ADMIN = 'admin',
 	MODERATOR = 'moderator',
@@ -20,6 +25,7 @@ export enum SocketRooms {
 export enum SocketEvents {
 	CLIENT_SEND_MSG = 'CLIENT_SEND_MSG',
 	CLIENT_RECEIVE_MSG = 'CLIENT_RECEIVE_MSG',
+	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
 }
 
 export const RankColors = {
