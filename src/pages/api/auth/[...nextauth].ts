@@ -9,8 +9,11 @@ import clientPromise from '@utils/mongodb';
 
 const defaultProfile = {
 	username: '',
-	authLevel: AuthPerms.USER,
+	email: null,
 	rank: Rank.DEFAULT,
+
+	bannedUntil: null,
+	authLevel: AuthPerms.USER,
 };
 
 export const authOptions: NextAuthOptions = {
