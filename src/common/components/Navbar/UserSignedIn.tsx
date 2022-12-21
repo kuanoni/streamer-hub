@@ -64,7 +64,7 @@ const DropdownCaret = styled(BsCaretDownFill, {
 });
 
 interface Props {
-	user: User;
+	user: User | undefined;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
 	openSignIn: () => void;
 }
@@ -81,7 +81,7 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 
 	return (
 		<Container>
-			{status === 'authenticated' && (
+			{status === 'authenticated' && user && (
 				<DisplayName href={'/profile'} rank={user.rank}>
 					{user.username ? user.username : 'Enter username here'}
 				</DisplayName>
