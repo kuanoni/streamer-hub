@@ -6,3 +6,5 @@ type CommandParam = {
 };
 
 type CommandParamValidator = Joi.StringSchema;
+
+type ExecutionCallback = (...args: string[]) => string[];
