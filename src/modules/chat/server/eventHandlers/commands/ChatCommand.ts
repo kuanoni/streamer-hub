@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 import { CommandParam, CommandParamValidator } from './types';
 
-class CommandBuilder {
+class ChatCommand {
 	name: string;
 	desc: string | null = null;
 	params: CommandParamValidator[] | null = null;
@@ -55,4 +55,4 @@ class CommandBuilder {
 	}
 }
 
-export default CommandBuilder;
+export default ChatCommand;

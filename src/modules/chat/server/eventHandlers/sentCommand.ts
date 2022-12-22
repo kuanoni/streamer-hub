@@ -5,10 +5,10 @@ import { ServerCommand } from '@globalTypes/socketio';
 import { MessageType } from '@modules/chat/common';
 
 import sendMessage from '../sendMessage';
-import CommandBuilder from './commands/CommandBuilder';
+import ChatCommand from './commands/ChatCommand';
 import testCommand from './commands/testCommand';
 
-const commands: { [index: string]: CommandBuilder } = {
+const commands: { [index: string]: ChatCommand } = {
 	[testCommand.name]: testCommand,
 };
 
@@ -34,9 +34,9 @@ const sentCommand = (socket: Socket) => (cmd: ServerCommand) => {
 
 	if (commandNames.includes(cmd.name)) {
 		const cmdObj = commands[cmd.name];
-		const splitParams = cmd.params.split(' ');
+		const paramsArr = cmd.params.split(' ');
 
-		cmdObj.execute(splitParams);
+		cmdObj.execute(paramsArr);
 	} else throw new Error(`${cmd.name} was not found in 'commands' object.`);
 };
 
