@@ -4,6 +4,7 @@ import { AuthPerms } from '@globalTypes/custom-auth';
 import { NextApiResponseWithSocket } from '@globalTypes/socketio';
 
 import { MessageScope, MessageType, SocketEvents, SocketRooms } from '../common';
+import sentCommand from './eventHandlers/sentCommand';
 import sentMessage from './eventHandlers/sentMessage';
 import sendMessage from './sendMessage';
 
@@ -43,6 +44,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		const onConnection = async (socket: Socket) => {
 			// add socket event listeners
 			socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
+			socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
 
 			// emit "You have connected." message
 			sendMessage(socket, MessageType.INFO, 'You have connected.');
