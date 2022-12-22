@@ -1,12 +1,12 @@
 import Joi from 'joi';
 
-import { CommandParam, CommandParamValidator } from './types';
+import { CommandParam, CommandParamValidator, ExecutionCallback } from './types';
 
 class ChatCommand {
 	name: string;
 	desc: string | null = null;
-	params: CommandParamValidator[] | null = null;
-	execCb: Function | null = null;
+	paramValidators: CommandParamValidator[] | null = null;
+	execCb: ExecutionCallback | null = null;
 
 	constructor(name: string) {
 		this.name = name;
@@ -18,7 +18,7 @@ class ChatCommand {
 	}
 
 	setParams(params: CommandParam[]) {
-		this.params = params.map((param) => {
+		this.paramValidators = params.map((param) => {
 			const validator = Joi.string().label(param.key);
 			if (param.required) return validator.required();
 			else return validator;
@@ -26,32 +26,29 @@ class ChatCommand {
 		return this;
 	}
 
-	setExecCb(execCb: Function) {
+	setExecCb(execCb: ExecutionCallback) {
 		this.execCb = execCb;
 		return this;
 	}
 
-	execute(inputs: string[]) {
-		if (!this.name || !this.execCb) return;
+	execute(inputs: string[]): string[] {
+		if (!this.name || !this.execCb) return ['missing name or execCb'];
 
-		if (this.params) {
-			const errors: string[] = [];
-			const execCbParams: { [i: string]: string | undefined } = {};
-			console.log(this.params);
+		if (!this.paramValidators || !this.paramValidators.length) return this.execCb();
 
-			this.params.forEach((validator, i) => {
-				const key = validator.$_getFlag('label');
-				const { error, value } = validator.validate(inputs[i]);
+		const errors: string[] = [];
+		const args: string[] = [];
 
-				if (error) errors.push(error.message);
+		this.paramValidators.forEach((validator, i) => {
+			const { error, value } = validator.validate(inputs[i]);
 
-				execCbParams[key] = value;
-			});
+			if (error) errors.push(error.message);
+			args.push(value || '');
+		});
 
-			console.log(errors);
+		if (errors.length) return errors;
 
-			this.execCb(execCbParams);
-		}
+		return this.execCb(...args);
 	}
 }
 
