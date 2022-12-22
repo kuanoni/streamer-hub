@@ -45,6 +45,6 @@ type ServerMessage = {
 
 type ServerCommand = {
 	author: string;
-	command: string;
+	name: string;
 	params: string;
 };
