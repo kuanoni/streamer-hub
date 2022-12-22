@@ -1,10 +1,31 @@
-import { Server as IOServer } from 'socket.io';
+import { Server as IOServer, Socket } from 'socket.io';
 
 import { AuthPerms } from '@globalTypes/custom-auth';
 import { NextApiResponseWithSocket } from '@globalTypes/socketio';
 
-import { SocketRooms } from '../common';
-import { connectionHandler, messageHandler } from './SocketEventHandlers';
+import { MessageScope, MessageType, SocketEvents, SocketRooms } from '../common';
+import sentMessage from './eventHandlers/sentMessage';
+import sendMessage from './sendMessage';
+
+const errorHandler = (handler: Function) => {
+	const handleError = (err: Error) => {
+		console.error(err);
+	};
+
+	return (...args: any[]) => {
+		try {
+			const handlerReturn = handler(...args);
+
+			// async handler
+			if (handlerReturn && typeof handlerReturn.catch === 'function') {
+				handlerReturn.catch((err: Error) => handleError(err));
+			}
+		} catch (err: any) {
+			// sync handler
+			handleError(err);
+		}
+	};
+};
 
 export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	if (!res.socket.server.io) {
@@ -19,11 +40,15 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			next();
 		});
 
-		// add socket event listeners
-		io.on('connection', async (socket) => {
-			connectionHandler(socket);
-			messageHandler(socket);
-		});
+		const onConnection = async (socket: Socket) => {
+			// add socket event listeners
+			socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
+
+			// emit "You have connected." message
+			sendMessage(socket, MessageType.INFO, 'You have connected.');
+		};
+
+		io.on('connection', onConnection);
 
 		res.socket.server.io = io;
 	}
