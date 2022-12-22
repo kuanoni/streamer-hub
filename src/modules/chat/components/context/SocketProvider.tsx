@@ -40,9 +40,9 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		msg.text = msg.text.trim();
 
 		if (msg.text.startsWith('/')) {
-			const [command, params] = parseCommandText(msg.text);
+			const [name, params] = parseCommandText(msg.text);
 
-			if (!command) {
+			if (!name) {
 				const msg: ClientOnlyMessage = {
 					scope: MessageScope.CLIENT,
 					type: MessageType.SERVER,
@@ -56,11 +56,11 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 			const commandMessage: ServerCommand = {
 				author: msg.author,
-				command,
+				name,
 				params,
 			};
 
-			socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage, sendCommandErrorHandler);
+			socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
 			return;
 		}
 		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
