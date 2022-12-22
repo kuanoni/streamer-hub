@@ -3,14 +3,13 @@ import Joi from 'joi';
 import { CommandParam, CommandParamValidator } from './types';
 
 class CommandBuilder {
-	name: string | null = null;
+	name: string;
 	desc: string | null = null;
 	params: CommandParamValidator[] | null = null;
 	execCb: Function | null = null;
 
-	setName(name: string) {
+	constructor(name: string) {
 		this.name = name;
-		return this;
 	}
 
 	setDescription(desc: string) {
