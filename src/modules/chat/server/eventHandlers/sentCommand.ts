@@ -36,7 +36,8 @@ const sentCommand = (socket: Socket) => (cmd: ServerCommand) => {
 		const cmdObj = commands[cmd.name];
 		const paramsArr = cmd.params.split(' ');
 
-		cmdObj.execute(paramsArr);
+		const errors = cmdObj.execute(paramsArr);
+		if (errors.length) sendMessage(socket, MessageType.SERVER, errors.join(' '));
 	} else throw new Error(`${cmd.name} was not found in 'commands' object.`);
 };
 
