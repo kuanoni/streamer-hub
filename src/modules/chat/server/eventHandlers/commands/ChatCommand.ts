@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import { CommandParam, CommandParamValidator, ExecutionCallback } from './types';
+import { CommandParam, CommandParamValidator, ExecutionCallback, ExecutionErrors } from './types';
 
 class ChatCommand {
 	name: string;
@@ -31,12 +31,12 @@ class ChatCommand {
 		return this;
 	}
 
-	execute(inputs: string[]): string[] {
+	async execute(inputs: string[]): Promise<ExecutionErrors> {
 		if (!this.name || !this.execCb) return ['missing name or execCb'];
 
 		if (!this.paramValidators || !this.paramValidators.length) return this.execCb();
 
-		const errors: string[] = [];
+		const errors: ExecutionErrors = [];
 		const args: string[] = [];
 
 		this.paramValidators.forEach((validator, i) => {

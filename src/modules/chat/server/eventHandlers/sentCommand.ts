@@ -20,7 +20,7 @@ const commandSchema = Joi.object({
 	params: Joi.string().allow(''),
 });
 
-const sentCommand = (socket: Socket) => (cmd: ServerCommand) => {
+const sentCommand = (socket: Socket) => async (cmd: ServerCommand) => {
 	const { error } = commandSchema.validate(cmd, {
 		messages: {
 			'any.only': `${cmd.name} is not a valid command.`,
@@ -36,7 +36,7 @@ const sentCommand = (socket: Socket) => (cmd: ServerCommand) => {
 		const cmdObj = commands[cmd.name];
 		const paramsArr = cmd.params.split(' ');
 
-		const errors = cmdObj.execute(paramsArr);
+		const errors = await cmdObj.execute(paramsArr);
 		if (errors.length) sendMessage(socket, MessageType.SERVER, errors.join(' '));
 	} else throw new Error(`${cmd.name} was not found in 'commands' object.`);
 };

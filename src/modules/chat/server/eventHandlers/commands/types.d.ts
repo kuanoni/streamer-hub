@@ -7,4 +7,6 @@ type CommandParam = {
 
 type CommandParamValidator = Joi.StringSchema;
 
-type ExecutionCallback = (...args: string[]) => string[];
+type ExecutionErrors = string[];
+
+type ExecutionCallback = (...args: string[]) => Promise<ExecutionErrors>;
