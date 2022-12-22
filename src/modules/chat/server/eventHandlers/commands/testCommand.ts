@@ -1,18 +1,17 @@
 import ChatCommand from './ChatCommand';
-import { CommandParam } from './types';
+import { ExecutionCallback } from './types';
 
-const params: CommandParam[] = [
-	{ key: 'username', required: true },
-	{ key: 'razor', required: false },
-];
-
-const execCb = ({ username, razor }: { username: string; razor?: string }) => {
+const execCb: ExecutionCallback = (username, razor?) => {
 	console.log('executing', username, razor);
+	return [];
 };
 
 const test = new ChatCommand('test')
-	.setDescription('Returns a users email: /test [username] (razor)')
-	.setParams(params)
+	.setDescription('/test [username] (razor)')
+	.setParams([
+		{ key: 'username', required: true },
+		{ key: 'razor', required: false },
+	])
 	.setExecCb(execCb);
 
 export default test;
