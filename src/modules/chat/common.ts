@@ -12,11 +12,6 @@ export enum MessageScope {
 	PRIVATE,
 }
 
-export const ChatCommands = {
-	ban: { desc: 'Ban User: /ban [username]' },
-	whoami: { desc: 'Returns your username: /whoami' },
-};
-
 export enum SocketRooms {
 	ADMIN = 'admin',
 	MODERATOR = 'moderator',
