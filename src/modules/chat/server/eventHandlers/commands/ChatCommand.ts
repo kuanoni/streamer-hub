@@ -42,13 +42,16 @@ class ChatCommand {
 	}
 
 	async execute(inputs: string[]): Promise<ExecutionErrors> {
-		if (!this.name || !this.execCb) return ['missing name or execCb'];
+		if (!this.name) throw new Error(`ChatCommand missing name`);
+		if (!this.execCb) throw new Error(`ChatCommand ${this.name} missing execution callback`);
 
+		// if there are no parameter validators, the execution callback will be run without args
 		if (!this.paramValidators || !this.paramValidators.length) return this.execCb();
 
 		const errors: ExecutionErrors = [];
 		const args: string[] = [];
 
+		// validate inputs using paramValidators
 		this.paramValidators.forEach((validator, i) => {
 			const { error, value } = validator.validate(inputs[i]);
 

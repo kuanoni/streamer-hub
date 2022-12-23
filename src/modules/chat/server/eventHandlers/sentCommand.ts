@@ -23,6 +23,7 @@ const commandSchema = Joi.object({
 });
 
 const sentCommand = (socket: Socket) => async (cmd: ServerCommand) => {
+	// validate command message
 	const { error } = commandSchema.validate(cmd, {
 		messages: {
 			'any.only': `${cmd.name} is not a valid command.`,
@@ -34,15 +35,18 @@ const sentCommand = (socket: Socket) => async (cmd: ServerCommand) => {
 		throw error;
 	}
 
+	// if this error is thrown, something is very wrong. it should be caught by the Joi validator
 	if (!commandNames.includes(cmd.name)) throw new Error(`${cmd.name} was not found in 'commands' object.`);
 
 	const cmdObj = commands[cmd.name];
 
+	// make sure socket has the required authLevel
 	if (socket.handshake.auth.authLevel > cmdObj.authLevel)
 		return sendMessage(socket, MessageType.SERVER, "You don't have permission to use that command");
 
 	const paramsArr = cmd.params.split(' ');
 
+	// this will return an empty array on success and an array with error messages (strings) on failure
 	const errors = await cmdObj.execute(paramsArr);
 
 	if (errors.length) sendMessage(socket, MessageType.SERVER, errors.join(' '));
