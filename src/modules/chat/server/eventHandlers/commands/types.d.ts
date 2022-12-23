@@ -4,6 +4,7 @@ type CommandParam = {
 	key: string;
 	required: boolean;
 	regex?: RegExp;
+	rest?: boolean;
 };
 
 type CommandParamValidator = Joi.StringSchema;

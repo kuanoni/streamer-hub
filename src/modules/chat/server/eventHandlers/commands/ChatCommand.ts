@@ -29,6 +29,7 @@ class ChatCommand {
 		this.paramValidators = params.map((param) => {
 			let validator = Joi.string().label(param.key);
 			if (param.regex) validator = validator.regex(param.regex).message(`Invalid "${param.key}" format`);
+			if (param.rest) validator = validator.tag('rest');
 			if (param.required) validator = validator.required();
 
 			return validator;
@@ -53,7 +54,8 @@ class ChatCommand {
 
 		// validate inputs using paramValidators
 		this.paramValidators.forEach((validator, i) => {
-			const { error, value } = validator.validate(inputs[i]);
+			const isRest = validator.$_terms.tags.includes('rest');
+			const { error, value } = validator.validate(isRest ? inputs.slice(i).join(' ') : inputs[i]);
 
 			if (error) errors.push(error.message);
 			args.push(value || '');
