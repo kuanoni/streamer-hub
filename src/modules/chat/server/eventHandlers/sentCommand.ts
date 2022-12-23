@@ -7,10 +7,8 @@ import { MessageType } from '@modules/chat/common';
 import sendMessage from '../sendMessage';
 import ChatCommand from './commands/ChatCommand';
 import cmdBanUser from './commands/cmdBanUser';
-import testCommand from './commands/testCommand';
 
 const commands: { [index: string]: ChatCommand } = {
-	[testCommand.name]: testCommand,
 	[cmdBanUser.name]: cmdBanUser,
 };
 
