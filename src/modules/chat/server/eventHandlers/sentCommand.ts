@@ -34,13 +34,18 @@ const sentCommand = (socket: Socket) => async (cmd: ServerCommand) => {
 		throw error;
 	}
 
-	if (commandNames.includes(cmd.name)) {
-		const cmdObj = commands[cmd.name];
-		const paramsArr = cmd.params.split(' ');
+	if (!commandNames.includes(cmd.name)) throw new Error(`${cmd.name} was not found in 'commands' object.`);
 
-		const errors = await cmdObj.execute(paramsArr);
-		if (errors.length) sendMessage(socket, MessageType.SERVER, errors.join(' '));
-	} else throw new Error(`${cmd.name} was not found in 'commands' object.`);
+	const cmdObj = commands[cmd.name];
+
+	if (socket.handshake.auth.authLevel > cmdObj.authLevel)
+		return sendMessage(socket, MessageType.SERVER, "You don't have permission to use that command");
+
+	const paramsArr = cmd.params.split(' ');
+
+	const errors = await cmdObj.execute(paramsArr);
+
+	if (errors.length) sendMessage(socket, MessageType.SERVER, errors.join(' '));
 };
 
 export default sentCommand;

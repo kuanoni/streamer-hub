@@ -1,10 +1,13 @@
 import Joi from 'joi';
 
+import { AuthPerms } from '@globalTypes/custom-auth';
+
 import { CommandParam, CommandParamValidator, ExecutionCallback, ExecutionErrors } from './types';
 
 class ChatCommand {
 	name: string;
 	desc: string | null = null;
+	authLevel: AuthPerms = 0;
 	paramValidators: CommandParamValidator[] | null = null;
 	execCb: ExecutionCallback | null = null;
 
@@ -14,6 +17,11 @@ class ChatCommand {
 
 	setDescription(desc: string) {
 		this.desc = desc;
+		return this;
+	}
+
+	setAuthLevel(authLevel: AuthPerms) {
+		this.authLevel = authLevel;
 		return this;
 	}
 

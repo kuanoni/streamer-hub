@@ -1,5 +1,6 @@
 import add from 'date-fns/add';
 
+import { AuthPerms } from '@globalTypes/custom-auth';
 import banUser from '@utils/database/banUser';
 
 import ChatCommand from './ChatCommand';
@@ -8,8 +9,6 @@ import { ExecutionCallback } from './types';
 const durationRegex = /^(\d\w*)([dhm])$/;
 
 const execCb: ExecutionCallback = async (username, duration?) => {
-	console.log('banning:', username, duration);
-
 	if (duration) {
 		const matches = duration.match(durationRegex);
 		if (!matches) return ['Invalid "duration" format '];
@@ -31,6 +30,7 @@ const execCb: ExecutionCallback = async (username, duration?) => {
 
 const cmdBanUser = new ChatCommand('ban')
 	.setDescription('/ban [username] (duration)')
+	.setAuthLevel(AuthPerms.MOD)
 	.setParams([
 		{ key: 'username', required: true },
 		{ key: 'duration', required: false, regex: durationRegex },
