@@ -4,7 +4,10 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
-import { ClientMessage, ClientOnlyMessage, ServerMessage } from '@globalTypes/socketio';
+import {
+	ClientMessage, ClientOnlyMessage, ServerCommand, ServerMessage
+} from '@globalTypes/socketio';
+import parseCommandText from '@modules/chat/utils/parseCommandText';
 
 import { MessageScope, MessageType, SocketEvents } from '../../common';
 import SocketContext, { SocketProviderIface } from './SocketContext';
@@ -22,6 +25,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		});
 	};
 
+	// write message only on client side
 	const writeClientMessage = (msg: ClientOnlyMessage) => {
 		setMessageLogs((currentMessages) => {
 			if (currentMessages.length < 50) return [...currentMessages, msg];
@@ -31,8 +35,48 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	// send msg over socket connection
 	const sendMessage = (msg: ServerMessage) => {
-		if (!data?.user) return;
-		socket?.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
+		if (!data?.user || !socket) return;
+
+		msg.text = msg.text.trim();
+
+		if (msg.text.startsWith('/')) {
+			const [name, params] = parseCommandText(msg.text);
+
+			if (!name) {
+				const msg: ClientOnlyMessage = {
+					scope: MessageScope.CLIENT,
+					type: MessageType.SERVER,
+					time: new Date().toISOString(),
+					text: ['Invalid command.'],
+				};
+
+				writeClientMessage(msg);
+				return;
+			}
+
+			const commandMessage: ServerCommand = {
+				author: msg.author,
+				name,
+				params,
+			};
+
+			socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
+			return;
+		}
+		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
+	};
+
+	const sendCommandErrorHandler = (res: { ok: boolean; error: string }) => {
+		if (res.ok) return;
+
+		const msg: ClientOnlyMessage = {
+			scope: MessageScope.CLIENT,
+			type: MessageType.SERVER,
+			time: new Date().toISOString(),
+			text: res.error,
+		};
+
+		writeClientMessage(msg);
 	};
 
 	const sendMessageErrorHandler = (res: { ok: boolean; errors: Joi.ValidationErrorItem[] }) => {
@@ -75,7 +119,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// make sure the server is running
 		fetch('/api/socket');
 
-		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.authLevel } });
+		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { authLevel: data?.user?.authLevel } });
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: ClientMessage) => writeMessage(msg));
 		newSocket.connect();
 

@@ -20,6 +20,7 @@ export enum SocketRooms {
 export enum SocketEvents {
 	CLIENT_SEND_MSG = 'CLIENT_SEND_MSG',
 	CLIENT_RECEIVE_MSG = 'CLIENT_RECEIVE_MSG',
+	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
 }
 
 export const RankColors = {

@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		async session({ session, user }: any) {
-			session.user = user; // Add role value to user object so it is passed along with session
+			session.user = user;
 			return session;
 		},
 		async redirect({ url }: { url: string }) {

@@ -8,6 +8,7 @@ import { Rank } from './custom-auth';
 
 import type { Server as HTTPServer } from 'http';
 import type { Socket as NetSocket } from 'net';
+
 interface SocketServer extends HTTPServer {
 	io?: IOServer | undefined;
 }
@@ -40,4 +41,10 @@ type ServerMessage = {
 	author: string;
 	rank: Rank;
 	text: string;
+};
+
+type ServerCommand = {
+	author: string;
+	name: string;
+	params: string;
 };
