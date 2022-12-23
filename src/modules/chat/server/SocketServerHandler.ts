@@ -34,10 +34,10 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		const io = new IOServer(res.socket.server);
 
-		// assign socket to rooms based on passed user role
+		// assign socket to rooms based on passed user authLevel
 		io.use(async (socket, next) => {
-			if (socket.handshake.auth.role === AuthPerms.ADMIN) socket.join(SocketRooms.ADMIN);
-			if (socket.handshake.auth.role === AuthPerms.MOD) socket.join(SocketRooms.MODERATOR);
+			if (socket.handshake.auth.authLevel === AuthPerms.ADMIN) socket.join(SocketRooms.ADMIN);
+			if (socket.handshake.auth.authLevel === AuthPerms.MOD) socket.join(SocketRooms.MODERATOR);
 			next();
 		});
 

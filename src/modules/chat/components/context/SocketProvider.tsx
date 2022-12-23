@@ -119,7 +119,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// make sure the server is running
 		fetch('/api/socket');
 
-		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { role: data?.user?.authLevel } });
+		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { authLevel: data?.user?.authLevel } });
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: ClientMessage) => writeMessage(msg));
 		newSocket.connect();
 
