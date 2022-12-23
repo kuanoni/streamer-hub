@@ -8,7 +8,9 @@ import { ExecutionCallback } from './types';
 
 const durationRegex = /^(\d\w*)([dhm])$/;
 
-const execCb: ExecutionCallback = async (username, duration?) => {
+const execCb: ExecutionCallback = async (username, duration?, reason?) => {
+	let untilDate: Date | undefined = undefined;
+
 	if (duration) {
 		const matches = duration.match(durationRegex);
 		if (!matches) return ['Invalid "duration" format '];
@@ -17,15 +19,15 @@ const execCb: ExecutionCallback = async (username, duration?) => {
 
 		switch (timeInterval) {
 			case 'd':
-				return await banUser(username, add(new Date(), { days: parseInt(amount) }));
+				untilDate = add(new Date(), { days: parseInt(amount) });
 			case 'h':
-				return await banUser(username, add(new Date(), { hours: parseInt(amount) }));
+				untilDate = add(new Date(), { hours: parseInt(amount) });
 			case 'm':
-				return await banUser(username, add(new Date(), { minutes: parseInt(amount) }));
+				untilDate = add(new Date(), { minutes: parseInt(amount) });
 		}
 	}
 
-	return await banUser(username);
+	return await banUser(username, untilDate, reason);
 };
 
 const cmdBanUser = new ChatCommand('ban')
@@ -34,6 +36,7 @@ const cmdBanUser = new ChatCommand('ban')
 	.setParams([
 		{ key: 'username', required: true },
 		{ key: 'duration', required: false, regex: durationRegex },
+		{ key: 'reason', required: false, rest: true },
 	])
 	.setExecCb(execCb);
 
