@@ -3,6 +3,7 @@ import Joi from 'joi';
 type CommandParam = {
 	key: string;
 	required: boolean;
+	regex?: RegExp;
 };
 
 type CommandParamValidator = Joi.StringSchema;

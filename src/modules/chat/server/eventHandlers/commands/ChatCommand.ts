@@ -19,9 +19,11 @@ class ChatCommand {
 
 	setParams(params: CommandParam[]) {
 		this.paramValidators = params.map((param) => {
-			const validator = Joi.string().label(param.key);
-			if (param.required) return validator.required();
-			else return validator;
+			let validator = Joi.string().label(param.key);
+			if (param.regex) validator = validator.regex(param.regex).message(`Invalid "${param.key}" format`);
+			if (param.required) validator = validator.required();
+
+			return validator;
 		});
 		return this;
 	}
