@@ -2,7 +2,7 @@ import React from 'react';
 import { BsInfoCircleFill, BsShieldFillExclamation } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import { ClientOnlyMessage } from '@globalTypes/socketio';
+import { MessageClientOnly } from '@globalTypes/socketio';
 import { MessageType } from '@modules/chat/common';
 
 import ChatMessageText from './ChatMessageText';
@@ -41,7 +41,7 @@ const messageIcon: { [index: number]: React.ReactNode } = {
 };
 
 interface Props {
-	msg: ClientOnlyMessage;
+	msg: MessageClientOnly;
 	setFocusedUser: (user: string) => void;
 	censorBadWords: boolean;
 }

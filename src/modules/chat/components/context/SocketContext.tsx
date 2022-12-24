@@ -1,11 +1,13 @@
 import { createContext } from 'react';
 
-import { ClientMessage, ClientOnlyMessage, ServerMessage } from '@globalTypes/socketio';
+import {
+	MessageClientOnly, MessageClientToServer, MessageServerToClient
+} from '@globalTypes/socketio';
 
 export interface SocketProviderIface {
-	readonly messageLogs: (ClientMessage | ClientOnlyMessage)[];
-	writeMessage: (msg: ClientMessage) => void;
-	sendMessage: (msg: ServerMessage) => void;
+	readonly messageLogs: (MessageServerToClient | MessageClientOnly)[];
+	writeMessage: (msg: MessageServerToClient) => void;
+	sendMessage: (msg: MessageClientToServer) => void;
 }
 
 const SocketContext = createContext<SocketProviderIface | null>(null);

@@ -2,7 +2,8 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { ClientMessage, ClientOnlyMessage } from '@globalTypes/socketio';
+import { Rank } from '@globalTypes/custom-auth';
+import { MessageClientOnly, MessageServerToClient } from '@globalTypes/socketio';
 import { MessageScope, MessageType } from '@modules/chat/common';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
@@ -10,6 +11,7 @@ import SocketContext from '../../context/SocketContext';
 import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
 import ChatClientMessage from './ChatClientMessage';
 import ChatMessage from './ChatMessage';
+import EmbedMessage from './embeds/EmbedMessage';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -172,27 +174,32 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const liveMessages = useMemo(() => {
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
 
-		return socketCtx?.messageLogs.map((msg: ClientMessage | ClientOnlyMessage) => {
-			if (msg.scope === MessageScope.CLIENT)
-				return (
-					<ChatClientMessage
-						key={msg.time}
-						censorBadWords={censorBadWords}
-						msg={msg}
-						setFocusedUser={setFocusedUser}
-					/>
-				);
+		return (
+			<>
+				<EmbedMessage />
+				{socketCtx?.messageLogs.map((msg: MessageServerToClient | MessageClientOnly) => {
+					if (msg.scope === MessageScope.CLIENT)
+						return (
+							<ChatClientMessage
+								key={msg.time}
+								censorBadWords={censorBadWords}
+								msg={msg}
+								setFocusedUser={setFocusedUser}
+							/>
+						);
 
-			if (msg.scope === MessageScope.PUBLIC)
-				return (
-					<ChatMessage
-						key={msg.time + (msg as ClientMessage).author}
-						censorBadWords={censorBadWords}
-						msg={msg as ClientMessage}
-						setFocusedUser={setFocusedUser}
-					/>
-				);
-		});
+					if (msg.scope === MessageScope.PUBLIC)
+						return (
+							<ChatMessage
+								key={msg.time + (msg as MessageServerToClient).author}
+								censorBadWords={censorBadWords}
+								msg={msg as MessageServerToClient}
+								setFocusedUser={setFocusedUser}
+							/>
+						);
+				})}
+			</>
+		);
 	}, [shouldReRenderLiveMessages, optionsCtx?.chatOptions.censorBadWords]);
 
 	// paused rendered messages

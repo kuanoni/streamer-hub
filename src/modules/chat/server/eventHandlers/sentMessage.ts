@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { Socket } from 'socket.io';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { ClientMessage, ServerMessage } from '@globalTypes/socketio';
+import { MessageClientToServer, MessageServerToClient } from '@globalTypes/socketio';
 import { MessageScope, MessageType, SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
@@ -14,10 +14,10 @@ const messageSchema = Joi.object({
 	text: Joi.string().max(500).required(),
 });
 
-const sentMessage = (socket: Socket) => (msg: ServerMessage, callback: Function, room?: SocketRooms) => {
+const sentMessage = (socket: Socket) => (msg: MessageClientToServer, callback: Function, room?: SocketRooms) => {
 	if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-	const newMsg: ClientMessage = {
+	const newMsg: MessageServerToClient = {
 		...msg,
 		scope: MessageScope.PUBLIC,
 		type: MessageType.DEFAULT,

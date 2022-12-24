@@ -21,14 +21,14 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 	socket: SocketWithIO;
 }
 
-type ClientOnlyMessage = {
+type MessageClientOnly = {
 	scope: MessageScope.CLIENT;
 	type: MessageType.SERVER | MessageType.INFO;
 	time: string;
 	text: string | (string | ReactNode)[];
 };
 
-type ClientMessage = {
+type MessageServerToClient = {
 	scope: MessageScope.PUBLIC;
 	type: MessageType.DEFAULT;
 	time: string;
@@ -37,13 +37,13 @@ type ClientMessage = {
 	text: string | (string | ReactNode)[];
 };
 
-type ServerMessage = {
+type MessageClientToServer = {
 	author: string;
 	rank: Rank;
 	text: string;
 };
 
-type ServerCommand = {
+type CommandFromClient = {
 	author: string;
 	name: string;
 	params: string;
