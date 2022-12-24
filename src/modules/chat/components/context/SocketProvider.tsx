@@ -66,19 +66,6 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
 	};
 
-	const sendCommandErrorHandler = (res: { ok: boolean; error: string }) => {
-		if (res.ok) return;
-
-		const msg: MessageClientOnly = {
-			scope: MessageScope.CLIENT,
-			type: MessageType.SERVER,
-			time: new Date().toISOString(),
-			text: res.error,
-		};
-
-		writeClientMessage(msg);
-	};
-
 	const sendMessageErrorHandler = (res: { ok: boolean; errors: Joi.ValidationErrorItem[] }) => {
 		if (res.ok) return;
 
