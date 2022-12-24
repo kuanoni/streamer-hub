@@ -58,19 +58,19 @@ type CommandFromClient = {
 };
 
 interface Field {
-	title: string;
-	description: string;
+	title?: string;
+	description?: string;
 }
 
 interface Footer {
-	title: string;
-	timestamp: string;
+	title?: string;
+	timestamp?: string;
 }
 
 interface Embed {
-	author: string;
-	title: string;
-	description: string;
-	fields: Field[];
-	footer: Footer;
+	author?: string;
+	title?: string;
+	description?: string;
+	fields?: Field[];
+	footer?: Footer;
 }

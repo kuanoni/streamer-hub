@@ -77,6 +77,7 @@ const FooterTimestamp = styled('div', {});
 
 interface Props {
 	embed: Embed;
+	time: string;
 }
 
 const embed: Embed = {
@@ -100,23 +101,26 @@ const embed: Embed = {
 	},
 };
 
-const EmbedMessage = React.memo(({ embed }: Props) => {
+const EmbedMessage = React.memo(({ embed, time }: Props) => {
 	return (
 		<Container>
 			<Author>{embed.author}</Author>
 			<Title>{embed.title}</Title>
-			<Description>{injectMarkdownStyles(embed.description)}</Description>
+			<Description>{embed.description && injectMarkdownStyles(embed.description)}</Description>
 			<FieldsContainer>
-				{embed.fields.map((field, i) => (
-					<Field key={i}>
-						<FieldName>{field.title}</FieldName>
-						<FieldDescription>{injectMarkdownStyles(field.description)}</FieldDescription>
-					</Field>
-				))}
+				{embed.fields &&
+					embed.fields.map((field, i) => (
+						<Field key={i}>
+							<FieldName>{field.title}</FieldName>
+							<FieldDescription>
+								{field.description && injectMarkdownStyles(field.description)}
+							</FieldDescription>
+						</Field>
+					))}
 			</FieldsContainer>
 			<Footer>
-				<FooterTitle>{embed.footer.title}</FooterTitle>
-				<FooterTimestamp>{embed.footer.timestamp}</FooterTimestamp>
+				<FooterTitle>{embed.footer?.title}</FooterTitle>
+				<FooterTimestamp>{embed.footer?.timestamp}</FooterTimestamp>
 			</Footer>
 
 			<TopBorder />
