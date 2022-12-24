@@ -2,8 +2,11 @@ import { Server as IOServer, Socket } from 'socket.io';
 
 import { AuthPerms } from '@globalTypes/custom-auth';
 import { NextApiResponseWithSocket } from '@globalTypes/socketio';
+import getUserById from '@utils/database/getUserById';
+import validateSessionToken from '@utils/database/validateSessionToken';
+import parseCookieString from '@utils/parseCookieString';
 
-import { MessageScope, MessageType, SocketEvents, SocketRooms } from '../common';
+import { MessageType, SocketEvents, SocketRooms } from '../common';
 import sentCommand from './eventHandlers/sentCommand';
 import sentMessage from './eventHandlers/sentMessage';
 import sendMessage from './sendMessage';
@@ -42,6 +45,20 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		});
 
 		const onConnection = async (socket: Socket) => {
+			if (!socket.handshake.headers.cookie)
+				return sendMessage(socket, MessageType.INFO, 'You have connected. Sign in to chat.');
+
+			const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
+
+			// validate session token
+			const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
+			if (!session) return sendMessage(socket, MessageType.INFO, 'You have connected. Sign in to chat.');
+
+			// get user data, add it to socket
+			const user = await getUserById(session.userId);
+			if (!user) return sendMessage(socket, MessageType.INFO, 'You have connected. Sign in to chat.');
+			socket.user = user;
+
 			// add socket event listeners
 			socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
 			socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));

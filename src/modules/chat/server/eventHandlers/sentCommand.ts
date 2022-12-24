@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { ServerCommand } from '@globalTypes/socketio';
+import { CommandFromClient } from '@globalTypes/socketio';
 import { MessageType } from '@modules/chat/common';
 
 import sendMessage from '../sendMessage';
@@ -22,7 +22,7 @@ const commandSchema = Joi.object({
 	params: Joi.string().allow(''),
 });
 
-const sentCommand = (socket: Socket) => async (cmd: ServerCommand) => {
+const sentCommand = (socket: Socket) => async (cmd: CommandFromClient) => {
 	// validate command message
 	const { error } = commandSchema.validate(cmd, {
 		messages: {

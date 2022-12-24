@@ -3,7 +3,7 @@ import React from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { ClientMessage } from '@globalTypes/socketio';
+import { MessageServerToClient } from '@globalTypes/socketio';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
@@ -86,7 +86,7 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 };
 
 interface Props {
-	msg: ClientMessage;
+	msg: MessageServerToClient;
 	setFocusedUser: (user: string) => void;
 	censorBadWords: boolean;
 }
