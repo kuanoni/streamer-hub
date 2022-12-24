@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { styled, theme } from 'stiches.config';
 
+import { Embed } from '@globalTypes/socketio';
 import injectMarkdownStyles from '@modules/chat/utils/injectTextWithMarkdown';
 
 const Container = styled('div', {
@@ -74,24 +75,8 @@ const FooterTitle = styled('div', {
 
 const FooterTimestamp = styled('div', {});
 
-interface Props {}
-
-interface Field {
-	title: string;
-	description: string;
-}
-
-interface Footer {
-	title: string;
-	timestamp: string;
-}
-
-interface Embed {
-	author: string;
-	title: string;
-	description: string;
-	fields: Field[];
-	footer: Footer;
+interface Props {
+	embed: Embed;
 }
 
 const embed: Embed = {
@@ -115,7 +100,7 @@ const embed: Embed = {
 	},
 };
 
-const EmbedMessage = React.memo(({}: Props) => {
+const EmbedMessage = React.memo(({ embed }: Props) => {
 	return (
 		<Container>
 			<Author>{embed.author}</Author>

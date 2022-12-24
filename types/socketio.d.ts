@@ -21,6 +21,8 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 	socket: SocketWithIO;
 }
 
+type EmbedMessageClientOnly = {};
+
 type MessageClientOnly = {
 	scope: MessageScope.CLIENT;
 	type: MessageType.SERVER | MessageType.INFO;
@@ -48,3 +50,21 @@ type CommandFromClient = {
 	name: string;
 	params: string;
 };
+
+interface Field {
+	title: string;
+	description: string;
+}
+
+interface Footer {
+	title: string;
+	timestamp: string;
+}
+
+interface Embed {
+	author: string;
+	title: string;
+	description: string;
+	fields: Field[];
+	footer: Footer;
+}
