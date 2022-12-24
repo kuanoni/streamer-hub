@@ -6,7 +6,7 @@ const validateSessionToken = async (sessionToken: string) => {
 		const db = client.db('auth');
 		const collection = db.collection('sessions');
 
-		const session = await collection.findOne({ sessionToken });
+		const session = await collection.findOne<{ userId: string }>({ sessionToken });
 		if (session) return session;
 		else return false;
 	} catch (err) {

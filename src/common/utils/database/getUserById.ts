@@ -1,3 +1,5 @@
+import { User } from 'next-auth';
+
 import clientPromise from '@utils/mongodb';
 
 const getUserById = async (id: string) => {
@@ -6,10 +8,10 @@ const getUserById = async (id: string) => {
 		const db = client.db('auth');
 		const collection = db.collection('users');
 
-		const userDoc = await collection.findOne({ _id: id });
+		const userDoc = await collection.findOne<User>({ _id: id });
 		return userDoc;
 	} catch (err) {
-		return false;
+		return null;
 	}
 };
 export default getUserById;
