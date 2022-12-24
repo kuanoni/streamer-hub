@@ -54,7 +54,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
 			if (!session) return sendMessage(socket, MessageType.INFO, 'You have connected. Sign in to chat.');
 
-			// get user data
+			// get user data, add it to socket
 			const user = await getUserById(session.userId);
 			if (!user) return sendMessage(socket, MessageType.INFO, 'You have connected. Sign in to chat.');
 			socket.user = user;
