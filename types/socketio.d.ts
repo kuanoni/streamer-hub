@@ -1,4 +1,5 @@
 import { NextApiResponse } from 'next';
+import { User } from 'next-auth';
 import { ReactNode } from 'react';
 import { Server as IOServer, Socket } from 'socket.io';
 
@@ -8,6 +9,11 @@ import { Rank } from './custom-auth';
 
 import type { Server as HTTPServer } from 'http';
 import type { Socket as NetSocket } from 'net';
+declare module 'socket.io' {
+	interface Socket {
+		user: User;
+	}
+}
 
 interface SocketServer extends HTTPServer {
 	io?: IOServer | undefined;
