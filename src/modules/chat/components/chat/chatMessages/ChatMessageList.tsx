@@ -176,7 +176,6 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
-				<EmbedMessage />
 				{socketCtx?.messageLogs.map((msg: MessageServerToClient | MessageClientOnly) => {
 					if (msg.scope === MessageScope.CLIENT)
 						return (
