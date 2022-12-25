@@ -27,32 +27,23 @@ interface NextApiResponseWithSocket extends NextApiResponse {
 	socket: SocketWithIO;
 }
 
-type EmbedMessageClientOnly = {};
-
-type MessageClientOnly = {
-	scope: MessageScope.CLIENT;
-	type: MessageType.SERVER | MessageType.INFO;
+type EmbedMessage = {
+	data: Embed;
 	time: string;
-	text: string | (string | ReactNode)[];
 };
 
-type MessageServerToClient = {
-	scope: MessageScope.PUBLIC;
-	type: MessageType.DEFAULT;
+type UserMessage = {
+	author: string;
+	features: string[];
+	data: string | (string | ReactNode)[];
 	time: string;
-	author: string;
-	rank: Rank;
-	text: string | (string | ReactNode)[];
 };
 
-type MessageClientToServer = {
-	author: string;
-	rank: Rank;
-	text: string;
+type UserMessageToServer = {
+	data: string;
 };
 
-type CommandFromClient = {
-	author: string;
+type CommandMessage = {
 	name: string;
 	params: string;
 };

@@ -1,28 +1,24 @@
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { Rank } from '@globalTypes/custom-auth';
-import { MessageClientToServer, MessageServerToClient } from '@globalTypes/socketio';
-import { MessageScope, MessageType, SocketEvents, SocketRooms } from '@modules/chat/common';
+import { UserMessage, UserMessageToServer } from '@globalTypes/socketio';
+import { SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
-	type: Joi.number().valid(...Object.values(MessageType)),
-	scope: Joi.number().valid(...Object.values(MessageScope)),
-	time: Joi.date().required(),
 	author: Joi.string().min(5).max(15).required(),
-	rank: Joi.string().valid(...Object.values(Rank)),
-	text: Joi.string().max(500).required(),
+	features: Joi.array(),
+	time: Joi.date().required(),
+	data: Joi.string().max(500).required(),
 });
 
-const sentMessage = (socket: Socket) => (msg: MessageClientToServer, callback: Function, room?: SocketRooms) => {
+const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Function, room?: SocketRooms) => {
 	if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
 
-	const newMsg: MessageServerToClient = {
-		...msg,
-		scope: MessageScope.PUBLIC,
-		type: MessageType.DEFAULT,
+	const newMsg: UserMessage = {
+		author: socket.user.username,
+		features: [],
 		time: new Date().toISOString(),
-		text: msg.text.replace(/\s+/g, ' ').trim(),
+		data: msg.data.replace(/\s+/g, ' ').trim(),
 	};
 
 	const { error, value: validatedMsg } = messageSchema.validate(newMsg);
