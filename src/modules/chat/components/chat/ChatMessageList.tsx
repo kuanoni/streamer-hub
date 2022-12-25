@@ -2,16 +2,13 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { Rank } from '@globalTypes/custom-auth';
-import { MessageClientOnly, MessageServerToClient } from '@globalTypes/socketio';
-import { MessageScope, MessageType } from '@modules/chat/common';
+import { UserMessage } from '@globalTypes/socketio';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
-import SocketContext from '../../context/SocketContext';
-import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
-import ChatClientMessage from './ChatClientMessage';
-import ChatMessage from './ChatMessage';
-import EmbedMessage from './embeds/EmbedMessage';
+import SocketContext from '../context/SocketContext';
+import EmbedMessage from './chatMessages/EmbedMessage';
+import ChatMessage from './chatMessages/UserMessage';
+import ChatOptionsContext from './chatOptions/components/context/ChatOptionsContext';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -176,26 +173,17 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
-				{socketCtx?.messageLogs.map((msg: MessageServerToClient | MessageClientOnly) => {
-					if (msg.scope === MessageScope.CLIENT)
-						return (
-							<ChatClientMessage
-								key={msg.time}
-								censorBadWords={censorBadWords}
-								msg={msg}
-								setFocusedUser={setFocusedUser}
-							/>
-						);
-
-					if (msg.scope === MessageScope.PUBLIC)
+				{socketCtx?.messageLogs.map((msg) => {
+					if ('author' in msg)
 						return (
 							<ChatMessage
-								key={msg.time + (msg as MessageServerToClient).author}
+								key={msg.time + msg.author}
 								censorBadWords={censorBadWords}
-								msg={msg as MessageServerToClient}
+								msg={msg as UserMessage}
 								setFocusedUser={setFocusedUser}
 							/>
 						);
+					else return <EmbedMessage key={msg.time} embed={msg.data} time={msg.time} />;
 				})}
 			</>
 		);

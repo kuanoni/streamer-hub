@@ -5,7 +5,7 @@ import SocketProvider from '../context/SocketProvider';
 import ChatControlsBottom from './ChatControlsBottom';
 import ChatControlsTop from './ChatControlsTop';
 import ChatInput from './ChatInput';
-import ChatMessageList from './chatMessages/ChatMessageList';
+import ChatMessageList from './ChatMessageList';
 import ChatOptions from './chatOptions/components/ChatOptions';
 import ChatOptionsProvider from './chatOptions/components/context/ChatOptionsProvider';
 import ChatSigninPrompt from './ChatSigninPrompt';
