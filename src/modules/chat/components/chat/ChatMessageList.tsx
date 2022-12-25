@@ -2,12 +2,11 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { UserMessage } from '@globalTypes/socketio';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
 import SocketContext from '../context/SocketContext';
 import EmbedMessage from './chatMessages/EmbedMessage';
-import ChatMessage from './chatMessages/UserMessage';
+import UserMessage from './chatMessages/UserMessage';
 import ChatOptionsContext from './chatOptions/components/context/ChatOptionsContext';
 
 const Container = styled('div', {
@@ -176,10 +175,10 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				{socketCtx?.messageLogs.map((msg) => {
 					if ('author' in msg)
 						return (
-							<ChatMessage
+							<UserMessage
 								key={msg.time + msg.author}
+								msg={msg}
 								censorBadWords={censorBadWords}
-								msg={msg as UserMessage}
 								setFocusedUser={setFocusedUser}
 							/>
 						);
