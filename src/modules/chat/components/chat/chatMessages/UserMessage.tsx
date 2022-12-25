@@ -3,13 +3,13 @@ import React from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { Rank } from '@globalTypes/custom-auth';
-import { MessageServerToClient } from '@globalTypes/socketio';
+import { UserMessage } from '@globalTypes/socketio';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
 import { MessageType, RankColors } from '@modules/chat/common';
 
-import ChatMessageText from './ChatMessageText';
+import ChatMessageText from './UserMessageText';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -86,7 +86,7 @@ const RankFlair: { [index: string]: React.ReactNode } = {
 };
 
 interface Props {
-	msg: MessageServerToClient;
+	msg: UserMessage;
 	setFocusedUser: (user: string) => void;
 	censorBadWords: boolean;
 }
@@ -96,17 +96,14 @@ const ChatMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 	const timeTitle = timeTitleFormatter.format(dateObj);
 	const timeValue = timeValueFormatter.format(dateObj);
 
-	const flair = RankFlair[msg.rank];
-
 	return (
 		<Container className='msg' data-author={msg.author}>
 			<time title={timeTitle}>{timeValue}</time>
-			<Author className='author' rank={msg.rank} onClick={() => setFocusedUser(msg.author)}>
-				{flair}
+			<Author className='author' onClick={() => setFocusedUser(msg.author)}>
 				{msg.author}
 			</Author>
 			<span className='separator'>:&nbsp;</span>
-			<ChatMessageText text={msg.text} />
+			<ChatMessageText text={msg.data} />
 		</Container>
 	);
 });
