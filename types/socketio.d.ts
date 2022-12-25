@@ -34,7 +34,7 @@ type EmbedMessage = {
 
 type UserMessage = {
 	author: string;
-	features: string[];
+	flair: string;
 	data: string | (string | ReactNode)[];
 	time: string;
 };
