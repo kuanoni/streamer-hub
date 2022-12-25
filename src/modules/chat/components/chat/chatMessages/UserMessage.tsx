@@ -9,7 +9,7 @@ import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
 import { MessageType, RankColors } from '@modules/chat/common';
 
-import ChatMessageText from './UserMessageText';
+import UserMessageText from './UserMessageText';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -103,7 +103,7 @@ const ChatMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 				{msg.author}
 			</Author>
 			<span className='separator'>:&nbsp;</span>
-			<ChatMessageText text={msg.data} />
+			<UserMessageText text={msg.data} />
 		</Container>
 	);
 });

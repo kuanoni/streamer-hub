@@ -19,7 +19,7 @@ interface Props {
 	text: string | (string | ReactNode)[];
 }
 
-const ChatMessageText = ({ text }: Props) => {
+const UserMessageText = ({ text }: Props) => {
 	const [isCensored, setIsCensored] = useState(true);
 
 	const [textWithEmotes, hasEmotes] = injectTextWithEmotes(text);
@@ -40,4 +40,4 @@ const ChatMessageText = ({ text }: Props) => {
 	);
 };
 
-export default ChatMessageText;
+export default UserMessageText;
