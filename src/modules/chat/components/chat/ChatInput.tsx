@@ -6,7 +6,6 @@ import { styled, theme } from 'stiches.config';
 import Button from '@components/ui/Button';
 import { UserMessageToServer } from '@globalTypes/socketio';
 
-import { MessageType } from '../../common';
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
 
