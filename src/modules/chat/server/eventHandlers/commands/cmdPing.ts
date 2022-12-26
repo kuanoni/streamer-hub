@@ -1,4 +1,4 @@
-import { AuthPerms } from '@globalTypes/custom-auth';
+import { AuthPerms } from '@globalTypes/user';
 
 import ChatCommand from './ChatCommand';
 import { ExecutionCallback } from './types';

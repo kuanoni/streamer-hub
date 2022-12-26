@@ -1,5 +1,5 @@
 import type { NextComponentType } from 'next';
-import type { AuthPerms } from './custom-auth';
+import type { AuthPerms } from './user';
 import type { ReactNode } from 'react';
 
 interface PageAuthorizationOptions {

@@ -1,7 +1,7 @@
 import { Server as IOServer, Socket } from 'socket.io';
 
-import { AuthPerms } from '@globalTypes/custom-auth';
 import { NextApiResponseWithSocket } from '@globalTypes/socketio';
+import { AuthPerms } from '@globalTypes/user';
 import getUserById from '@utils/database/getUserById';
 import validateSessionToken from '@utils/database/validateSessionToken';
 import parseCookieString from '@utils/parseCookieString';

@@ -2,7 +2,7 @@ import { User } from 'next-auth';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { SubscriptionTier } from '@globalTypes/custom-auth';
+import { SubscriptionTier } from '@globalTypes/user';
 
 import { Info, Label } from '../styles';
 

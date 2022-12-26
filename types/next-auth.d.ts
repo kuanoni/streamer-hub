@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 
 import { UserFlair } from '@modules/chat/common';
 
-import { AuthPerms, Role, SubscriptionTier } from './custom-auth';
+import { AuthPerms, Role, SubscriptionTier } from './user';
 
 declare module 'next-auth' {
 	type User = {
