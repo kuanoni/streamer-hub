@@ -4,16 +4,13 @@ import { styled, theme } from 'stiches.config';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
-import { MessageFlair } from '@modules/chat/common';
+import { FlairColors, MessageFlair } from '@modules/chat/common';
 
-const Author = styled('span', {
+const Container = styled('span', {
 	display: 'inline',
 	padding: 0,
 	paddingLeft: 3,
 	margin: 0,
-	border: 'none',
-	color: 'inherit',
-	background: 'none',
 	fontSize: 'inherit',
 	fontWeight: 900,
 	'&:hover': {
@@ -28,6 +25,12 @@ const Author = styled('span', {
 	},
 });
 
+const Name = styled('span', {
+	variants: {
+		color: FlairColors,
+	},
+});
+
 const flairs: { [index: string]: React.ReactNode } = {
 	[MessageFlair.TIER_1_SUB]: <Image src={Tier1} alt='Tier 1 subscriber' />,
 	[MessageFlair.TIER_2_SUB]: <Image src={Tier2} alt='Tier 2 subscriber' />,
@@ -35,12 +38,17 @@ const flairs: { [index: string]: React.ReactNode } = {
 };
 
 interface Props {
-	flair: string;
+	flair: MessageFlair;
 	onClick: () => void;
 }
 
 const UserMessageAuthor = ({ flair, onClick, children }: React.PropsWithChildren<Props>) => {
-	return <Author onClick={onClick}>{children}</Author>;
+	return (
+		<Container onClick={onClick}>
+			{flairs[flair]}
+			<Name color={flair}>{children}</Name>
+		</Container>
+	);
 };
 
 export default UserMessageAuthor;
