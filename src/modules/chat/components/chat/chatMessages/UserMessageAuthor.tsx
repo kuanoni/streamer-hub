@@ -4,7 +4,7 @@ import { styled, theme } from 'stiches.config';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
-import { FlairColors, UserFlair } from '@modules/chat/common';
+import { UserFlair, UsernameColors } from '@modules/chat/common';
 
 const Container = styled('span', {
 	display: 'inline',
@@ -27,7 +27,7 @@ const Container = styled('span', {
 
 const Name = styled('span', {
 	variants: {
-		color: FlairColors,
+		color: UsernameColors,
 	},
 });
 

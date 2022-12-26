@@ -18,7 +18,7 @@ export enum SocketEvents {
 	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
 }
 
-export const FlairColors: { [index: string]: { color: string } } = {
+export const UsernameColors: { [index: string]: { color: string } } = {
 	[UserFlair.DEFAULT]: {
 		color: 'var(--colors-textLight)',
 	},

@@ -7,7 +7,7 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
-import { FlairColors } from '@modules/chat/common';
+import { UsernameColors } from '@modules/chat/common';
 
 import UserOptionsDropdown from './UserOptionsDropdown';
 
@@ -19,7 +19,7 @@ const Container = styled('div', {
 
 const DisplayName = styled(Link, {
 	variants: {
-		role: FlairColors,
+		role: UsernameColors,
 	},
 	'&:hover': {
 		textDecoration: 'underline',

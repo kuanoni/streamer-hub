@@ -3,7 +3,7 @@ import React from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { Role, SubscriptionTier } from '@globalTypes/custom-auth';
-import { FlairColors } from '@modules/chat/common';
+import { UsernameColors } from '@modules/chat/common';
 
 import { Info, Label } from '../styles';
 
@@ -15,7 +15,7 @@ const Username = styled('h1', {
 	backgroundColor: theme.colors.primary900,
 	fontSize: '3rem',
 	lineHeight: '1em',
-	variants: { flair: FlairColors },
+	variants: { flair: UsernameColors },
 });
 
 const UserInfo = styled('div', {
