@@ -1,6 +1,4 @@
-import { Rank } from '@globalTypes/custom-auth';
-
-export enum MessageFlair {
+export enum UserFlair {
 	DEFAULT = '',
 	TIER_1_SUB = 't1',
 	TIER_2_SUB = 't2',
@@ -21,22 +19,22 @@ export enum SocketEvents {
 }
 
 export const FlairColors: { [index: string]: { color: string } } = {
-	[MessageFlair.DEFAULT]: {
+	[UserFlair.DEFAULT]: {
 		color: 'var(--colors-textLight)',
 	},
-	[MessageFlair.TIER_1_SUB]: {
+	[UserFlair.TIER_1_SUB]: {
 		color: 'rgb(72, 185, 190)',
 	},
-	[MessageFlair.TIER_2_SUB]: {
+	[UserFlair.TIER_2_SUB]: {
 		color: 'rgb(72, 185, 240)',
 	},
-	[MessageFlair.TIER_3_SUB]: {
+	[UserFlair.TIER_3_SUB]: {
 		color: 'rgb(20, 185, 255)',
 	},
-	[MessageFlair.BUDDY]: {
+	[UserFlair.BUDDY]: {
 		color: 'rgb(240, 151, 72)',
 	},
-	[MessageFlair.OWNER]: {
+	[UserFlair.OWNER]: {
 		color: 'rgb(225, 53, 53)',
 	},
 };

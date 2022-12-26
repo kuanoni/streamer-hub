@@ -4,7 +4,7 @@ import { styled, theme } from 'stiches.config';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
-import { FlairColors, MessageFlair } from '@modules/chat/common';
+import { FlairColors, UserFlair } from '@modules/chat/common';
 
 const Container = styled('span', {
 	display: 'inline',
@@ -32,13 +32,13 @@ const Name = styled('span', {
 });
 
 const flairs: { [index: string]: React.ReactNode } = {
-	[MessageFlair.TIER_1_SUB]: <Image src={Tier1} alt='Tier 1 subscriber' />,
-	[MessageFlair.TIER_2_SUB]: <Image src={Tier2} alt='Tier 2 subscriber' />,
-	[MessageFlair.TIER_3_SUB]: <Image src={Tier3} alt='Tier 3 subscriber' />,
+	[UserFlair.TIER_1_SUB]: <Image src={Tier1} alt='Tier 1 subscriber' />,
+	[UserFlair.TIER_2_SUB]: <Image src={Tier2} alt='Tier 2 subscriber' />,
+	[UserFlair.TIER_3_SUB]: <Image src={Tier3} alt='Tier 3 subscriber' />,
 };
 
 interface Props {
-	flair: MessageFlair;
+	flair: UserFlair;
 	onClick: () => void;
 }
 
