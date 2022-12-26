@@ -14,10 +14,11 @@ export enum Role {
 }
 
 export enum SubscriptionTier {
-	NONE = 'NONE',
-	TIER_1 = 'TIER_1',
-	TIER_2 = 'TIER_2',
-	TIER_3 = 'TIER_3',
+	NONE,
+	TIER_1,
+	TIER_2,
+	TIER_3,
+	PERMANENT,
 }
 
 export interface PageAuthorizationOptions {
