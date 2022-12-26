@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 
 import { UserFlair } from '@modules/chat/common';
 
-import { AuthPerms, Role } from './custom-auth';
+import { AuthPerms, Role, SubscriptionTier } from './custom-auth';
 
 declare module 'next-auth' {
 	type User = {
@@ -13,7 +13,7 @@ declare module 'next-auth' {
 		joined: Date;
 
 		role: Role;
-		subscriptionTier: string;
+		subscriptionTier: SubscriptionTier;
 		selectedFlair: UserFlair;
 		availableFlairs: UserFlair[];
 
