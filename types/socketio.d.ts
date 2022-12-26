@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import { Server as IOServer, Socket } from 'socket.io';
 
 import { MessageScope, MessageType } from '@/modules/chat/common';
+import { MessageFlair } from '@modules/chat/common';
 
 import { Rank } from './custom-auth';
 
@@ -34,7 +35,7 @@ type EmbedMessage = {
 
 type UserMessage = {
 	author: string;
-	flair: string;
+	flair: MessageFlair;
 	data: string | (string | ReactNode)[];
 	time: string;
 };
