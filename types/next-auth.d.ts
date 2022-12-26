@@ -1,8 +1,6 @@
 import NextAuth from 'next-auth';
 
-import { UserFlair } from '@modules/chat/common';
-
-import { AuthPerms, Role, SubscriptionTier } from './user';
+import { AuthPerms, Role, SubscriptionTier, UsernameFlair } from './user';
 
 declare module 'next-auth' {
 	type User = {
@@ -14,8 +12,6 @@ declare module 'next-auth' {
 
 		role: Role;
 		subscriptionTier: SubscriptionTier;
-		selectedFlair: UserFlair;
-		availableFlairs: UserFlair[];
 
 		bannedUntil: Date | null;
 

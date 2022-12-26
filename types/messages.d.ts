@@ -5,7 +5,7 @@ type EmbedMessage = {
 
 type UserMessage = {
 	author: string;
-	flair: UserFlair;
+	flair: UsernameFlair;
 	data: string | (string | ReactNode)[];
 	time: string;
 };

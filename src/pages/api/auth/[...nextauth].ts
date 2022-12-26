@@ -2,8 +2,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import DiscordProvider, { DiscordProfile } from 'next-auth/providers/discord';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
 
-import { AuthPerms, Role, SubscriptionTier } from '@globalTypes/user';
-import { UserFlair } from '@modules/chat/common';
+import { AuthPerms, Role, SubscriptionTier, UsernameFlair } from '@globalTypes/user';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import extractStringEnvVar from '@utils/extractStringEnvVar';
 import clientPromise from '@utils/mongodb';
@@ -13,8 +12,6 @@ const defaultProfile = {
 	email: null,
 	role: Role.DEFAULT,
 	subscriptionTier: SubscriptionTier.NONE,
-	selectedFlair: UserFlair.DEFAULT,
-	availableFlairs: [],
 
 	bannedUntil: null,
 	authLevel: AuthPerms.USER,

@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { UserFlair } from '@modules/chat/common';
+import { UsernameFlair } from '@globalTypes/user';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
 import SocketContext from '../context/SocketContext';
@@ -176,7 +176,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				<UserMessage
 					msg={{
 						author: 'Default',
-						flair: UserFlair.DEFAULT,
+						flair: UsernameFlair.DEFAULT,
 						data: 'test test',
 						time: new Date().toISOString(),
 					}}
@@ -186,7 +186,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				<UserMessage
 					msg={{
 						author: 'Tier1',
-						flair: UserFlair.TIER_1_SUB,
+						flair: UsernameFlair.TIER_1_SUB,
 						data: 'test test',
 						time: new Date().toISOString(),
 					}}
@@ -196,7 +196,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				<UserMessage
 					msg={{
 						author: 'Tier2',
-						flair: UserFlair.TIER_2_SUB,
+						flair: UsernameFlair.TIER_2_SUB,
 						data: 'test test',
 						time: new Date().toISOString(),
 					}}
@@ -206,7 +206,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				<UserMessage
 					msg={{
 						author: 'Tier3',
-						flair: UserFlair.TIER_3_SUB,
+						flair: UsernameFlair.TIER_3_SUB,
 						data: 'test test',
 						time: new Date().toISOString(),
 					}}
@@ -216,7 +216,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				<UserMessage
 					msg={{
 						author: 'Buddy',
-						flair: UserFlair.BUDDY,
+						flair: UsernameFlair.BUDDY,
 						data: 'test test',
 						time: new Date().toISOString(),
 					}}
@@ -226,7 +226,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				<UserMessage
 					msg={{
 						author: 'Owner',
-						flair: UserFlair.OWNER,
+						flair: UsernameFlair.OWNER,
 						data: 'test test',
 						time: new Date().toISOString(),
 					}}
