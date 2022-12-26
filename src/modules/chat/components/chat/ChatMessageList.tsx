@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
+import { UserFlair } from '@modules/chat/common';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
 import SocketContext from '../context/SocketContext';
@@ -172,14 +173,74 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
+				<UserMessage
+					msg={{
+						author: 'Default',
+						flair: UserFlair.DEFAULT,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Tier1',
+						flair: UserFlair.TIER_1_SUB,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Tier2',
+						flair: UserFlair.TIER_2_SUB,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Tier3',
+						flair: UserFlair.TIER_3_SUB,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Buddy',
+						flair: UserFlair.BUDDY,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Owner',
+						flair: UserFlair.OWNER,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
 				{socketCtx?.messageLogs.map((msg) => {
 					if ('author' in msg)
 						return (
 							<UserMessage
 								key={msg.time + msg.author}
 								msg={msg}
-								censorBadWords={censorBadWords}
 								setFocusedUser={setFocusedUser}
+								censorBadWords={censorBadWords}
 							/>
 						);
 					else return <EmbedMessage key={msg.time} embed={msg.data} time={msg.time} />;
