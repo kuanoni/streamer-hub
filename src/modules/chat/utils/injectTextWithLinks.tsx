@@ -36,7 +36,7 @@ export const injectTextWithLinks: InjectTextWithLinks = (text) => {
 
 			return [
 				...arr,
-				<StyledLink key={i} href={currentValue}>
+				<StyledLink key={i} href={currentValue} target='_blank'>
 					{currentValue}
 				</StyledLink>,
 			];
