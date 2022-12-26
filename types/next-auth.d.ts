@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 
-import { AuthPerms, Rank } from './custom-auth';
+import { UserFlair } from '@modules/chat/common';
+
+import { AuthPerms, Role } from './custom-auth';
 
 declare module 'next-auth' {
 	type User = {
@@ -8,9 +10,12 @@ declare module 'next-auth' {
 		username: string;
 		email: string | null;
 		avatar: string;
-
 		joined: Date;
-		rank: Rank;
+
+		role: Role;
+		subscriptionTier: string;
+		selectedFlair: UserFlair;
+		availableFlairs: UserFlair[];
 
 		bannedUntil: Date | null;
 

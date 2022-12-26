@@ -19,7 +19,7 @@ const Container = styled('div', {
 
 const DisplayName = styled(Link, {
 	variants: {
-		rank: FlairColors,
+		role: FlairColors,
 	},
 	'&:hover': {
 		textDecoration: 'underline',
@@ -82,7 +82,7 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 	return (
 		<Container>
 			{status === 'authenticated' && user && (
-				<DisplayName href={'/profile'} rank={user.rank}>
+				<DisplayName href={'/profile'} role={user.role}>
 					{user.username ? user.username : 'Enter username here'}
 				</DisplayName>
 			)}

@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import DiscordProvider, { DiscordProfile } from 'next-auth/providers/discord';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
 
-import { AuthPerms, Rank } from '@globalTypes/custom-auth';
+import { AuthPerms, Role } from '@globalTypes/custom-auth';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import extractStringEnvVar from '@utils/extractStringEnvVar';
 import clientPromise from '@utils/mongodb';
@@ -10,7 +10,7 @@ import clientPromise from '@utils/mongodb';
 const defaultProfile = {
 	username: '',
 	email: null,
-	rank: Rank.DEFAULT,
+	role: Role.DEFAULT,
 
 	bannedUntil: null,
 	authLevel: AuthPerms.USER,

@@ -7,13 +7,17 @@ export enum AuthPerms {
 	USER,
 }
 
-export enum Rank {
+export enum Role {
 	DEFAULT = 'DEFAULT',
+	BUDDY = 'BUDDY',
+	OWNER = 'OWNER',
+}
+
+export enum SubscriptionTier {
+	NONE = 'NONE',
 	TIER_1 = 'TIER_1',
 	TIER_2 = 'TIER_2',
 	TIER_3 = 'TIER_3',
-	ORBITER = 'ORBITER',
-	OWNER = 'OWNER',
 }
 
 export interface PageAuthorizationOptions {
