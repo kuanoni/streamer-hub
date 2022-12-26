@@ -2,8 +2,7 @@ import { User } from 'next-auth';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { Role, SubscriptionTier } from '@globalTypes/custom-auth';
-import { UsernameColors } from '@modules/chat/common';
+import { SubscriptionTier } from '@globalTypes/custom-auth';
 
 import { Info, Label } from '../styles';
 
@@ -15,7 +14,6 @@ const Username = styled('h1', {
 	backgroundColor: theme.colors.primary900,
 	fontSize: '3rem',
 	lineHeight: '1em',
-	variants: { flair: UsernameColors },
 });
 
 const UserInfo = styled('div', {
@@ -39,7 +37,7 @@ const HeaderInfo = ({ user }: Props) => {
 
 	return (
 		<>
-			<Username flair={user.selectedFlair}>{user.username}</Username>
+			<Username>{user.username}</Username>
 			<UserInfo>
 				<Label>Joined</Label>
 				<Info>{joined.toDateString()}</Info>

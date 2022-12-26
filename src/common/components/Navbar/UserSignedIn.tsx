@@ -7,7 +7,6 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
-import { UsernameColors } from '@modules/chat/common';
 
 import UserOptionsDropdown from './UserOptionsDropdown';
 
@@ -17,10 +16,7 @@ const Container = styled('div', {
 	alignItems: 'center',
 });
 
-const DisplayName = styled(Link, {
-	variants: {
-		role: UsernameColors,
-	},
+const Username = styled(Link, {
 	'&:hover': {
 		textDecoration: 'underline',
 	},
@@ -82,9 +78,7 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 	return (
 		<Container>
 			{status === 'authenticated' && user && (
-				<DisplayName href={'/profile'} role={user.role}>
-					{user.username ? user.username : 'Enter username here'}
-				</DisplayName>
+				<Username href={'/profile'}>{user.username ? user.username : 'Enter username here'}</Username>
 			)}
 			{status === 'unauthenticated' && (
 				<Button color='primary' onClick={openSignIn}>
