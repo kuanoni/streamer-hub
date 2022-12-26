@@ -31,10 +31,14 @@ const UserMessageText = ({ text }: Props) => {
 
 	const censoredClass = hasLinks && textHasNsfl ? 'nsfl' : hasLinks && textHasNsfw ? 'nsfw' : '';
 
+	const handleClick = () => {
+		if (censoredClass) setIsCensored(false);
+	};
+
 	return (
-		<Text className={isCensored ? censoredClass : ''} onClick={() => setIsCensored(false)}>
+		<Text className={isCensored ? censoredClass : ''} onClick={handleClick}>
 			{newText.map((item, i) => (
-				<React.Fragment key={i}>{item}</React.Fragment>
+				<React.Fragment key={i}>{item} </React.Fragment>
 			))}
 		</Text>
 	);
