@@ -17,24 +17,3 @@ export enum SocketEvents {
 	CLIENT_RECEIVE_MSG = 'CLIENT_RECEIVE_MSG',
 	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
 }
-
-export const UsernameColors: { [index: string]: { color: string } } = {
-	[UserFlair.DEFAULT]: {
-		color: 'var(--colors-textLight)',
-	},
-	[UserFlair.TIER_1_SUB]: {
-		color: 'rgb(72, 185, 190)',
-	},
-	[UserFlair.TIER_2_SUB]: {
-		color: 'rgb(72, 185, 240)',
-	},
-	[UserFlair.TIER_3_SUB]: {
-		color: 'rgb(20, 185, 255)',
-	},
-	[UserFlair.BUDDY]: {
-		color: 'rgb(240, 151, 72)',
-	},
-	[UserFlair.OWNER]: {
-		color: 'rgb(225, 53, 53)',
-	},
-};
