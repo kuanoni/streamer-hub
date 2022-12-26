@@ -54,6 +54,7 @@ const UserMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 			<UserMessageAuthor flair={msg.flair} onClick={() => setFocusedUser(msg.author)}>
 				{msg.author}
 			</UserMessageAuthor>
+			&nbsp;
 			<UserMessageText text={msg.data} />
 		</Container>
 	);
