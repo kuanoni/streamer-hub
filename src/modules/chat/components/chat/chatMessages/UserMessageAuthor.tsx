@@ -8,7 +8,7 @@ import { UserFlair, UsernameColors } from '@modules/chat/common';
 
 const Container = styled('span', {
 	display: 'inline-flex',
-	padding: '0 3px',
+	paddingLeft: 3,
 	margin: 0,
 	borderRadius: theme.space.borderRadHalf,
 	fontSize: 'inherit',
