@@ -1,6 +1,7 @@
 import { Rank } from '@globalTypes/custom-auth';
 
 export enum MessageFlair {
+	DEFAULT = '',
 	TIER_1_SUB = 't1',
 	TIER_2_SUB = 't2',
 	TIER_3_SUB = 't3',
@@ -19,23 +20,23 @@ export enum SocketEvents {
 	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
 }
 
-export const RankColors = {
-	[Rank.DEFAULT]: {
+export const FlairColors: { [index: string]: { color: string } } = {
+	[MessageFlair.DEFAULT]: {
 		color: 'var(--colors-textLight)',
 	},
-	[Rank.TIER_1]: {
+	[MessageFlair.TIER_1_SUB]: {
 		color: 'rgb(72, 185, 190)',
 	},
-	[Rank.TIER_2]: {
+	[MessageFlair.TIER_2_SUB]: {
 		color: 'rgb(72, 185, 240)',
 	},
-	[Rank.TIER_3]: {
+	[MessageFlair.TIER_3_SUB]: {
 		color: 'rgb(20, 185, 255)',
 	},
-	[Rank.ORBITER]: {
+	[MessageFlair.BUDDY]: {
 		color: 'rgb(240, 151, 72)',
 	},
-	[Rank.OWNER]: {
+	[MessageFlair.OWNER]: {
 		color: 'rgb(225, 53, 53)',
 	},
 };
