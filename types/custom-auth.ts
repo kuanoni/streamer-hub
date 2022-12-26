@@ -1,6 +1,3 @@
-import { NextComponentType } from 'next';
-import { ReactElement, ReactNode } from 'react';
-
 export enum AuthPerms {
 	ADMIN,
 	MOD,
@@ -20,15 +17,3 @@ export enum SubscriptionTier {
 	TIER_3,
 	PERMANENT,
 }
-
-export interface PageAuthorizationOptions {
-	roleRequired: AuthPerms;
-	whileLoading: ReactNode;
-	unauthorizedRedirect: string;
-}
-
-export type Page = NextComponentType & {
-	title?: string;
-	getLayout?: (page: ReactElement) => ReactNode;
-	authorizationOptions?: PageAuthorizationOptions | undefined;
-};

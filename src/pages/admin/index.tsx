@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { AuthPerms, Page } from '@globalTypes/custom-auth';
+import { Page } from '@globalTypes/authorized-page';
+import { AuthPerms } from '@globalTypes/custom-auth';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 
 const Admin: Page = () => {

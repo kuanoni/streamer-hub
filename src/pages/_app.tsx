@@ -5,14 +5,15 @@ import NextNProgress from 'nextjs-progressbar';
 import { theme } from 'stiches.config';
 
 import AuthorizedPageWrapper from '@components/AuthorizedPageWrapper';
-import { Page } from '@globalTypes/custom-auth';
+import { Page } from '@globalTypes/authorized-page';
 
+import type { ReactElement } from 'react';
 interface PageAppProps extends AppProps {
 	Component: Page;
 }
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: PageAppProps) {
-	const getLayout = Component.getLayout || ((page) => page);
+	const getLayout = Component.getLayout || ((page: ReactElement) => page);
 	const pageTitle = `${Component.title || 'Unnamed'} | Stream Hub`;
 
 	return (
