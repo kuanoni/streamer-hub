@@ -8,7 +8,6 @@ import { UserFlair } from '@modules/chat/common';
 
 const Container = styled('span', {
 	display: 'inline-flex',
-	paddingLeft: 3,
 	margin: 0,
 	borderRadius: theme.space.borderRadHalf,
 	fontSize: 'inherit',
@@ -28,7 +27,7 @@ const Container = styled('span', {
 				color: 'rgb(72, 185, 240)',
 			},
 			[UserFlair.TIER_3_SUB]: {
-				color: 'rgb(20, 185, 255)',
+				color: 'rgb(48, 119, 255)',
 			},
 			[UserFlair.BUDDY]: {
 				color: theme.colors.primary300,
@@ -44,11 +43,14 @@ const Container = styled('span', {
 const BadgeContainer = styled('span', {
 	display: 'inline-flex',
 	alignItems: 'center',
-	marginRight: '.25em',
 	[`svg, img`]: {
 		maxWidth: '1em',
 		maxHeight: '1em',
 	},
+});
+
+const Username = styled('span', {
+	padding: '0 .25em',
 });
 
 const badges: { [index: string]: React.ReactNode } = {
@@ -66,8 +68,7 @@ const UserMessageAuthor = ({ flair, onClick, children }: React.PropsWithChildren
 	return (
 		<Container flair={flair} onClick={onClick}>
 			<BadgeContainer>{badges[flair]}</BadgeContainer>
-			{children}
-			{':'}
+			<Username>{children}:</Username>
 		</Container>
 	);
 };
