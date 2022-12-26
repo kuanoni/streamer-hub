@@ -23,9 +23,9 @@ const timeValueFormatter = new Intl.DateTimeFormat('default', {
 });
 
 const Container = styled('div', {
-	fontSize: 13,
-	lineHeight: 1.75,
 	padding: '.2em 1.2em .2em .6em',
+	fontSize: 13,
+	lineHeight: 1.5,
 	time: {
 		display: 'inline-block',
 		color: theme.colors.textMedium,
@@ -54,7 +54,6 @@ const UserMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 			<UserMessageAuthor flair={msg.flair} onClick={() => setFocusedUser(msg.author)}>
 				{msg.author}
 			</UserMessageAuthor>
-			<span className='separator'>:&nbsp;</span>
 			<UserMessageText text={msg.data} />
 		</Container>
 	);

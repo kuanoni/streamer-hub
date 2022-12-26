@@ -7,31 +7,42 @@ import Tier3 from '@images/flairs/tier_3.png';
 import { UserFlair, UsernameColors } from '@modules/chat/common';
 
 const Container = styled('span', {
-	display: 'inline',
-	padding: 0,
-	paddingLeft: 3,
+	display: 'inline-flex',
+	padding: '0 3px',
 	margin: 0,
+	borderRadius: theme.space.borderRadHalf,
 	fontSize: 'inherit',
 	fontWeight: 900,
+	verticalAlign: 'bottom',
 	'&:hover': {
 		textDecoration: 'underline',
 		cursor: 'pointer',
 	},
-	[`svg, img`]: {
-		maxWidth: '1rem',
-		maxHeight: '1rem',
-		verticalAlign: 'middle',
-		marginRight: '.25em',
-	},
-});
-
-const Name = styled('span', {
 	variants: {
-		color: UsernameColors,
+		flair: {
+			t1: {
+				color: theme.colors.grey900,
+				backgroundColor: theme.colors.primary400,
+			},
+			t2: {
+				color: theme.colors.primary300,
+				backgroundColor: theme.colors.frostedPrimary,
+			},
+		},
 	},
 });
 
-const flairs: { [index: string]: React.ReactNode } = {
+const BadgeContainer = styled('span', {
+	display: 'inline-flex',
+	alignItems: 'center',
+	marginRight: '.25em',
+	[`svg, img`]: {
+		maxWidth: '1em',
+		maxHeight: '1em',
+	},
+});
+
+const badges: { [index: string]: React.ReactNode } = {
 	[UserFlair.TIER_1_SUB]: <Image src={Tier1} alt='Tier 1 subscriber' />,
 	[UserFlair.TIER_2_SUB]: <Image src={Tier2} alt='Tier 2 subscriber' />,
 	[UserFlair.TIER_3_SUB]: <Image src={Tier3} alt='Tier 3 subscriber' />,
@@ -44,9 +55,10 @@ interface Props {
 
 const UserMessageAuthor = ({ flair, onClick, children }: React.PropsWithChildren<Props>) => {
 	return (
-		<Container onClick={onClick}>
-			{flairs[flair]}
-			<Name color={flair}>{children}</Name>
+		<Container flair={'t2'} onClick={onClick}>
+			<BadgeContainer>{badges[flair]}</BadgeContainer>
+			{children}
+			{':'}
 		</Container>
 	);
 };

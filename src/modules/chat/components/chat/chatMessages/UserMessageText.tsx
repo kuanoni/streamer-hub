@@ -5,8 +5,8 @@ import { injectTextWithEmotes } from '@modules/chat/utils/injectTextWithEmotes';
 import { injectTextWithLinks } from '@modules/chat/utils/injectTextWithLinks';
 
 const Text = styled('span', {
-	maxWidth: '100%',
 	wordWrap: 'break-word',
+	verticalAlign: 'top',
 });
 
 const containsWord = (textArr: ReactNode[], word: string) =>
