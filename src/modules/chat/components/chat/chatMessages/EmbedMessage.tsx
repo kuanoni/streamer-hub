@@ -1,7 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { Embed } from '@globalTypes/socketio';
 import injectMarkdownStyles from '@modules/chat/utils/injectTextWithMarkdown';
 
 const Container = styled('div', {
@@ -109,7 +108,7 @@ const EmbedMessage = React.memo(({ embed, time }: Props) => {
 			<Description>{embed.description && injectMarkdownStyles(embed.description)}</Description>
 			<FieldsContainer>
 				{embed.fields &&
-					embed.fields.map((field, i) => (
+					embed.fields.map((field: Field, i: number) => (
 						<Field key={i}>
 							<FieldName>{field.title}</FieldName>
 							<FieldDescription>

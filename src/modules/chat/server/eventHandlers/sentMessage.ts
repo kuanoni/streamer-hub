@@ -1,9 +1,6 @@
 import Joi from 'joi';
-import { User } from 'next-auth';
 import { Socket } from 'socket.io';
 
-import { Role } from '@globalTypes/custom-auth';
-import { UserMessage, UserMessageToServer } from '@globalTypes/socketio';
 import { SocketEvents, SocketRooms, UserFlair } from '@modules/chat/common';
 
 const messageSchema = Joi.object({

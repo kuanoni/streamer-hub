@@ -1,8 +1,6 @@
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { CommandMessage } from '@globalTypes/socketio';
-
 import sendMessage from '../sendMessage';
 import ChatCommand from './commands/ChatCommand';
 import cmdBanUser from './commands/cmdBanUser';

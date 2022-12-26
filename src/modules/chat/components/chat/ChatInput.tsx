@@ -4,7 +4,6 @@ import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
-import { UserMessageToServer } from '@globalTypes/socketio';
 
 import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
