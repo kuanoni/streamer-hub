@@ -7,7 +7,7 @@ import { MessageBoxContainer } from '@modules/chat/styles';
 
 import SocketContext from '../context/SocketContext';
 import EmbedMessage from './chatMessages/EmbedMessage';
-import UserMessage from './chatMessages/UserMessage';
+import UserMessage from './chatMessages/TextMessage';
 import ChatOptionsContext from './chatOptions/components/context/ChatOptionsContext';
 
 const Container = styled('div', {

@@ -1,10 +1,8 @@
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { UserMessage } from '@globalTypes/socketio';
-
-import UserMessageAuthor from './UserMessageAuthor';
-import UserMessageText from './UserMessageText';
+import UserMessageAuthor from './TextMessageAuthor';
+import UserMessageText from './TextMessageText';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 	year: 'numeric',
@@ -60,6 +58,6 @@ const UserMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 	);
 });
 
-UserMessage.displayName = 'UserMessage';
+UserMessage.displayName = 'TextMessage';
 
 export default UserMessage;
