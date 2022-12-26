@@ -6,7 +6,7 @@ import { MessageFlair, SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
 	author: Joi.string().min(5).max(15).required(),
-	flair: Joi.string().valid(Object.values(MessageFlair)),
+	flair: Joi.string().valid(...Object.values(MessageFlair)),
 	time: Joi.date().required(),
 	data: Joi.string().max(500).required(),
 });
