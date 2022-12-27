@@ -2,16 +2,13 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { Rank } from '@globalTypes/custom-auth';
-import { MessageClientOnly, MessageServerToClient } from '@globalTypes/socketio';
-import { MessageScope, MessageType } from '@modules/chat/common';
+import { UsernameFlair } from '@globalTypes/user';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
-import SocketContext from '../../context/SocketContext';
-import ChatOptionsContext from '../chatOptions/components/context/ChatOptionsContext';
-import ChatClientMessage from './ChatClientMessage';
-import ChatMessage from './ChatMessage';
-import EmbedMessage from './embeds/EmbedMessage';
+import EmbedMessage from './chatMessages/EmbedMessage';
+import UserMessage from './chatMessages/TextMessage';
+import SocketContext from './context/SocketContext';
+import ChatOptionsContext from './optionsMenu/components/context/ChatOptionsContext';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -176,26 +173,77 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
-				{socketCtx?.messageLogs.map((msg: MessageServerToClient | MessageClientOnly) => {
-					if (msg.scope === MessageScope.CLIENT)
+				<UserMessage
+					msg={{
+						author: 'Default',
+						flair: UsernameFlair.DEFAULT,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Tier1',
+						flair: UsernameFlair.TIER_1_SUB,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Tier2',
+						flair: UsernameFlair.TIER_2_SUB,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Tier3',
+						flair: UsernameFlair.TIER_3_SUB,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Buddy',
+						flair: UsernameFlair.BUDDY,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				<UserMessage
+					msg={{
+						author: 'Owner',
+						flair: UsernameFlair.OWNER,
+						data: 'test test',
+						time: new Date().toISOString(),
+					}}
+					setFocusedUser={setFocusedUser}
+					censorBadWords={censorBadWords}
+				/>
+				{socketCtx?.messageLogs.map((msg) => {
+					if ('author' in msg)
 						return (
-							<ChatClientMessage
-								key={msg.time}
-								censorBadWords={censorBadWords}
+							<UserMessage
+								key={msg.time + msg.author}
 								msg={msg}
 								setFocusedUser={setFocusedUser}
-							/>
-						);
-
-					if (msg.scope === MessageScope.PUBLIC)
-						return (
-							<ChatMessage
-								key={msg.time + (msg as MessageServerToClient).author}
 								censorBadWords={censorBadWords}
-								msg={msg as MessageServerToClient}
-								setFocusedUser={setFocusedUser}
 							/>
 						);
+					else return <EmbedMessage key={msg.time} embed={msg.data} time={msg.time} />;
 				})}
 			</>
 		);

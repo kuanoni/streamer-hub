@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import { AuthPerms } from '@globalTypes/custom-auth';
+import { AuthPerms } from '@globalTypes/user';
 
 import { CommandParam, CommandParamValidator, ExecutionCallback, ExecutionErrors } from './types';
 

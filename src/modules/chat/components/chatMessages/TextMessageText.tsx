@@ -5,8 +5,8 @@ import { injectTextWithEmotes } from '@modules/chat/utils/injectTextWithEmotes';
 import { injectTextWithLinks } from '@modules/chat/utils/injectTextWithLinks';
 
 const Text = styled('span', {
-	maxWidth: '100%',
 	wordWrap: 'break-word',
+	verticalAlign: 'top',
 });
 
 const containsWord = (textArr: ReactNode[], word: string) =>
@@ -19,7 +19,7 @@ interface Props {
 	text: string | (string | ReactNode)[];
 }
 
-const ChatMessageText = ({ text }: Props) => {
+const UserMessageText = ({ text }: Props) => {
 	const [isCensored, setIsCensored] = useState(true);
 
 	const [textWithEmotes, hasEmotes] = injectTextWithEmotes(text);
@@ -31,13 +31,17 @@ const ChatMessageText = ({ text }: Props) => {
 
 	const censoredClass = hasLinks && textHasNsfl ? 'nsfl' : hasLinks && textHasNsfw ? 'nsfw' : '';
 
+	const handleClick = () => {
+		if (censoredClass) setIsCensored(false);
+	};
+
 	return (
-		<Text className={isCensored ? censoredClass : ''} onClick={() => setIsCensored(false)}>
+		<Text className={isCensored ? censoredClass : ''} onClick={handleClick}>
 			{newText.map((item, i) => (
-				<React.Fragment key={i}>{item}</React.Fragment>
+				<React.Fragment key={i}>{item} </React.Fragment>
 			))}
 		</Text>
 	);
 };
 
-export default ChatMessageText;
+export default UserMessageText;

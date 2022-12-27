@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { AuthPerms } from '@globalTypes/custom-auth';
+import { AuthPerms } from '@globalTypes/user';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import ProfileHeaderContainer from '@modules/profile/components/HeaderContainer';
 import HeaderInfo from '@modules/profile/components/HeaderInfo';

@@ -3,7 +3,7 @@ import React from 'react';
 import { styled } from 'stiches.config';
 
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
-import { Chat } from '@modules/chat/components/chat/Chat';
+import { Chat } from '@modules/chat/components/Chat';
 import StreamPageLayout from '@modules/stream/components/layouts/StreamPageLayout';
 import StreamSection from '@modules/stream/components/StreamSection';
 

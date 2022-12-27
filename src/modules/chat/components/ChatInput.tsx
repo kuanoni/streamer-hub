@@ -4,11 +4,9 @@ import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
-import { MessageClientToServer } from '@globalTypes/socketio';
 
-import { MessageType } from '../../common';
-import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
+import SocketContext from './context/SocketContext';
 
 const Container = styled('div', {
 	padding: '.5rem 0',
@@ -66,10 +64,8 @@ const ChatInput = ({
 		if (!data?.user) throw new Error('user undefined');
 
 		// send message through socket connection
-		const msg: MessageClientToServer = {
-			author: data.user.username,
-			rank: data.user.rank,
-			text: textAreaRef.current.value,
+		const msg: UserMessageToServer = {
+			data: textAreaRef.current.value,
 		};
 		ctx.sendMessage(msg);
 

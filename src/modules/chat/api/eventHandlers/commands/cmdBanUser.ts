@@ -1,6 +1,6 @@
 import add from 'date-fns/add';
 
-import { AuthPerms } from '@globalTypes/custom-auth';
+import { AuthPerms } from '@globalTypes/user';
 import banUser from '@utils/database/banUser';
 
 import ChatCommand from './ChatCommand';

@@ -1,8 +1,8 @@
+import Joi from 'joi';
 import { ReactNode } from 'react';
 import { styled } from 'stiches.config';
 
-const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
-const regex = new RegExp(expression);
+const url = Joi.string().uri();
 
 const StyledLink = styled('a', {
 	color: '#0069c2',
@@ -17,34 +17,40 @@ type InjectTextWithLinks = (
 
 export const injectTextWithLinks: InjectTextWithLinks = (text) => {
 	let hasLinks = false;
-	let injectedText = text;
 
-	if (Array.isArray(text))
-		injectedText = text.flatMap((item, i) => {
-			if (typeof item !== 'string') return item;
+	// split any words into individual array items
+	const splitText = Array.isArray(text)
+		? text.flatMap((item) => {
+				if (typeof item !== 'string') return item;
+				return item.split(' ');
+		  })
+		: text.split(' ');
 
-			if (item.match(regex)) {
-				hasLinks = true;
+	const newText = splitText.reduce((arr: ReactNode[], currentValue, i) => {
+		if (typeof currentValue !== 'string') return [...arr, currentValue];
 
-				return (
-					<StyledLink key={i} href={item}>
-						{item}
-					</StyledLink>
-				);
-			} else return ' ' + item + ' ';
-		});
-	else
-		injectedText = text.split(' ').flatMap((item, i) => {
-			if (item.match(regex)) {
-				hasLinks = true;
+		const { error } = url.validate(currentValue);
 
-				return (
-					<StyledLink key={i} href={item}>
-						{item}
-					</StyledLink>
-				);
-			} else return ' ' + item + ' ';
-		});
+		if (!error) {
+			hasLinks = true;
 
-	return [injectedText, hasLinks];
+			return [
+				...arr,
+				<StyledLink key={i} href={currentValue} target='_blank'>
+					{currentValue}
+				</StyledLink>,
+			];
+		}
+
+		// concatenate current and previous string values
+		const prevValue = arr[arr.length - 1];
+		if (typeof prevValue === 'string') {
+			const newValue = `${prevValue} ${currentValue}`;
+			return [...arr.slice(0, arr.length - 2), newValue];
+		}
+
+		return [...arr, currentValue];
+	}, []);
+
+	return [newText, hasLinks];
 };

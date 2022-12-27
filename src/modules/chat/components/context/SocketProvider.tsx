@@ -1,32 +1,20 @@
 import Joi from 'joi';
 import { useSession } from 'next-auth/react';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
-import {
-	CommandFromClient, MessageClientOnly, MessageClientToServer, MessageServerToClient
-} from '@globalTypes/socketio';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
-import { MessageScope, MessageType, SocketEvents } from '../../common';
+import { SocketEvents } from '../../common';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const [messageLogs, setMessageLogs] = useState<(MessageServerToClient | MessageClientOnly)[]>([]);
+	const [messageLogs, setMessageLogs] = useState<UserMessage[]>([]);
 
 	// saves msg to messageLogs, which is a list that renders in MessageBox
-	const writeMessage = (msg: MessageServerToClient) => {
-		setMessageLogs((currentMessages) => {
-			if (currentMessages.length < 50) return [...currentMessages, msg];
-			else return [...currentMessages.slice(1), msg];
-		});
-	};
-
-	// write message only on client side
-	const writeClientMessage = (msg: MessageClientOnly) => {
+	const writeMessage = (msg: UserMessage) => {
 		setMessageLogs((currentMessages) => {
 			if (currentMessages.length < 50) return [...currentMessages, msg];
 			else return [...currentMessages.slice(1), msg];
@@ -34,28 +22,21 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	// send msg over socket connection
-	const sendMessage = (msg: MessageClientToServer) => {
+	const sendMessage = (msg: UserMessageToServer) => {
 		if (!data?.user || !socket) return;
 
-		msg.text = msg.text.trim();
+		msg.data = msg.data.trim();
 
-		if (msg.text.startsWith('/')) {
-			const [name, params] = parseCommandText(msg.text);
+		if (msg.data.startsWith('/')) {
+			const [name, params] = parseCommandText(msg.data);
 
 			if (!name) {
-				const msg: MessageClientOnly = {
-					scope: MessageScope.CLIENT,
-					type: MessageType.SERVER,
-					time: new Date().toISOString(),
-					text: ['Invalid command.'],
-				};
+				console.log('Invalid command');
 
-				writeClientMessage(msg);
 				return;
 			}
 
-			const commandMessage: CommandFromClient = {
-				author: msg.author,
+			const commandMessage: CommandMessage = {
 				name,
 				params,
 			};
@@ -63,6 +44,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
 			return;
 		}
+
 		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
 	};
 
@@ -73,41 +55,17 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			switch (error.context?.key) {
 				case 'author': {
 					console.log('Your username is missing!');
-					const msg: MessageClientOnly = {
-						scope: MessageScope.CLIENT,
-						type: MessageType.SERVER,
-						time: new Date().toISOString(),
-						text: [
-							'Your username is missing! Click',
-							<Link key='link' href={'/profile'}>
-								here
-							</Link>,
-							'to set a username.',
-						],
-					};
-
-					writeClientMessage(msg);
 				}
 			}
 		});
 	};
 
 	useEffect(() => {
-		// write 'Attempting to connect...' message
-		const msg: MessageClientOnly = {
-			scope: MessageScope.CLIENT,
-			type: MessageType.INFO,
-			time: new Date().toISOString(),
-			text: 'Attempting to connect...',
-		};
-
-		writeClientMessage(msg);
-
 		// make sure the server is running
 		fetch('/api/socket');
 
 		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { authLevel: data?.user?.authLevel } });
-		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: MessageServerToClient) => writeMessage(msg));
+		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
 		newSocket.connect();
 
 		// save socket to state

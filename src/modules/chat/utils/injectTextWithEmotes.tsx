@@ -9,22 +9,39 @@ type InjectTextWithEmotes = (
 
 export const injectTextWithEmotes: InjectTextWithEmotes = (text) => {
 	let hasEmotes = false;
-	const textArr = Array.isArray(text) ? text : text.split(' ');
 
-	const injectedText = textArr.flatMap((item, i) => {
-		if (typeof item !== 'string') return item;
+	// split any words into individual array items
+	const splitText = Array.isArray(text)
+		? text.flatMap((item) => {
+				if (typeof item !== 'string') return item;
+				return item.split(' ');
+		  })
+		: text.split(' ');
 
-		if (EmoteKeys.includes(item)) {
+	const newText = splitText.reduce((arr: ReactNode[], currentValue, i) => {
+		if (typeof currentValue !== 'string') return [...arr, currentValue];
+
+		// replace string with emote node
+		if (EmoteKeys.includes(currentValue)) {
 			hasEmotes = true;
 
 			return [
+				...arr,
 				<StyledEmote as='span' key={i}>
-					{Emotes[item]}
+					{Emotes[currentValue]}
 				</StyledEmote>,
-				' ',
 			];
-		} else return ' ' + item + ' ';
-	});
+		}
 
-	return [injectedText, hasEmotes];
+		// concatenate current and previous string values
+		const prevValue = arr[arr.length - 1];
+		if (typeof prevValue === 'string') {
+			const newValue = `${prevValue} ${currentValue}`;
+			return [...arr.slice(0, arr.length - 2), newValue];
+		}
+
+		return [...arr, currentValue];
+	}, []);
+
+	return [newText, hasEmotes];
 };

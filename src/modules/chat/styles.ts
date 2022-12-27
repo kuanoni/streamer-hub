@@ -10,7 +10,6 @@ export const MessageBoxContainer = styled('div', {
 
 export const StyledEmote = styled(Image, {
 	margin: '-.5rem 0',
-	verticalAlign: 'middle',
 	maxHeight: 32,
 });
 

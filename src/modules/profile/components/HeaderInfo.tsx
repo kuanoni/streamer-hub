@@ -2,12 +2,11 @@ import { User } from 'next-auth';
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { Rank } from '@globalTypes/custom-auth';
-import { RankColors } from '@modules/chat/common';
+import { SubscriptionTier } from '@globalTypes/user';
 
 import { Info, Label } from '../styles';
 
-const DisplayName = styled('h1', {
+const Username = styled('h1', {
 	display: 'flex',
 	alignItems: 'end',
 	margin: 0,
@@ -15,20 +14,17 @@ const DisplayName = styled('h1', {
 	backgroundColor: theme.colors.primary900,
 	fontSize: '3rem',
 	lineHeight: '1em',
-	variants: { rank: RankColors },
 });
 
 const UserInfo = styled('div', {
 	padding: '1rem',
 });
 
-const RankDescription: { [index: string]: string } = {
-	[Rank.DEFAULT]: 'You have no active subscriptions.',
-	[Rank.TIER_1]: 'Tier 1 Subscriber',
-	[Rank.TIER_2]: 'Tier 2 Subscriber',
-	[Rank.TIER_3]: 'Tier 3 Subscriber',
-	[Rank.ORBITER]: 'Orbiter',
-	[Rank.OWNER]: 'Owner',
+const SubscriptionTierDescription: { [index: string]: string } = {
+	[SubscriptionTier.NONE]: 'You have no active subscriptions.',
+	[SubscriptionTier.TIER_1]: 'Tier 1',
+	[SubscriptionTier.TIER_2]: 'Tier 2',
+	[SubscriptionTier.TIER_3]: 'Tier 3',
 };
 
 interface Props {
@@ -36,17 +32,17 @@ interface Props {
 }
 
 const HeaderInfo = ({ user }: Props) => {
-	const rank = RankDescription[user.rank];
+	const subscriptionTier = SubscriptionTierDescription[user.role];
 	const joined = new Date(user.joined);
 
 	return (
 		<>
-			<DisplayName rank={user.rank}>{user.username}</DisplayName>
+			<Username>{user.username}</Username>
 			<UserInfo>
 				<Label>Joined</Label>
 				<Info>{joined.toDateString()}</Info>
 				<Label>Subscription</Label>
-				<Info>{rank}</Info>
+				<Info>{subscriptionTier}</Info>
 			</UserInfo>
 		</>
 	);

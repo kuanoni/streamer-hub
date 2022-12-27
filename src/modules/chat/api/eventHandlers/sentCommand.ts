@@ -1,9 +1,6 @@
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { CommandFromClient } from '@globalTypes/socketio';
-import { MessageType } from '@modules/chat/common';
-
 import sendMessage from '../sendMessage';
 import ChatCommand from './commands/ChatCommand';
 import cmdBanUser from './commands/cmdBanUser';
@@ -22,7 +19,7 @@ const commandSchema = Joi.object({
 	params: Joi.string().allow(''),
 });
 
-const sentCommand = (socket: Socket) => async (cmd: CommandFromClient) => {
+const sentCommand = (socket: Socket) => async (cmd: CommandMessage) => {
 	// validate command message
 	const { error } = commandSchema.validate(cmd, {
 		messages: {
@@ -31,7 +28,7 @@ const sentCommand = (socket: Socket) => async (cmd: CommandFromClient) => {
 	});
 
 	if (error) {
-		sendMessage(socket, MessageType.SERVER, error.message);
+		sendMessage(socket, error.message);
 		throw error;
 	}
 
@@ -42,14 +39,14 @@ const sentCommand = (socket: Socket) => async (cmd: CommandFromClient) => {
 
 	// make sure socket has the required authLevel
 	if (socket.handshake.auth.authLevel > cmdObj.authLevel)
-		return sendMessage(socket, MessageType.SERVER, "You don't have permission to use that command");
+		return sendMessage(socket, "You don't have permission to use that command");
 
 	const paramsArr = cmd.params.split(' ');
 
 	// this will return an empty array on success and an array with error messages (strings) on failure
 	const errors = await cmdObj.execute(paramsArr);
 
-	if (errors.length) sendMessage(socket, MessageType.SERVER, errors.join(' '));
+	if (errors.length) sendMessage(socket, errors.join(' '));
 };
 
 export default sentCommand;

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { AuthPerms } from '@globalTypes/custom-auth';
+import { AuthPerms } from '@globalTypes/user';
 
 import SignIn from '../SignInModal';
 import BrandLogo from './BrandLogo';
