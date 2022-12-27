@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { StyledEmote } from '../styles';
-import { EmoteKeys, Emotes } from './ChatEmotes';
+import { EmoteComponents, EmoteKeys } from './ChatEmotes';
 
 type InjectTextWithEmotes = (
 	text: string | (string | ReactNode)[]
@@ -28,7 +28,7 @@ export const injectTextWithEmotes: InjectTextWithEmotes = (text) => {
 			return [
 				...arr,
 				<StyledEmote as='span' key={i}>
-					{Emotes[currentValue]}
+					{EmoteComponents[currentValue]}
 				</StyledEmote>,
 			];
 		}

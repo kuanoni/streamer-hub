@@ -25,7 +25,7 @@ const buildEmoteComponent = (name: string, src: StaticImageData, css?: CSS) => {
 	return <StyledEmote src={src} alt={name} title={name} css={css || {}} />;
 };
 
-export const Emotes: EmotesIface = {
+export const EmoteComponents: EmotesIface = {
 	ResidentSleeper: buildEmoteComponent('ResidentSleeper', ResidentSleeper),
 	LUL: buildEmoteComponent('LUL', LUL),
 	BUNGER: buildEmoteComponent('BUNGER', BUNGER, { maxWidth: 48 }),
@@ -41,4 +41,4 @@ export const Emotes: EmotesIface = {
 	ForsenGun: buildEmoteComponent('ForsenGun', ForsenGun),
 };
 
-export const EmoteKeys = Object.keys(Emotes);
+export const EmoteKeys = Object.keys(EmoteComponents);

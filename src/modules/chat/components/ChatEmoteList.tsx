@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { keyframes, styled, theme } from 'stiches.config';
 
 import { MessageBoxContainer } from '../styles';
-import { EmoteKeys, Emotes } from '../utils/ChatEmotes';
+import { EmoteComponents, EmoteKeys } from '../utils/ChatEmotes';
 
 const moveIn = keyframes({
 	'0%': {
@@ -42,7 +42,7 @@ const ChatEmoteList = ({ insertEmote }: { insertEmote: (emoteKey: string) => voi
 	const emoteButtons = useMemo(() => {
 		return EmoteKeys.map((emoteKey, i) => (
 			<EmoteButton key={i} title={emoteKey} onClick={() => insertEmote(emoteKey)}>
-				{Emotes[emoteKey]}
+				{EmoteComponents[emoteKey]}
 			</EmoteButton>
 		));
 	}, [insertEmote]);
