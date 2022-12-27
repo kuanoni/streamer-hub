@@ -5,8 +5,8 @@ import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 
-import SocketContext from '../context/SocketContext';
 import EmoteSelector from './ChatEmoteList';
+import SocketContext from './context/SocketContext';
 
 const Container = styled('div', {
 	padding: '.5rem 0',

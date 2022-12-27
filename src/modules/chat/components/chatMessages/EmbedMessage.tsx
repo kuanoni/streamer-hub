@@ -128,4 +128,6 @@ const EmbedMessage = React.memo(({ embed, time }: Props) => {
 	);
 });
 
+EmbedMessage.displayName = 'EmbedMessage';
+
 export default EmbedMessage;

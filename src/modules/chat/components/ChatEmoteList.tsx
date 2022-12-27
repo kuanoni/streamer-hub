@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { keyframes, styled, theme } from 'stiches.config';
 
-import { MessageBoxContainer } from '../../styles';
-import { EmoteKeys, Emotes } from '../../utils/ChatEmotes';
+import { MessageBoxContainer } from '../styles';
+import { EmoteKeys, Emotes } from '../utils/ChatEmotes';
 
 const moveIn = keyframes({
 	'0%': {

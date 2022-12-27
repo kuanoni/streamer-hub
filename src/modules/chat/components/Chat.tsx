@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { styled } from 'stiches.config';
 
-import SocketProvider from '../context/SocketProvider';
 import ChatControlsBottom from './ChatControlsBottom';
 import ChatControlsTop from './ChatControlsTop';
 import ChatInput from './ChatInput';
 import ChatMessageList from './ChatMessageList';
-import ChatOptions from './chatOptions/components/ChatOptions';
-import ChatOptionsProvider from './chatOptions/components/context/ChatOptionsProvider';
 import ChatSigninPrompt from './ChatSigninPrompt';
+import SocketProvider from './context/SocketProvider';
+import ChatOptions from './optionsMenu/components/ChatOptions';
+import ChatOptionsProvider from './optionsMenu/components/context/ChatOptionsProvider';
 
 const Container = styled('div', {
 	position: 'relative',

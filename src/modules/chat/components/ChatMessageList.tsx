@@ -5,10 +5,10 @@ import { styled, theme } from 'stiches.config';
 import { UsernameFlair } from '@globalTypes/user';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
-import SocketContext from '../context/SocketContext';
 import EmbedMessage from './chatMessages/EmbedMessage';
 import UserMessage from './chatMessages/TextMessage';
-import ChatOptionsContext from './chatOptions/components/context/ChatOptionsContext';
+import SocketContext from './context/SocketContext';
+import ChatOptionsContext from './optionsMenu/components/context/ChatOptionsContext';
 
 const Container = styled('div', {
 	position: 'relative',
