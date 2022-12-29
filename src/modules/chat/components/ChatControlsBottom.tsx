@@ -1,8 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { BsDashCircleFill, BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
 import Button from '@components/ui/Button';
+import TextInput from '@components/ui/TextInput';
+
+import SocketContext from './context/SocketContext';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -16,11 +19,22 @@ type Props = {
 };
 
 const ChatControlsBottom = ({ setIsChatOptionsOpen }: Props) => {
+	const ctx = useContext(SocketContext);
+	const [input, setInput] = useState('');
+
 	return (
 		<Container>
 			<Button color='dark' content='icon' onClick={() => setIsChatOptionsOpen((current) => !current)}>
 				<BsFillGearFill />
 			</Button>
+			<Button
+				color='dark'
+				content='icon'
+				onClick={() => ctx?.dispatch({ type: 'update', payload: { id: input, data: 'xxx' } })}
+			>
+				<BsDashCircleFill />
+			</Button>
+			<TextInput value={input} setValue={setInput} placeholder='...' />
 			<Button color='dark' content='icon' onClick={() => {}}>
 				<BsPeopleFill />
 			</Button>
