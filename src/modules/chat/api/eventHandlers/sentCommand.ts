@@ -14,7 +14,6 @@ const commands: { [index: string]: ChatCommand } = {
 const commandNames = Object.keys(commands);
 
 const commandSchema = Joi.object({
-	author: Joi.string().min(5).max(15).required(),
 	name: Joi.string().valid(...commandNames),
 	params: Joi.string().allow(''),
 });
