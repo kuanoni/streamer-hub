@@ -20,7 +20,6 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 			const { id, data }: { id: string; data: string } = action.payload;
 
 			const msgIndex = state.findIndex((msg) => msg.id === id);
-
 			const msg = state[msgIndex];
 
 			if (msg.type !== MessageType.TEXT) {
@@ -30,6 +29,18 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 			}
 
 			const newMsg: UserMessage = { ...msg, data };
+			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
+		}
+		case 'updateEmbedMsg': {
+			const { id, data }: { id: string; data: EmbedData } = action.payload;
+
+			const msgIndex = state.findIndex((msg) => msg.id === id);
+			const msg = state[msgIndex];
+
+			if (msg.type !== MessageType.EMBED) return state;
+
+			const newData = { ...msg.data, ...data };
+			const newMsg: EmbedMessage = { ...msg, data: newData };
 			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
 		}
 	}
