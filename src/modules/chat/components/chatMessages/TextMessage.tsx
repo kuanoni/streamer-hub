@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import UserMessageAuthor from './TextMessageAuthor';
+import TextMessageAuthor from './TextMessageAuthor';
 import UserMessageText from './TextMessageText';
 
 const timeTitleFormatter = new Intl.DateTimeFormat('default', {
@@ -49,14 +49,14 @@ const UserMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 	return (
 		<Container className='msg' data-author={msg.author}>
 			<time title={timeTitle}>{timeValue}</time>
-			<UserMessageAuthor
+			<TextMessageAuthor
 				subTier={msg.subTier}
 				infoBadges={msg.infoBadges}
 				role={msg.role}
 				onClick={() => setFocusedUser(msg.author)}
 			>
 				{msg.author}
-			</UserMessageAuthor>
+			</TextMessageAuthor>
 			&nbsp;
 			<UserMessageText text={msg.data} />
 		</Container>

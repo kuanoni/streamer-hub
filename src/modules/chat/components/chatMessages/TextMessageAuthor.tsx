@@ -48,7 +48,7 @@ interface Props {
 	onClick: () => void;
 }
 
-const UserMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: React.PropsWithChildren<Props>) => {
+const TextMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: React.PropsWithChildren<Props>) => {
 	console.log(subTier, infoBadges, role);
 	return (
 		<Container onClick={onClick}>
@@ -58,4 +58,4 @@ const UserMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: Rea
 	);
 };
 
-export default UserMessageAuthor;
+export default TextMessageAuthor;
