@@ -1,12 +1,14 @@
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { UsernameFlair } from '@globalTypes/user';
+import { InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
 import { SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
 	author: Joi.string().min(5).max(15).required(),
-	flair: Joi.string().valid(...Object.values(UsernameFlair)),
+	subTier: Joi.string().valid(...Object.values(SubscriptionTier)),
+	infoBadges: Joi.array().items(Joi.string().valid(...Object.values(InfoBadge))),
+	role: Joi.string().valid(...Object.values(Role)),
 	time: Joi.date().required(),
 	data: Joi.string().max(500).required(),
 });
@@ -18,7 +20,9 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Fun
 
 	const newMsg: UserMessage = {
 		author: user.username,
-		flair: '',
+		subTier: user.subscriptionTier,
+		infoBadges: user.infoBadges,
+		role: user.role,
 		time: new Date().toISOString(),
 		data: msg.data.replace(/\s+/g, ' ').trim(),
 	};

@@ -49,7 +49,12 @@ const UserMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) 
 	return (
 		<Container className='msg' data-author={msg.author}>
 			<time title={timeTitle}>{timeValue}</time>
-			<UserMessageAuthor flair={msg.flair} onClick={() => setFocusedUser(msg.author)}>
+			<UserMessageAuthor
+				subTier={msg.subTier}
+				infoBadges={msg.infoBadges}
+				role={msg.role}
+				onClick={() => setFocusedUser(msg.author)}
+			>
 				{msg.author}
 			</UserMessageAuthor>
 			&nbsp;

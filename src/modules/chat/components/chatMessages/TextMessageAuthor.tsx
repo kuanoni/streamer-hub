@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { styled, theme } from 'stiches.config';
 
-import { UsernameFlair } from '@globalTypes/user';
+import { InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
@@ -18,25 +18,7 @@ const Container = styled('span', {
 		cursor: 'pointer',
 	},
 	variants: {
-		flair: {
-			[UsernameFlair.DEFAULT]: {},
-			[UsernameFlair.TIER_1_SUB]: {
-				color: 'rgb(72, 185, 190)',
-			},
-			[UsernameFlair.TIER_2_SUB]: {
-				color: 'rgb(72, 185, 240)',
-			},
-			[UsernameFlair.TIER_3_SUB]: {
-				color: 'rgb(48, 119, 255)',
-			},
-			[UsernameFlair.BUDDY]: {
-				color: theme.colors.primary300,
-				backgroundColor: theme.colors.frostedPrimary,
-			},
-			[UsernameFlair.OWNER]: {
-				color: 'rgb(225, 53, 53)',
-			},
-		},
+		role: {},
 	},
 });
 
@@ -54,20 +36,22 @@ const Username = styled('span', {
 });
 
 const badges: { [index: string]: React.ReactNode } = {
-	[UsernameFlair.TIER_1_SUB]: <Image src={Tier1} alt='Tier 1 subscriber' />,
-	[UsernameFlair.TIER_2_SUB]: <Image src={Tier2} alt='Tier 2 subscriber' />,
-	[UsernameFlair.TIER_3_SUB]: <Image src={Tier3} alt='Tier 3 subscriber' />,
+	[SubscriptionTier.TIER_1]: <Image src={Tier1} alt='Tier 1 subscriber' />,
+	[SubscriptionTier.TIER_2]: <Image src={Tier2} alt='Tier 2 subscriber' />,
+	[SubscriptionTier.TIER_3]: <Image src={Tier3} alt='Tier 3 subscriber' />,
 };
 
 interface Props {
-	flair: UsernameFlair;
+	subTier: SubscriptionTier;
+	infoBadges: InfoBadge[];
+	role: Role;
 	onClick: () => void;
 }
 
-const UserMessageAuthor = ({ flair, onClick, children }: React.PropsWithChildren<Props>) => {
+const UserMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: React.PropsWithChildren<Props>) => {
 	return (
-		<Container flair={flair} onClick={onClick}>
-			<BadgeContainer>{badges[flair]}</BadgeContainer>
+		<Container onClick={onClick}>
+			<BadgeContainer></BadgeContainer>
 			<Username>{children}:</Username>
 		</Container>
 	);
