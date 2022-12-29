@@ -1,5 +1,5 @@
 type EmbedMessage = {
-	data: Embed;
+	data: EmbedData;
 	time: number;
 };
 
@@ -31,7 +31,7 @@ interface Footer {
 	timestamp?: string;
 }
 
-interface Embed {
+interface EmbedData {
 	author?: string;
 	title?: string;
 	description?: string;

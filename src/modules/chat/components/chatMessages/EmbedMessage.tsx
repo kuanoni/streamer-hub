@@ -75,11 +75,11 @@ const FooterTitle = styled('div', {
 const FooterTimestamp = styled('div', {});
 
 interface Props {
-	embed: Embed;
+	embed: EmbedData;
 	time: number;
 }
 
-const embed: Embed = {
+const embed: EmbedData = {
 	author: 'Embed Generator',
 	title: 'Welcome to Embed Generator!',
 	description:

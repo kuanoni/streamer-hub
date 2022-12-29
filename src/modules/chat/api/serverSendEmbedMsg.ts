@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 
 import { SocketEvents } from '../common';
 
-const serverSendEmbedMsg = (socket: Socket, data: Embed) => {
+const serverSendEmbedMsg = (socket: Socket, data: EmbedData) => {
 	const msg: EmbedMessage = {
 		time: new Date().getTime(),
 		data,
