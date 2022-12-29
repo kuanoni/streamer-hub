@@ -2,6 +2,7 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useReducer, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
+import { MessageType } from '@globalTypes/user';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
 import { DispatchAction, MessageList, SocketEvents } from '../../common';
@@ -24,11 +25,13 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 
 			const msg = state[msgIndex];
 
+			if (msg.type !== MessageType.TEXT) {
+				console.log('err');
+
+				return state;
+			}
+
 			const newMsg: UserMessage = { ...msg, data };
-
-			console.log(msgIndex, msg, newMsg);
-			console.table([...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)]);
-
 			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
 		}
 	}
