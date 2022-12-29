@@ -15,7 +15,7 @@ type UserMessage = Message & {
 	infoBadges?: import('./user').InfoBadge[];
 	role?: import('./user').Role;
 
-	data: string | (string | ReactNode)[];
+	data: string | (string | import('react').ReactNode)[];
 };
 
 type UserMessageToServer = {
