@@ -4,6 +4,7 @@ import { styled } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
+import { MessageType } from '@globalTypes/user';
 
 import SocketContext from './context/SocketContext';
 
@@ -30,7 +31,12 @@ const ChatControlsBottom = ({ setIsChatOptionsOpen }: Props) => {
 			<Button
 				color='dark'
 				content='icon'
-				onClick={() => ctx?.dispatch({ type: 'update', payload: { id: input, data: 'xxx' } })}
+				onClick={() =>
+					ctx?.dispatch({
+						type: 'updateTextMsg',
+						payload: { id: input, data: new Date().toISOString() },
+					})
+				}
 			>
 				<BsDashCircleFill />
 			</Button>
