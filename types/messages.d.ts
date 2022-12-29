@@ -44,4 +44,5 @@ interface EmbedData {
 	description?: string;
 	fields?: Field[];
 	footer?: Footer;
+	color?: import('@modules/chat/common').EmbedColors;
 }
