@@ -45,19 +45,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			return;
 		}
 
-		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg, sendMessageErrorHandler);
-	};
-
-	const sendMessageErrorHandler = (res: { ok: boolean; errors: Joi.ValidationErrorItem[] }) => {
-		if (res.ok) return;
-
-		res.errors.forEach((error) => {
-			switch (error.context?.key) {
-				case 'author': {
-					console.log('Your username is missing!');
-				}
-			}
-		});
+		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
 	};
 
 	useEffect(() => {

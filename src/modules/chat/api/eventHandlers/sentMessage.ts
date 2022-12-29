@@ -14,8 +14,6 @@ const messageSchema = Joi.object({
 });
 
 const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Function, room?: SocketRooms) => {
-	if (typeof callback !== 'function') throw new Error("Handler wasn't provided acknowledgement callback");
-
 	const user = socket.user;
 
 	const newMsg: UserMessage = {
@@ -30,23 +28,13 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Fun
 
 	const { error, value: validatedMsg } = messageSchema.validate(newMsg);
 
-	if (error) {
-		callback({
-			ok: false,
-			errors: error.details,
-		});
-		throw error;
-	}
+	if (error) throw error;
 
 	// broadcast message globally or to room
 	if (room) socket.in(room).emit(SocketEvents.CLIENT_RECEIVE_MSG, validatedMsg);
 	else socket.nsp.emit(SocketEvents.CLIENT_RECEIVE_MSG, validatedMsg);
 
 	// write to db
-
-	callback({
-		ok: true,
-	});
 };
 
 export default sentMessage;
