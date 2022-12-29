@@ -50,6 +50,8 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 
 			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
 		}
+		case 'clear':
+			return [];
 	}
 
 	throw new Error(`Unknown action: ${action}`);
