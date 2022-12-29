@@ -5,9 +5,9 @@ type EmbedMessage = {
 
 type UserMessage = {
 	author: string;
-	subTier: any;
-	infoBadges: any[];
-	role: any;
+	subTier?: any;
+	infoBadges?: any[];
+	role?: any;
 	data: string | (string | ReactNode)[];
 	time: string;
 };

@@ -43,12 +43,13 @@ const badges: { [index: string]: React.ReactNode } = {
 
 interface Props {
 	subTier: SubscriptionTier;
-	infoBadges: InfoBadge[];
-	role: Role;
+	infoBadges: InfoBadge[] | undefined;
+	role: Role | undefined;
 	onClick: () => void;
 }
 
 const UserMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: React.PropsWithChildren<Props>) => {
+	console.log(subTier, infoBadges, role);
 	return (
 		<Container onClick={onClick}>
 			<BadgeContainer></BadgeContainer>

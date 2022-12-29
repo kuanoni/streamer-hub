@@ -20,12 +20,13 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Fun
 
 	const newMsg: UserMessage = {
 		author: user.username,
-		subTier: user.subscriptionTier,
-		infoBadges: user.infoBadges,
-		role: user.role,
 		time: new Date().toISOString(),
 		data: msg.data.replace(/\s+/g, ' ').trim(),
 	};
+
+	if (user.subscriptionTier) newMsg.subTier = user.subscriptionTier;
+	if (user.infoBadges.length) newMsg.infoBadges = user.infoBadges;
+	if (user.role) newMsg.role = user.role;
 
 	const { error, value: validatedMsg } = messageSchema.validate(newMsg);
 
