@@ -164,7 +164,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 		return cssObj;
 	}, [freeScroll, showFlair, showTime, hideNsfw, hideNsfl]);
 
-	const shouldReRenderLiveMessages = freeScroll ? null : socketCtx?.messageLogs;
+	const shouldReRenderLiveMessages = freeScroll ? null : socketCtx?.messageList;
 
 	// live rendered messages
 	const liveMessages = useMemo(() => {
@@ -172,7 +172,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
-				{socketCtx?.messageLogs.map((msg) => {
+				{socketCtx?.messageList.map((msg) => {
 					if ('author' in msg)
 						return (
 							<UserMessage
