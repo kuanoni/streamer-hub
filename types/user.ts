@@ -18,11 +18,6 @@ export enum Role {
 	OWNER = 'OWNER',
 }
 
-export enum UsernameFlair {
-	DEFAULT = '',
-	TIER_1_SUB = 't1',
-	TIER_2_SUB = 't2',
-	TIER_3_SUB = 't3',
-	BUDDY = 'buddy',
-	OWNER = 'owner',
+export enum InfoBadge {
+	LAWYER = 'LAWYER',
 }
