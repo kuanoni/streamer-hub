@@ -10,7 +10,7 @@ declare module 'next-auth' {
 		avatar: string;
 		joined: Date;
 
-		role: Role;
+		role: Role | null;
 		infoBadges: InfoBadge[];
 
 		subscriptionTier: SubscriptionTier;

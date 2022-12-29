@@ -10,7 +10,7 @@ import clientPromise from '@utils/mongodb';
 const defaultProfile = {
 	username: '',
 	email: null,
-	role: Role.DEFAULT,
+	role: null,
 	infoBadges: [],
 	subscriptionTier: SubscriptionTier.NONE,
 

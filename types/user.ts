@@ -13,7 +13,6 @@ export enum SubscriptionTier {
 }
 
 export enum Role {
-	DEFAULT = 'DEFAULT',
 	BUDDY = 'BUDDY',
 	OWNER = 'OWNER',
 }
