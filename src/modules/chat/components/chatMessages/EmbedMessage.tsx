@@ -76,7 +76,7 @@ const FooterTimestamp = styled('div', {});
 
 interface Props {
 	embed: Embed;
-	time: string;
+	time: number;
 }
 
 const embed: Embed = {

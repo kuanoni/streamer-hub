@@ -1,6 +1,6 @@
 type EmbedMessage = {
 	data: Embed;
-	time: string;
+	time: number;
 };
 
 type UserMessage = {
