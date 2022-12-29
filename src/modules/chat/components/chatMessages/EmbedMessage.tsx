@@ -1,7 +1,18 @@
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
+import { EmbedColors } from '@modules/chat/common';
 import injectMarkdownStyles from '@modules/chat/utils/injectTextWithMarkdown';
+
+const timeTitleFormatter = new Intl.DateTimeFormat('default', {
+	year: 'numeric',
+	month: 'numeric',
+	day: 'numeric',
+	hour: 'numeric',
+	minute: 'numeric',
+	second: 'numeric',
+	hour12: false,
+});
 
 const Container = styled('div', {
 	position: 'relative',
@@ -13,22 +24,34 @@ const Container = styled('div', {
 	overflow: 'hidden',
 });
 
-const TopBorder = styled('div', {
-	position: 'absolute',
-	top: 0,
-	left: 0,
-	right: 0,
-	height: 4,
-	backgroundColor: theme.colors.primary700,
-});
+const borderColors = {
+	[EmbedColors.primary]: {
+		backgroundColor: theme.colors.primary700,
+	},
+	[EmbedColors.blue]: {
+		backgroundColor: theme.colors.secondary900,
+	},
+	[EmbedColors.green]: {
+		backgroundColor: theme.colors.trinary900,
+	},
+};
 
-const BotBorder = styled('div', {
+const Border = styled('div', {
 	position: 'absolute',
-	bottom: 0,
 	left: 0,
 	right: 0,
 	height: 4,
-	backgroundColor: theme.colors.primary700,
+	variants: {
+		color: borderColors,
+		position: {
+			top: {
+				top: 0,
+			},
+			bottom: {
+				bottom: 0,
+			},
+		},
+	},
 });
 
 const Author = styled('div', {
@@ -43,7 +66,7 @@ const Title = styled('div', {
 });
 
 const Description = styled('div', {
-	marginTop: '.5rem',
+	margin: '.5rem 0',
 	color: theme.colors.textMedium,
 });
 
@@ -66,51 +89,34 @@ const FieldDescription = styled('div', {
 
 const Footer = styled('div', {
 	margin: '.5rem 0',
-});
-
-const FooterTitle = styled('div', {
+	color: theme.colors.textDark,
 	fontSize: '11px',
 });
 
-const FooterTimestamp = styled('div', {});
+const FooterTitle = styled('div', {});
+
+const FooterTimestamp = styled('time', {});
 
 interface Props {
-	embed: EmbedData;
+	embedData: EmbedData;
 	time: number;
 }
 
-const embed: EmbedData = {
-	author: 'Embed Generator',
-	title: 'Welcome to Embed Generator!',
-	description:
-		"**This is an embed!** It's the primary way to *style* your message!\nYou can change the text, add **images**, and structure your content.",
-	fields: [
-		{
-			title: 'Field 1',
-			description: 'Fields can be used to create simple tables with multiple columns.',
-		},
-		{
-			title: 'Field 2',
-			description: 'Fields can be aligned next to each other (inline) or below each other.',
-		},
-	],
-	footer: {
-		title: 'Embeds are pretty cool in my opinion!',
-		timestamp: '',
-	},
-};
+const EmbedMessage = React.memo(({ embedData, time }: Props) => {
+	const color = embedData.color || EmbedColors.primary;
+	const dateObj = new Date(time);
+	const timeTitle = timeTitleFormatter.format(dateObj);
 
-const EmbedMessage = React.memo(({ embed, time }: Props) => {
 	return (
 		<Container>
-			{embed.author && <Author>{embed.author}</Author>}
-			{embed.title && <Title>{embed.title}</Title>}
-			{embed.description && (
-				<Description>{embed.description && injectMarkdownStyles(embed.description)}</Description>
+			{embedData.author && <Author>{embedData.author}</Author>}
+			{embedData.title && <Title>{embedData.title}</Title>}
+			{embedData.description && (
+				<Description>{embedData.description && injectMarkdownStyles(embedData.description)}</Description>
 			)}
-			<FieldsContainer>
-				{embed.fields &&
-					embed.fields.map((field: Field, i: number) => (
+			{embedData.fields && (
+				<FieldsContainer>
+					{embedData.fields.map((field: Field, i: number) => (
 						<Field key={i}>
 							<FieldName>{field.title}</FieldName>
 							<FieldDescription>
@@ -118,15 +124,16 @@ const EmbedMessage = React.memo(({ embed, time }: Props) => {
 							</FieldDescription>
 						</Field>
 					))}
-			</FieldsContainer>
-			{embed.footer && (
+				</FieldsContainer>
+			)}
+			{embedData.footer && (
 				<Footer>
-					<FooterTitle>{embed.footer?.title}</FooterTitle>
-					<FooterTimestamp>{embed.footer?.timestamp}</FooterTimestamp>
+					<FooterTitle>{embedData.footer?.title}</FooterTitle>
+					<FooterTimestamp>{embedData.footer?.timestamp || timeTitle}</FooterTimestamp>
 				</Footer>
 			)}
-			<TopBorder />
-			<BotBorder />
+			<Border position='top' color={color} />
+			<Border position='bottom' color={color} />
 		</Container>
 	);
 });

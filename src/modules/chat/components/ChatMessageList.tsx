@@ -182,7 +182,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 								censorBadWords={censorBadWords}
 							/>
 						);
-					else return <EmbedMessage key={msg.time} embed={msg.data} time={msg.time} />;
+					else return <EmbedMessage key={msg.time} embedData={msg.data} time={msg.time} />;
 				})}
 			</>
 		);
