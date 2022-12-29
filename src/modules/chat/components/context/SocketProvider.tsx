@@ -7,7 +7,7 @@ import { MessageType } from '@globalTypes/user';
 import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
-import { DispatchAction, MessageList, SocketEvents } from '../../common';
+import { DispatchAction, EmbedColors, MessageList, SocketEvents } from '../../common';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const messageListReducer = (state: MessageList, action: DispatchAction): MessageList => {
@@ -111,14 +111,18 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		newSocket.connect();
 
 		const id = v4();
-		const connectingEmbedData: EmbedData = { title: 'Attempting to connect...' };
-		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(connectingEmbedData, id);
+		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(
+			{ description: 'Attempting to connect...', color: EmbedColors.blue },
+			id
+		);
 
 		dispatch({ type: 'push', payload: connectingEmbedMsg });
 
 		newSocket.on('connected', (data) => {
-			const connectedEmbedData: EmbedData = { description: data.message };
-			dispatch({ type: 'updateEmbedMsg', payload: { id, data: connectedEmbedData } });
+			dispatch({
+				type: 'updateEmbedMsg',
+				payload: { id, data: { description: data.message, footer: {}, color: EmbedColors.green } },
+			});
 		});
 
 		// save socket to state
