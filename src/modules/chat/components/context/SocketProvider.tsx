@@ -65,7 +65,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
 
-	// saves msg to messageLogs, which is a list that renders in MessageBox
+	// saves msg to messageList, which is a list that renders in ChatMessageList
 	const writeMessage = (msg: UserMessage) => {
 		dispatch({ type: 'push', payload: msg });
 	};
@@ -76,25 +76,19 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 		msg.data = msg.data.trim();
 
-		if (msg.data.startsWith('/')) {
-			const [name, params] = parseCommandText(msg.data);
+		if (msg.data.startsWith('/')) sendCommand(msg);
+		else socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
+	};
 
-			if (!name) {
-				console.log('Invalid command');
+	const sendCommand = (msg: UserMessageToServer) => {
+		if (!data?.user || !socket) return;
 
-				return;
-			}
+		const [name, params] = parseCommandText(msg.data);
+		if (!name) return console.log('Invalid command');
 
-			const commandMessage: CommandMessage = {
-				name,
-				params,
-			};
+		const commandMessage: CommandMessage = { name, params };
 
-			socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
-			return;
-		}
-
-		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
+		socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
 	};
 
 	useEffect(() => {
