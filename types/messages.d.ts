@@ -1,15 +1,21 @@
-type EmbedMessage = {
-	data: EmbedData;
+type Message = {
 	time: number;
 };
 
-type UserMessage = {
+type EmbedMessage = Message & {
+	type: import('./user').MessageType.EMBED;
+	data: EmbedData;
+};
+
+type UserMessage = Message & {
+	type: import('./user').MessageType.TEXT;
 	author: string;
+
 	subTier?: any;
-	infoBadges?: any[];
-	role?: any;
+	infoBadges?: import('./user').InfoBadge[];
+	role?: import('./user').Role;
+
 	data: string | (string | ReactNode)[];
-	time: number;
 };
 
 type UserMessageToServer = {

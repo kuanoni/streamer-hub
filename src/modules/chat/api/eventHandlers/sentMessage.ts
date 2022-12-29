@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
+import { InfoBadge, MessageType, Role, SubscriptionTier } from '@globalTypes/user';
 import { SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
@@ -17,6 +17,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Fun
 	const user = socket.user;
 
 	const newMsg: UserMessage = {
+		type: MessageType.TEXT,
 		author: user.username,
 		time: new Date().getTime(),
 		data: msg.data.replace(/\s+/g, ' ').trim(),
