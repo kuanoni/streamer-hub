@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
@@ -5,6 +6,7 @@ import { InfoBadge, MessageType, Role, SubscriptionTier } from '@globalTypes/use
 import { SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
+	id: Joi.string().uuid().required(),
 	type: Joi.number()
 		.valid(...Object.values(MessageType))
 		.required(),
@@ -20,6 +22,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 	const user = socket.user;
 
 	const newMsg: UserMessage = {
+		id: randomUUID(),
 		type: MessageType.TEXT,
 		author: user.username,
 		time: new Date().getTime(),
