@@ -1,8 +1,10 @@
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useReducer, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
+import { v4 } from 'uuid';
 
 import { MessageType } from '@globalTypes/user';
+import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
 import { DispatchAction, MessageList, SocketEvents } from '../../common';
@@ -108,6 +110,17 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
 		newSocket.connect();
 
+		const id = v4();
+		const connectingEmbedData: EmbedData = { title: 'Attempting to connect...' };
+		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(connectingEmbedData, id);
+
+		dispatch({ type: 'push', payload: connectingEmbedMsg });
+
+		newSocket.on('connected', (data) => {
+			const connectedEmbedData: EmbedData = { description: data.message };
+			dispatch({ type: 'updateEmbedMsg', payload: { id, data: connectedEmbedData } });
+		});
+
 		// save socket to state
 		setSocket((currentSocket) => {
 			currentSocket?.disconnect();
@@ -116,8 +129,9 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 		// cleanup
 		return () => {
-			newSocket?.disconnect();
+			newSocket.disconnect();
 			setMessageLogs([]);
+			dispatch({ type: 'clear' });
 		};
 	}, [data?.user?.authLevel]);
 
