@@ -47,25 +47,39 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		const onConnection = async (socket: Socket) => {
 			if (!socket.handshake.headers.cookie)
-				return serverSendEmbedMsg(socket, { title: 'You have connected. Sign in to chat.' });
+				return socket.emit('connected', {
+					connected: true,
+					authenticated: false,
+					message: 'You are connected. Sign in to chat.',
+				});
 
+			// get cookies from socket handshake
 			const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
 
-			// validate session token
+			// validate session token from cookies
 			const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
-			if (!session) return serverSendEmbedMsg(socket, { title: 'You have connected. Sign in to chat.' });
+			if (!session)
+				return socket.emit('connected', {
+					connected: true,
+					authenticated: false,
+					message: 'You are connected. Sign in to chat.',
+				});
 
-			// get user data, add it to socket
+			// use session data to get user data, add it to socket
 			const user = await getUserById(session.userId);
-			if (!user) return serverSendEmbedMsg(socket, { title: 'You have connected. Sign in to chat.' });
+			if (!user)
+				return socket.emit('connected', {
+					connected: true,
+					authenticated: false,
+					message: 'Failed to retrieve user data. Try logging in again.',
+				});
 			socket.user = user;
 
-			// add socket event listeners
+			// add socket incoming event listeners
 			socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
 			socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
 
-			// emit "You have connected." message
-			return serverSendEmbedMsg(socket, { title: 'You have connected.' });
+			socket.emit('connected', { connected: true, authenticated: true, message: 'You have connected.' });
 		};
 
 		io.on('connection', onConnection);
