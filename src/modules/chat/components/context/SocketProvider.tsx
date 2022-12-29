@@ -1,20 +1,51 @@
-import Joi from 'joi';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
-import { SocketEvents } from '../../common';
+import { DispatchAction, MessageList, SocketEvents } from '../../common';
 import SocketContext, { SocketProviderIface } from './SocketContext';
+
+const messageListReducer = (state: MessageList, action: DispatchAction): MessageList => {
+	switch (action.type) {
+		case 'push': {
+			return [...state, action.payload];
+		}
+		case 'removeLast': {
+			return [...state.slice(0, state.length - 1)];
+		}
+		case 'updateTextMsg': {
+			const { id, data }: { id: string; data: string } = action.payload;
+
+			const msgIndex = state.findIndex((msg) => {
+				return msg.time === parseInt(id);
+			});
+
+			const msg = state[msgIndex];
+
+			const newMsg: UserMessage = { ...msg, data };
+
+			console.log(msgIndex, msg, newMsg);
+			console.table([...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)]);
+
+			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
+		}
+	}
+
+	throw new Error(`Unknown action: ${action}`);
+};
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
 	const [messageLogs, setMessageLogs] = useState<UserMessage[]>([]);
 
+	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
+
 	// saves msg to messageLogs, which is a list that renders in MessageBox
 	const writeMessage = (msg: UserMessage) => {
+		dispatch({ type: 'push', payload: msg });
 		setMessageLogs((currentMessages) => {
 			if (currentMessages.length < 50) return [...currentMessages, msg];
 			else return [...currentMessages.slice(1), msg];
