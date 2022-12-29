@@ -43,6 +43,13 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 			const newMsg: EmbedMessage = { ...msg, data: newData };
 			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
 		}
+		case 'replaceMsg': {
+			const { id, newMsg }: { id: string; newMsg: UserMessage | EmbedMessage } = action.payload;
+
+			const msgIndex = state.findIndex((msg) => msg.id === id);
+
+			return [...state.slice(0, msgIndex), newMsg, ...state.slice(msgIndex + 1)];
+		}
 	}
 
 	throw new Error(`Unknown action: ${action}`);
