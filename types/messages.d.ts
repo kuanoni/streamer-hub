@@ -5,9 +5,11 @@ type EmbedMessage = {
 
 type UserMessage = {
 	author: string;
-	flair: UsernameFlair;
+	subTier?: any;
+	infoBadges?: any[];
+	role?: any;
 	data: string | (string | ReactNode)[];
-	time: string;
+	time: number;
 };
 
 type UserMessageToServer = {

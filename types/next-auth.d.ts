@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 
-import { AuthPerms, Role, SubscriptionTier, UsernameFlair } from './user';
+import { AuthPerms, InfoBadge, Role, SubscriptionTier, UsernameFlair } from './user';
 
 declare module 'next-auth' {
 	type User = {
@@ -10,7 +10,9 @@ declare module 'next-auth' {
 		avatar: string;
 		joined: Date;
 
-		role: Role;
+		role: Role | null;
+		infoBadges: InfoBadge[];
+
 		subscriptionTier: SubscriptionTier;
 
 		bannedUntil: Date | null;

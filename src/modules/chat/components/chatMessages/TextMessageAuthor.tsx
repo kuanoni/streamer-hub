@@ -1,7 +1,8 @@
 import Image from 'next/image';
+import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { UsernameFlair } from '@globalTypes/user';
+import { InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
@@ -9,35 +10,9 @@ import Tier3 from '@images/flairs/tier_3.png';
 const Container = styled('span', {
 	display: 'inline-flex',
 	margin: 0,
-	borderRadius: theme.space.borderRadHalf,
 	fontSize: 'inherit',
 	fontWeight: 900,
 	verticalAlign: 'bottom',
-	'&:hover': {
-		textDecoration: 'underline',
-		cursor: 'pointer',
-	},
-	variants: {
-		flair: {
-			[UsernameFlair.DEFAULT]: {},
-			[UsernameFlair.TIER_1_SUB]: {
-				color: 'rgb(72, 185, 190)',
-			},
-			[UsernameFlair.TIER_2_SUB]: {
-				color: 'rgb(72, 185, 240)',
-			},
-			[UsernameFlair.TIER_3_SUB]: {
-				color: 'rgb(48, 119, 255)',
-			},
-			[UsernameFlair.BUDDY]: {
-				color: theme.colors.primary300,
-				backgroundColor: theme.colors.frostedPrimary,
-			},
-			[UsernameFlair.OWNER]: {
-				color: 'rgb(225, 53, 53)',
-			},
-		},
-	},
 });
 
 const BadgeContainer = styled('span', {
@@ -51,26 +26,73 @@ const BadgeContainer = styled('span', {
 
 const Username = styled('span', {
 	padding: '0 .25em',
+	borderRadius: theme.space.borderRadHalf,
+	'&:hover': {
+		textDecoration: 'underline',
+		cursor: 'pointer',
+	},
 });
 
-const badges: { [index: string]: React.ReactNode } = {
-	[UsernameFlair.TIER_1_SUB]: <Image src={Tier1} alt='Tier 1 subscriber' />,
-	[UsernameFlair.TIER_2_SUB]: <Image src={Tier2} alt='Tier 2 subscriber' />,
-	[UsernameFlair.TIER_3_SUB]: <Image src={Tier3} alt='Tier 3 subscriber' />,
+const subBadgeImages: { [index: string]: React.ReactNode } = {
+	[SubscriptionTier.TIER_1]: <Image src={Tier1} alt='Tier 1 subscriber' title='Tier 1 subscriber' />,
+	[SubscriptionTier.TIER_2]: <Image src={Tier2} alt='Tier 2 subscriber' title='Tier 2 subscriber' />,
+	[SubscriptionTier.TIER_3]: <Image src={Tier3} alt='Tier 3 subscriber' title='Tier 3 subscriber' />,
+};
+
+const infoBadgeImages = {
+	[InfoBadge.LAWYER]: <Image src={Tier3} alt='Lawyer' title='Lawyer' />,
+};
+
+const subscriberColors = {
+	[SubscriptionTier.TIER_1]: {
+		color: 'rgb(232, 219, 164)',
+	},
+	[SubscriptionTier.TIER_2]: {
+		color: 'rgb(231, 214, 36)',
+	},
+	[SubscriptionTier.TIER_3]: {
+		color: 'rgb(17, 225, 224)',
+	},
+	[SubscriptionTier.PERMANENT]: {
+		color: 'rgb(48, 19, 255)',
+	},
+};
+
+const roleColors = {
+	[Role.BUDDY]: {
+		color: theme.colors.primary300,
+		backgroundColor: theme.colors.frostedPrimary,
+	},
+	[Role.OWNER]: {
+		color: 'rgb(225, 53, 53)',
+		backgroundColor: '#ff000826',
+	},
 };
 
 interface Props {
-	flair: UsernameFlair;
+	subTier: SubscriptionTier;
+	infoBadges: InfoBadge[] | undefined;
+	role: Role | undefined;
 	onClick: () => void;
 }
 
-const UserMessageAuthor = ({ flair, onClick, children }: React.PropsWithChildren<Props>) => {
+const TextMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: React.PropsWithChildren<Props>) => {
+	const colors = role ? roleColors[role] : subTier ? subscriberColors[subTier] : {};
+	const badges: React.ReactNode[] = [];
+
+	if (subTier) badges.push(subBadgeImages[subTier]);
+	if (infoBadges) infoBadges.forEach((badge) => badges.push(infoBadgeImages[badge]));
+
 	return (
-		<Container flair={flair} onClick={onClick}>
-			<BadgeContainer>{badges[flair]}</BadgeContainer>
-			<Username>{children}:</Username>
+		<Container onClick={onClick}>
+			<BadgeContainer>
+				{badges.map((badge, i) => (
+					<React.Fragment key={i}>{badge}</React.Fragment>
+				))}
+			</BadgeContainer>
+			<Username css={colors}>{children}:</Username>
 		</Container>
 	);
 };
 
-export default UserMessageAuthor;
+export default TextMessageAuthor;

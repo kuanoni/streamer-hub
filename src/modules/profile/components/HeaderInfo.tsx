@@ -32,7 +32,7 @@ interface Props {
 }
 
 const HeaderInfo = ({ user }: Props) => {
-	const subscriptionTier = SubscriptionTierDescription[user.role];
+	const subscriptionTier = SubscriptionTierDescription[user.subscriptionTier];
 	const joined = new Date(user.joined);
 
 	return (

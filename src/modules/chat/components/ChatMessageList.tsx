@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
-import { UsernameFlair } from '@globalTypes/user';
 import { MessageBoxContainer } from '@modules/chat/styles';
 
 import EmbedMessage from './chatMessages/EmbedMessage';
@@ -173,66 +172,6 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
-				<UserMessage
-					msg={{
-						author: 'Default',
-						flair: UsernameFlair.DEFAULT,
-						data: 'test test',
-						time: new Date().toISOString(),
-					}}
-					setFocusedUser={setFocusedUser}
-					censorBadWords={censorBadWords}
-				/>
-				<UserMessage
-					msg={{
-						author: 'Tier1',
-						flair: UsernameFlair.TIER_1_SUB,
-						data: 'test test',
-						time: new Date().toISOString(),
-					}}
-					setFocusedUser={setFocusedUser}
-					censorBadWords={censorBadWords}
-				/>
-				<UserMessage
-					msg={{
-						author: 'Tier2',
-						flair: UsernameFlair.TIER_2_SUB,
-						data: 'test test',
-						time: new Date().toISOString(),
-					}}
-					setFocusedUser={setFocusedUser}
-					censorBadWords={censorBadWords}
-				/>
-				<UserMessage
-					msg={{
-						author: 'Tier3',
-						flair: UsernameFlair.TIER_3_SUB,
-						data: 'test test',
-						time: new Date().toISOString(),
-					}}
-					setFocusedUser={setFocusedUser}
-					censorBadWords={censorBadWords}
-				/>
-				<UserMessage
-					msg={{
-						author: 'Buddy',
-						flair: UsernameFlair.BUDDY,
-						data: 'test test',
-						time: new Date().toISOString(),
-					}}
-					setFocusedUser={setFocusedUser}
-					censorBadWords={censorBadWords}
-				/>
-				<UserMessage
-					msg={{
-						author: 'Owner',
-						flair: UsernameFlair.OWNER,
-						data: 'test test',
-						time: new Date().toISOString(),
-					}}
-					setFocusedUser={setFocusedUser}
-					censorBadWords={censorBadWords}
-				/>
 				{socketCtx?.messageLogs.map((msg) => {
 					if ('author' in msg)
 						return (
