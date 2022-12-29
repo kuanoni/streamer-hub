@@ -1,6 +1,6 @@
 type EmbedMessage = {
-	data: Embed;
-	time: string;
+	data: EmbedData;
+	time: number;
 };
 
 type UserMessage = {
@@ -31,7 +31,7 @@ interface Footer {
 	timestamp?: string;
 }
 
-interface Embed {
+interface EmbedData {
 	author?: string;
 	title?: string;
 	description?: string;

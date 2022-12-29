@@ -9,7 +9,8 @@ import parseCookieString from '@utils/parseCookieString';
 import { SocketEvents, SocketRooms } from '../common';
 import sentCommand from './eventHandlers/sentCommand';
 import sentMessage from './eventHandlers/sentMessage';
-import sendMessage from './sendMessage';
+import serverSendEmbedMsg from './serverSendEmbedMsg';
+import serverSendTextMsg from './serverSendTextMsg';
 
 const errorHandler = (handler: Function) => {
 	const handleError = (err: Error) => {
@@ -45,17 +46,18 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		});
 
 		const onConnection = async (socket: Socket) => {
-			if (!socket.handshake.headers.cookie) return sendMessage(socket, 'You have connected. Sign in to chat.');
+			if (!socket.handshake.headers.cookie)
+				return serverSendEmbedMsg(socket, { title: 'You have connected. Sign in to chat.' });
 
 			const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
 
 			// validate session token
 			const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
-			if (!session) return sendMessage(socket, 'You have connected. Sign in to chat.');
+			if (!session) return serverSendEmbedMsg(socket, { title: 'You have connected. Sign in to chat.' });
 
 			// get user data, add it to socket
 			const user = await getUserById(session.userId);
-			if (!user) return sendMessage(socket, 'You have connected. Sign in to chat.');
+			if (!user) return serverSendEmbedMsg(socket, { title: 'You have connected. Sign in to chat.' });
 			socket.user = user;
 
 			// add socket event listeners
@@ -63,7 +65,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
 
 			// emit "You have connected." message
-			sendMessage(socket, 'You have connected.');
+			return serverSendEmbedMsg(socket, { title: 'You have connected.' });
 		};
 
 		io.on('connection', onConnection);

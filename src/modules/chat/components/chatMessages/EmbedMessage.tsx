@@ -75,11 +75,11 @@ const FooterTitle = styled('div', {
 const FooterTimestamp = styled('div', {});
 
 interface Props {
-	embed: Embed;
-	time: string;
+	embed: EmbedData;
+	time: number;
 }
 
-const embed: Embed = {
+const embed: EmbedData = {
 	author: 'Embed Generator',
 	title: 'Welcome to Embed Generator!',
 	description:
@@ -103,9 +103,11 @@ const embed: Embed = {
 const EmbedMessage = React.memo(({ embed, time }: Props) => {
 	return (
 		<Container>
-			<Author>{embed.author}</Author>
-			<Title>{embed.title}</Title>
-			<Description>{embed.description && injectMarkdownStyles(embed.description)}</Description>
+			{embed.author && <Author>{embed.author}</Author>}
+			{embed.title && <Title>{embed.title}</Title>}
+			{embed.description && (
+				<Description>{embed.description && injectMarkdownStyles(embed.description)}</Description>
+			)}
 			<FieldsContainer>
 				{embed.fields &&
 					embed.fields.map((field: Field, i: number) => (
@@ -117,11 +119,12 @@ const EmbedMessage = React.memo(({ embed, time }: Props) => {
 						</Field>
 					))}
 			</FieldsContainer>
-			<Footer>
-				<FooterTitle>{embed.footer?.title}</FooterTitle>
-				<FooterTimestamp>{embed.footer?.timestamp}</FooterTimestamp>
-			</Footer>
-
+			{embed.footer && (
+				<Footer>
+					<FooterTitle>{embed.footer?.title}</FooterTitle>
+					<FooterTimestamp>{embed.footer?.timestamp}</FooterTimestamp>
+				</Footer>
+			)}
 			<TopBorder />
 			<BotBorder />
 		</Container>
