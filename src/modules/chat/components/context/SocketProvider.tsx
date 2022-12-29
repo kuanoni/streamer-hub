@@ -19,9 +19,7 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 		case 'updateTextMsg': {
 			const { id, data }: { id: string; data: string } = action.payload;
 
-			const msgIndex = state.findIndex((msg) => {
-				return msg.time === parseInt(id);
-			});
+			const msgIndex = state.findIndex((msg) => msg.id === id);
 
 			const msg = state[msgIndex];
 
