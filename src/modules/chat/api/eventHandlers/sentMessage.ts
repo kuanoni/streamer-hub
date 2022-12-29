@@ -9,7 +9,7 @@ const messageSchema = Joi.object({
 	subTier: Joi.string().valid(...Object.values(SubscriptionTier)),
 	infoBadges: Joi.array().items(Joi.string().valid(...Object.values(InfoBadge))),
 	role: Joi.string().valid(...Object.values(Role)),
-	time: Joi.date().required(),
+	time: Joi.number().required(),
 	data: Joi.string().max(500).required(),
 });
 
@@ -20,7 +20,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Fun
 
 	const newMsg: UserMessage = {
 		author: user.username,
-		time: new Date().toISOString(),
+		time: new Date().getTime(),
 		data: msg.data.replace(/\s+/g, ' ').trim(),
 	};
 

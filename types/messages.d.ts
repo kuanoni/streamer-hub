@@ -9,7 +9,7 @@ type UserMessage = {
 	infoBadges?: any[];
 	role?: any;
 	data: string | (string | ReactNode)[];
-	time: string;
+	time: number;
 };
 
 type UserMessageToServer = {
