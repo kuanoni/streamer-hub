@@ -62,17 +62,12 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const [messageLogs, setMessageLogs] = useState<UserMessage[]>([]);
 
 	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
 
 	// saves msg to messageLogs, which is a list that renders in MessageBox
 	const writeMessage = (msg: UserMessage) => {
 		dispatch({ type: 'push', payload: msg });
-		setMessageLogs((currentMessages) => {
-			if (currentMessages.length < 50) return [...currentMessages, msg];
-			else return [...currentMessages.slice(1), msg];
-		});
 	};
 
 	// send msg over socket connection
@@ -110,6 +105,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
 		newSocket.connect();
 
+		// create and write 'Attempting to connect...' message
 		const id = v4();
 		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(
 			{ description: 'Attempting to connect...', color: EmbedColors.blue },
@@ -118,6 +114,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 		dispatch({ type: 'push', payload: connectingEmbedMsg });
 
+		// when connected, update message
 		newSocket.on('connected', (data) => {
 			dispatch({
 				type: 'updateEmbedMsg',
@@ -134,14 +131,11 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// cleanup
 		return () => {
 			newSocket.disconnect();
-			setMessageLogs([]);
 			dispatch({ type: 'clear' });
 		};
 	}, [data?.user?.authLevel]);
 
 	const providerData: SocketProviderIface = Object.freeze({
-		messageLogs,
-		writeMessage,
 		sendMessage,
 		dispatch,
 		messageList,
