@@ -1,10 +1,15 @@
+import { randomUUID } from 'crypto';
 import Joi from 'joi';
 import { Socket } from 'socket.io';
 
-import { InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
+import { InfoBadge, MessageType, Role, SubscriptionTier } from '@globalTypes/user';
 import { SocketEvents, SocketRooms } from '@modules/chat/common';
 
 const messageSchema = Joi.object({
+	id: Joi.string().uuid().required(),
+	type: Joi.number()
+		.valid(...Object.values(MessageType))
+		.required(),
 	author: Joi.string().min(5).max(15).required(),
 	subTier: Joi.string().valid(...Object.values(SubscriptionTier)),
 	infoBadges: Joi.array().items(Joi.string().valid(...Object.values(InfoBadge))),
@@ -13,10 +18,12 @@ const messageSchema = Joi.object({
 	data: Joi.string().max(500).required(),
 });
 
-const sentMessage = (socket: Socket) => (msg: UserMessageToServer, callback: Function, room?: SocketRooms) => {
+const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: SocketRooms) => {
 	const user = socket.user;
 
 	const newMsg: UserMessage = {
+		id: randomUUID(),
+		type: MessageType.TEXT,
 		author: user.username,
 		time: new Date().getTime(),
 		data: msg.data.replace(/\s+/g, ' ').trim(),

@@ -1,24 +1,25 @@
-import Joi from 'joi';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
+import { v4 } from 'uuid';
 
+import { MessageType } from '@globalTypes/user';
+import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
-import { SocketEvents } from '../../common';
+import { EmbedColors, SocketEvents } from '../../common';
+import messageListReducer from './messageListReducer';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const [messageLogs, setMessageLogs] = useState<UserMessage[]>([]);
 
-	// saves msg to messageLogs, which is a list that renders in MessageBox
+	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
+
+	// saves msg to messageList, which is a list that renders in ChatMessageList
 	const writeMessage = (msg: UserMessage) => {
-		setMessageLogs((currentMessages) => {
-			if (currentMessages.length < 50) return [...currentMessages, msg];
-			else return [...currentMessages.slice(1), msg];
-		});
+		dispatch({ type: 'push', payload: msg });
 	};
 
 	// send msg over socket connection
@@ -27,25 +28,19 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 		msg.data = msg.data.trim();
 
-		if (msg.data.startsWith('/')) {
-			const [name, params] = parseCommandText(msg.data);
+		if (msg.data.startsWith('/')) sendCommand(msg);
+		else socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
+	};
 
-			if (!name) {
-				console.log('Invalid command');
+	const sendCommand = (msg: UserMessageToServer) => {
+		if (!data?.user || !socket) return;
 
-				return;
-			}
+		const [name, params] = parseCommandText(msg.data);
+		if (!name) return console.log('Invalid command');
 
-			const commandMessage: CommandMessage = {
-				name,
-				params,
-			};
+		const commandMessage: CommandMessage = { name, params };
 
-			socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
-			return;
-		}
-
-		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
+		socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
 	};
 
 	useEffect(() => {
@@ -56,6 +51,23 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
 		newSocket.connect();
 
+		// create and write 'Attempting to connect...' message
+		const id = v4();
+		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(
+			{ description: 'Attempting to connect...', color: EmbedColors.blue },
+			id
+		);
+
+		dispatch({ type: 'push', payload: connectingEmbedMsg });
+
+		// when connected, update message
+		newSocket.on('connected', (data) => {
+			dispatch({
+				type: 'updateEmbedMsg',
+				payload: { id, data: { description: data.message, footer: {}, color: EmbedColors.green } },
+			});
+		});
+
 		// save socket to state
 		setSocket((currentSocket) => {
 			currentSocket?.disconnect();
@@ -64,15 +76,15 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 		// cleanup
 		return () => {
-			newSocket?.disconnect();
-			setMessageLogs([]);
+			newSocket.disconnect();
+			dispatch({ type: 'clear' });
 		};
 	}, [data?.user?.authLevel]);
 
 	const providerData: SocketProviderIface = Object.freeze({
-		messageLogs,
-		writeMessage,
 		sendMessage,
+		dispatch,
+		messageList,
 	});
 
 	return <SocketContext.Provider value={providerData}>{children}</SocketContext.Provider>;

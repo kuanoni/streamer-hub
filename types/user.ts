@@ -20,3 +20,8 @@ export enum Role {
 export enum InfoBadge {
 	LAWYER = 'LAWYER',
 }
+
+export enum MessageType {
+	TEXT,
+	EMBED,
+}

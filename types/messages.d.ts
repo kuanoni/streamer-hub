@@ -1,15 +1,22 @@
-type EmbedMessage = {
-	data: EmbedData;
+type Message = {
+	id: string;
 	time: number;
 };
 
-type UserMessage = {
+type EmbedMessage = Message & {
+	type: import('./user').MessageType.EMBED;
+	data: EmbedData;
+};
+
+type UserMessage = Message & {
+	type: import('./user').MessageType.TEXT;
 	author: string;
+
 	subTier?: any;
-	infoBadges?: any[];
-	role?: any;
-	data: string | (string | ReactNode)[];
-	time: number;
+	infoBadges?: import('./user').InfoBadge[];
+	role?: import('./user').Role;
+
+	data: string | (string | import('react').ReactNode)[];
 };
 
 type UserMessageToServer = {
@@ -37,4 +44,5 @@ interface EmbedData {
 	description?: string;
 	fields?: Field[];
 	footer?: Footer;
+	color?: import('@modules/chat/common').EmbedColors;
 }

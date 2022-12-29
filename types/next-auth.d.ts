@@ -1,7 +1,5 @@
 import NextAuth from 'next-auth';
 
-import { AuthPerms, InfoBadge, Role, SubscriptionTier, UsernameFlair } from './user';
-
 declare module 'next-auth' {
 	type User = {
 		id: string;
@@ -10,14 +8,14 @@ declare module 'next-auth' {
 		avatar: string;
 		joined: Date;
 
-		role: Role | null;
-		infoBadges: InfoBadge[];
+		role: import('./user').Role | null;
+		infoBadges: import('./user').InfoBadge[];
 
-		subscriptionTier: SubscriptionTier;
+		subscriptionTier: import('./user').SubscriptionTier;
 
 		bannedUntil: Date | null;
 
-		authLevel: AuthPerms;
+		authLevel: import('./user').AuthPerms;
 	};
 
 	interface Session {
