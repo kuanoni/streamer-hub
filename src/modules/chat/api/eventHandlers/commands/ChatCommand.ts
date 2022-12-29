@@ -31,6 +31,7 @@ class ChatCommand {
 			if (param.regex) validator = validator.regex(param.regex).message(`Invalid "${param.key}" format`);
 			if (param.rest) validator = validator.tag('rest');
 			if (param.required) validator = validator.required();
+			else validator = validator.allow('');
 
 			return validator;
 		});
@@ -42,7 +43,7 @@ class ChatCommand {
 		return this;
 	}
 
-	async execute(inputs: string[]): Promise<ExecutionErrors> {
+	execute(inputs: string[]): Promise<ExecutionErrors> | ExecutionErrors {
 		if (!this.name) throw new Error(`ChatCommand missing name`);
 		if (!this.execCb) throw new Error(`ChatCommand ${this.name} missing execution callback`);
 
@@ -54,6 +55,7 @@ class ChatCommand {
 
 		// validate inputs using paramValidators
 		this.paramValidators.forEach((validator, i) => {
+			// if a param is "rest", it acts like ...args and collects the rest of the input string
 			const isRest = validator.$_terms.tags.includes('rest');
 			const { error, value } = validator.validate(isRest ? inputs.slice(i).join(' ') : inputs[i]);
 
