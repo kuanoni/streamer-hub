@@ -37,9 +37,9 @@ export const Chat = () => {
 
 	return (
 		<Container>
+			{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
+			<ChatControlsTop />
 			<SocketProvider>
-				{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
-				<ChatControlsTop />
 				<ChatOptionsProvider>
 					<MessagesSection>
 						<ChatMessageList closePopup={closePopup} hide={isChatOptionsOpen} />
@@ -51,8 +51,8 @@ export const Chat = () => {
 					setIsEmotesOpen={setIsEmotesOpen}
 					setIsSigninPromptOpen={setIsSigninPromptOpen}
 				/>
-				<ChatControlsBottom setIsChatOptionsOpen={setIsChatOptionsOpen} />
 			</SocketProvider>
+			<ChatControlsBottom setIsChatOptionsOpen={setIsChatOptionsOpen} />
 		</Container>
 	);
 };
