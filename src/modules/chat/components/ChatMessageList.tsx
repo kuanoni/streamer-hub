@@ -172,17 +172,11 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 		return (
 			<>
-				{socketCtx?.messageList.map((msg) => {
-					if ('author' in msg)
-						return (
-							<UserMessage
-								key={msg.time + msg.author}
-								msg={msg}
-								setFocusedUser={setFocusedUser}
-								censorBadWords={censorBadWords}
-							/>
-						);
-					else return <EmbedMessage key={msg.time} embedData={msg.data} time={msg.time} />;
+				{messageList.map((msg) => {
+					if (msg.type === MessageType.TEXT)
+						return <UserMessage key={msg.id} msg={msg} setFocusedUser={setFocusedUser} />;
+					if (msg.type === MessageType.EMBED)
+						return <EmbedMessage key={msg.id} embedData={msg.data} time={msg.time} />;
 				})}
 			</>
 		);
