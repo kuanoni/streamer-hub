@@ -17,6 +17,16 @@ const Container = styled('div', {
 	overflowY: 'scroll',
 	scrollbarWidth: 'thin',
 	scrollbarColor: `${theme.colors.primary900} ${theme.colors.grey900}`,
+	variants: {
+		hide: {
+			true: {
+				visibility: 'hidden',
+			},
+			false: {
+				visibility: 'visible',
+			},
+		},
+	},
 });
 
 const MessagesContainer = styled('div', {
@@ -85,17 +95,8 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 	// uses selector to highlight focusedUser messages and dim the rest
 	const containerCss = useMemo(() => {
-		let cssObj = {};
-
-		if (hide)
-			cssObj = {
-				...cssObj,
-				visibility: 'hidden',
-			};
-
 		if (focusedUser)
-			cssObj = {
-				...cssObj,
+			return {
 				[focusedUserCssSelector]: {
 					opacity: '1 !important',
 				},
@@ -103,9 +104,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 					opacity: 0.3,
 				},
 			};
-
-		return cssObj;
-	}, [hide, focusedUser, focusedUserCssSelector]);
+	}, [focusedUser, focusedUserCssSelector]);
 
 	// control how messages are rendered through css selectors rather than re-rendering components
 	const messagesContainerCss = useMemo(() => {
@@ -209,7 +208,13 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 	return (
 		<>
-			<Container ref={scrollableContainerRef} onScroll={handleScroll} onClick={handleClick} css={containerCss}>
+			<Container
+				ref={scrollableContainerRef}
+				onScroll={handleScroll}
+				onClick={handleClick}
+				hide={hide}
+				css={containerCss}
+			>
 				{/* since container has a flex direction of column-reverse, bottomRef needs to be at the top */}
 				<div ref={bottomRef}></div>
 				<MessagesContainer css={messagesContainerCss}>
