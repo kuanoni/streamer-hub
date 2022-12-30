@@ -32,7 +32,7 @@ const BottomContainer = styled('div', {
 	margin: '0 .5rem',
 });
 
-const ScrollDownButton = styled(MessageBoxContainer, {
+const UnpauseButton = styled(MessageBoxContainer, {
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
@@ -217,11 +217,11 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				</MessagesContainer>
 			</Container>
 			<BottomContainer>
-				<ScrollDownButton onClick={scrollToBottom} className={hide ? 'really-hide' : freeScroll ? '' : 'hide'}>
+				<UnpauseButton onClick={scrollToBottom} className={hide ? 'really-hide' : freeScroll ? '' : 'hide'}>
 					<RiArrowDownSLine />
 					UNPAUSE
 					<RiArrowDownSLine />
-				</ScrollDownButton>
+				</UnpauseButton>
 			</BottomContainer>
 		</>
 	);
