@@ -1,8 +1,10 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
+import { MessageType } from '@globalTypes/user';
 import { MessageBoxContainer } from '@modules/chat/styles';
+import { CSS } from '@stitches/react';
 
 import EmbedMessage from './chatMessages/EmbedMessage';
 import UserMessage from './chatMessages/TextMessage';
@@ -90,6 +92,8 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
 	const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 
+	const messageList = socketCtx?.messageList;
+
 	// uses css selector to target focusedUser messages
 	const focusedUserCssSelector = '.msg[data-author="' + focusedUser.toString() + '"]';
 
@@ -163,10 +167,9 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 		return cssObj;
 	}, [freeScroll, showFlair, showTime, hideNsfw, hideNsfl]);
 
-	const shouldReRenderLiveMessages = freeScroll ? null : socketCtx?.messageList;
-
 	// live rendered messages
 	const liveMessages = useMemo(() => {
+		if (!messageList) return <></>;
 		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
 
 		return (
@@ -179,7 +182,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				})}
 			</>
 		);
-	}, [shouldReRenderLiveMessages, optionsCtx?.chatOptions.censorBadWords]);
+	}, [messageList, setFocusedUser, optionsCtx?.chatOptions.censorBadWords]);
 
 	// paused rendered messages
 	const pausedMessages = useMemo(() => {
@@ -187,21 +190,21 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 		else return [];
 	}, [freeScroll]);
 
-	// scrolls to bottom of chat
+	// uses bottomRef to scroll to bottom of chat
 	const scrollToBottom = () => {
 		if (!bottomRef.current) return;
 		bottomRef.current.scrollIntoView({ behavior: 'smooth' });
 	};
 
 	// user scrolling turns on freeScroll, reaching the bottom turns it off
-	const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+	const handleScroll = () => {
 		if (!scrollableContainerRef.current) return;
 
 		const isScrolledToBottom = scrollableContainerRef.current?.scrollTop === 0;
 		setFreeScroll(!isScrolledToBottom);
 	};
 
-	const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+	const handleClick = () => {
 		if (focusedUser) setFocusedUser('');
 		closePopup();
 	};
