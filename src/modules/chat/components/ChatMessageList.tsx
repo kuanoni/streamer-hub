@@ -82,7 +82,8 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const [focusedUser, setFocusedUser] = useState('');
-	const [freeScroll, setFreeScroll] = useState(false);
+	const [isPaused, setIsPaused] = useState(false);
+	const [messages, setMessages] = useState<(UserMessage | EmbedMessage)[]>([]);
 
 	const socketCtx = useContext(SocketContext);
 	const optionsCtx = useContext(ChatOptionsContext);
@@ -92,10 +93,10 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 	const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
 	const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
 
-	const messageList = socketCtx?.messageList;
+	const liveMessageList = socketCtx?.messageList;
 
 	// uses css selector to target focusedUser messages
-	const focusedUserCssSelector = '.msg[data-author="' + focusedUser.toString() + '"]';
+	const focusedUserCssSelector = `.msg[data-author="${focusedUser.toString()}"]`;
 
 	// uses selector to highlight focusedUser messages and dim the rest
 	const containerCss = useMemo(() => {
@@ -112,83 +113,51 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 
 	// control how messages are rendered through css selectors rather than re-rendering components
 	const messagesContainerCss = useMemo(() => {
-		let cssObj = {};
+		const cssObj: CSS = {};
 
 		if (!showFlair)
-			cssObj = {
-				...cssObj,
-				'.author img': {
-					display: 'none',
-				},
+			cssObj['.author img'] = {
+				display: 'none',
 			};
 
 		if (!showTime)
-			cssObj = {
-				...cssObj,
-				time: {
-					display: 'none',
-				},
+			cssObj.time = {
+				display: 'none',
 			};
 
-		if (hideNsfw)
-			cssObj = {
-				...cssObj,
-				'& .nsfw': {
-					fontSize: 0,
-				},
-				'& .nsfw::before': {
-					content: '<NSFW>',
-					fontSize: '13px',
-					backgroundColor: theme.colors.grey800,
-				},
-				'& .nsfw:hover::before': {
-					backgroundColor: theme.colors.grey700,
-					cursor: 'pointer',
-				},
+		if (hideNsfw) {
+			cssObj['& .nsfw'] = { fontSize: 0 };
+			cssObj['& .nsfw::before'] = {
+				content: '<NSFW>',
+				fontSize: '13px',
+				backgroundColor: theme.colors.grey800,
 			};
+			cssObj['& .nsfw:hover::before'] = {
+				backgroundColor: theme.colors.grey700,
+				cursor: 'pointer',
+			};
+		}
 
-		if (hideNsfl)
-			cssObj = {
-				...cssObj,
-				'& .nsfl': {
-					fontSize: 0,
-				},
-				'& .nsfl::before': {
-					content: '<NSFL>',
-					fontSize: '13px',
-					backgroundColor: theme.colors.grey800,
-				},
-				'& .nsfl:hover::before': {
-					backgroundColor: theme.colors.grey700,
-					cursor: 'pointer',
-				},
+		if (hideNsfl) {
+			cssObj['& .nsfl'] = { fontSize: 0 };
+			cssObj['& .nsfl::before'] = {
+				content: '<NSFL>',
+				fontSize: '13px',
+				backgroundColor: theme.colors.grey800,
 			};
+			cssObj['& .nsfl:hover::before'] = {
+				backgroundColor: theme.colors.grey700,
+				cursor: 'pointer',
+			};
+		}
 
 		return cssObj;
-	}, [freeScroll, showFlair, showTime, hideNsfw, hideNsfl]);
+	}, [isPaused, showFlair, showTime, hideNsfw, hideNsfl]);
 
-	// live rendered messages
-	const liveMessages = useMemo(() => {
-		if (!messageList) return <></>;
-		const censorBadWords = optionsCtx?.chatOptions.censorBadWords === true;
-
-		return (
-			<>
-				{messageList.map((msg) => {
-					if (msg.type === MessageType.TEXT)
-						return <UserMessage key={msg.id} msg={msg} setFocusedUser={setFocusedUser} />;
-					if (msg.type === MessageType.EMBED)
-						return <EmbedMessage key={msg.id} embedData={msg.data} time={msg.time} />;
-				})}
-			</>
-		);
-	}, [messageList, setFocusedUser, optionsCtx?.chatOptions.censorBadWords]);
-
-	// paused rendered messages
-	const pausedMessages = useMemo(() => {
-		if (freeScroll) return liveMessages;
-		else return [];
-	}, [freeScroll]);
+	// update messages only when not paused
+	useEffect(() => {
+		if (!isPaused && liveMessageList) setMessages(liveMessageList);
+	}, [setMessages, liveMessageList, isPaused]);
 
 	// uses bottomRef to scroll to bottom of chat
 	const scrollToBottom = () => {
@@ -201,7 +170,7 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 		if (!scrollableContainerRef.current) return;
 
 		const isScrolledToBottom = scrollableContainerRef.current?.scrollTop === 0;
-		setFreeScroll(!isScrolledToBottom);
+		setIsPaused(!isScrolledToBottom);
 	};
 
 	const handleClick = () => {
@@ -221,11 +190,16 @@ const ChatMessageList = ({ closePopup, hide }: Props) => {
 				{/* since container has a flex direction of column-reverse, bottomRef needs to be at the top */}
 				<div ref={bottomRef}></div>
 				<MessagesContainer css={messagesContainerCss}>
-					{freeScroll ? pausedMessages : liveMessages}
+					{messages.map((msg) => {
+						if (msg.type === MessageType.TEXT)
+							return <UserMessage key={msg.id} msg={msg} setFocusedUser={setFocusedUser} />;
+						if (msg.type === MessageType.EMBED)
+							return <EmbedMessage key={msg.id} embedData={msg.data} time={msg.time} />;
+					})}
 				</MessagesContainer>
 			</Container>
 			<BottomContainer>
-				<UnpauseButton onClick={scrollToBottom} className={hide ? 'really-hide' : freeScroll ? '' : 'hide'}>
+				<UnpauseButton onClick={scrollToBottom} className={hide ? 'really-hide' : isPaused ? '' : 'hide'}>
 					<RiArrowDownSLine />
 					UNPAUSE
 					<RiArrowDownSLine />

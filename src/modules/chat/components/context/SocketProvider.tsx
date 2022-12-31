@@ -3,7 +3,6 @@ import React, { useEffect, useReducer, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 import { v4 } from 'uuid';
 
-import { MessageType } from '@globalTypes/user';
 import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
