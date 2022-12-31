@@ -38,10 +38,9 @@ const Container = styled('div', {
 interface Props {
 	msg: UserMessage;
 	setFocusedUser: (user: string) => void;
-	censorBadWords: boolean;
 }
 
-const UserMessage = React.memo(({ msg, setFocusedUser, censorBadWords }: Props) => {
+const UserMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 	const dateObj = new Date(msg.time);
 	const timeTitle = timeTitleFormatter.format(dateObj);
 	const timeValue = timeValueFormatter.format(dateObj);
