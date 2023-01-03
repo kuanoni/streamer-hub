@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
+import { ChatPopups } from '../common';
 import ChatControlsBottom from './ChatControlsBottom';
 import ChatControlsTop from './ChatControlsTop';
 import ChatInput from './ChatInput';
@@ -41,8 +42,15 @@ export const Chat = () => {
 	const [isChatOptionsOpen, setIsChatOptionsOpen] = useState(false);
 	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(false);
 
-	const closePopup = () => {
-		setIsEmotesOpen(false);
+	const [popupOpen, setPopupOpen] = useState<ChatPopups>();
+
+	const openPopup = (popup: ChatPopups) => {
+		if (popup === popupOpen) setPopupOpen(ChatPopups.NONE);
+		else setPopupOpen(popup);
+	};
+
+	const closePopups = () => {
+		setPopupOpen(ChatPopups.NONE);
 	};
 
 	return (
@@ -52,10 +60,8 @@ export const Chat = () => {
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<Popups>
-							{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
-						</Popups>
-						<ChatMessageList closePopup={closePopup} hide={false} />
+						<Popups>{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopups={closePopups} />}</Popups>
+						<ChatMessageList closePopup={closePopups} hide={false} />
 						<Popups></Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>
@@ -65,7 +71,7 @@ export const Chat = () => {
 					setIsSigninPromptOpen={setIsSigninPromptOpen}
 				/>
 			</SocketProvider>
-			<ChatControlsBottom setIsChatOptionsOpen={setIsChatOptionsOpen} />
+			<ChatControlsBottom openPopup={openPopup} />
 		</Container>
 	);
 };

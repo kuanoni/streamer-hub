@@ -116,10 +116,10 @@ const sectionsTemplate: Section[] = [
 ];
 
 type Props = {
-	setIsChatOptionsOpen: Dispatch<SetStateAction<boolean>>;
+	closePopups: () => void;
 };
 
-const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
+const ChatOptions = ({ closePopups }: Props) => {
 	const ctx = useContext(ChatOptionsContext);
 
 	if (!ctx) return <></>;
@@ -158,7 +158,7 @@ const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
 		<Container>
 			<Header>
 				<h2>Options</h2>
-				<CloseButton onClick={() => setIsChatOptionsOpen(false)}>
+				<CloseButton onClick={() => closePopups()}>
 					<BsX />
 				</CloseButton>
 			</Header>
