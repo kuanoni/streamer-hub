@@ -64,11 +64,7 @@ export const Chat = () => {
 						<Popups></Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>
-				<ChatInput
-					isEmotesOpen={isEmotesOpen}
-					setIsEmotesOpen={setIsEmotesOpen}
-					setIsSigninPromptOpen={setIsSigninPromptOpen}
-				/>
+				<ChatInput popupOpen={popupOpen} togglePopup={togglePopup} closePopup={closePopup} />
 			</SocketProvider>
 			<ChatControlsBottom togglePopup={togglePopup} />
 		</Container>

@@ -5,6 +5,7 @@ import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 
+import { ChatPopups } from '../common';
 import EmoteSelector from './ChatEmoteList';
 import SocketContext from './context/SocketContext';
 
@@ -45,15 +46,13 @@ const TopContainer = styled('div', {
 	margin: '0 .5rem',
 });
 
-const ChatInput = ({
-	isEmotesOpen,
-	setIsEmotesOpen,
-	setIsSigninPromptOpen,
-}: {
-	isEmotesOpen: boolean;
-	setIsEmotesOpen: Function;
-	setIsSigninPromptOpen: Function;
-}) => {
+type Props = {
+	popupOpen: ChatPopups;
+	togglePopup: (popup: ChatPopups) => void;
+	closePopup: () => void;
+};
+
+const ChatInput = ({ popupOpen, togglePopup, closePopup }: Props) => {
 	const ctx = useContext(SocketContext);
 	const { data, status } = useSession();
 	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
@@ -73,19 +72,17 @@ const ChatInput = ({
 		textAreaRef.current.value = '';
 		textAreaRef.current.style.height = 'auto';
 		textAreaRef.current.focus();
-		setIsEmotesOpen(false);
+		if (popupOpen === ChatPopups.EMOTES) closePopup();
 	};
 
 	// open and close EmoteList
 	const toggleEmoteList = () => {
 		if (!textAreaRef.current) throw new Error('textarea undefined');
-		if (status !== 'authenticated') return setIsSigninPromptOpen(true);
+		if (status !== 'authenticated') return togglePopup(ChatPopups.SIGNIN);
 
 		textAreaRef.current.focus();
 
-		setIsEmotesOpen((isOpen: boolean) => {
-			return !isOpen;
-		});
+		togglePopup(ChatPopups.EMOTES);
 	};
 
 	// when button in ChatEmoteList is clicked
@@ -116,10 +113,10 @@ const ChatInput = ({
 	};
 
 	const onFocusTextArea = () => {
-		if (status === 'unauthenticated') {
-			textAreaRef.current?.blur();
-			setIsSigninPromptOpen(true);
-		}
+		if (status === 'authenticated') return;
+
+		textAreaRef.current?.blur();
+		togglePopup(ChatPopups.SIGNIN);
 	};
 
 	const onKeyDownTextArea = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -131,7 +128,9 @@ const ChatInput = ({
 
 	return (
 		<>
-			<TopContainer>{isEmotesOpen && <EmoteSelector insertEmote={insertEmote} />}</TopContainer>
+			<TopContainer>
+				{popupOpen === ChatPopups.EMOTES && <EmoteSelector insertEmote={insertEmote} />}
+			</TopContainer>
 			<Container>
 				<TextAreaWrapper>
 					<TextArea
