@@ -142,4 +142,6 @@ const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref
 	);
 });
 
+ChatInput.displayName = 'ChatInput';
+
 export default ChatInput;
