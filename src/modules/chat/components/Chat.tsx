@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { styled, theme } from 'stiches.config';
+import { styled } from 'stiches.config';
 
 import { ChatPopups } from '../common';
 import ChatControlsBottom from './ChatControlsBottom';
@@ -7,7 +7,6 @@ import ChatControlsTop from './ChatControlsTop';
 import ChatEmoteList from './ChatEmoteList';
 import ChatInput from './ChatInput';
 import ChatMessageList from './ChatMessageList';
-import ChatSigninPrompt from './ChatSigninPrompt';
 import SocketProvider from './context/SocketProvider';
 import ChatOptions from './optionsMenu/components/ChatOptions';
 import ChatOptionsProvider from './optionsMenu/components/context/ChatOptionsProvider';
@@ -47,7 +46,6 @@ export const Chat = () => {
 
 	return (
 		<Container>
-			{popupOpen === ChatPopups.SIGNIN && <ChatSigninPrompt closePopup={closePopup} />}
 			<ChatControlsTop />
 			<SocketProvider>
 				<ChatOptionsProvider>
