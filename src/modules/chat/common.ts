@@ -9,10 +9,17 @@ export enum SocketEvents {
 	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
 }
 
+export enum ChatPopups {
+	NONE,
+	OPTIONS,
+	EMOTES,
+}
+
 export enum EmbedColors {
 	primary,
 	blue,
 	green,
+	red,
 }
 
 export type DispatchAction = { type: string; payload?: any };

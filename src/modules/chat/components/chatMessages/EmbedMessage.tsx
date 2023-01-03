@@ -34,6 +34,9 @@ const borderColors = {
 	[EmbedColors.green]: {
 		backgroundColor: theme.colors.trinary900,
 	},
+	[EmbedColors.red]: {
+		backgroundColor: 'red',
+	},
 };
 
 const Border = styled('div', {

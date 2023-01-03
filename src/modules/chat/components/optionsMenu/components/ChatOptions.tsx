@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import { AbsoluteContainer } from '@modules/chat/styles';
+import { moveIn } from '@modules/chat/styles';
 import { keyframes } from '@stitches/react';
 
 import { OptionItem, Section } from '../types';
@@ -10,20 +10,13 @@ import ChatOptionsContext from './context/ChatOptionsContext';
 import OptionsCheckbox from './OptionsCheckbox';
 import OptionsDropdown from './OptionsDropdown';
 
-const fadeIn = keyframes({
-	'0%': {
-		opacity: 0.6,
-	},
-	'100%': {
-		opacity: 1,
-	},
-});
-
-const Container = styled(AbsoluteContainer, {
+const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
+	height: '100%',
+	paddingBottom: '1rem',
 	fontSize: '.9rem',
-	animation: `${fadeIn} .1s`,
+	animation: `${moveIn} .2s`,
 });
 
 const Header = styled('div', {
@@ -116,10 +109,10 @@ const sectionsTemplate: Section[] = [
 ];
 
 type Props = {
-	setIsChatOptionsOpen: Dispatch<SetStateAction<boolean>>;
+	closePopup: () => void;
 };
 
-const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
+const ChatOptions = ({ closePopup }: Props) => {
 	const ctx = useContext(ChatOptionsContext);
 
 	if (!ctx) return <></>;
@@ -158,7 +151,7 @@ const ChatOptions = ({ setIsChatOptionsOpen }: Props) => {
 		<Container>
 			<Header>
 				<h2>Options</h2>
-				<CloseButton onClick={() => setIsChatOptionsOpen(false)}>
+				<CloseButton onClick={() => closePopup()}>
 					<BsX />
 				</CloseButton>
 			</Header>

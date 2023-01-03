@@ -1,8 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
 import Button from '@components/ui/Button';
+
+import { ChatPopups } from '../common';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -12,13 +14,13 @@ const Container = styled('div', {
 });
 
 type Props = {
-	setIsChatOptionsOpen: Dispatch<SetStateAction<boolean>>;
+	togglePopup: (popup: ChatPopups) => void;
 };
 
-const ChatControlsBottom = ({ setIsChatOptionsOpen }: Props) => {
+const ChatControlsBottom = ({ togglePopup }: Props) => {
 	return (
 		<Container>
-			<Button color='dark' content='icon' onClick={() => setIsChatOptionsOpen((current) => !current)}>
+			<Button color='dark' content='icon' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
 				<BsFillGearFill />
 			</Button>
 			<Button color='dark' content='icon' onClick={() => {}}>

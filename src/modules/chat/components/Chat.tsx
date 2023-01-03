@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { styled } from 'stiches.config';
 
+import { ChatPopups } from '../common';
 import ChatControlsBottom from './ChatControlsBottom';
 import ChatControlsTop from './ChatControlsTop';
+import ChatEmoteList from './ChatEmoteList';
 import ChatInput from './ChatInput';
 import ChatMessageList from './ChatMessageList';
-import ChatSigninPrompt from './ChatSigninPrompt';
 import SocketProvider from './context/SocketProvider';
 import ChatOptions from './optionsMenu/components/ChatOptions';
 import ChatOptionsProvider from './optionsMenu/components/context/ChatOptionsProvider';
@@ -22,37 +23,45 @@ const Container = styled('div', {
 
 const MessagesSection = styled('div', {
 	position: 'relative',
+	display: 'flex',
+	flexDirection: 'column',
 	height: '100%',
 	minHeight: 0,
 });
 
-export const Chat = () => {
-	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
-	const [isChatOptionsOpen, setIsChatOptionsOpen] = useState(false);
-	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(false);
+const Popups = styled('div', {
+	'&:not(:empty)': {},
+});
 
-	const closePopup = () => {
-		setIsEmotesOpen(false);
+export const Chat = () => {
+	const [popupOpen, setPopupOpen] = useState<ChatPopups>(ChatPopups.NONE);
+	const inputRef: React.RefObject<(emoteKey: string) => void> = useRef(null);
+
+	const togglePopup = (popup: ChatPopups) => {
+		if (popup === popupOpen) setPopupOpen(ChatPopups.NONE);
+		else setPopupOpen(popup);
 	};
+
+	const closePopup = () => setPopupOpen(ChatPopups.NONE);
 
 	return (
 		<Container>
-			{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
 			<ChatControlsTop />
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<ChatMessageList closePopup={closePopup} hide={isChatOptionsOpen} />
-						{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
+						<ChatMessageList closePopup={closePopup} hide={false} />
+						<Popups>
+							{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}
+							{popupOpen === ChatPopups.EMOTES && (
+								<ChatEmoteList insertEmote={inputRef.current || (() => {})} />
+							)}
+						</Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>
-				<ChatInput
-					isEmotesOpen={isEmotesOpen}
-					setIsEmotesOpen={setIsEmotesOpen}
-					setIsSigninPromptOpen={setIsSigninPromptOpen}
-				/>
+				<ChatInput ref={inputRef} popupOpen={popupOpen} togglePopup={togglePopup} closePopup={closePopup} />
 			</SocketProvider>
-			<ChatControlsBottom setIsChatOptionsOpen={setIsChatOptionsOpen} />
+			<ChatControlsBottom togglePopup={togglePopup} />
 		</Container>
 	);
 };
