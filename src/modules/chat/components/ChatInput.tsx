@@ -47,7 +47,6 @@ type Props = {
 
 const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref) => {
 	const ctx = useContext(SocketContext);
-	const { data, status } = useSession();
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
 	useImperativeHandle(ref, () => insertEmote, []);
@@ -72,10 +71,8 @@ const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref
 	// open and close EmoteList
 	const toggleEmoteList = () => {
 		if (!textAreaRef.current) throw new Error('textarea undefined');
-		if (status !== 'authenticated') return togglePopup(ChatPopups.SIGNIN);
 
 		textAreaRef.current.focus();
-
 		togglePopup(ChatPopups.EMOTES);
 	};
 
@@ -106,14 +103,6 @@ const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref
 		e.target.style.height = e.target.scrollHeight - 1 + 'px';
 	};
 
-	// open Sign In popup on focus if not authenticated
-	const onFocusTextArea = () => {
-		if (status === 'authenticated') return;
-
-		textAreaRef.current?.blur();
-		togglePopup(ChatPopups.SIGNIN);
-	};
-
 	// use Enter key to send message
 	const onKeyDownTextArea = (e: React.KeyboardEvent<HTMLElement>) => {
 		if (e.code === 'Enter' || e.code === 'NumpadEnter') {
@@ -129,7 +118,6 @@ const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref
 					<TextArea
 						ref={textAreaRef}
 						onChange={onChangeTextArea}
-						onFocus={onFocusTextArea}
 						onKeyDown={onKeyDownTextArea}
 						maxLength={500}
 						spellCheck={false}
