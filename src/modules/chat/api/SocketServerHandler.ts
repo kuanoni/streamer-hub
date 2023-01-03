@@ -50,7 +50,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 				return socket.emit('connected', {
 					connected: true,
 					authenticated: false,
-					message: 'You are connected. Sign in to chat.',
+					message: 'You are connected.\n **Sign in to chat**',
 				});
 
 			// get cookies from socket handshake
@@ -62,7 +62,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 				return socket.emit('connected', {
 					connected: true,
 					authenticated: false,
-					message: 'You are connected. Sign in to chat.',
+					message: 'You are connected.\n **Sign in to chat**',
 				});
 
 			// use session data to get user data, add it to socket
