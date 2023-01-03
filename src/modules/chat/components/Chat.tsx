@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
 
 import ChatControlsBottom from './ChatControlsBottom';
 import ChatControlsTop from './ChatControlsTop';
@@ -22,8 +22,18 @@ const Container = styled('div', {
 
 const MessagesSection = styled('div', {
 	position: 'relative',
+	display: 'flex',
+	flexDirection: 'column',
 	height: '100%',
 	minHeight: 0,
+});
+
+const Popups = styled('div', {
+	'&:not(:empty)': {
+		maxHeight: '65%',
+		marginBottom: '1rem',
+		boxShadow: `0 1px 10px 1px ${theme.colors.primary900}`,
+	},
 });
 
 export const Chat = () => {
@@ -42,8 +52,11 @@ export const Chat = () => {
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<ChatMessageList closePopup={closePopup} hide={isChatOptionsOpen} />
-						{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
+						<Popups>
+							{isChatOptionsOpen && <ChatOptions setIsChatOptionsOpen={setIsChatOptionsOpen} />}
+						</Popups>
+						<ChatMessageList closePopup={closePopup} hide={false} />
+						<Popups></Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>
 				<ChatInput

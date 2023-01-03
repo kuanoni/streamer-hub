@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import { AbsoluteContainer } from '@modules/chat/styles';
 import { keyframes } from '@stitches/react';
 
 import { OptionItem, Section } from '../types';
@@ -19,11 +18,12 @@ const fadeIn = keyframes({
 	},
 });
 
-const Container = styled(AbsoluteContainer, {
+const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
+	height: '100%',
 	fontSize: '.9rem',
-	animation: `${fadeIn} .1s`,
+	animation: `${fadeIn} .2s`,
 });
 
 const Header = styled('div', {
