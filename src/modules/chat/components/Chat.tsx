@@ -43,7 +43,7 @@ export const Chat = () => {
 
 	const [popupOpen, setPopupOpen] = useState<ChatPopups>(ChatPopups.NONE);
 
-	const openPopup = (popup: ChatPopups) => {
+	const togglePopup = (popup: ChatPopups) => {
 		if (popup === popupOpen) setPopupOpen(ChatPopups.NONE);
 		else setPopupOpen(popup);
 	};
@@ -70,7 +70,7 @@ export const Chat = () => {
 					setIsSigninPromptOpen={setIsSigninPromptOpen}
 				/>
 			</SocketProvider>
-			<ChatControlsBottom openPopup={openPopup} />
+			<ChatControlsBottom togglePopup={togglePopup} />
 		</Container>
 	);
 };

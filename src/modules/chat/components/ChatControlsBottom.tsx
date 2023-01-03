@@ -14,13 +14,13 @@ const Container = styled('div', {
 });
 
 type Props = {
-	openPopup: (popup: ChatPopups) => void;
+	togglePopup: (popup: ChatPopups) => void;
 };
 
-const ChatControlsBottom = ({ openPopup }: Props) => {
+const ChatControlsBottom = ({ togglePopup }: Props) => {
 	return (
 		<Container>
-			<Button color='dark' content='icon' onClick={() => openPopup(ChatPopups.OPTIONS)}>
+			<Button color='dark' content='icon' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
 				<BsFillGearFill />
 			</Button>
 			<Button color='dark' content='icon' onClick={() => {}}>
