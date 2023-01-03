@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { styled } from 'stiches.config';
+import { keyframes, styled } from 'stiches.config';
 
 export const MessageBoxContainer = styled('div', {
 	position: 'absolute',
@@ -17,4 +17,15 @@ export const AbsoluteContainer = styled('div', {
 	position: 'absolute',
 	inset: '0 0 0 0',
 	height: '100%',
+});
+
+export const moveIn = keyframes({
+	'0%': {
+		opacity: 0,
+		transform: 'translateY(25px)',
+	},
+	'100%': {
+		opacity: 1,
+		transform: 'translateY(0px)',
+	},
 });
