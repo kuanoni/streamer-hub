@@ -40,15 +40,19 @@ const ButtonsContainer = styled('div', {
 	},
 });
 
-const ChatSigninPrompt = ({ setIsOpen }: { setIsOpen: Function }) => {
+type Props = {
+	closePopup: () => void;
+};
+
+const ChatSigninPrompt = ({ closePopup }: Props) => {
 	return (
 		<Container>
 			You must sign in to chat
 			<ButtonsContainer>
-				<Link href={'#signin'} className='signin' onClick={() => setIsOpen(false)}>
+				<Link href={'#signin'} className='signin' onClick={() => closePopup()}>
 					Sign In
 				</Link>
-				<button className='close' onClick={() => setIsOpen(false)}>
+				<button className='close' onClick={() => closePopup()}>
 					Close
 				</button>
 			</ButtonsContainer>

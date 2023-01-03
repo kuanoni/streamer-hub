@@ -38,9 +38,6 @@ const Popups = styled('div', {
 });
 
 export const Chat = () => {
-	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
-	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(false);
-
 	const [popupOpen, setPopupOpen] = useState<ChatPopups>(ChatPopups.NONE);
 
 	const togglePopup = (popup: ChatPopups) => {
@@ -54,7 +51,7 @@ export const Chat = () => {
 
 	return (
 		<Container>
-			{isSigninPromptOpen && <ChatSigninPrompt setIsOpen={setIsSigninPromptOpen} />}
+			{popupOpen === ChatPopups.SIGNIN && <ChatSigninPrompt closePopup={closePopup} />}
 			<ChatControlsTop />
 			<SocketProvider>
 				<ChatOptionsProvider>
