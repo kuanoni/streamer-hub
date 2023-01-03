@@ -13,13 +13,13 @@ export enum ChatPopups {
 	NONE,
 	OPTIONS,
 	EMOTES,
-	SIGNIN,
 }
 
 export enum EmbedColors {
 	primary,
 	blue,
 	green,
+	red,
 }
 
 export type DispatchAction = { type: string; payload?: any };
