@@ -1,12 +1,11 @@
 import { useSession } from 'next-auth/react';
-import React, { useContext, useRef } from 'react';
+import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 
 import { ChatPopups } from '../common';
-import EmoteSelector from './ChatEmoteList';
 import SocketContext from './context/SocketContext';
 
 const Container = styled('div', {
@@ -40,27 +39,22 @@ const ButtonsContainer = styled('div', {
 	gap: '.35rem',
 });
 
-const TopContainer = styled('div', {
-	position: 'relative',
-	height: 0,
-	margin: '0 .5rem',
-});
-
 type Props = {
 	popupOpen: ChatPopups;
 	togglePopup: (popup: ChatPopups) => void;
 	closePopup: () => void;
 };
 
-const ChatInput = ({ popupOpen, togglePopup, closePopup }: Props) => {
+const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref) => {
 	const ctx = useContext(SocketContext);
 	const { data, status } = useSession();
-	const textAreaRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
+	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-	const sendMessage = () => {
+	useImperativeHandle(ref, () => insertEmote, []);
+
+	const submitMessage = () => {
 		if (!textAreaRef.current) throw new Error('textarea undefined');
 		if (!ctx) throw new Error('context undefined');
-		if (!data?.user) throw new Error('user undefined');
 
 		// send message through socket connection
 		const msg: UserMessageToServer = {
@@ -112,6 +106,7 @@ const ChatInput = ({ popupOpen, togglePopup, closePopup }: Props) => {
 		e.target.style.height = e.target.scrollHeight - 1 + 'px';
 	};
 
+	// open Sign In popup on focus if not authenticated
 	const onFocusTextArea = () => {
 		if (status === 'authenticated') return;
 
@@ -119,18 +114,16 @@ const ChatInput = ({ popupOpen, togglePopup, closePopup }: Props) => {
 		togglePopup(ChatPopups.SIGNIN);
 	};
 
+	// use Enter key to send message
 	const onKeyDownTextArea = (e: React.KeyboardEvent<HTMLElement>) => {
 		if (e.code === 'Enter' || e.code === 'NumpadEnter') {
 			e.preventDefault();
-			if (textAreaRef.current?.value) sendMessage();
+			if (textAreaRef.current?.value) submitMessage();
 		}
 	};
 
 	return (
 		<>
-			<TopContainer>
-				{popupOpen === ChatPopups.EMOTES && <EmoteSelector insertEmote={insertEmote} />}
-			</TopContainer>
 			<Container>
 				<TextAreaWrapper>
 					<TextArea
@@ -146,7 +139,7 @@ const ChatInput = ({ popupOpen, togglePopup, closePopup }: Props) => {
 							color='dark'
 							content='icon'
 							onClick={() => {
-								if (textAreaRef.current?.value) sendMessage();
+								if (textAreaRef.current?.value) submitMessage();
 							}}
 						>
 							<BsCursorFill />
@@ -159,6 +152,6 @@ const ChatInput = ({ popupOpen, togglePopup, closePopup }: Props) => {
 			</Container>
 		</>
 	);
-};
+});
 
 export default ChatInput;

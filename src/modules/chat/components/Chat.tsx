@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { ChatPopups } from '../common';
 import ChatControlsBottom from './ChatControlsBottom';
 import ChatControlsTop from './ChatControlsTop';
+import ChatEmoteList from './ChatEmoteList';
 import ChatInput from './ChatInput';
 import ChatMessageList from './ChatMessageList';
 import ChatSigninPrompt from './ChatSigninPrompt';
@@ -39,15 +40,14 @@ const Popups = styled('div', {
 
 export const Chat = () => {
 	const [popupOpen, setPopupOpen] = useState<ChatPopups>(ChatPopups.NONE);
+	const inputRef: React.RefObject<(emoteKey: string) => void> = useRef(null);
 
 	const togglePopup = (popup: ChatPopups) => {
 		if (popup === popupOpen) setPopupOpen(ChatPopups.NONE);
 		else setPopupOpen(popup);
 	};
 
-	const closePopup = () => {
-		setPopupOpen(ChatPopups.NONE);
-	};
+	const closePopup = () => setPopupOpen(ChatPopups.NONE);
 
 	return (
 		<Container>
@@ -58,10 +58,14 @@ export const Chat = () => {
 					<MessagesSection>
 						<Popups>{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}</Popups>
 						<ChatMessageList closePopup={closePopup} hide={false} />
-						<Popups></Popups>
+						<Popups>
+							{popupOpen === ChatPopups.EMOTES && (
+								<ChatEmoteList insertEmote={inputRef.current || (() => {})} />
+							)}
+						</Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>
-				<ChatInput popupOpen={popupOpen} togglePopup={togglePopup} closePopup={closePopup} />
+				<ChatInput ref={inputRef} popupOpen={popupOpen} togglePopup={togglePopup} closePopup={closePopup} />
 			</SocketProvider>
 			<ChatControlsBottom togglePopup={togglePopup} />
 		</Container>
