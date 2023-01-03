@@ -11,7 +11,7 @@ import messageListReducer from './messageListReducer';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
-	const { data } = useSession();
+	const { data, status } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
 
 	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
@@ -23,7 +23,14 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	// send msg over socket connection
 	const sendMessage = (msg: UserMessageToServer) => {
-		if (!data?.user || !socket) return;
+		if (status !== 'authenticated' || !socket)
+			return dispatch({
+				type: 'push',
+				payload: createEmbedMessage({
+					description: 'You must sign in to send chat messages.',
+					color: EmbedColors.red,
+				}),
+			});
 
 		msg.data = msg.data.trim();
 
@@ -32,7 +39,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	const sendCommand = (msg: UserMessageToServer) => {
-		if (!data?.user || !socket) return;
+		if (status !== 'authenticated' || !socket) return;
 
 		const [name, params] = parseCommandText(msg.data);
 		if (!name) return console.log('Invalid command');
