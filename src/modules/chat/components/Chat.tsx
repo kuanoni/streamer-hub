@@ -31,11 +31,7 @@ const MessagesSection = styled('div', {
 });
 
 const Popups = styled('div', {
-	'&:not(:empty)': {
-		maxHeight: '65%',
-		marginBottom: '1rem',
-		boxShadow: `0 1px 10px 1px ${theme.colors.primary900}`,
-	},
+	'&:not(:empty)': {},
 });
 
 export const Chat = () => {
@@ -56,9 +52,9 @@ export const Chat = () => {
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<Popups>{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}</Popups>
 						<ChatMessageList closePopup={closePopup} hide={false} />
 						<Popups>
+							{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}
 							{popupOpen === ChatPopups.EMOTES && (
 								<ChatEmoteList insertEmote={inputRef.current || (() => {})} />
 							)}
