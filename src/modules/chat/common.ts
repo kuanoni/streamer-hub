@@ -13,6 +13,7 @@ export enum ChatPopups {
 	NONE,
 	OPTIONS,
 	EMOTES,
+	SIGNIN,
 }
 
 export enum EmbedColors {
