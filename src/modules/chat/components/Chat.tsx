@@ -39,17 +39,16 @@ const Popups = styled('div', {
 
 export const Chat = () => {
 	const [isEmotesOpen, setIsEmotesOpen] = useState(false);
-	const [isChatOptionsOpen, setIsChatOptionsOpen] = useState(false);
 	const [isSigninPromptOpen, setIsSigninPromptOpen] = useState(false);
 
-	const [popupOpen, setPopupOpen] = useState<ChatPopups>();
+	const [popupOpen, setPopupOpen] = useState<ChatPopups>(ChatPopups.NONE);
 
 	const openPopup = (popup: ChatPopups) => {
 		if (popup === popupOpen) setPopupOpen(ChatPopups.NONE);
 		else setPopupOpen(popup);
 	};
 
-	const closePopups = () => {
+	const closePopup = () => {
 		setPopupOpen(ChatPopups.NONE);
 	};
 
@@ -60,8 +59,8 @@ export const Chat = () => {
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<Popups>{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopups={closePopups} />}</Popups>
-						<ChatMessageList closePopup={closePopups} hide={false} />
+						<Popups>{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}</Popups>
+						<ChatMessageList closePopup={closePopup} hide={false} />
 						<Popups></Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>

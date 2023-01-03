@@ -116,10 +116,10 @@ const sectionsTemplate: Section[] = [
 ];
 
 type Props = {
-	closePopups: () => void;
+	closePopup: () => void;
 };
 
-const ChatOptions = ({ closePopups }: Props) => {
+const ChatOptions = ({ closePopup }: Props) => {
 	const ctx = useContext(ChatOptionsContext);
 
 	if (!ctx) return <></>;
@@ -158,7 +158,7 @@ const ChatOptions = ({ closePopups }: Props) => {
 		<Container>
 			<Header>
 				<h2>Options</h2>
-				<CloseButton onClick={() => closePopups()}>
+				<CloseButton onClick={() => closePopup()}>
 					<BsX />
 				</CloseButton>
 			</Header>
