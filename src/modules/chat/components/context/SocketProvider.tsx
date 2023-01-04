@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 import { v4 } from 'uuid';
 
@@ -13,6 +13,7 @@ import SocketContext, { SocketProviderIface } from './SocketContext';
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { data, status } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
+	const controllerRef = useRef<AbortController | null>();
 
 	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
 
@@ -50,39 +51,63 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	useEffect(() => {
-		// make sure the server is running
-		fetch('/api/socket');
-
-		const newSocket = SocketIO({ forceNew: true, autoConnect: false, auth: { authLevel: data?.user?.authLevel } });
-		newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
-		newSocket.connect();
-
 		// create and write 'Attempting to connect...' message
 		const id = v4();
 		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(
 			{ description: 'Attempting to connect...', color: EmbedColors.blue },
 			id
 		);
-
 		dispatch({ type: 'push', payload: connectingEmbedMsg });
 
-		// when connected, update message
-		newSocket.on('connected', (data) => {
-			dispatch({
-				type: 'updateEmbedMsg',
-				payload: { id, data: { description: data.message, footer: {}, color: EmbedColors.green } },
-			});
-		});
+		// don't try to connect until auth is done loading
+		if (status === 'loading')
+			return () => {
+				socket?.disconnect();
+				dispatch({ type: 'clear' });
+			};
 
-		// save socket to state
-		setSocket((currentSocket) => {
-			currentSocket?.disconnect();
-			return newSocket;
-		});
+		async function createSocket() {
+			// cancel running fetch requests
+			if (controllerRef.current) controllerRef.current.abort();
+			// create new AbortController
+			const controller = new AbortController();
+			controllerRef.current = controller;
+
+			// make sure the server is running
+			await fetch('/api/socket', { signal: controllerRef.current.signal });
+
+			// create new socket connection
+			const newSocket = SocketIO({
+				forceNew: true,
+				autoConnect: false,
+				auth: { authLevel: data?.user?.authLevel },
+			});
+
+			// when connected, update message
+			newSocket.on('connected', (data) => {
+				dispatch({
+					type: 'updateEmbedMsg',
+					payload: { id, data: { description: data.message, color: EmbedColors.green } },
+				});
+			});
+
+			newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
+			newSocket.connect();
+
+			// save socket to state
+			setSocket((currentSocket) => {
+				currentSocket?.disconnect();
+				return newSocket;
+			});
+
+			controllerRef.current = null;
+		}
+
+		createSocket();
 
 		// cleanup
 		return () => {
-			newSocket.disconnect();
+			socket?.disconnect();
 			dispatch({ type: 'clear' });
 		};
 	}, [data?.user?.authLevel]);
