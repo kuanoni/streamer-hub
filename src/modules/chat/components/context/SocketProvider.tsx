@@ -51,6 +51,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			return () => {
 				socket?.disconnect();
 				msgDispatch({ type: 'clear' });
+				usersDispatch({ type: 'clear' });
 			};
 
 		async function createSocket() {
@@ -79,6 +80,12 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 				});
 
 				newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
+				newSocket.on(SocketEvents.JOIN, (user: UsersListItem) =>
+					usersDispatch({ type: 'push', payload: user })
+				);
+				newSocket.on(SocketEvents.LEAVE, (username: string) =>
+					usersDispatch({ type: 'removeByUsername', payload: username })
+				);
 				newSocket.connect();
 
 				// save socket to state
@@ -99,6 +106,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		return () => {
 			socket?.disconnect();
 			msgDispatch({ type: 'clear' });
+			usersDispatch({ type: 'clear' });
 		};
 	}, [status]);
 
