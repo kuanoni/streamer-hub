@@ -1,6 +1,6 @@
-import { DispatchAction, UserListItem } from '@modules/chat/common';
+import { DispatchAction, UsersListItem } from '@modules/chat/common';
 
-const userListReducer = (state: UserListItem[], action: DispatchAction) => {
+const usersListReducer = (state: UsersListItem[], action: DispatchAction) => {
 	switch (action.type) {
 		case 'push': {
 			const contains = state.find((item) => item.username === action.payload.username);
@@ -15,4 +15,4 @@ const userListReducer = (state: UserListItem[], action: DispatchAction) => {
 	}
 };
 
-export default userListReducer;
+export default usersListReducer;
