@@ -84,7 +84,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			});
 
 			// when connected, update message
-			newSocket.on('connected', (data) => {
+			newSocket.on('connected', (data: { message: string }) => {
 				dispatch({
 					type: 'updateEmbedMsg',
 					payload: { id, data: { description: data.message, color: EmbedColors.green } },
