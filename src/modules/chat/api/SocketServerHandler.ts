@@ -75,8 +75,12 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		// add socket event listeners
 		socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
+		socket.on('disconnect', () => {
+			socket.nsp.emit(SocketEvents.LEAVE, user.username);
+		});
 
 		socket.emit('connected', { authenticated: true, message: 'You have connected.' });
+		socket.nsp.emit(SocketEvents.JOIN, { username: user.username });
 	};
 
 	io.on('connection', onConnection);
