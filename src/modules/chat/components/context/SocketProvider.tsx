@@ -115,6 +115,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		sendMessage,
 		dispatch: msgDispatch,
 		messageList,
+		usersList,
 	});
 
 	return <SocketContext.Provider value={providerData}>{children}</SocketContext.Provider>;
