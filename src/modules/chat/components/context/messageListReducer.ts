@@ -7,8 +7,8 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 		case 'push': {
 			return [...state, action.payload];
 		}
-		case 'removeLast': {
-			return [...state.slice(0, state.length - 1)];
+		case 'pop': {
+			return [...state.slice(0, -1)];
 		}
 		case 'updateTextMsg': {
 			const { id, data }: { id: string; data: string } = action.payload;
