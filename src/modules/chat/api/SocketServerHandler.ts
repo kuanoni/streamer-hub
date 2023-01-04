@@ -7,7 +7,6 @@ import validateSessionToken from '@utils/database/validateSessionToken';
 import parseCookieString from '@utils/parseCookieString';
 
 import { SocketEvents, SocketRooms } from '../common';
-import sentCommand from './eventHandlers/sentCommand';
 import sentMessage from './eventHandlers/sentMessage';
 
 const errorHandler = (handler: Function) => {
@@ -70,7 +69,6 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		// add socket event listeners
 		socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
-		socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
 
 		socket.emit('connected', { authenticated: true, message: 'You have connected.' });
 	};
