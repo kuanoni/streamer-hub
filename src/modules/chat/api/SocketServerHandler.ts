@@ -9,8 +9,6 @@ import parseCookieString from '@utils/parseCookieString';
 import { SocketEvents, SocketRooms } from '../common';
 import sentCommand from './eventHandlers/sentCommand';
 import sentMessage from './eventHandlers/sentMessage';
-import serverSendEmbedMsg from './serverSendEmbedMsg';
-import serverSendTextMsg from './serverSendTextMsg';
 
 const errorHandler = (handler: Function) => {
 	const handleError = (err: Error) => {
@@ -33,59 +31,53 @@ const errorHandler = (handler: Function) => {
 };
 
 export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
-	if (!res.socket.server.io) {
-		console.log('Starting socket.io server');
+	if (res.socket.server.io) return res;
 
-		const io = new IOServer(res.socket.server);
+	console.log('Starting socket.io server');
 
-		// assign socket to rooms based on passed user authLevel
-		io.use(async (socket, next) => {
-			if (socket.handshake.auth.authLevel === AuthPerms.ADMIN) socket.join(SocketRooms.ADMIN);
-			if (socket.handshake.auth.authLevel === AuthPerms.MOD) socket.join(SocketRooms.MODERATOR);
-			next();
-		});
+	const io = new IOServer(res.socket.server);
 
-		const onConnection = async (socket: Socket) => {
-			if (!socket.handshake.headers.cookie)
-				return socket.emit('connected', {
-					connected: true,
-					authenticated: false,
-					message: 'You are connected.\n **Sign in to chat**',
-				});
+	const onConnection = async (socket: Socket) => {
+		if (!socket.handshake.headers.cookie)
+			return socket.emit('connected', {
+				authenticated: false,
+				message: 'You are connected.\n **Sign in to chat**',
+			});
 
-			// get cookies from socket handshake
-			const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
+		// get cookies from socket handshake
+		const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
 
-			// validate session token from cookies
-			const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
-			if (!session)
-				return socket.emit('connected', {
-					connected: true,
-					authenticated: false,
-					message: 'You are connected.\n **Sign in to chat**',
-				});
+		// validate session token from cookies
+		const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
+		if (!session)
+			return socket.emit('connected', {
+				authenticated: false,
+				message: 'You are connected.\n **Sign in to chat**',
+			});
 
-			// use session data to get user data, add it to socket
-			const user = await getUserById(session.userId);
-			if (!user)
-				return socket.emit('connected', {
-					connected: true,
-					authenticated: false,
-					message: 'Failed to retrieve user data. Try logging in again.',
-				});
-			socket.user = user;
+		// use session data to get user data, add it to socket
+		const user = await getUserById(session.userId);
+		if (!user)
+			return socket.emit('connected', {
+				authenticated: false,
+				message: 'Failed to retrieve user data. Try logging in again.',
+			});
+		socket.user = user;
 
-			// add socket incoming event listeners
-			socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
-			socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
+		// assign socket to rooms based on user authLevel
+		if (user.authLevel === AuthPerms.ADMIN) socket.join(SocketRooms.ADMIN);
+		if (user.authLevel <= AuthPerms.MOD) socket.join(SocketRooms.MODERATOR);
 
-			socket.emit('connected', { connected: true, authenticated: true, message: 'You have connected.' });
-		};
+		// add socket event listeners
+		socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
+		socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
 
-		io.on('connection', onConnection);
+		socket.emit('connected', { authenticated: true, message: 'You have connected.' });
+	};
 
-		res.socket.server.io = io;
-	}
+	io.on('connection', onConnection);
+
+	res.socket.server.io = io;
 
 	return res;
 };
