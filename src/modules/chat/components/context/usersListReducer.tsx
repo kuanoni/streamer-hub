@@ -2,6 +2,8 @@ import { DispatchAction, UsersListItem } from '@modules/chat/common';
 
 const usersListReducer = (state: UsersListItem[], action: DispatchAction) => {
 	switch (action.type) {
+		case 'set':
+			return action.payload;
 		case 'push': {
 			const contains = state.find((item) => item.username === action.payload.username);
 			if (contains) return state;
