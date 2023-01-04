@@ -7,7 +7,6 @@ import validateSessionToken from '@utils/database/validateSessionToken';
 import parseCookieString from '@utils/parseCookieString';
 
 import { SocketEvents, SocketRooms } from '../common';
-import sentCommand from './eventHandlers/sentCommand';
 import sentMessage from './eventHandlers/sentMessage';
 
 const errorHandler = (handler: Function) => {
@@ -38,30 +37,36 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	const io = new IOServer(res.socket.server);
 
 	const onConnection = async (socket: Socket) => {
-		if (!socket.handshake.headers.cookie)
-			return socket.emit('connected', {
+		if (!socket.handshake.headers.cookie) {
+			socket.emit('connected', {
 				authenticated: false,
 				message: 'You are connected.\n **Sign in to chat**',
 			});
+			return;
+		}
 
 		// get cookies from socket handshake
 		const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
 
 		// validate session token from cookies
 		const session = await validateSessionToken(parsedCookie['next-auth.session-token']);
-		if (!session)
-			return socket.emit('connected', {
+		if (!session) {
+			socket.emit('connected', {
 				authenticated: false,
 				message: 'You are connected.\n **Sign in to chat**',
 			});
+			return;
+		}
 
 		// use session data to get user data, add it to socket
 		const user = await getUserById(session.userId);
-		if (!user)
-			return socket.emit('connected', {
+		if (!user) {
+			socket.emit('connected', {
 				authenticated: false,
 				message: 'Failed to retrieve user data. Try logging in again.',
 			});
+			return;
+		}
 		socket.user = user;
 
 		// assign socket to rooms based on user authLevel
@@ -70,7 +75,6 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 
 		// add socket event listeners
 		socket.on(SocketEvents.CLIENT_SEND_MSG, errorHandler(sentMessage(socket)));
-		socket.on(SocketEvents.CLIENT_SEND_COMMAND, errorHandler(sentCommand(socket)));
 
 		socket.emit('connected', { authenticated: true, message: 'You have connected.' });
 	};
