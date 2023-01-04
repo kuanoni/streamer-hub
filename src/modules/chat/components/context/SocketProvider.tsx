@@ -12,18 +12,18 @@ import SocketContext, { SocketProviderIface } from './SocketContext';
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { status } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
+	const [messageList, msgDispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
 	const controllerRef = useRef<AbortController | null>();
 
 	// saves msg to messageList, which is a list that renders in ChatMessageList
 	const writeMessage = (msg: UserMessage) => {
-		dispatch({ type: 'push', payload: msg });
+		msgDispatch({ type: 'push', payload: msg });
 	};
 
 	// send msg over socket connection
 	const sendMessage = (msg: UserMessageToServer) => {
 		if (status !== 'authenticated' || !socket)
-			return dispatch({
+			return msgDispatch({
 				type: 'push',
 				payload: createEmbedMessage({
 					description: 'You must sign in to send chat messages.',
@@ -42,13 +42,13 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			{ description: 'Attempting to connect...', color: EmbedColors.blue },
 			id
 		);
-		dispatch({ type: 'push', payload: connectingEmbedMsg });
+		msgDispatch({ type: 'push', payload: connectingEmbedMsg });
 
 		// don't try to connect until auth is done loading
 		if (status === 'loading')
 			return () => {
 				socket?.disconnect();
-				dispatch({ type: 'clear' });
+				msgDispatch({ type: 'clear' });
 			};
 
 		async function createSocket() {
@@ -70,7 +70,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 				// when connected, update message
 				newSocket.on('connected', (data: { message: string }) => {
-					dispatch({
+					msgDispatch({
 						type: 'updateEmbedMsg',
 						payload: { id, data: { description: data.message, color: EmbedColors.green } },
 					});
@@ -96,13 +96,13 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// cleanup
 		return () => {
 			socket?.disconnect();
-			dispatch({ type: 'clear' });
+			msgDispatch({ type: 'clear' });
 		};
 	}, [status]);
 
 	const providerData: SocketProviderIface = Object.freeze({
 		sendMessage,
-		dispatch,
+		dispatch: msgDispatch,
 		messageList,
 	});
 
