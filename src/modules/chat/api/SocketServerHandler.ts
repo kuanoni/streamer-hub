@@ -6,7 +6,7 @@ import getUserById from '@utils/database/getUserById';
 import validateSessionToken from '@utils/database/validateSessionToken';
 import parseCookieString from '@utils/parseCookieString';
 
-import { SocketEvents, SocketRooms, UsersList } from '../common';
+import { SocketEvents, SocketRooms, UsersList, UsersListItem } from '../common';
 import sentMessage from './eventHandlers/sentMessage';
 
 const errorHandler = (handler: Function) => {
@@ -42,7 +42,14 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		const allSockets = await io.fetchSockets();
 		allSockets.forEach((socketItem) => {
 			if (socketItem.id === socket.id) return;
-			if (socketItem.user && socketItem.user.username) usersList.push({ username: socketItem.user.username });
+			const { username, subscriptionTier, role } = socketItem.user;
+			if (!username) return;
+
+			const listItem: UsersListItem = { username };
+			if (subscriptionTier) listItem.subTier = subscriptionTier;
+			if (role) listItem.role = role;
+
+			usersList.push(listItem);
 		});
 
 		// check for cookies
@@ -92,7 +99,17 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 		});
 
 		socket.emit('connected', { authenticated: true, message: 'You have connected.', usersList });
-		socket.nsp.emit(SocketEvents.JOIN, { username: user.username });
+
+		// broadcast to all sockets that user has joined
+		if (user.username) {
+			const { username, subscriptionTier, role } = user;
+
+			const listItem: UsersListItem = { username };
+			if (subscriptionTier) listItem.subTier = subscriptionTier;
+			if (role) listItem.role = role;
+
+			socket.nsp.emit(SocketEvents.JOIN, listItem);
+		}
 	};
 
 	io.on('connection', onConnection);

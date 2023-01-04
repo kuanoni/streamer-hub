@@ -1,3 +1,5 @@
+import { Role, SubscriptionTier } from '@globalTypes/user';
+
 export enum SocketRooms {
 	ADMIN = 'admin',
 	MODERATOR = 'moderator',
@@ -29,5 +31,7 @@ export type DispatchAction = { type: string; payload?: any };
 export type MessageList = (UserMessage | EmbedMessage)[];
 export type UsersListItem = {
 	username: string;
+	subTier?: SubscriptionTier;
+	role?: Role;
 };
 export type UsersList = UsersListItem[];
