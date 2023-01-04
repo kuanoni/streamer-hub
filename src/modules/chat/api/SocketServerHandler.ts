@@ -37,14 +37,15 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	const io = new IOServer(res.socket.server);
 
 	const onConnection = async (socket: Socket) => {
+		// create list of currently connected users
 		const usersList: UsersList = [];
 		const allSockets = await io.fetchSockets();
-
-		allSockets.forEach((sock) => {
-			if (sock.id === socket.id) return;
-			if (sock.user && sock.user.username) usersList.push({ username: sock.user.username });
+		allSockets.forEach((socketItem) => {
+			if (socketItem.id === socket.id) return;
+			if (socketItem.user && socketItem.user.username) usersList.push({ username: socketItem.user.username });
 		});
 
+		// check for cookies
 		if (!socket.handshake.headers.cookie) {
 			socket.emit('connected', {
 				authenticated: false,
