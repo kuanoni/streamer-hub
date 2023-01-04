@@ -24,3 +24,6 @@ export enum EmbedColors {
 
 export type DispatchAction = { type: string; payload?: any };
 export type MessageList = (UserMessage | EmbedMessage)[];
+export type UserListItem = {
+	username: string;
+};
