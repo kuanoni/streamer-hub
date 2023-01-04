@@ -12,10 +12,10 @@ import usersListReducer from './usersListReducer';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { status } = useSession();
-	const [socket, setSocket] = useState<Socket | null>(null);
 	const [messageList, msgDispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
 	const [usersList, usersDispatch] = useReducer<typeof usersListReducer>(usersListReducer, []);
 	const controllerRef = useRef<AbortController | null>();
+	const socketRef = useRef<Socket | null>();
 
 	// saves msg to messageList, which is a list that renders in ChatMessageList
 	const writeMessage = (msg: UserMessage) => {
@@ -24,7 +24,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 	// send msg over socket connection
 	const sendMessage = (msg: UserMessageToServer) => {
-		if (status !== 'authenticated' || !socket)
+		if (status !== 'authenticated' || !socketRef.current)
 			return msgDispatch({
 				type: 'push',
 				payload: createEmbedMessage({
@@ -34,7 +34,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			});
 
 		msg.data = msg.data.trim();
-		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
+		socketRef.current.emit(SocketEvents.CLIENT_SEND_MSG, msg);
 	};
 
 	useEffect(() => {
@@ -49,7 +49,9 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// don't try to connect until auth is done loading
 		if (status === 'loading')
 			return () => {
-				socket?.disconnect();
+				socketRef.current?.disconnect();
+				socketRef.current = null;
+
 				msgDispatch({ type: 'clear' });
 				usersDispatch({ type: 'clear' });
 			};
@@ -86,14 +88,10 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 				newSocket.on(SocketEvents.LEAVE, (username: string) =>
 					usersDispatch({ type: 'removeByUsername', payload: username })
 				);
+
 				newSocket.connect();
 
-				// save socket to state
-				setSocket((currentSocket) => {
-					currentSocket?.disconnect();
-					return newSocket;
-				});
-
+				socketRef.current = newSocket;
 				controllerRef.current = null;
 			} catch (e) {
 				console.log(e);
@@ -104,7 +102,9 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
 		// cleanup
 		return () => {
-			socket?.disconnect();
+			socketRef.current?.disconnect();
+			socketRef.current = null;
+
 			msgDispatch({ type: 'clear' });
 			usersDispatch({ type: 'clear' });
 		};
