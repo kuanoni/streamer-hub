@@ -33,20 +33,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			});
 
 		msg.data = msg.data.trim();
-
-		if (msg.data.startsWith('/')) sendCommand(msg);
-		else socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
-	};
-
-	const sendCommand = (msg: UserMessageToServer) => {
-		if (status !== 'authenticated' || !socket) return;
-
-		const [name, params] = parseCommandText(msg.data);
-		if (!name) return console.log('Invalid command');
-
-		const commandMessage: CommandMessage = { name, params };
-
-		socket.emit(SocketEvents.CLIENT_SEND_COMMAND, commandMessage);
+		socket.emit(SocketEvents.CLIENT_SEND_MSG, msg);
 	};
 
 	useEffect(() => {
