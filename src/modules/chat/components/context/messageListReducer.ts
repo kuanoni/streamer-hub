@@ -31,7 +31,7 @@ const messageListReducer = (state: MessageList, action: DispatchAction): Message
 			const msgIndex = state.findIndex((msg) => msg.id === id);
 			const msg = state[msgIndex];
 
-			if (msg.type !== MessageType.EMBED) return state;
+			if (!msg || msg.type !== MessageType.EMBED) return state;
 
 			const newData = { ...msg.data, ...data };
 			const newMsg: EmbedMessage = { ...msg, data: newData };
