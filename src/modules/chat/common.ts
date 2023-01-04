@@ -14,6 +14,7 @@ export enum SocketEvents {
 export enum ChatPopups {
 	NONE,
 	OPTIONS,
+	USERS,
 	EMOTES,
 }
 
