@@ -9,7 +9,12 @@ import SocketContext from './context/SocketContext';
 
 const Section = styled(PopupSection, {});
 
+const Name = styled('span', {
+	padding: '0 .25rem',
+	borderRadius: theme.space.borderRadHalf,
 	'&:hover': {
+		textDecoration: 'underline',
+		cursor: 'pointer',
 	},
 });
 
@@ -31,9 +36,16 @@ const ChatUsersList = ({ closePopup }: Props) => {
 			</PopupHeader>
 			<PopupContent>
 				<Section>
-					{usersList.map((user, i) => (
-						<div key={i}>{user.username}</div>
-					))}
+					{usersList.map((user, i) => {
+						console.log(user);
+
+						const color = getUsernameColorsCss(user.role, user.subTier);
+						return (
+							<div key={user.username}>
+								<Name css={color}>{user.username}</Name>
+							</div>
+						);
+					})}
 				</Section>
 			</PopupContent>
 		</PopupContainer>
