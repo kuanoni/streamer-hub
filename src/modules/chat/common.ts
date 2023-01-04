@@ -4,6 +4,8 @@ export enum SocketRooms {
 }
 
 export enum SocketEvents {
+	JOIN = 'join',
+	LEAVE = 'leave',
 	CLIENT_SEND_MSG = 'CLIENT_SEND_MSG',
 	CLIENT_RECEIVE_MSG = 'CLIENT_RECEIVE_MSG',
 	CLIENT_SEND_COMMAND = 'CLIENT_SEND_COMMAND',
