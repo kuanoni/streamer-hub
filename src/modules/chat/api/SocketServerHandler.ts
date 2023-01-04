@@ -6,7 +6,7 @@ import getUserById from '@utils/database/getUserById';
 import validateSessionToken from '@utils/database/validateSessionToken';
 import parseCookieString from '@utils/parseCookieString';
 
-import { SocketEvents, SocketRooms } from '../common';
+import { SocketEvents, SocketRooms, UsersListItem } from '../common';
 import sentMessage from './eventHandlers/sentMessage';
 
 const errorHandler = (handler: Function) => {
@@ -37,10 +37,19 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	const io = new IOServer(res.socket.server);
 
 	const onConnection = async (socket: Socket) => {
+		const usersList: UsersListItem[] = [];
+		const allSockets = await io.fetchSockets();
+
+		allSockets.forEach((sock) => {
+			if (sock.id === socket.id) return;
+			if (sock.user && sock.user.username) usersList.push({ username: sock.user.username });
+		});
+
 		if (!socket.handshake.headers.cookie) {
 			socket.emit('connected', {
 				authenticated: false,
 				message: 'You are connected.\n **Sign in to chat**',
+				usersList,
 			});
 			return;
 		}
@@ -54,6 +63,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			socket.emit('connected', {
 				authenticated: false,
 				message: 'You are connected.\n **Sign in to chat**',
+				usersList,
 			});
 			return;
 		}
@@ -64,6 +74,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			socket.emit('connected', {
 				authenticated: false,
 				message: 'Failed to retrieve user data. Try logging in again.',
+				usersList,
 			});
 			return;
 		}
@@ -79,7 +90,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			socket.nsp.emit(SocketEvents.LEAVE, user.username);
 		});
 
-		socket.emit('connected', { authenticated: true, message: 'You have connected.' });
+		socket.emit('connected', { authenticated: true, message: 'You have connected.', usersList });
 		socket.nsp.emit(SocketEvents.JOIN, { username: user.username });
 	};
 
