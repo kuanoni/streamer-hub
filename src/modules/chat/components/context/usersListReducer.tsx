@@ -1,6 +1,6 @@
-import { DispatchAction, UsersListItem } from '@modules/chat/common';
+import { DispatchAction, UsersList } from '@modules/chat/common';
 
-const usersListReducer = (state: UsersListItem[], action: DispatchAction) => {
+const usersListReducer = (state: UsersList, action: DispatchAction) => {
 	switch (action.type) {
 		case 'set':
 			return action.payload;

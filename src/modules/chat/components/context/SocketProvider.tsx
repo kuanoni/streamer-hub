@@ -1,11 +1,11 @@
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import SocketIO, { Socket } from 'socket.io-client';
 import { v4 } from 'uuid';
 
 import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
 
-import { EmbedColors, SocketEvents, UsersListItem } from '../../common';
+import { EmbedColors, SocketEvents, UsersList, UsersListItem } from '../../common';
 import messageListReducer from './messageListReducer';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 import usersListReducer from './usersListReducer';
@@ -74,7 +74,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 				});
 
 				// when connected, update message
-				newSocket.on('connected', (data: { message: string; usersList: UsersListItem[] }) => {
+				newSocket.on('connected', (data: { message: string; usersList: UsersList }) => {
 					usersDispatch({ type: 'set', payload: data.usersList });
 					msgDispatch({
 						type: 'updateEmbedMsg',

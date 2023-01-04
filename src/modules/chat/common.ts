@@ -29,3 +29,4 @@ export type MessageList = (UserMessage | EmbedMessage)[];
 export type UsersListItem = {
 	username: string;
 };
+export type UsersList = UsersListItem[];

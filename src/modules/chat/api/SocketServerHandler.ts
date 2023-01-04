@@ -6,7 +6,7 @@ import getUserById from '@utils/database/getUserById';
 import validateSessionToken from '@utils/database/validateSessionToken';
 import parseCookieString from '@utils/parseCookieString';
 
-import { SocketEvents, SocketRooms, UsersListItem } from '../common';
+import { SocketEvents, SocketRooms, UsersList } from '../common';
 import sentMessage from './eventHandlers/sentMessage';
 
 const errorHandler = (handler: Function) => {
@@ -37,7 +37,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	const io = new IOServer(res.socket.server);
 
 	const onConnection = async (socket: Socket) => {
-		const usersList: UsersListItem[] = [];
+		const usersList: UsersList = [];
 		const allSockets = await io.fetchSockets();
 
 		allSockets.forEach((sock) => {
