@@ -11,11 +11,10 @@ import messageListReducer from './messageListReducer';
 import SocketContext, { SocketProviderIface } from './SocketContext';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
-	const { data, status } = useSession();
+	const { status } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
-	const controllerRef = useRef<AbortController | null>();
-
 	const [messageList, dispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
+	const controllerRef = useRef<AbortController | null>();
 
 	// saves msg to messageList, which is a list that renders in ChatMessageList
 	const writeMessage = (msg: UserMessage) => {
@@ -73,34 +72,37 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			const controller = new AbortController();
 			controllerRef.current = controller;
 
-			// make sure the server is running
-			await fetch('/api/socket', { signal: controllerRef.current.signal });
+			try {
+				// make sure the server is running
+				await fetch('/api/socket', { signal: controllerRef.current.signal });
 
-			// create new socket connection
-			const newSocket = SocketIO({
-				forceNew: true,
-				autoConnect: false,
-				auth: { authLevel: data?.user?.authLevel },
-			});
-
-			// when connected, update message
-			newSocket.on('connected', (data: { message: string }) => {
-				dispatch({
-					type: 'updateEmbedMsg',
-					payload: { id, data: { description: data.message, color: EmbedColors.green } },
+				// create new socket connection
+				const newSocket = SocketIO({
+					forceNew: true,
+					autoConnect: false,
 				});
-			});
 
-			newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
-			newSocket.connect();
+				// when connected, update message
+				newSocket.on('connected', (data: { message: string }) => {
+					dispatch({
+						type: 'updateEmbedMsg',
+						payload: { id, data: { description: data.message, color: EmbedColors.green } },
+					});
+				});
 
-			// save socket to state
-			setSocket((currentSocket) => {
-				currentSocket?.disconnect();
-				return newSocket;
-			});
+				newSocket.on(SocketEvents.CLIENT_RECEIVE_MSG, (msg: UserMessage) => writeMessage(msg));
+				newSocket.connect();
 
-			controllerRef.current = null;
+				// save socket to state
+				setSocket((currentSocket) => {
+					currentSocket?.disconnect();
+					return newSocket;
+				});
+
+				controllerRef.current = null;
+			} catch (e) {
+				console.log(e);
+			}
 		}
 
 		createSocket();
@@ -110,7 +112,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 			socket?.disconnect();
 			dispatch({ type: 'clear' });
 		};
-	}, [data?.user?.authLevel]);
+	}, [status]);
 
 	const providerData: SocketProviderIface = Object.freeze({
 		sendMessage,
