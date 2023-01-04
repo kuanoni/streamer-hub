@@ -4,7 +4,6 @@ import SocketIO, { Socket } from 'socket.io-client';
 import { v4 } from 'uuid';
 
 import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
-import parseCommandText from '@modules/chat/utils/parseCommandText';
 
 import { EmbedColors, SocketEvents } from '../../common';
 import messageListReducer from './messageListReducer';
