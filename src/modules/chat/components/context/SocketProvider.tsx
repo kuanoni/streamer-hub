@@ -5,14 +5,16 @@ import { v4 } from 'uuid';
 
 import createEmbedMessage from '@modules/chat/utils/createEmbedMessage';
 
-import { EmbedColors, SocketEvents } from '../../common';
+import { EmbedColors, SocketEvents, UsersListItem } from '../../common';
 import messageListReducer from './messageListReducer';
 import SocketContext, { SocketProviderIface } from './SocketContext';
+import usersListReducer from './usersListReducer';
 
 const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 	const { status } = useSession();
 	const [socket, setSocket] = useState<Socket | null>(null);
 	const [messageList, msgDispatch] = useReducer<typeof messageListReducer>(messageListReducer, []);
+	const [usersList, usersDispatch] = useReducer<typeof usersListReducer>(usersListReducer, []);
 	const controllerRef = useRef<AbortController | null>();
 
 	// saves msg to messageList, which is a list that renders in ChatMessageList
