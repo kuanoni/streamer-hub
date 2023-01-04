@@ -9,6 +9,10 @@ declare module 'socket.io' {
 	interface Socket {
 		user: User;
 	}
+
+	interface RemoteSocket {
+		user: User;
+	}
 }
 
 interface SocketServer extends HTTPServer {
