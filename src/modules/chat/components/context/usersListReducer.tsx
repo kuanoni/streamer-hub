@@ -12,7 +12,11 @@ const usersListReducer = (state: UsersListItem[], action: DispatchAction) => {
 			const idx = state.findIndex((item) => item.username === username);
 			return [...state.slice(0, idx), ...state.slice(idx + 1)];
 		}
+		case 'clear':
+			return [];
 	}
+
+	return state;
 };
 
 export default usersListReducer;
