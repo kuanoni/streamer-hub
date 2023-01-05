@@ -47,15 +47,28 @@ export const PopupHeader = styled('div', {
 	paddingLeft: '1rem',
 	backgroundColor: theme.colors.primary900,
 	borderBottom: `1px solid ${theme.colors.trinary700}`,
+});
+
+export const PopupHeaderTitle = styled('div', {
 	h2: {
 		display: 'inline',
 		margin: 0,
 		fontSize: '1.25rem',
 	},
+	h4: {
+		display: 'inline',
+		margin: 0,
+		color: theme.colors.textMedium,
+	},
 });
 
-export const CloseButton = styled('button', {
-	height: '1.75rem',
+export const PopupHeaderButtons = styled('div', {
+	display: 'flex',
+	gap: '1rem',
+});
+
+export const HeaderButton = styled('button', {
+	height: '1.25rem',
 	padding: 0,
 	backgroundColor: 'transparent',
 	border: 'none',
