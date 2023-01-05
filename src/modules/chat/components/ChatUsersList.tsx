@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
@@ -25,6 +25,7 @@ const Name = styled('span', {
 });
 
 type RoleUsersListItem = UsersListItem & { role: Role };
+type RoleUsersList = RoleUsersListItem[];
 
 interface Props {
 	closePopup: () => void;
@@ -33,66 +34,67 @@ interface Props {
 const ChatUsersList = ({ closePopup }: Props) => {
 	const ctx = useContext(SocketContext);
 	const [usersListSections, setUsersListSections] = useState<UsersList[]>([]);
-	const mountedRef = useRef<boolean>(false);
+	const isMountedRef = useRef<boolean>(false);
 
+	// divides context usersLists into separate sorted arrays of users with roles, and users without roles
+	// only runs once then stops after component is mounted
 	useEffect(() => {
-		if (mountedRef.current || !ctx?.usersList) return;
+		if (isMountedRef.current || !ctx?.usersList) return;
+
 		const usersList = ctx.usersList;
+		const roleUsers: RoleUsersList = [];
+		const rolelessUsers: UsersList = [];
 
-		const otherUsers: UsersList = [];
-		const roleUsers: RoleUsersListItem[] = [];
-
-		// split users list
+		// split users list into users with roles and users without roles
 		for (const user of usersList) {
 			if (user.role) roleUsers.push(user as RoleUsersListItem);
-			else otherUsers.push(user);
+			else rolelessUsers.push(user);
 		}
 
-		// sort lists
-		otherUsers.sort((a, b) => a.username.localeCompare(b.username));
-		roleUsers.sort((a, b) => {
-			return a.role.localeCompare(b.role) || a.username.localeCompare(b.username);
-		});
+		// sort both lists
+		roleUsers.sort((a, b) => a.role.localeCompare(b.role) || a.username.localeCompare(b.username));
+		rolelessUsers.sort((a, b) => a.username.localeCompare(b.username));
 
-		setUsersListSections([roleUsers, otherUsers]);
+		setUsersListSections([roleUsers, rolelessUsers]);
 	}, [ctx?.usersList]);
 
-	const sectionComponents = useMemo(
-		() =>
-			usersListSections.map((sectionUsers, i) => {
-				return (
-					<Section key={i}>
-						{sectionUsers.map((user) => {
-							const color = getUsernameColorsCss(user.role, user.subTier);
-							return (
-								<NameContainer key={user.username}>
-									<Name css={color}>{user.username}</Name>
-								</NameContainer>
-							);
-						})}
-					</Section>
-				);
-			}),
-		[usersListSections]
-	);
-
-	// used to prevent
+	// track if component is mounted
 	useEffect(() => {
-		mountedRef.current = true;
+		isMountedRef.current = true;
 		return () => {
-			mountedRef.current = false;
+			isMountedRef.current = false;
 		};
 	}, []);
 
 	return (
 		<PopupContainer>
 			<PopupHeader>
-				<h2>Users</h2>
+				<div>
+					<h2>Users</h2>
+					<span> ({ctx?.usersList.length})</span>
+				</div>
 				<CloseButton onClick={() => closePopup()}>
 					<BsX />
 				</CloseButton>
 			</PopupHeader>
-			<PopupContent>{sectionComponents}</PopupContent>
+			<PopupContent>
+				{usersListSections.map((sectionUsers, i) => {
+					if (!sectionUsers.length) return <React.Fragment key={i}></React.Fragment>;
+
+					return (
+						<Section key={i}>
+							{sectionUsers.map((user) => {
+								const color = getUsernameColorsCss(user.role, user.subTier);
+								return (
+									<NameContainer key={user.username}>
+										<Name css={color}>{user.username}</Name>
+									</NameContainer>
+								);
+							})}
+						</Section>
+					);
+				})}
+			</PopupContent>
 		</PopupContainer>
 	);
 };
