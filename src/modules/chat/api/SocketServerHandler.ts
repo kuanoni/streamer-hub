@@ -104,10 +104,10 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	};
 
 	io.on('connection', async (socket: Socket) => {
-		const usersList = await getUsersList();
 		const [user, message] = await tryToFetchUserData(socket);
-
 		if (user) handleUserSocket(socket, user);
+
+		const usersList = await getUsersList();
 
 		socket.emit('connected', { authenticated: !!user, message, usersList });
 	});
