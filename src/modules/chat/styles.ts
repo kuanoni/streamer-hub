@@ -31,9 +31,6 @@ export const moveIn = keyframes({
 });
 
 export const PopupContainer = styled('div', {
-	display: 'flex',
-	flexDirection: 'column',
-	height: '100%',
 	paddingBottom: '1rem',
 	fontSize: '.9rem',
 	animation: `${moveIn} .2s`,
