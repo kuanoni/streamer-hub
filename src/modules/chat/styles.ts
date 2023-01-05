@@ -85,10 +85,14 @@ export const HeaderButton = styled('button', {
 	},
 });
 
+export const PopupContentHeader = styled('div', {
+	paddingTop: '.5rem',
+});
+
 export const PopupContent = styled('div', {
 	height: '100%',
 	padding: '.5rem 0',
-	overflowY: 'scroll',
+	overflowY: 'auto',
 	scrollbarWidth: 'thin',
 });
 
