@@ -31,6 +31,15 @@ const Name = styled('span', {
 type RoleUsersListItem = UsersListItem & { role: Role };
 type RoleUsersList = RoleUsersListItem[];
 
+const getNameComponent = (user: UsersListItem) => {
+	const color = getUsernameColorsCss(user.role, user.subTier);
+	return (
+		<NameContainer key={user.username}>
+			<Name css={color}>{user.username}</Name>
+		</NameContainer>
+	);
+};
+
 interface Props {
 	closePopup: () => void;
 }
@@ -101,22 +110,20 @@ const ChatUsersList = ({ closePopup }: Props) => {
 				</TextInput>
 			</PopupContentHeader>
 			<PopupContent>
-				{usersListSections.map((sectionUsers, i) => {
-					if (!sectionUsers.length) return <React.Fragment key={i}></React.Fragment>;
+				{!searchValue &&
+					usersListSections.map((sectionUsers, i) => {
+						if (!sectionUsers.length) return <React.Fragment key={i}></React.Fragment>;
 
-					return (
-						<Section key={i}>
-							{sectionUsers.map((user) => {
-								const color = getUsernameColorsCss(user.role, user.subTier);
-								return (
-									<NameContainer key={user.username}>
-										<Name css={color}>{user.username}</Name>
-									</NameContainer>
-								);
-							})}
-						</Section>
-					);
-				})}
+						return <Section key={i}>{sectionUsers.map((user) => getNameComponent(user))}</Section>;
+					})}
+
+				<Section>
+					{searchValue &&
+						ctx?.usersList.map((user) => {
+							if (user.username.toLowerCase().startsWith(searchValue.toLowerCase()))
+								return getNameComponent(user);
+						})}
+				</Section>
 			</PopupContent>
 		</PopupContainer>
 	);
