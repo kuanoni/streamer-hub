@@ -1,14 +1,14 @@
+import React, { useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
-const Input = styled('input', {
-	width: '100%',
-	margin: 0,
-	fontFamily: 'inherit',
+const InputWrapper = styled('div', {
+	position: 'relative',
+	display: 'flex',
+	gap: '.5rem',
 	outlineColor: 'transparent',
 	outlineStyle: 'solid',
 	outlineWidth: 1,
 	outlineOffset: -1,
-
 	transition: 'outline-color .2s ease',
 
 	variants: {
@@ -20,12 +20,12 @@ const Input = styled('input', {
 				borderLeft: `1px solid ${theme.colors.border}`,
 				borderRight: `1px solid ${theme.colors.grey800}`,
 				borderBottom: `1px solid ${theme.colors.grey800}`,
-				'&:focus': {
+				'&.focus': {
 					color: theme.colors.textMediumActive,
 					outlineColor: theme.colors.grey400,
 				},
 
-				'&:disabled': {
+				'&.disabled': {
 					color: theme.colors.textDark,
 					backgroundColor: theme.colors.bg,
 				},
@@ -38,7 +38,7 @@ const Input = styled('input', {
 				outlineStyle: 'ridge',
 				outlineOffset: 2,
 				outlineWidth: 2,
-				'&:focus': {
+				'&.focus': {
 					outlineColor: theme.colors.textMedium,
 				},
 			},
@@ -50,6 +50,12 @@ const Input = styled('input', {
 				borderRadius: theme.space.borderRadHalf,
 				fontSize: '1rem',
 			},
+			small: {
+				height: '2em',
+				padding: '.25rem',
+				borderRadius: theme.space.borderRadHalf,
+				fontSize: '.875rem',
+			},
 			huge: {
 				height: '1em',
 				padding: 0,
@@ -60,15 +66,27 @@ const Input = styled('input', {
 	},
 });
 
+const Input = styled('input', {
+	width: '100%',
+	margin: 0,
+	padding: 0,
+	fontFamily: 'inherit',
+	color: 'inherit',
+	backgroundColor: 'transparent',
+	caretColor: 'inherit',
+	border: 'none',
+	outline: 'none',
+});
+
 interface Props {
 	value: string;
 	setValue: Function;
-	placeholder: string;
+	placeholder?: string;
 	disabled?: boolean;
 	autoFocus?: boolean;
 	maxLength?: number;
 	color?: 'dark' | 'transparent';
-	size?: 'form' | 'huge';
+	size?: 'form' | 'small' | 'huge';
 }
 
 const TextInput = ({
@@ -80,23 +98,36 @@ const TextInput = ({
 	maxLength,
 	color = 'dark',
 	size = 'form',
-}: Props) => {
+	children,
+}: React.PropsWithChildren<Props>) => {
+	const [isFocused, setIsFocused] = useState(false);
+
+	const containerClassName = `${isFocused ? 'focus' : ''} ${disabled ? 'disabled' : ''}`;
+
+	const handleFocus = (e: React.FocusEvent) => {
+		const wasFocused = e.type === 'focus';
+		setIsFocused(wasFocused);
+	};
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
 
 	return (
-		<Input
-			type={'text'}
-			value={value}
-			onChange={handleChange}
-			placeholder={placeholder}
-			disabled={disabled}
-			autoFocus={autoFocus}
-			maxLength={maxLength || 999}
-			color={color}
-			size={size}
-		/>
+		<InputWrapper className={containerClassName} color={color} size={size}>
+			{children}
+			<Input
+				type={'text'}
+				value={value}
+				onChange={handleChange}
+				onFocus={handleFocus}
+				onBlur={handleFocus}
+				placeholder={placeholder}
+				disabled={disabled}
+				autoFocus={autoFocus}
+				maxLength={maxLength || 999}
+			/>
+		</InputWrapper>
 	);
 };
 

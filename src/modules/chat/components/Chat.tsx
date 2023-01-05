@@ -7,6 +7,7 @@ import ChatControlsTop from './ChatControlsTop';
 import ChatEmoteList from './ChatEmoteList';
 import ChatInput from './ChatInput';
 import ChatMessageList from './ChatMessageList';
+import ChatUsersList from './ChatUsersList';
 import SocketProvider from './context/SocketProvider';
 import ChatOptions from './optionsMenu/components/ChatOptions';
 import ChatOptionsProvider from './optionsMenu/components/context/ChatOptionsProvider';
@@ -30,7 +31,9 @@ const MessagesSection = styled('div', {
 });
 
 const Popups = styled('div', {
-	'&:not(:empty)': {},
+	'&:not(:empty)': {
+		minHeight: '35%',
+	},
 });
 
 export const Chat = () => {
@@ -56,6 +59,7 @@ export const Chat = () => {
 							{popupOpen === ChatPopups.EMOTES && (
 								<ChatEmoteList insertEmote={inputRef.current || (() => {})} />
 							)}
+							{popupOpen === ChatPopups.USERS && <ChatUsersList closePopup={closePopup} />}
 						</Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>

@@ -23,7 +23,7 @@ const ChatControlsBottom = ({ togglePopup }: Props) => {
 			<Button color='dark' content='icon' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
 				<BsFillGearFill />
 			</Button>
-			<Button color='dark' content='icon' onClick={() => {}}>
+			<Button color='dark' content='icon' onClick={() => togglePopup(ChatPopups.USERS)}>
 				<BsPeopleFill />
 			</Button>
 		</Container>
