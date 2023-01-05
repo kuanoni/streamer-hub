@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { BsX } from 'react-icons/bs';
+import { BsArrowClockwise, BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { Role } from '@globalTypes/user';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 import { UsersList, UsersListItem } from '../common';
-import { CloseButton, PopupContainer, PopupContent, PopupHeader, PopupSection } from '../styles';
+import {
+	HeaderButton, PopupContainer, PopupContent, PopupHeader, PopupHeaderButtons, PopupHeaderTitle,
+	PopupSection
+} from '../styles';
 import SocketContext from './context/SocketContext';
 
 const Section = styled(PopupSection, {});
@@ -34,12 +37,16 @@ interface Props {
 const ChatUsersList = ({ closePopup }: Props) => {
 	const ctx = useContext(SocketContext);
 	const [usersListSections, setUsersListSections] = useState<UsersList[]>([]);
-	const isMountedRef = useRef<boolean>(false);
+	const [, forceRender] = useState({});
+
+	const isListFrozenRef = useRef<boolean>(false);
+	const isListFrozen = isListFrozenRef?.current;
 
 	// divides context usersLists into separate sorted arrays of users with roles, and users without roles
 	// only runs once then stops after component is mounted
 	useEffect(() => {
-		if (isMountedRef.current || !ctx?.usersList) return;
+		if (isListFrozenRef.current || !ctx?.usersList) return;
+		isListFrozenRef.current = true;
 
 		const usersList = ctx.usersList;
 		const roleUsers: RoleUsersList = [];
@@ -56,26 +63,35 @@ const ChatUsersList = ({ closePopup }: Props) => {
 		rolelessUsers.sort((a, b) => a.username.localeCompare(b.username));
 
 		setUsersListSections([roleUsers, rolelessUsers]);
-	}, [ctx?.usersList]);
+	}, [isListFrozen, ctx?.usersList, setUsersListSections]);
 
-	// track if component is mounted
+	// unfreeze list when component unmounts
 	useEffect(() => {
-		isMountedRef.current = true;
 		return () => {
-			isMountedRef.current = false;
+			isListFrozenRef.current = false;
 		};
 	}, []);
+
+	const refreshList = () => {
+		isListFrozenRef.current = false;
+		forceRender({});
+	};
 
 	return (
 		<PopupContainer>
 			<PopupHeader>
-				<div>
+				<PopupHeaderTitle>
 					<h2>Users</h2>
-					<span> ({ctx?.usersList.length})</span>
-				</div>
-				<CloseButton onClick={() => closePopup()}>
-					<BsX />
-				</CloseButton>
+					<h4> ({ctx?.usersList.length})</h4>
+				</PopupHeaderTitle>
+				<PopupHeaderButtons>
+					<HeaderButton onClick={() => refreshList()}>
+						<BsArrowClockwise />
+					</HeaderButton>
+					<HeaderButton onClick={() => closePopup()}>
+						<BsX viewBox='3 3 10 10' />
+					</HeaderButton>
+				</PopupHeaderButtons>
 			</PopupHeader>
 			<PopupContent>
 				{usersListSections.map((sectionUsers, i) => {
