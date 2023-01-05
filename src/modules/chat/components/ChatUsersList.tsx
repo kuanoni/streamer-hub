@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { BsArrowClockwise, BsX } from 'react-icons/bs';
+import { BsArrowClockwise, BsSearch, BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
+import TextInput from '@components/ui/TextInput';
 import { Role } from '@globalTypes/user';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 import { UsersList, UsersListItem } from '../common';
 import {
-	HeaderButton, PopupContainer, PopupContent, PopupHeader, PopupHeaderButtons, PopupHeaderTitle,
-	PopupSection
+	HeaderButton, PopupContainer, PopupContent, PopupContentHeader, PopupHeader, PopupHeaderButtons,
+	PopupHeaderTitle, PopupSection
 } from '../styles';
 import SocketContext from './context/SocketContext';
 
@@ -37,6 +38,7 @@ interface Props {
 const ChatUsersList = ({ closePopup }: Props) => {
 	const ctx = useContext(SocketContext);
 	const [usersListSections, setUsersListSections] = useState<UsersList[]>([]);
+	const [searchValue, setSearchValue] = useState('');
 	const [, forceRender] = useState({});
 
 	const isListFrozenRef = useRef<boolean>(false);
@@ -93,6 +95,11 @@ const ChatUsersList = ({ closePopup }: Props) => {
 					</HeaderButton>
 				</PopupHeaderButtons>
 			</PopupHeader>
+			<PopupContentHeader>
+				<TextInput value={searchValue} setValue={setSearchValue} placeholder='Search...' size='small'>
+					<BsSearch size='auto' style={{ padding: '2px' }} />
+				</TextInput>
+			</PopupContentHeader>
 			<PopupContent>
 				{usersListSections.map((sectionUsers, i) => {
 					if (!sectionUsers.length) return <React.Fragment key={i}></React.Fragment>;
