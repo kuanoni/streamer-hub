@@ -79,7 +79,9 @@ export const PopupContent = styled('div', {
 });
 
 export const PopupSection = styled('div', {
-	padding: '.5em 0',
+	'&:not(:empty)': {
+		padding: '.5em 0',
+	},
 	'.title': {
 		padding: '0 .5em',
 		paddingBottom: '.25em',
