@@ -31,7 +31,9 @@ const MessagesSection = styled('div', {
 });
 
 const Popups = styled('div', {
-	'&:not(:empty)': {},
+	'&:not(:empty)': {
+		minHeight: '35%',
+	},
 });
 
 export const Chat = () => {
