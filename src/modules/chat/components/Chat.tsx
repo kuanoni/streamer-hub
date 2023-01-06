@@ -38,6 +38,7 @@ const Popups = styled('div', {
 
 export const Chat = () => {
 	const [popupOpen, setPopupOpen] = useState<ChatPopups>(ChatPopups.NONE);
+	const [focusedUser, setFocusedUser] = useState('');
 	const inputRef: React.RefObject<(emoteKey: string) => void> = useRef(null);
 
 	const togglePopup = (popup: ChatPopups) => {
@@ -53,13 +54,20 @@ export const Chat = () => {
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
-						<ChatMessageList closePopup={closePopup} hide={false} />
+						<ChatMessageList
+							focusedUser={focusedUser}
+							setFocusedUser={setFocusedUser}
+							closePopup={closePopup}
+							hide={false}
+						/>
 						<Popups>
 							{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}
 							{popupOpen === ChatPopups.EMOTES && (
 								<ChatEmoteList closePopup={closePopup} insertEmote={inputRef.current || (() => {})} />
 							)}
-							{popupOpen === ChatPopups.USERS && <ChatUsersList closePopup={closePopup} />}
+							{popupOpen === ChatPopups.USERS && (
+								<ChatUsersList setFocusedUser={setFocusedUser} closePopup={closePopup} />
+							)}
 						</Popups>
 					</MessagesSection>
 				</ChatOptionsProvider>
