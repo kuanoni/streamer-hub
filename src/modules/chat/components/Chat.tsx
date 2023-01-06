@@ -57,7 +57,7 @@ export const Chat = () => {
 						<Popups>
 							{popupOpen === ChatPopups.OPTIONS && <ChatOptions closePopup={closePopup} />}
 							{popupOpen === ChatPopups.EMOTES && (
-								<ChatEmoteList insertEmote={inputRef.current || (() => {})} />
+								<ChatEmoteList closePopup={closePopup} insertEmote={inputRef.current || (() => {})} />
 							)}
 							{popupOpen === ChatPopups.USERS && <ChatUsersList closePopup={closePopup} />}
 						</Popups>

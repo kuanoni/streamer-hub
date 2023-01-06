@@ -1,21 +1,14 @@
-import React, { useMemo } from 'react';
-import { styled, theme } from 'stiches.config';
+import React from 'react';
+import { styled } from 'stiches.config';
 
-import { moveIn } from '../styles';
 import { EmoteComponents, EmoteKeys } from '../utils/ChatEmotes';
+import ChatPopup from './ChatPopup';
 
-const Container = styled('div', {
+const EmotesContainer = styled('div', {
+	display: 'flex',
+	flexWrap: 'wrap',
+	gap: '.5rem',
 	padding: '.5rem',
-	backgroundColor: theme.colors.grey900,
-	animation: `${moveIn} .2s`,
-	h2: {
-		marginTop: 0,
-	},
-	'.emotes': {
-		display: 'flex',
-		flexWrap: 'wrap',
-		gap: '.5rem',
-	},
 });
 
 const EmoteButton = styled('div', {
@@ -26,21 +19,25 @@ const EmoteButton = styled('div', {
 	cursor: 'pointer',
 });
 
-const ChatEmoteList = ({ insertEmote }: { insertEmote: (emoteKey: string) => void }) => {
-	// wrap emotes in clickable buttons
-	const emoteButtons = useMemo(() => {
-		return EmoteKeys.map((emoteKey, i) => (
-			<EmoteButton key={i} title={emoteKey} onClick={() => insertEmote(emoteKey)}>
-				{EmoteComponents[emoteKey]}
-			</EmoteButton>
-		));
-	}, [insertEmote]);
+type Props = {
+	closePopup: () => void;
+	insertEmote: (emoteKey: string) => void;
+};
 
+const ChatEmoteList = ({ closePopup, insertEmote }: Props) => {
 	return (
-		<Container>
-			<h2>Emotes</h2>
-			<div className='emotes'>{emoteButtons}</div>
-		</Container>
+		<ChatPopup>
+			<ChatPopup.Header title='Emotes' closePopup={closePopup}></ChatPopup.Header>
+			<ChatPopup.Content>
+				<EmotesContainer>
+					{EmoteKeys.map((emoteKey, i) => (
+						<EmoteButton key={i} title={emoteKey} onClick={() => insertEmote(emoteKey)}>
+							{EmoteComponents[emoteKey]}
+						</EmoteButton>
+					))}
+				</EmotesContainer>
+			</ChatPopup.Content>
+		</ChatPopup>
 	);
 };
 
