@@ -12,7 +12,7 @@ import ChatPopup from './ChatPopup';
 import SocketContext from './context/SocketContext';
 
 const Lists = styled('div', {
-	padding: '.5rem 0',
+	padding: '.5rem',
 	overflowY: 'auto',
 	scrollbarWidth: 'thin',
 });
@@ -34,6 +34,10 @@ const Name = styled('span', {
 		textDecoration: 'underline',
 		cursor: 'pointer',
 	},
+});
+
+const Searchbar = styled('div', {
+	margin: '0 .5rem',
 });
 
 type RoleUsersListItem = UsersListItem & { role: Role };
@@ -105,9 +109,11 @@ const ChatUsersList = ({ closePopup }: Props) => {
 				</Button>
 			</ChatPopup.Header>
 			<ChatPopup.Content>
-				<TextInput value={searchValue} setValue={setSearchValue} placeholder='Search...' size='small'>
-					<BsSearch size='auto' style={{ padding: '2px' }} />
-				</TextInput>
+				<Searchbar>
+					<TextInput value={searchValue} setValue={setSearchValue} placeholder='Search...' size='small'>
+						<BsSearch size='auto' style={{ padding: '2px' }} />
+					</TextInput>
+				</Searchbar>
 				<Lists>
 					{searchValue ? (
 						<ListSection>
