@@ -15,6 +15,9 @@ const moveIn = keyframes({
 });
 
 const PopupContainer = styled('div', {
+	display: 'flex',
+	flexDirection: 'column',
+	height: '100%',
 	marginTop: '.5rem',
 	paddingBottom: '1rem',
 	fontSize: '.9rem',
@@ -52,6 +55,8 @@ const HeaderButtons = styled('div', {
 const Content = styled('div', {
 	height: '100%',
 	paddingTop: '.5rem',
+	overflowY: 'auto',
+	scrollbarWidth: 'thin',
 });
 
 interface Props {
