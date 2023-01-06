@@ -38,7 +38,6 @@ const HeaderTitles = styled('div', {
 	h2: {
 		display: 'inline',
 		margin: 0,
-		fontSize: '1.25rem',
 	},
 	h4: {
 		display: 'inline',
@@ -55,6 +54,9 @@ const HeaderButtons = styled('div', {
 const Content = styled('div', {
 	height: '100%',
 	paddingTop: '.5rem',
+	backgroundColor: theme.colors.bg,
+	borderBottomLeftRadius: theme.space.borderRad,
+	borderBottomLRightRadius: theme.space.borderRad,
 	overflowY: 'auto',
 	scrollbarWidth: 'thin',
 });
