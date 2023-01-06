@@ -2,20 +2,28 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BsArrowClockwise, BsSearch, BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
+import Button from '@components/ui/Button';
 import TextInput from '@components/ui/TextInput';
 import { Role } from '@globalTypes/user';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 import { UsersList, UsersListItem } from '../common';
-import {
-	HeaderButton, PopupContainer, PopupContent, PopupContentHeader, PopupHeader, PopupHeaderButtons,
-	PopupHeaderTitle, PopupSection
-} from '../styles';
+import ChatPopup from './ChatPopup';
 import SocketContext from './context/SocketContext';
 
-const Section = styled(PopupSection, {});
+const Lists = styled('div', {
+	padding: '.5rem 0',
+	overflowY: 'auto',
+	scrollbarWidth: 'thin',
+});
 
-const NameContainer = styled('div', {
+const ListSection = styled('section', {
+	'&:not(:empty)': {
+		padding: '.5em 0',
+	},
+});
+
+const NameWrapper = styled('div', {
 	marginBottom: 2,
 });
 
@@ -34,9 +42,9 @@ type RoleUsersList = RoleUsersListItem[];
 const getNameComponent = (user: UsersListItem) => {
 	const color = getUsernameColorsCss(user.role, user.subTier);
 	return (
-		<NameContainer key={user.username}>
+		<NameWrapper key={user.username}>
 			<Name css={color}>{user.username}</Name>
-		</NameContainer>
+		</NameWrapper>
 	);
 };
 
@@ -83,49 +91,43 @@ const ChatUsersList = ({ closePopup }: Props) => {
 		};
 	}, []);
 
+	// reload users list
 	const refreshList = () => {
 		isListFrozenRef.current = false;
 		forceRender({});
 	};
 
 	return (
-		<PopupContainer>
-			<PopupHeader>
-				<PopupHeaderTitle>
-					<h2>Users</h2>
-					<h4> ({ctx?.usersList.length})</h4>
-				</PopupHeaderTitle>
-				<PopupHeaderButtons>
-					<HeaderButton onClick={() => refreshList()}>
-						<BsArrowClockwise />
-					</HeaderButton>
-					<HeaderButton onClick={() => closePopup()}>
-						<BsX viewBox='3 3 10 10' />
-					</HeaderButton>
-				</PopupHeaderButtons>
-			</PopupHeader>
-			<PopupContentHeader>
+		<ChatPopup>
+			<ChatPopup.Header title='Users' subtitle={` (${ctx?.usersList.length})`} closePopup={closePopup}>
+				<Button color='primaryTransparent' content='icon' size='2em' onClick={() => refreshList()}>
+					<BsArrowClockwise />
+				</Button>
+			</ChatPopup.Header>
+			<ChatPopup.Content>
 				<TextInput value={searchValue} setValue={setSearchValue} placeholder='Search...' size='small'>
 					<BsSearch size='auto' style={{ padding: '2px' }} />
 				</TextInput>
-			</PopupContentHeader>
-			<PopupContent>
-				{!searchValue &&
-					usersListSections.map((sectionUsers, i) => {
-						if (!sectionUsers.length) return <React.Fragment key={i}></React.Fragment>;
+				<Lists>
+					{searchValue ? (
+						<ListSection>
+							{ctx?.usersList.map((user) => {
+								if (user.username.toLowerCase().startsWith(searchValue.toLowerCase()))
+									return getNameComponent(user);
+							})}
+						</ListSection>
+					) : (
+						usersListSections.map((sectionUsers, i) => {
+							if (!sectionUsers.length) return <React.Fragment key={i}></React.Fragment>;
 
-						return <Section key={i}>{sectionUsers.map((user) => getNameComponent(user))}</Section>;
-					})}
-
-				<Section>
-					{searchValue &&
-						ctx?.usersList.map((user) => {
-							if (user.username.toLowerCase().startsWith(searchValue.toLowerCase()))
-								return getNameComponent(user);
-						})}
-				</Section>
-			</PopupContent>
-		</PopupContainer>
+							return (
+								<ListSection key={i}>{sectionUsers.map((user) => getNameComponent(user))}</ListSection>
+							);
+						})
+					)}
+				</Lists>
+			</ChatPopup.Content>
+		</ChatPopup>
 	);
 };
 
