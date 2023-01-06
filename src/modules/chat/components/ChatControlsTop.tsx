@@ -28,7 +28,7 @@ const ChatControlsTop = () => {
 				value={streamSource}
 				chooseOption={changeStreamSource}
 			/>
-			<Button color='dark' content='icon' onClick={() => {}}>
+			<Button color='dark' content='icon' size='icon' onClick={() => {}}>
 				<BsArrowUpRightSquareFill />
 			</Button>
 		</Container>
