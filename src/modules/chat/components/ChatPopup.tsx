@@ -71,7 +71,7 @@ const ChatPopup = ({ children }: React.PropsWithChildren) => {
 	return <PopupContainer>{children}</PopupContainer>;
 };
 
-ChatPopup.Header = ({ title, subtitle, closePopup, children }: React.PropsWithChildren<Props>) => (
+const ChatPopupHeader = ({ title, subtitle, closePopup, children }: React.PropsWithChildren<Props>) => (
 	<Header>
 		<HeaderTitles>
 			<h2>{title}</h2>
@@ -86,6 +86,9 @@ ChatPopup.Header = ({ title, subtitle, closePopup, children }: React.PropsWithCh
 	</Header>
 );
 
-ChatPopup.Content = ({ children }: React.PropsWithChildren) => <Content>{children}</Content>;
+const ChatPopupContent = ({ children }: React.PropsWithChildren) => <Content>{children}</Content>;
+
+ChatPopup.Header = ChatPopupHeader;
+ChatPopup.Content = ChatPopupContent;
 
 export default ChatPopup;
