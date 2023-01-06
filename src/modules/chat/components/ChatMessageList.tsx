@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+	Dispatch, SetStateAction, useContext, useEffect, useMemo, useRef, useState
+} from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
@@ -74,14 +76,15 @@ const UnpauseButton = styled(MessageBoxContainer, {
 });
 
 interface Props {
+	focusedUser: string;
+	setFocusedUser: Dispatch<SetStateAction<string>>;
 	closePopup: () => void;
 	hide: boolean;
 }
 
-const ChatMessageList = ({ closePopup, hide }: Props) => {
+const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Props) => {
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
-	const [focusedUser, setFocusedUser] = useState('');
 	const [isPaused, setIsPaused] = useState(false);
 	const [messages, setMessages] = useState<(UserMessage | EmbedMessage)[]>([]);
 
