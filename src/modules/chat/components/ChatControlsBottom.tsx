@@ -20,10 +20,10 @@ type Props = {
 const ChatControlsBottom = ({ togglePopup }: Props) => {
 	return (
 		<Container>
-			<Button color='dark' content='icon' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
+			<Button color='dark' content='icon' size='icon' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
 				<BsFillGearFill />
 			</Button>
-			<Button color='dark' content='icon' onClick={() => togglePopup(ChatPopups.USERS)}>
+			<Button color='dark' content='icon' size='icon' onClick={() => togglePopup(ChatPopups.USERS)}>
 				<BsPeopleFill />
 			</Button>
 		</Container>

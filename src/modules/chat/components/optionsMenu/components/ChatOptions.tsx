@@ -1,62 +1,11 @@
-import React, { Dispatch, SetStateAction, useContext } from 'react';
-import { BsX } from 'react-icons/bs';
+import React, { useContext } from 'react';
 import { styled, theme } from 'stiches.config';
 
-import { moveIn } from '@modules/chat/styles';
-import { keyframes } from '@stitches/react';
-
+import ChatPopup from '../../ChatPopup';
 import { OptionItem, Section } from '../types';
 import ChatOptionsContext from './context/ChatOptionsContext';
 import OptionsCheckbox from './OptionsCheckbox';
 import OptionsDropdown from './OptionsDropdown';
-
-const Container = styled('div', {
-	display: 'flex',
-	flexDirection: 'column',
-	height: '100%',
-	paddingBottom: '1rem',
-	fontSize: '.9rem',
-	animation: `${moveIn} .2s`,
-});
-
-const Header = styled('div', {
-	display: 'flex',
-	justifyContent: 'space-between',
-	alignItems: 'center',
-	padding: '.5rem',
-	paddingLeft: '1rem',
-	backgroundColor: theme.colors.primary900,
-	borderBottom: `1px solid ${theme.colors.trinary700}`,
-	h2: {
-		margin: 0,
-		fontSize: '1.25rem',
-	},
-});
-
-const CloseButton = styled('button', {
-	height: '1.75rem',
-	padding: 0,
-	backgroundColor: 'transparent',
-	border: 'none',
-	color: theme.colors.textMedium,
-	aspectRatio: 1,
-	cursor: 'pointer',
-	'&:hover': {
-		color: theme.colors.textMediumActive,
-	},
-	svg: {
-		width: '100%',
-		height: '100%',
-		aspectRatio: 1,
-	},
-});
-
-const OptionsContent = styled('div', {
-	height: '100%',
-	padding: '.5rem 0',
-	overflowY: 'scroll',
-	scrollbarWidth: 'thin',
-});
 
 const OptionsSection = styled('div', {
 	padding: '.5em 0',
@@ -117,6 +66,7 @@ const ChatOptions = ({ closePopup }: Props) => {
 
 	if (!ctx) return <></>;
 
+	// creates components from Section template items
 	const getOptionItemComponent = (item: OptionItem) => {
 		switch (item.type) {
 			case 'checkbox': {
@@ -148,14 +98,9 @@ const ChatOptions = ({ closePopup }: Props) => {
 	};
 
 	return (
-		<Container>
-			<Header>
-				<h2>Options</h2>
-				<CloseButton onClick={() => closePopup()}>
-					<BsX />
-				</CloseButton>
-			</Header>
-			<OptionsContent>
+		<ChatPopup>
+			<ChatPopup.Header title='Options' closePopup={closePopup}></ChatPopup.Header>
+			<ChatPopup.Content>
 				{sectionsTemplate.map((section) => {
 					return (
 						<OptionsSection key={section.title}>
@@ -164,8 +109,8 @@ const ChatOptions = ({ closePopup }: Props) => {
 						</OptionsSection>
 					);
 				})}
-			</OptionsContent>
-		</Container>
+			</ChatPopup.Content>
+		</ChatPopup>
 	);
 };
 

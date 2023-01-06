@@ -126,13 +126,14 @@ const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref
 						<Button
 							color='dark'
 							content='icon'
+							size='icon'
 							onClick={() => {
 								if (textAreaRef.current?.value) submitMessage();
 							}}
 						>
 							<BsCursorFill />
 						</Button>
-						<Button color='dark' content='icon' onClick={toggleEmoteList}>
+						<Button color='dark' content='icon' size='icon' onClick={toggleEmoteList}>
 							<BsEmojiSmileFill />
 						</Button>
 					</ButtonsContainer>

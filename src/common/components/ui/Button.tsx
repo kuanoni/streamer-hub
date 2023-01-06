@@ -10,6 +10,10 @@ const Btn = styled('button', {
 	fontWeight: 700,
 	cursor: 'pointer',
 	transition: '.1s ease',
+	'&:active': {
+		transitionDuration: '0s',
+	},
+
 	variants: {
 		color: {
 			primary: {
@@ -18,6 +22,21 @@ const Btn = styled('button', {
 				'&:hover': {
 					boxShadow: `0 0 4px 1px ${theme.colors.primary400}`,
 					backgroundColor: theme.colors.primary600,
+				},
+				'&:active': {
+					transform: 'translateY(1px)',
+					boxShadow: 'none',
+					backgroundColor: theme.colors.primary800,
+				},
+			},
+			primaryTransparent: {
+				color: theme.colors.textLight,
+				backgroundColor: 'transparent',
+				border: `1px solid ${theme.colors.primary700}`,
+				'&:hover': {
+					boxShadow: `0 0 4px 1px ${theme.colors.primary400}`,
+					backgroundColor: theme.colors.primary600,
+					borderColor: theme.colors.primary400,
 				},
 				'&:active': {
 					transform: 'translateY(1px)',
@@ -46,8 +65,6 @@ const Btn = styled('button', {
 				position: 'relative',
 				padding: 0,
 				margin: 0,
-				height: 36,
-				width: 36,
 				svg: {
 					position: 'absolute',
 					left: '50%',
@@ -59,22 +76,30 @@ const Btn = styled('button', {
 			},
 		},
 		size: {
+			icon: {
+				height: 36,
+				width: 36,
+			},
 			fill: {
 				width: '100%',
 				height: '100%',
+			},
+			'2em': {
+				width: '2em',
+				height: '2em',
 			},
 		},
 	},
 });
 
 interface Props {
-	color?: 'primary' | 'dark';
+	color?: 'primary' | 'primaryTransparent' | 'dark';
 	content?: 'text' | 'icon';
-	size?: 'fill' | undefined;
+	size?: 'icon' | 'fill' | '2em' | undefined;
 	onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-const Button = ({ color = 'primary', content = 'text', onClick, size, children: label }: PropsWithChildren<Props>) => {
+const Button = ({ color = 'primary', content = 'text', size, onClick, children: label }: PropsWithChildren<Props>) => {
 	return (
 		<Btn color={color} content={content} size={size} onClick={onClick}>
 			{label}

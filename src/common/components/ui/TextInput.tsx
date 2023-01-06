@@ -54,7 +54,6 @@ const InputWrapper = styled('div', {
 				height: '2em',
 				padding: '.25rem',
 				borderRadius: theme.space.borderRadHalf,
-				fontSize: '.875rem',
 			},
 			huge: {
 				height: '1em',
@@ -70,6 +69,7 @@ const Input = styled('input', {
 	width: '100%',
 	margin: 0,
 	padding: 0,
+	fontSize: 'inherit',
 	fontFamily: 'inherit',
 	color: 'inherit',
 	backgroundColor: 'transparent',
