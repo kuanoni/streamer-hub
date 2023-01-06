@@ -40,16 +40,16 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 	const user = socket.user;
 
 	const handleCommand = async (msg: UserMessageToServer) => {
-		const [name, params] = parseCommandText(msg.data);
-
-		const cmd: CommandMessage = { name, params };
+		const cmd: CommandMessage = parseCommandText(msg.data);
 
 		// validate command message
-		const { error } = commandSchema.validate(cmd, {
+		const { error, value } = commandSchema.validate(cmd, {
 			messages: {
-				'any.only': `${cmd.name} is not a valid command.`,
+				'any.only': `"${cmd.name}" is not a valid command.`,
 			},
 		});
+
+		const { name, params } = value;
 
 		if (error) {
 			serverSendEmbedMsg(socket, { title: 'Error', description: error.message, color: EmbedColors.red });
@@ -57,12 +57,12 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 		}
 
 		// if this error is thrown, something is very wrong. it should be caught by the Joi validator
-		if (!commandNames.includes(cmd.name)) throw new Error(`${cmd.name} was not found in 'commands' object.`);
+		if (!commandNames.includes(name)) throw new Error(`${name} was not found in 'commands' object.`);
 
-		const cmdObj = commands[cmd.name];
+		const cmdObj = commands[name];
 
 		// make sure socket has the required authLevel
-		if (socket.handshake.auth.authLevel < cmdObj.authLevel)
+		if (user.authLevel < cmdObj.authLevel)
 			// return serverSendTextMsg(socket, "You don't have permission to use that command");
 			return serverSendEmbedMsg(socket, {
 				title: 'Error',
@@ -70,7 +70,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 				color: EmbedColors.red,
 			});
 
-		const paramsArr = cmd.params.split(' ');
+		const paramsArr = params.split(' ');
 
 		// this will return an empty array on success and an array with error messages (strings) on failure
 		const errors = await cmdObj.execute(paramsArr);
