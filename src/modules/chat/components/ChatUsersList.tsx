@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import { BsArrowClockwise, BsSearch, BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
@@ -43,20 +43,12 @@ const Searchbar = styled('div', {
 type RoleUsersListItem = UsersListItem & { role: Role };
 type RoleUsersList = RoleUsersListItem[];
 
-const getNameComponent = (user: UsersListItem) => {
-	const color = getUsernameColorsCss(user.role, user.subTier);
-	return (
-		<NameWrapper key={user.username}>
-			<Name css={color}>{user.username}</Name>
-		</NameWrapper>
-	);
-};
-
 interface Props {
+	setFocusedUser: Dispatch<SetStateAction<string>>;
 	closePopup: () => void;
 }
 
-const ChatUsersList = ({ closePopup }: Props) => {
+const ChatUsersList = ({ setFocusedUser, closePopup }: Props) => {
 	const ctx = useContext(SocketContext);
 	const [usersListSections, setUsersListSections] = useState<UsersList[]>([]);
 	const [searchValue, setSearchValue] = useState('');
@@ -64,6 +56,15 @@ const ChatUsersList = ({ closePopup }: Props) => {
 
 	const isListFrozenRef = useRef<boolean>(false);
 	const isListFrozen = isListFrozenRef?.current;
+
+	const getNameComponent = (user: UsersListItem) => {
+		const color = getUsernameColorsCss(user.role, user.subTier);
+		return (
+			<NameWrapper key={user.username} onClick={() => setFocusedUser(user.username)}>
+				<Name css={color}>{user.username}</Name>
+			</NameWrapper>
+		);
+	};
 
 	// divides context usersLists into separate sorted arrays of users with roles, and users without roles
 	// only runs once then stops after component is mounted
@@ -111,7 +112,7 @@ const ChatUsersList = ({ closePopup }: Props) => {
 			<ChatPopup.Content>
 				<Searchbar>
 					<TextInput value={searchValue} setValue={setSearchValue} placeholder='Search...' size='small'>
-						<BsSearch size='auto' style={{ padding: '2px' }} />
+						<BsSearch />
 					</TextInput>
 				</Searchbar>
 				<Lists>
