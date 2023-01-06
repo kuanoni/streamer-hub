@@ -17,7 +17,7 @@ const timeTitleFormatter = new Intl.DateTimeFormat('default', {
 const Container = styled('div', {
 	position: 'relative',
 	margin: '.25rem',
-	padding: '.5rem',
+	padding: '4px .5em',
 	fontSize: '13px',
 	backgroundColor: 'rgba(149, 149, 149, 0.15)',
 	borderRadius: theme.space.borderRad,
@@ -98,7 +98,12 @@ const Footer = styled('div', {
 
 const FooterTitle = styled('div', {});
 
-const FooterTimestamp = styled('time', {});
+const Timestamp = styled('time', {
+	display: 'block',
+	margin: '.5rem 0',
+	color: theme.colors.textDark,
+	fontSize: '11px',
+});
 
 interface Props {
 	embedData: EmbedData;
@@ -132,9 +137,9 @@ const EmbedMessage = React.memo(({ embedData, time }: Props) => {
 			{embedData.footer && (
 				<Footer>
 					<FooterTitle>{embedData.footer?.title}</FooterTitle>
-					<FooterTimestamp>{embedData.footer?.timestamp || timeTitle}</FooterTimestamp>
 				</Footer>
 			)}
+			<Timestamp>{timeTitle}</Timestamp>
 			<Border position='top' color={color} />
 			<Border position='bottom' color={color} />
 		</Container>

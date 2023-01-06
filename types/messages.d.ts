@@ -35,7 +35,6 @@ interface Field {
 
 interface Footer {
 	title?: string;
-	timestamp?: string;
 }
 
 interface EmbedData {
