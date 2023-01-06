@@ -3,7 +3,7 @@ import { Socket } from 'socket.io';
 import { v4 } from 'uuid';
 
 import { InfoBadge, MessageType, Role, SubscriptionTier } from '@globalTypes/user';
-import { SocketEvents, SocketRooms } from '@modules/chat/common';
+import { EmbedColors, SocketEvents, SocketRooms } from '@modules/chat/common';
 import parseCommandText from '@modules/chat/utils/parseCommandText';
 
 import serverSendEmbedMsg from '../serverSendEmbedMsg';
@@ -52,8 +52,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 		});
 
 		if (error) {
-			// serverSendTextMsg(socket, error.message);
-			serverSendEmbedMsg(socket, { title: 'Error', description: error.message });
+			serverSendEmbedMsg(socket, { title: 'Error', description: error.message, color: EmbedColors.red });
 			throw error;
 		}
 
@@ -68,6 +67,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 			return serverSendEmbedMsg(socket, {
 				title: 'Error',
 				description: "You don't have permission to use that command",
+				color: EmbedColors.red,
 			});
 
 		const paramsArr = cmd.params.split(' ');
@@ -76,7 +76,8 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 		const errors = await cmdObj.execute(paramsArr);
 
 		// if (errors.length) serverSendTextMsg(socket, errors.join(' '));
-		if (errors.length) serverSendEmbedMsg(socket, { title: 'Error', description: errors.join(' ') });
+		if (errors.length)
+			serverSendEmbedMsg(socket, { title: 'Error', description: errors.join(' '), color: EmbedColors.red });
 	};
 
 	const handleText = (msg: UserMessageToServer) => {
