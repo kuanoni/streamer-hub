@@ -12,7 +12,7 @@ type UserMessage = Message & {
 	type: import('./user').MessageType.TEXT;
 	author: string;
 
-	subTier?: any;
+	subTier?: import('./user').SubscriptionTier;
 	infoBadges?: import('./user').InfoBadge[];
 	role?: import('./user').Role;
 
