@@ -1,6 +1,8 @@
 import { NextApiRequest } from 'next';
+import { v4 } from 'uuid';
 
 import { NextApiResponseWithSocket } from '@globalTypes/socketio';
+import { MessageType } from '@globalTypes/user';
 import { SocketEvents } from '@modules/chat/common';
 import extractStringEnvVar from '@utils/extractStringEnvVar';
 
@@ -12,14 +14,20 @@ const emitMessage = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 	else if (typeof req.body === 'string') body = JSON.parse(req.body);
 	else return res.end({ status: 500, message: 'Request body is neither object or string' });
 
-	if (!body.secret) return res.send({ status: 500, message: 'Must include secret key' });
-	if (!body.author) return res.send({ status: 500, message: 'Must include author' });
-	if (!body.text) return res.send({ status: 500, message: 'Must include text' });
+	const { secret, author, subTier, infoBadges, role, data } = body;
+
+	if (!secret) return res.send({ status: 500, message: 'Must include secret key' });
+	if (!author || typeof author !== 'string') return res.send({ status: 500, message: 'Must include author' });
+	if (!data || typeof data !== 'string') return res.send({ status: 500, message: 'Must include data' });
 
 	if (body.secret !== extractStringEnvVar('CUSTOM_API_SECRET'))
 		return res.send({ status: 500, message: 'Invalid secret key' });
 
-	const newMessage = { ...body, time: new Date() };
+	const newMessage: UserMessage = { id: v4(), type: MessageType.TEXT, author, data, time: new Date().getTime() };
+
+	if (subTier) newMessage.subTier = subTier;
+	if (infoBadges) newMessage.infoBadges = infoBadges;
+	if (role) newMessage.role = role;
 
 	res.socket.server.io.emit(SocketEvents.CLIENT_RECEIVE_MSG, newMessage);
 
