@@ -18,3 +18,16 @@ export const AbsoluteContainer = styled('div', {
 	inset: '0 0 0 0',
 	height: '100%',
 });
+
+export const CustomScrollbar = {
+	scrollbarWidth: 'thin',
+	scrollbarColor: `${theme.colors.primary900} ${theme.colors.grey900}`,
+	'&::-webkit-scrollbar': {
+		width: 8,
+		color: theme.colors.primary900,
+		backgroundColor: theme.colors.grey900,
+	},
+	'&::-webkit-scrollbar-thumb': {
+		backgroundColor: theme.colors.primary900,
+	},
+};

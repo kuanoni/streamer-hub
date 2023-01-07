@@ -12,9 +12,7 @@ import ChatPopup from './ChatPopup';
 import SocketContext from './context/SocketContext';
 
 const Lists = styled('div', {
-	padding: '.5rem',
-	overflowY: 'auto',
-	scrollbarWidth: 'thin',
+	padding: '0 .5rem',
 });
 
 const ListSection = styled('section', {
@@ -37,7 +35,14 @@ const Name = styled('span', {
 });
 
 const Searchbar = styled('div', {
-	margin: '0 .5rem',
+	position: 'sticky',
+	top: 0,
+	left: 0,
+	padding: '0 .5rem',
+	backgroundColor: theme.colors.bg,
+	svg: {
+		height: '100%',
+	},
 });
 
 type RoleUsersListItem = UsersListItem & { role: Role };

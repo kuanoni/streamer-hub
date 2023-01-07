@@ -3,6 +3,8 @@ import { keyframes, styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
 
+import { CustomScrollbar } from '../styles';
+
 const moveIn = keyframes({
 	'0%': {
 		opacity: 0,
@@ -58,7 +60,7 @@ const Content = styled('div', {
 	borderBottomLeftRadius: theme.space.borderRad,
 	borderBottomLRightRadius: theme.space.borderRad,
 	overflowY: 'auto',
-	scrollbarWidth: 'thin',
+	...CustomScrollbar,
 });
 
 interface Props {

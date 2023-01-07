@@ -6,6 +6,7 @@ import { styled, theme } from 'stiches.config';
 import Button from '@components/ui/Button';
 
 import { ChatPopups } from '../common';
+import { CustomScrollbar } from '../styles';
 import SocketContext from './context/SocketContext';
 
 const Container = styled('div', {
@@ -30,7 +31,7 @@ const TextArea = styled('textarea', {
 	overflow: 'hidden',
 	outline: 'none',
 	resize: 'none',
-	scrollbarWidth: 'thin',
+	...CustomScrollbar,
 });
 
 const ButtonsContainer = styled('div', {
