@@ -2,10 +2,13 @@ import { MessageType } from '@globalTypes/user';
 
 import { DispatchAction, MessageList } from '../../common';
 
+const messagesMaxAmount = 200;
+
 const messageListReducer = (state: MessageList, action: DispatchAction): MessageList => {
 	switch (action.type) {
 		case 'push': {
-			return [...state, action.payload];
+			if (state.length > messagesMaxAmount) return [...state.slice(1), action.payload];
+			else return [...state, action.payload];
 		}
 		case 'pop': {
 			return [...state.slice(0, -1)];
