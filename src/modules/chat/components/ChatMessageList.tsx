@@ -5,7 +5,7 @@ import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
 
 import { MessageType } from '@globalTypes/user';
-import { MessageBoxContainer } from '@modules/chat/styles';
+import { CustomScrollbar, MessageBoxContainer } from '@modules/chat/styles';
 import { CSS } from '@stitches/react';
 
 import EmbedMessage from './chatMessages/EmbedMessage';
@@ -19,8 +19,7 @@ const Container = styled('div', {
 	flexDirection: 'column-reverse',
 	height: '100%',
 	overflowY: 'scroll',
-	scrollbarWidth: 'thin',
-	scrollbarColor: `${theme.colors.primary900} ${theme.colors.grey900}`,
+	...CustomScrollbar,
 	variants: {
 		hide: {
 			true: {
