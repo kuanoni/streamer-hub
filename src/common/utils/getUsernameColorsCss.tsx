@@ -28,7 +28,7 @@ const roleColors = {
 	},
 };
 
-const getUsernameColorsCss = (role?: Role, subTier?: SubscriptionTier) => {
+const getUsernameColorsCss = (role?: Role | null, subTier?: SubscriptionTier) => {
 	return role ? roleColors[role] : subTier ? subscriberColors[subTier] : {};
 };
 
