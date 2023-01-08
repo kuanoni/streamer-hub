@@ -23,7 +23,7 @@ const sectionsTemplate: Section[] = [
 	{
 		title: 'Messages',
 		content: [
-			{ label: 'Show flair', key: 'showFlair', type: 'checkbox' },
+			{ label: 'Show badges', key: 'showBadges', type: 'checkbox' },
 			{ label: 'Show time', key: 'showTime', type: 'checkbox' },
 			{ label: 'Censor NSFW links', key: 'hideNsfw', type: 'checkbox' },
 			{ label: 'Censor NSFL links', key: 'hideNsfl', type: 'checkbox' },

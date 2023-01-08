@@ -7,7 +7,7 @@ type Props = {
 };
 
 const defaultOptions: ChatOptions = {
-	showFlair: false,
+	showBadges: false,
 	showTime: false,
 	hideNsfw: false,
 	hideNsfl: false,

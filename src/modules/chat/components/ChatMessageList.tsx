@@ -90,7 +90,7 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 	const socketCtx = useContext(SocketContext);
 	const optionsCtx = useContext(ChatOptionsContext);
 
-	const showFlair = optionsCtx?.chatOptions.showFlair === true;
+	const showBadges = optionsCtx?.chatOptions.showBadges === true;
 	const showTime = optionsCtx?.chatOptions.showTime === true;
 	const hideNsfw = optionsCtx?.chatOptions.hideNsfw === true;
 	const hideNsfl = optionsCtx?.chatOptions.hideNsfl === true;
@@ -117,7 +117,7 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 	const messagesContainerCss = useMemo(() => {
 		const cssObj: CSS = {};
 
-		if (!showFlair)
+		if (!showBadges)
 			cssObj['.author img'] = {
 				display: 'none',
 			};
@@ -154,7 +154,7 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 		}
 
 		return cssObj;
-	}, [isPaused, showFlair, showTime, hideNsfw, hideNsfl]);
+	}, [isPaused, showBadges, showTime, hideNsfw, hideNsfl]);
 
 	// update messages only when not paused
 	useEffect(() => {

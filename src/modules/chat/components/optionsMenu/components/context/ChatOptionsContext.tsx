@@ -3,7 +3,7 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 export interface ChatOptions {
 	[index: string]: string | boolean;
 
-	showFlair: boolean;
+	showBadges: boolean;
 	showTime: boolean;
 	hideNsfw: boolean;
 	hideNsfl: boolean;
