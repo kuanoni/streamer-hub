@@ -66,13 +66,13 @@ const Separator = styled('div', {
 	borderBottom: `1px solid ${theme.colors.grey500}`,
 });
 
-interface Props {
+type Props = {
 	setIsDropdownOpen: (setState: React.SetStateAction<boolean>) => void;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
 	openSignIn?: () => void;
-}
+};
 
-const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) => {
+const UserNavOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) => {
 	const handleClick = useCallback(() => setIsDropdownOpen((cur) => !cur), [setIsDropdownOpen]);
 
 	useEffect(() => {
@@ -113,4 +113,4 @@ const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) =
 	);
 };
 
-export default UserOptionsDropdown;
+export default UserNavOptionsDropdown;

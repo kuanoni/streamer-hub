@@ -8,7 +8,7 @@ import { AuthPerms } from '@globalTypes/user';
 import SignIn from '../SignInModal';
 import BrandLogo from './BrandLogo';
 import NavButton from './NavButton';
-import UserSignedIn from './UserSignedIn';
+import UserNavOptions from './UserNavOptions';
 
 const Topbar = styled('div', {
 	position: 'relative',
@@ -70,7 +70,7 @@ const Navbar = ({ fullWidth = false, children }: Props) => {
 					{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					<AlignRightContainer>
 						{children}
-						<UserSignedIn user={data?.user} status={status} openSignIn={openSignIn} />
+						<UserNavOptions user={data?.user} status={status} openSignIn={openSignIn} />
 					</AlignRightContainer>
 				</Nav>
 			</Topbar>

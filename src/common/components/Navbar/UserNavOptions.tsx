@@ -9,7 +9,7 @@ import { styled, theme } from 'stiches.config';
 import Button from '@components/ui/Button';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
-import UserOptionsDropdown from './UserOptionsDropdown';
+import UserNavOptionsDropdown from './UserNavOptionsDropdown';
 
 const Container = styled('div', {
 	position: 'relative',
@@ -61,13 +61,13 @@ const DropdownCaret = styled(BsCaretDownFill, {
 	},
 });
 
-interface Props {
+type Props = {
 	user: User | undefined;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
 	openSignIn: () => void;
-}
+};
 
-const UserSignedIn = ({ user, status, openSignIn }: Props) => {
+const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -114,10 +114,10 @@ const UserSignedIn = ({ user, status, openSignIn }: Props) => {
 				<DropdownCaret className={isDropdownOpen ? 'open' : ''} />
 			</SignedIn>
 			{isDropdownOpen && (
-				<UserOptionsDropdown setIsDropdownOpen={setIsDropdownOpen} status={status} openSignIn={openSignIn} />
+				<UserNavOptionsDropdown setIsDropdownOpen={setIsDropdownOpen} status={status} openSignIn={openSignIn} />
 			)}
 		</Container>
 	);
 };
 
-export default UserSignedIn;
+export default UserNavOptions;
