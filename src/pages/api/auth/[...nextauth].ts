@@ -61,12 +61,6 @@ export const authOptions: NextAuthOptions = {
 		newUser: '/profile',
 		signIn: '/#signin',
 	},
-	cookies: {
-		sessionToken: {
-			name: `next-auth.session-token`,
-			options: {},
-		},
-	},
 };
 
 export default NextAuth(authOptions);
