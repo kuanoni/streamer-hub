@@ -32,7 +32,7 @@ const MessagesSection = styled('div', {
 
 const Popups = styled('div', {
 	'&:not(:empty)': {
-		minHeight: '35%',
+		maxHeight: '80%',
 	},
 });
 
