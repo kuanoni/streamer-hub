@@ -116,7 +116,7 @@ const EmbedMessage = React.memo(({ embedData, time }: Props) => {
 	const timeTitle = timeTitleFormatter.format(dateObj);
 
 	return (
-		<Container>
+		<Container className='msg'>
 			{embedData.author && <Author>{embedData.author}</Author>}
 			{embedData.title && <Title>{embedData.title}</Title>}
 			{embedData.description && (
