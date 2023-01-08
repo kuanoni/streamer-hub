@@ -84,7 +84,7 @@ const TextMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: Rea
 	if (infoBadges) infoBadges.forEach((badge) => badges.push(infoBadgeImages[badge]));
 
 	return (
-		<Container onClick={onClick}>
+		<Container className='author' onClick={onClick}>
 			<BadgeContainer>
 				{badges.map((badge, i) => (
 					<React.Fragment key={i}>{badge}</React.Fragment>
