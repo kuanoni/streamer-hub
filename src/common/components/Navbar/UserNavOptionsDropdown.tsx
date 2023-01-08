@@ -26,8 +26,9 @@ const Options = styled('div', {
 	width: '100%',
 	minWidth: '10rem',
 	padding: '.5rem 0',
+	boxShadow: '#242424 0px 3px 5px 1px',
 
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.grey800,
 	borderRadius: theme.space.borderRad,
 	zIndex: 2,
 	transform: 'translateY(100%)',
@@ -47,7 +48,12 @@ const LinkButton = styled(Link, {
 	cursor: 'pointer',
 	'&:hover': {
 		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.primary600,
+		backgroundColor: theme.colors.frosted,
+	},
+	'&:active': {
+		color: theme.colors.textMediumActive,
+		backgroundColor: theme.colors.primary900,
+		transitionDuration: '0s',
 	},
 	svg: {
 		height: '50%',
@@ -60,13 +66,13 @@ const Separator = styled('div', {
 	borderBottom: `1px solid ${theme.colors.grey500}`,
 });
 
-interface Props {
+type Props = {
 	setIsDropdownOpen: (setState: React.SetStateAction<boolean>) => void;
 	status: 'authenticated' | 'loading' | 'unauthenticated';
 	openSignIn?: () => void;
-}
+};
 
-const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) => {
+const UserNavOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) => {
 	const handleClick = useCallback(() => setIsDropdownOpen((cur) => !cur), [setIsDropdownOpen]);
 
 	useEffect(() => {
@@ -107,4 +113,4 @@ const UserOptionsDropdown = ({ status, setIsDropdownOpen, openSignIn }: Props) =
 	);
 };
 
-export default UserOptionsDropdown;
+export default UserNavOptionsDropdown;
