@@ -1,6 +1,8 @@
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
+import { SubscriptionTier } from '@globalTypes/user';
+
 import TextMessageAuthor from './TextMessageAuthor';
 import UserMessageText from './TextMessageText';
 
@@ -49,7 +51,7 @@ const UserMessage = React.memo(({ msg, setFocusedUser }: Props) => {
 		<Container className='msg' data-author={msg.author}>
 			<time title={timeTitle}>{timeValue}</time>
 			<TextMessageAuthor
-				subTier={msg.subTier}
+				subTier={msg.subTier || SubscriptionTier.NONE}
 				infoBadges={msg.infoBadges}
 				role={msg.role}
 				onClick={() => setFocusedUser(msg.author)}
