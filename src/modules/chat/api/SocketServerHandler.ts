@@ -61,7 +61,7 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 	// attempt to use session token gathered from header cookies to validate socket and fetch user data
 	const tryToFetchUserData = async (socket: Socket): Promise<[User | undefined, string]> => {
 		// check for cookies
-		if (!socket.handshake.headers.cookie) return [, 'You are connected.\n **Sign in to chat**'];
+		if (!socket.handshake.headers.cookie) return [, 'You are connected.\n **Sign in to chat!**'];
 
 		// get cookies from socket handshake
 		const parsedCookie = parseCookieString(socket.handshake.headers.cookie);
