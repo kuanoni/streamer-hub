@@ -24,6 +24,7 @@ const MerchImage = styled(Image, {
 });
 
 const MerchLink = styled('a', {
+	maxHeight: '10rem',
 	cursor: 'pointer',
 	transition: '.1s ease-in',
 	'&:hover': {
