@@ -1,8 +1,10 @@
 import { styled } from 'stiches.config';
 
 import MerchSection from '@components/Home/MerchSection';
+import RedditSection from '@components/Home/RedditSection';
 import Section from '@components/Home/Section';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
+import fetchRedditPosts from '@utils/fetchRedditPosts';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -17,7 +19,11 @@ const Row = styled('div', {
 	justifyContent: 'stretch',
 });
 
-export default function Home() {
+interface Props {
+	posts: RedditPost[];
+}
+
+const Home = ({ posts }: Props) => {
 	return (
 		<Container>
 			<MerchSection />
@@ -26,10 +32,7 @@ export default function Home() {
 					<Section.Header>Twitter</Section.Header>
 					<Section.Content>content</Section.Content>
 				</Section>
-				<Section>
-					<Section.Header>Reddit</Section.Header>
-					<Section.Content>content</Section.Content>
-				</Section>
+				<RedditSection posts={posts} />
 			</Row>
 			<Section>
 				<Section.Header>Videos</Section.Header>
@@ -37,6 +40,17 @@ export default function Home() {
 			</Section>
 		</Container>
 	);
+};
+
+export async function getStaticProps() {
+	const posts = await fetchRedditPosts();
+
+	return {
+		props: {
+			posts,
+		},
+		revalidate: 10,
+	};
 }
 
 Home.getLayout = function getLayout(page: JSX.Element) {
@@ -44,3 +58,5 @@ Home.getLayout = function getLayout(page: JSX.Element) {
 };
 
 Home.title = 'Home';
+
+export default Home;
