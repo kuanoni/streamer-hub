@@ -3,7 +3,7 @@ import { styled, theme } from 'stiches.config';
 
 const Container = styled('div', {
 	width: '100%',
-	backgroundColor: theme.colors.frosted,
+	backgroundColor: theme.colors.grey1000,
 	borderRadius: theme.space.borderRad,
 	overflow: 'hidden',
 });
@@ -11,7 +11,7 @@ const Container = styled('div', {
 const Header = styled('div', {
 	padding: '1rem',
 	paddingBottom: '.25rem',
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.grey900,
 	h1: {
 		margin: 0,
 	},
