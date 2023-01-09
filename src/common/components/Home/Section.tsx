@@ -17,10 +17,6 @@ const Header = styled('div', {
 	},
 });
 
-const Content = styled('div', {
-	padding: '1rem',
-});
-
 interface Props {}
 
 const Section = ({ children }: React.PropsWithChildren<Props>) => {
@@ -36,7 +32,7 @@ const SectionHeader = ({ children }: React.PropsWithChildren) => {
 };
 
 const SectionContent = ({ children }: React.PropsWithChildren) => {
-	return <Content>{children}</Content>;
+	return <>{children}</>;
 };
 
 Section.Header = SectionHeader;
