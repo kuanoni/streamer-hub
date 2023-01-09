@@ -1,5 +1,6 @@
 import { styled } from 'stiches.config';
 
+import MerchSection from '@components/Home/MerchSection';
 import Section from '@components/Home/Section';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 
@@ -19,10 +20,7 @@ const Row = styled('div', {
 export default function Home() {
 	return (
 		<Container>
-			<Section>
-				<Section.Header>Merch</Section.Header>
-				<Section.Content>content</Section.Content>
-			</Section>
+			<MerchSection />
 			<Row>
 				<Section>
 					<Section.Header>Twitter</Section.Header>
