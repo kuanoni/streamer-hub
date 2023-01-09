@@ -22,25 +22,23 @@ const PostTitle = styled('a', {
 });
 
 const PostAuthor = styled('div', {
+	marginBottom: '.25em',
 	color: theme.colors.textMedium,
 	fontSize: '0.9em',
 });
 
-const PostFooter = styled('footer', {
-	gridArea: 'footer',
+const PostTime = styled('time', {
+	color: theme.colors.textDark,
+	fontSize: '0.9em',
+});
+
+const PostContent = styled('div', {
 	display: 'flex',
-	marginTop: '.5rem',
-	time: {
-		color: theme.colors.textDark,
-		fontSize: '0.9em',
-	},
+	flexDirection: 'column',
 });
 
 const Post = styled('article', {
-	display: 'grid',
-	gridTemplateColumns: 'auto 1fr',
-	gridTemplateRows: 'repeat(3, auto)',
-	gridTemplateAreas: `"thumb text" "thumb text" "thumb footer"`,
+	display: 'flex',
 	columnGap: '1rem',
 	padding: '.5rem',
 	border: `1px solid ${theme.colors.grey900}`,
@@ -75,15 +73,13 @@ const RedditSection = ({ posts }: Props) => {
 					) : (
 						<PostThumbnail src={thumbnail} alt='thumbnail' width={140} height={140} />
 					)}
-					<div>
+					<PostContent>
 						<PostTitle href={`https://reddit.com${permalink}`} target='_blank'>
 							{title}
 						</PostTitle>
 						<PostAuthor>{`By ${author}`}</PostAuthor>
-					</div>
-					<PostFooter>
-						<time title={timeFormatted}>{`${timeAgo} ago`}</time>
-					</PostFooter>
+						<PostTime title={timeFormatted}>{`${timeAgo} ago`}</PostTime>
+					</PostContent>
 				</Post>
 			);
 		}
