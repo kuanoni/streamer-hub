@@ -3,7 +3,12 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	images: {
-		domains: ['lh3.googleusercontent.com', 'cdn.discordapp.com', 'b.thumbs.redditmedia.com'],
+		domains: [
+			'lh3.googleusercontent.com',
+			'cdn.discordapp.com',
+			'b.thumbs.redditmedia.com',
+			'a.thumbs.redditmedia.com',
+		],
 	},
 };
 
