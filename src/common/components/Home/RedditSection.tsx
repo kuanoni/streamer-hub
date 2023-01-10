@@ -55,18 +55,15 @@ type Props = {
 
 const RedditSection = ({ posts }: Props) => {
 	const postComponents = useMemo(() => {
-		const components: React.ReactNode[] = [];
-
-		// only use 3 posts
-		for (let i = 0; i < 3; i++) {
-			const { author, title, permalink, thumbnail, created_utc } = posts[i];
+		return posts.map((post) => {
+			const { author, title, permalink, thumbnail, created_utc } = post;
 
 			const timeFromUnix = fromUnixTime(created_utc);
 			const timeAgo = formatDistanceToNowStrict(timeFromUnix);
 			const timeFormatted = format(timeFromUnix, 'yyy-MM-dd, HH:mm:ss');
 
-			components.push(
-				<Post key={i}>
+			return (
+				<Post key={permalink}>
 					{thumbnail === 'self' ? (
 						<PostThumbnail src={selfPostThumbnail} alt='thumbnail' />
 					) : (
@@ -81,9 +78,7 @@ const RedditSection = ({ posts }: Props) => {
 					</PostContent>
 				</Post>
 			);
-		}
-
-		return components;
+		});
 	}, [posts]);
 
 	return (
