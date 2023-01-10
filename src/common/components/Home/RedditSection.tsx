@@ -42,16 +42,15 @@ const Post = styled('article', {
 	columnGap: '1rem',
 	padding: '.5rem',
 	border: `1px solid ${theme.colors.grey900}`,
-	'&:hover': {
-		// backgroundColor: theme.colors.grey900,
-	},
+	borderBottomLeftRadius: theme.space.borderRad,
+	borderBottomLRightRadius: theme.space.borderRad,
 	'&:not(:last-child)': {
 		borderBottom: 'none',
 	},
 });
 
 type Props = {
-	posts: RedditPost[];
+	posts: RedditPostData[];
 };
 
 const RedditSection = ({ posts }: Props) => {
@@ -60,7 +59,7 @@ const RedditSection = ({ posts }: Props) => {
 
 		// only use 3 posts
 		for (let i = 0; i < 3; i++) {
-			const { author, title, permalink, thumbnail, created_utc } = posts[i].data;
+			const { author, title, permalink, thumbnail, created_utc } = posts[i];
 
 			const timeFromUnix = fromUnixTime(created_utc);
 			const timeAgo = formatDistanceToNowStrict(timeFromUnix);

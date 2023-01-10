@@ -20,7 +20,7 @@ const Row = styled('div', {
 });
 
 interface Props {
-	posts: RedditPost[];
+	posts: RedditPostData[];
 }
 
 const Home = ({ posts }: Props) => {
