@@ -3,6 +3,7 @@ import { styled } from 'stiches.config';
 import MerchSection from '@components/Home/MerchSection';
 import RedditSection from '@components/Home/RedditSection';
 import Section from '@components/Home/Section';
+import TwitterSection from '@components/Home/TwitterSection';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import fetchRedditPosts from '@utils/fetchRedditPosts';
 
@@ -28,10 +29,7 @@ const Home = ({ posts }: Props) => {
 		<Container>
 			<MerchSection />
 			<Row>
-				<Section>
-					<Section.Header>Twitter</Section.Header>
-					<Section.Content>content</Section.Content>
-				</Section>
+				<TwitterSection maxHeight={350} />
 				<RedditSection posts={posts} maxHeight={350} />
 			</Row>
 			<Section>
