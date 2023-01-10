@@ -32,7 +32,7 @@ const Home = ({ posts }: Props) => {
 					<Section.Header>Twitter</Section.Header>
 					<Section.Content>content</Section.Content>
 				</Section>
-				<RedditSection posts={posts} />
+				<RedditSection posts={posts} maxHeight={350} />
 			</Row>
 			<Section>
 				<Section.Header>Videos</Section.Header>

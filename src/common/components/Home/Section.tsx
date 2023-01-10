@@ -17,9 +17,14 @@ const Header = styled('div', {
 	},
 });
 
-interface Props {}
+const Content = styled('div', {});
 
-const Section = ({ children }: React.PropsWithChildren<Props>) => {
+interface ContentProps {
+	overflowY?: string;
+	maxHeight?: number | string;
+}
+
+const Section = ({ children }: React.PropsWithChildren) => {
 	return <Container>{children}</Container>;
 };
 
@@ -31,8 +36,8 @@ const SectionHeader = ({ children }: React.PropsWithChildren) => {
 	);
 };
 
-const SectionContent = ({ children }: React.PropsWithChildren) => {
-	return <>{children}</>;
+const SectionContent = ({ overflowY, maxHeight, children }: React.PropsWithChildren<ContentProps>) => {
+	return <Content css={{ overflowY, maxHeight }}>{children}</Content>;
 };
 
 Section.Header = SectionHeader;

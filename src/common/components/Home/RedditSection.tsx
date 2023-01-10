@@ -51,9 +51,10 @@ const Post = styled('article', {
 
 type Props = {
 	posts: RedditPostData[];
+	maxHeight: number | string;
 };
 
-const RedditSection = ({ posts }: Props) => {
+const RedditSection = ({ posts, maxHeight }: Props) => {
 	const postComponents = useMemo(() => {
 		return posts.map((post) => {
 			const { author, title, permalink, thumbnail, created_utc } = post;
@@ -84,7 +85,9 @@ const RedditSection = ({ posts }: Props) => {
 	return (
 		<Section>
 			<Section.Header>Reddit</Section.Header>
-			<Section.Content>{postComponents}</Section.Content>
+			<Section.Content maxHeight={maxHeight} overflowY='auto'>
+				{postComponents}
+			</Section.Content>
 		</Section>
 	);
 };
