@@ -9,11 +9,15 @@ import selfPostThumbnail from '@images/self_post_thumbnail.png';
 
 import Section from './Section';
 
-const PostThumbnail = styled(Image, {
-	gridArea: 'thumb',
+const PostThumbnailWrapper = styled('div', {
+	position: 'relative',
 	height: 64,
 	width: 64,
 	marginTop: '.25em',
+	img: {
+		objectFit: 'contain',
+		objectPosition: 'top',
+	},
 });
 
 const PostTitle = styled('span', {
@@ -114,11 +118,9 @@ const RedditSection = ({ posts, maxHeight }: Props) => {
 
 			return (
 				<Post key={permalink} href={`https://reddit.com${permalink}`} target='_blank'>
-					{thumbnail === 'self' ? (
-						<PostThumbnail src={selfPostThumbnail} alt='thumbnail' />
-					) : (
-						<PostThumbnail src={thumbnail} alt='thumbnail' width={140} height={140} />
-					)}
+					<PostThumbnailWrapper>
+						<Image src={thumbnail === 'self' ? selfPostThumbnail : thumbnail} alt='' fill />
+					</PostThumbnailWrapper>
 					<PostContent>
 						<RedditIcon>
 							<BsReddit />
