@@ -13,7 +13,6 @@ const PostThumbnailWrapper = styled('div', {
 	position: 'relative',
 	height: 64,
 	width: 64,
-	marginTop: '.25em',
 	img: {
 		objectFit: 'contain',
 		objectPosition: 'top',
@@ -21,7 +20,7 @@ const PostThumbnailWrapper = styled('div', {
 });
 
 const PostTitle = styled('span', {
-	marginBottom: '1.5rem',
+	marginBottom: '1rem',
 	marginRight: 'auto',
 	paddingRight: '2rem',
 	color: theme.colors.textLink,
