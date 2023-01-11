@@ -1,19 +1,24 @@
-import { Timeline, TimelineProps } from 'react-twitter-widgets';
-import { styled, theme } from 'stiches.config';
+import { useEffect, useRef } from 'react';
+import { Timeline } from 'react-twitter-widgets';
 
 import Section from './Section';
-
-const Container = styled('div', {});
 
 interface Props {
 	maxHeight: number | string;
 }
 
 const TwitterSection = ({ maxHeight }: Props) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const iframe = ref.current?.querySelector('iframe');
+		if (iframe) iframe.style.background = 'transparent';
+	}, []);
+
 	return (
 		<Section>
 			<Section.Header>Twitter</Section.Header>
-			<Section.Content maxHeight={maxHeight} overflowY='auto'>
+			<Section.Content ref={ref} maxHeight={maxHeight} overflowY='auto'>
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',
@@ -21,7 +26,7 @@ const TwitterSection = ({ maxHeight }: Props) => {
 					}}
 					options={{
 						theme: 'dark',
-						chrome: 'noheader, nofooter, noscrollbar',
+						chrome: 'noheader, nofooter, noscrollbar, transparent',
 						tweetLimit: 10,
 						dnt: true,
 					}}
