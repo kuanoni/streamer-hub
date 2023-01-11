@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { styled, theme } from 'stiches.config';
 
 const Container = styled('section', {
@@ -38,9 +38,15 @@ const SectionHeader = ({ children }: React.PropsWithChildren) => {
 	);
 };
 
-const SectionContent = ({ overflowY, maxHeight, children }: React.PropsWithChildren<ContentProps>) => {
-	return <Content css={{ overflowY, maxHeight }}>{children}</Content>;
-};
+const SectionContent = forwardRef(
+	({ overflowY, maxHeight, children }: React.PropsWithChildren<ContentProps>, ref: ForwardedRef<HTMLDivElement>) => {
+		return (
+			<Content ref={ref} css={{ overflowY, maxHeight }}>
+				{children}
+			</Content>
+		);
+	}
+);
 
 Section.Header = SectionHeader;
 Section.Content = SectionContent;
