@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { Timeline } from 'react-twitter-widgets';
 
 import Section from './Section';
@@ -8,17 +7,10 @@ interface Props {
 }
 
 const TwitterSection = ({ maxHeight }: Props) => {
-	const ref = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		const iframe = ref.current?.querySelector('iframe');
-		if (iframe) iframe.style.background = 'transparent';
-	}, []);
-
 	return (
 		<Section>
 			<Section.Header>Twitter</Section.Header>
-			<Section.Content ref={ref} css={{ maxHeight, overflowY: 'auto' }}>
+			<Section.Content css={{ maxHeight, overflowY: 'auto' }}>
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',
