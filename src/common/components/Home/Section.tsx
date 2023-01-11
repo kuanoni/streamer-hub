@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled, theme } from 'stiches.config';
 
-const Container = styled('div', {
+const Container = styled('section', {
 	width: '100%',
 	backgroundColor: theme.colors.grey1000,
 	borderRadius: theme.space.borderRad,
@@ -17,7 +17,9 @@ const Header = styled('div', {
 	},
 });
 
-const Content = styled('div', {});
+const Content = styled('div', {
+	scrollbarWidth: 'thin',
+});
 
 interface ContentProps {
 	overflowY?: string;
