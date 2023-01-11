@@ -18,7 +18,7 @@ const TwitterSection = ({ maxHeight }: Props) => {
 	return (
 		<Section>
 			<Section.Header>Twitter</Section.Header>
-			<Section.Content ref={ref} maxHeight={maxHeight} overflowY='auto'>
+			<Section.Content ref={ref} css={{ maxHeight, overflowY: 'auto' }}>
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',

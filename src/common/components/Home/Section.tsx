@@ -1,6 +1,8 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 import { styled, theme } from 'stiches.config';
 
+import { CSS } from '@stitches/react';
+
 const Container = styled('section', {
 	width: '100%',
 	backgroundColor: theme.colors.grey1000,
@@ -21,27 +23,34 @@ const Content = styled('div', {
 	scrollbarWidth: 'thin',
 });
 
-interface ContentProps {
-	overflowY?: string;
-	maxHeight?: number | string;
+interface SectionProps {
+	css?: CSS;
 }
 
-const Section = ({ children }: React.PropsWithChildren) => {
-	return <Container>{children}</Container>;
+interface HeaderProps {
+	css?: CSS;
+}
+
+interface ContentProps {
+	css?: CSS;
+}
+
+const Section = ({ css, children }: React.PropsWithChildren<SectionProps>) => {
+	return <Container css={css}>{children}</Container>;
 };
 
-const SectionHeader = ({ children }: React.PropsWithChildren) => {
+const SectionHeader = ({ css, children }: React.PropsWithChildren<HeaderProps>) => {
 	return (
-		<Header>
+		<Header css={css}>
 			<h1>{children}</h1>
 		</Header>
 	);
 };
 
 const SectionContent = forwardRef(
-	({ overflowY, maxHeight, children }: React.PropsWithChildren<ContentProps>, ref: ForwardedRef<HTMLDivElement>) => {
+	({ css, children }: React.PropsWithChildren<ContentProps>, ref: ForwardedRef<HTMLDivElement>) => {
 		return (
-			<Content ref={ref} css={{ overflowY, maxHeight }}>
+			<Content ref={ref} css={css}>
 				{children}
 			</Content>
 		);
