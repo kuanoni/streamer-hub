@@ -20,6 +20,18 @@ const Row = styled('div', {
 	justifyContent: 'stretch',
 });
 
+const TwoOneGrid = styled('div', {
+	display: 'grid',
+	gridTemplateColumns: '2fr minmax(auto, 400px)',
+	gridTemplateRows: '1fr 1fr',
+	gridTemplateAreas: '"first second" "first third"',
+	placeItems: 'stretch',
+	gap: '2rem',
+	'& section:first-child': { gridArea: 'first' },
+	'& > section:nth-child(2)': { gridArea: 'second' },
+	'& section:nth-child(3)': { gridArea: 'third' },
+});
+
 interface Props {
 	posts: RedditPostData[];
 }
@@ -28,14 +40,14 @@ const Home = ({ posts }: Props) => {
 	return (
 		<Container>
 			<MerchSection />
-			<Row>
+			<TwoOneGrid>
+				<Section>
+					<Section.Header>Videos</Section.Header>
+					<Section.Content>content</Section.Content>
+				</Section>
 				<TwitterSection maxHeight={350} />
 				<RedditSection posts={posts} maxHeight={350} />
-			</Row>
-			<Section>
-				<Section.Header>Videos</Section.Header>
-				<Section.Content>content</Section.Content>
-			</Section>
+			</TwoOneGrid>
 		</Container>
 	);
 };
