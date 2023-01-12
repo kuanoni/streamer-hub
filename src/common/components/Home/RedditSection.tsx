@@ -92,7 +92,7 @@ const RedditIcon = styled('div', {
 	top: '.75rem',
 	right: '1rem',
 	color: 'rgb(255, 135, 0)',
-	fontSize: '1.5em',
+	fontSize: '1.25em',
 });
 
 type Props = {
