@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import { styled, theme } from 'stiches.config';
 
 import { CSS } from '@stitches/react';
 
 import Section from './Section';
+import YoutubeThumbnail from './YoutubeThumbnail';
 
 const contentCss: CSS = {
 	padding: '.5rem 1rem',
@@ -21,25 +21,11 @@ const RecentVideosTitle = styled('h3', {
 	margin: '.5rem 0',
 });
 
-const Thumbnail = styled(Image, {
-	display: 'block',
-	width: 'auto',
-	height: 'auto',
-	maxWidth: '100%',
-});
-
 const Feature = styled('article', {
 	width: '100%',
 	marginBottom: '4rem',
 	backgroundColor: theme.colors.grey1000,
 	borderRadius: theme.space.borderRad,
-});
-
-const FeatureThumbnail = styled(Image, {
-	display: 'block',
-	width: 'auto',
-	height: 'auto',
-	maxWidth: '100%',
 });
 
 const FeatureContent = styled('div', {});
@@ -69,12 +55,7 @@ const VideosSection = ({}: Props) => {
 			<Section.Header>Videos</Section.Header>
 			<Section.Content css={contentCss}>
 				<Feature>
-					<FeatureThumbnail
-						src={`https://img.youtube.com/vi/${featuredVideoId}/maxresdefault.jpg`}
-						alt=''
-						width={1280}
-						height={720}
-					/>
+					<YoutubeThumbnail videoId={featuredVideoId} resolution='hd' />
 					<FeatureContent>
 						<FeatureTitle>Andrew Tate Self Snitches In Chat Logs, Didn't Expect To Be Caught </FeatureTitle>
 						<FeatureDescription>
@@ -86,13 +67,7 @@ const VideosSection = ({}: Props) => {
 				<RecentVideosTitle>Recent videos</RecentVideosTitle>
 				<RecentVideos>
 					{videoIds.map((id) => (
-						<Thumbnail
-							key={id}
-							src={`https://img.youtube.com/vi/${id}/mqdefault.jpg`}
-							alt=''
-							width={320}
-							height={180}
-						/>
+						<YoutubeThumbnail key={id} videoId={id} resolution='hd' />
 					))}
 				</RecentVideos>
 			</Section.Content>
