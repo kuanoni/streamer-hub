@@ -4,6 +4,7 @@ import MerchSection from '@components/Home/MerchSection';
 import RedditSection from '@components/Home/RedditSection';
 import Section from '@components/Home/Section';
 import TwitterSection from '@components/Home/TwitterSection';
+import VideosSection from '@components/Home/VideosSection';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import fetchRedditPosts from '@utils/fetchRedditPosts';
 
@@ -15,21 +16,28 @@ const Container = styled('div', {
 });
 
 const Row = styled('div', {
-	display: 'flex',
-	gap: '1rem',
-	justifyContent: 'stretch',
-});
-
-const TwoOneGrid = styled('div', {
 	display: 'grid',
-	gridTemplateColumns: '2fr minmax(auto, 400px)',
-	gridTemplateRows: '1fr 1fr',
-	gridTemplateAreas: '"first second" "first third"',
+	gridTemplateColumns: '1fr minmax(auto, 400px)',
+	gridTemplateRows: '1fr',
 	placeItems: 'stretch',
 	gap: '2rem',
-	'& section:first-child': { gridArea: 'first' },
-	'& > section:nth-child(2)': { gridArea: 'second' },
-	'& section:nth-child(3)': { gridArea: 'third' },
+});
+
+const ColumnWrapper = styled('div', {
+	position: 'relative',
+	display: 'flex',
+	gap: '1rem',
+});
+
+const ColumnContainer = styled('div', {
+	position: 'absolute',
+	inset: '0 0 0 0',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '1rem',
+	'& > *': {
+		height: '50%',
+	},
 });
 
 interface Props {
@@ -40,14 +48,15 @@ const Home = ({ posts }: Props) => {
 	return (
 		<Container>
 			<MerchSection />
-			<TwoOneGrid>
-				<Section>
-					<Section.Header>Videos</Section.Header>
-					<Section.Content>content</Section.Content>
-				</Section>
-				<TwitterSection />
-				<RedditSection posts={posts} />
-			</TwoOneGrid>
+			<Row>
+				<VideosSection />
+				<ColumnWrapper>
+					<ColumnContainer>
+						<TwitterSection />
+						<RedditSection posts={posts} />
+					</ColumnContainer>
+				</ColumnWrapper>
+			</Row>
 		</Container>
 	);
 };

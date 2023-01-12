@@ -8,7 +8,7 @@ const TwitterSection = ({}: Props) => {
 	return (
 		<Section css={{ borderLeft: 'none' }}>
 			<Section.Header>Twitter</Section.Header>
-			<Section.Content css={{ overflowY: 'auto' }}>
+			<Section.Content css={{ height: '100%', overflowY: 'auto' }}>
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',

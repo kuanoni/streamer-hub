@@ -140,7 +140,7 @@ const RedditSection = ({ posts }: Props) => {
 	return (
 		<Section css={{ borderLeft: 'none' }}>
 			<Section.Header>Reddit</Section.Header>
-			<Section.Content css={{ overflowY: 'auto' }}>
+			<Section.Content css={{ height: '100%', overflowY: 'auto' }}>
 				<Container>{postComponents}</Container>
 			</Section.Content>
 		</Section>
