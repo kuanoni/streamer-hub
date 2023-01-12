@@ -5,7 +5,7 @@ import { CSS } from '@stitches/react';
 
 const Container = styled('section', {
 	width: '100%',
-	backgroundColor: theme.colors.grey1000,
+	border: `1px solid ${theme.colors.grey800}`,
 	borderRadius: theme.space.borderRad,
 	overflow: 'hidden',
 });
@@ -13,7 +13,7 @@ const Container = styled('section', {
 const Header = styled('div', {
 	padding: '1rem',
 	paddingBottom: '.25rem',
-	backgroundColor: theme.colors.grey900,
+	backgroundColor: theme.colors.frostedPrimary,
 	h1: {
 		margin: 0,
 	},

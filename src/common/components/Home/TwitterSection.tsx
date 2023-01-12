@@ -8,7 +8,7 @@ interface Props {
 
 const TwitterSection = ({ maxHeight }: Props) => {
 	return (
-		<Section>
+		<Section css={{ borderLeft: 'none' }}>
 			<Section.Header>Twitter</Section.Header>
 			<Section.Content css={{ maxHeight, overflowY: 'auto' }}>
 				<Timeline

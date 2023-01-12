@@ -141,7 +141,7 @@ const RedditSection = ({ posts, maxHeight }: Props) => {
 	}, [posts]);
 
 	return (
-		<Section>
+		<Section css={{ borderLeft: 'none' }}>
 			<Section.Header>Reddit</Section.Header>
 			<Section.Content css={{ maxHeight, overflowY: 'auto' }}>
 				<Container>{postComponents}</Container>
