@@ -8,6 +8,8 @@ const nextConfig = {
 			'cdn.discordapp.com',
 			'b.thumbs.redditmedia.com',
 			'a.thumbs.redditmedia.com',
+			'img.youtube.com',
+			'i3.ytimg.com',
 		],
 	},
 };
