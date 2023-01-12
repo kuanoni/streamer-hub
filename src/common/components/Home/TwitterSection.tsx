@@ -2,15 +2,13 @@ import { Timeline } from 'react-twitter-widgets';
 
 import Section from './Section';
 
-interface Props {
-	maxHeight: number | string;
-}
+interface Props {}
 
-const TwitterSection = ({ maxHeight }: Props) => {
+const TwitterSection = ({}: Props) => {
 	return (
 		<Section css={{ borderLeft: 'none' }}>
 			<Section.Header>Twitter</Section.Header>
-			<Section.Content css={{ maxHeight, overflowY: 'auto' }}>
+			<Section.Content css={{ overflowY: 'auto' }}>
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',

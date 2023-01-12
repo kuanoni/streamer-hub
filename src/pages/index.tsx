@@ -45,8 +45,8 @@ const Home = ({ posts }: Props) => {
 					<Section.Header>Videos</Section.Header>
 					<Section.Content>content</Section.Content>
 				</Section>
-				<TwitterSection maxHeight={350} />
-				<RedditSection posts={posts} maxHeight={350} />
+				<TwitterSection />
+				<RedditSection posts={posts} />
 			</TwoOneGrid>
 		</Container>
 	);

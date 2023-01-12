@@ -97,10 +97,9 @@ const RedditIcon = styled('div', {
 
 type Props = {
 	posts: RedditPostData[];
-	maxHeight: number | string;
 };
 
-const RedditSection = ({ posts, maxHeight }: Props) => {
+const RedditSection = ({ posts }: Props) => {
 	const postComponents = useMemo(() => {
 		return posts.map((post) => {
 			const { author, title, permalink, thumbnail, created_utc, num_comments, score } = post;
@@ -141,7 +140,7 @@ const RedditSection = ({ posts, maxHeight }: Props) => {
 	return (
 		<Section css={{ borderLeft: 'none' }}>
 			<Section.Header>Reddit</Section.Header>
-			<Section.Content css={{ maxHeight, overflowY: 'auto' }}>
+			<Section.Content css={{ overflowY: 'auto' }}>
 				<Container>{postComponents}</Container>
 			</Section.Content>
 		</Section>
