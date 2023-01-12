@@ -105,18 +105,16 @@ const RedditSection = ({ posts, maxHeight }: Props) => {
 		return posts.map((post) => {
 			const { author, title, permalink, thumbnail, created_utc, num_comments, score } = post;
 
+			const thumbnailUrl =
+				thumbnail === 'self' ? selfPostThumbnail : thumbnail === 'default' ? selfPostThumbnail : thumbnail;
+
 			const timeFromUnix = fromUnixTime(created_utc);
 			const timeAgo = formatDistanceToNowStrict(timeFromUnix);
 			const timeFormatted = format(timeFromUnix, 'yyy-MM-dd, HH:mm:ss');
 
 			return (
 				<Post key={permalink} href={`https://reddit.com${permalink}`} target='_blank'>
-					<PostThumbnail
-						src={thumbnail === 'self' ? selfPostThumbnail : thumbnail}
-						alt=''
-						width={64}
-						height={64}
-					/>
+					<PostThumbnail src={thumbnailUrl} alt='' width={64} height={64} />
 					<PostContent>
 						<RedditIcon>
 							<BsReddit />
