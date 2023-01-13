@@ -28,7 +28,7 @@ const Input = styled('div', {
 				backgroundColor: 'transparent',
 				'&:hover, &.open': {
 					color: theme.colors.textMedium,
-					backgroundColor: theme.colors.grey900,
+					backgroundColor: theme.colors.grey800,
 				},
 			},
 		},
@@ -65,7 +65,7 @@ const OptionsContainer = styled('div', {
 				backgroundColor: theme.colors.primary400,
 			},
 			dark: {
-				backgroundColor: theme.colors.grey800,
+				backgroundColor: theme.colors.grey700,
 			},
 		},
 	},

@@ -33,13 +33,13 @@ const SignedIn = styled('button', {
 	margin: 0,
 	marginRight: '.5rem',
 	padding: 0,
-	color: theme.colors.grey400,
+	color: theme.colors.grey300,
 	backgroundColor: 'transparent',
 	border: 'none',
 	cursor: 'pointer',
 	transition: 'color .1s ease',
 	'&:hover': {
-		color: theme.colors.grey200,
+		color: theme.colors.grey100,
 	},
 });
 
@@ -95,7 +95,7 @@ const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 			)}
 			{status === 'loading' && (
 				<BeatLoader
-					color={theme.colors.grey400.toString()}
+					color={theme.colors.grey300.toString()}
 					loading={true}
 					size='.75rem'
 					cssOverride={{ marginRight: '1rem' }}

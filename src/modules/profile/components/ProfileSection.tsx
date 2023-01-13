@@ -6,7 +6,7 @@ const Section = styled('article', {
 	margin: '2rem',
 	marginBottom: 0,
 	borderRadius: theme.space.borderRad,
-	border: `1px solid ${theme.colors.grey800}`,
+	border: `1px solid ${theme.colors.grey700}`,
 	transition: '.2s ease',
 	'&.collapse': {
 		borderColor: 'transparent',

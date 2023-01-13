@@ -63,11 +63,11 @@ const Post = styled('a', {
 	display: 'flex',
 	columnGap: '1rem',
 	padding: '.75rem 1rem',
-	border: `1px solid ${theme.colors.grey800}`,
+	border: `1px solid ${theme.colors.grey700}`,
 	borderTop: 'none',
 	transition: '.2s ease',
 	'&:hover': {
-		backgroundColor: theme.colors.grey900,
+		backgroundColor: theme.colors.grey800,
 		textDecoration: 'none',
 		cursor: 'pointer',
 	},
@@ -84,7 +84,7 @@ const Post = styled('a', {
 
 const Container = styled('div', {
 	borderRadius: 12,
-	border: `1px solid ${theme.colors.grey800}`,
+	border: `1px solid ${theme.colors.grey700}`,
 });
 
 const RedditIcon = styled('div', {

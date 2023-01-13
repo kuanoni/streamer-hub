@@ -132,10 +132,10 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 			cssObj['& .nsfw::before'] = {
 				content: '<NSFW>',
 				fontSize: '13px',
-				backgroundColor: theme.colors.grey800,
+				backgroundColor: theme.colors.grey700,
 			};
 			cssObj['& .nsfw:hover::before'] = {
-				backgroundColor: theme.colors.grey700,
+				backgroundColor: theme.colors.grey600,
 				cursor: 'pointer',
 			};
 		}
@@ -145,10 +145,10 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 			cssObj['& .nsfl::before'] = {
 				content: '<NSFL>',
 				fontSize: '13px',
-				backgroundColor: theme.colors.grey800,
+				backgroundColor: theme.colors.grey700,
 			};
 			cssObj['& .nsfl:hover::before'] = {
-				backgroundColor: theme.colors.grey700,
+				backgroundColor: theme.colors.grey600,
 				cursor: 'pointer',
 			};
 		}

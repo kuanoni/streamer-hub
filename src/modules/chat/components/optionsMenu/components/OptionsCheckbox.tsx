@@ -53,7 +53,7 @@ const Container = styled('div', {
 	cursor: 'pointer',
 	userSelect: 'none',
 	'&:hover': {
-		backgroundColor: theme.colors.grey900,
+		backgroundColor: theme.colors.grey800,
 	},
 });
 

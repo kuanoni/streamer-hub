@@ -57,11 +57,11 @@ const Btn = styled('button', {
 				backgroundColor: 'transparent',
 				'&:hover': {
 					color: theme.colors.textDarkActive,
-					backgroundColor: theme.colors.grey800,
+					backgroundColor: theme.colors.grey700,
 				},
 				'&:active': {
 					color: theme.colors.textPrimaryMedium,
-					backgroundColor: theme.colors.grey900,
+					backgroundColor: theme.colors.grey800,
 				},
 			},
 		},

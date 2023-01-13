@@ -27,7 +27,7 @@ const Options = styled('div', {
 	minWidth: '10rem',
 	padding: '.5rem 0',
 	backgroundColor: theme.colors.primary400,
-	border: `1px solid ${theme.colors.grey500}`,
+	border: `1px solid ${theme.colors.grey400}`,
 	borderRadius: theme.space.borderRadHalf,
 	zIndex: 2,
 	transform: 'translateY(100%)',
@@ -63,7 +63,7 @@ const LinkButton = styled(Link, {
 const Separator = styled('div', {
 	height: 1,
 	margin: '.5rem',
-	borderBottom: `1px solid ${theme.colors.grey500}`,
+	borderBottom: `1px solid ${theme.colors.grey400}`,
 });
 
 type Props = {
