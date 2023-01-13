@@ -3,7 +3,6 @@ import { styled, theme } from 'stiches.config';
 
 const Btn = styled('button', {
 	color: theme.colors.textLight,
-	backgroundColor: theme.colors.secondary700,
 	border: 'none',
 	borderRadius: theme.space.borderRad,
 	fontSize: '1rem',
@@ -26,6 +25,18 @@ const Btn = styled('button', {
 					transform: 'translateY(1px)',
 					boxShadow: 'none',
 					backgroundColor: theme.colors.primary300,
+				},
+			},
+			secondary: {
+				color: theme.colors.textLight,
+				backgroundColor: theme.colors.secondary900,
+				'&:hover': {
+					backgroundColor: theme.colors.primary100,
+				},
+				'&:active': {
+					transform: 'translateY(1px)',
+					boxShadow: 'none',
+					backgroundColor: theme.colors.primary200,
 				},
 			},
 			primaryTransparent: {
@@ -90,7 +101,7 @@ const Btn = styled('button', {
 });
 
 interface Props {
-	color?: 'primary' | 'primaryTransparent' | 'dark';
+	color?: 'primary' | 'secondary' | 'primaryTransparent' | 'dark';
 	content?: 'text' | 'icon';
 	size?: 'icon' | 'fill' | '2em' | undefined;
 	onClick: MouseEventHandler<HTMLButtonElement>;
