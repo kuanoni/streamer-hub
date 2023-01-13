@@ -57,7 +57,7 @@ const VideosSection = ({}: Props) => {
 				<Feature>
 					<YoutubeThumbnail videoId={featuredVideoId} resolution='hd' />
 					<FeatureContent>
-						<FeatureTitle>Andrew Tate Self Snitches In Chat Logs, Didn't Expect To Be Caught </FeatureTitle>
+						<FeatureTitle>{`Andrew Tate Self Snitches In Chat Logs, Didn't Expect To Be Caught`}</FeatureTitle>
 						<FeatureDescription>
 							Destiny reacts to latest Andrew Tate updates from criminal lawyer Bruce Rivers, Romanian
 							TVee and DJ Akademiks...
