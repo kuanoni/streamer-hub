@@ -42,3 +42,4 @@ bot.js
 fly.toml
 .dockerignore
 Dockerfile
+hexConvert.js
