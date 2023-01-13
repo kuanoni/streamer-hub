@@ -21,6 +21,9 @@ const Header = styled('div', {
 
 const Content = styled('div', {
 	scrollbarWidth: 'thin',
+	'&::-webkit-scrollbar': {
+		width: 8,
+	},
 });
 
 interface SectionProps {
