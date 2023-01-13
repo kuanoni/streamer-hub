@@ -43,20 +43,19 @@ interface Props {
 const Navbar = ({ fullWidth = false, children }: Props) => {
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
-	const router = useRouter();
 
 	const openSignIn = () => {
-		if (!window.location.hash) router.push({ hash: 'signin' });
+		setIsSignInOpen(true);
 	};
 
 	const closeSignIn = () => {
-		router.push({ hash: '' });
+		setIsSignInOpen(false);
 	};
 
 	useEffect(() => {
 		if (window.location.hash.startsWith('#signin') && status !== 'authenticated') setIsSignInOpen(true);
 		else setIsSignInOpen(false);
-	}, [router.asPath, setIsSignInOpen, status]);
+	}, [setIsSignInOpen, status]);
 
 	return (
 		<>
