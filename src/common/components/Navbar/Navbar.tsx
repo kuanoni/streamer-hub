@@ -26,7 +26,7 @@ const Nav = styled('nav', {
 	alignItems: 'center',
 	width: '100%',
 	marginTop: 'auto',
-	borderBottom: `1px solid ${theme.colors.grey900}`,
+	borderBottom: `1px solid ${theme.colors.grey800}`,
 });
 
 const AlignRightContainer = styled('div', {
