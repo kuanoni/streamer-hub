@@ -42,15 +42,15 @@ const Btn = styled('button', {
 				},
 			},
 			dark: {
-				color: theme.colors.grey700,
+				color: theme.colors.textDark,
 				backgroundColor: 'transparent',
 				'&:hover': {
-					color: theme.colors.grey300,
-					backgroundColor: theme.colors.grey900,
+					color: theme.colors.textDarkActive,
+					backgroundColor: theme.colors.grey800,
 				},
 				'&:active': {
-					color: theme.colors.primary500,
-					backgroundColor: theme.colors.grey800,
+					color: theme.colors.textPrimaryMedium,
+					backgroundColor: theme.colors.grey900,
 				},
 			},
 		},
