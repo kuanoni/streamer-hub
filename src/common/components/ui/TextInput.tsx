@@ -16,8 +16,6 @@ const InputWrapper = styled('div', {
 			dark: {
 				color: theme.colors.textMedium,
 				backgroundColor: theme.colors.grey900,
-				borderTop: `1px solid ${theme.colors.border}`,
-				borderLeft: `1px solid ${theme.colors.border}`,
 				borderRight: `1px solid ${theme.colors.grey800}`,
 				borderBottom: `1px solid ${theme.colors.grey800}`,
 				'&.focus': {
@@ -27,7 +25,7 @@ const InputWrapper = styled('div', {
 
 				'&.disabled': {
 					color: theme.colors.textDark,
-					backgroundColor: theme.colors.bg,
+					backgroundColor: theme.colors.primary1400,
 				},
 			},
 			transparent: {

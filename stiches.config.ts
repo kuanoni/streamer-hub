@@ -59,10 +59,6 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			textLink: 'hsl(204, 78%, 53%)',
 			textPrimaryMedium: 'hsl(275, 100%, 71%)',
 
-			border: 'hsl(275, 100%, 13%)',
-
-			xd: 'hsl(206, 7%, 20%)',
-
 			frosted: 'hsla(0, 0%, 100%, 0.15)',
 			frostedPrimary: 'hsla(275, 100%, 67%, 0.25)',
 		},
