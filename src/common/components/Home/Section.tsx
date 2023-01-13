@@ -60,4 +60,6 @@ const SectionContent = forwardRef(
 Section.Header = SectionHeader;
 Section.Content = SectionContent;
 
+SectionContent.displayName = 'SectionContent';
+
 export default Section;
