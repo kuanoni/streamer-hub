@@ -24,7 +24,7 @@ const RecentVideosTitle = styled('h3', {
 const Feature = styled('article', {
 	width: '100%',
 	marginBottom: '4rem',
-	backgroundColor: theme.colors.grey1000,
+	backgroundColor: theme.colors.grey900,
 	borderRadius: theme.space.borderRad,
 });
 

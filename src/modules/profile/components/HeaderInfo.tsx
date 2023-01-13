@@ -11,7 +11,7 @@ const Username = styled('h1', {
 	alignItems: 'end',
 	margin: 0,
 	padding: '.5rem 1rem',
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.primary600,
 	fontSize: '3rem',
 	lineHeight: '1em',
 });

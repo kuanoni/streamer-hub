@@ -25,17 +25,17 @@ const Container = styled('div', {
 });
 
 const borderColors = {
-	[EmbedColors.primary]: {
-		backgroundColor: theme.colors.primary700,
+	[EmbedColors.default]: {
+		backgroundColor: theme.colors.primary200,
 	},
-	[EmbedColors.blue]: {
-		backgroundColor: theme.colors.secondary900,
+	[EmbedColors.info]: {
+		backgroundColor: theme.colors.info,
 	},
-	[EmbedColors.green]: {
-		backgroundColor: theme.colors.trinary900,
+	[EmbedColors.success]: {
+		backgroundColor: theme.colors.success,
 	},
-	[EmbedColors.red]: {
-		backgroundColor: 'red',
+	[EmbedColors.error]: {
+		backgroundColor: theme.colors.error,
 	},
 };
 
@@ -111,7 +111,7 @@ interface Props {
 }
 
 const EmbedMessage = React.memo(({ embedData, time }: Props) => {
-	const color = embedData.color || EmbedColors.primary;
+	const color = embedData.color || EmbedColors.default;
 	const dateObj = new Date(time);
 	const timeTitle = timeTitleFormatter.format(dateObj);
 

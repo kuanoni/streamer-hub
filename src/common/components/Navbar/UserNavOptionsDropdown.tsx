@@ -26,10 +26,9 @@ const Options = styled('div', {
 	width: '100%',
 	minWidth: '10rem',
 	padding: '.5rem 0',
-	boxShadow: '#242424 0px 3px 5px 1px',
-
-	backgroundColor: theme.colors.grey800,
-	borderRadius: theme.space.borderRad,
+	backgroundColor: theme.colors.primary400,
+	border: `1px solid ${theme.colors.grey400}`,
+	borderRadius: theme.space.borderRadHalf,
 	zIndex: 2,
 	transform: 'translateY(100%)',
 	animation: `${moveIn} .25s`,
@@ -41,18 +40,19 @@ const LinkButton = styled(Link, {
 	gap: '.5rem',
 	height: '2rem',
 	padding: '0 .5rem',
-	color: theme.colors.textMedium,
+	color: theme.colors.textLight,
 	backgroundColor: 'transparent',
 	border: 'none',
 	fontSize: '.875rem',
 	cursor: 'pointer',
 	'&:hover': {
-		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.frosted,
+		color: theme.colors.textLightActive,
+		backgroundColor: theme.colors.primary300,
+		textDecoration: 'none',
 	},
 	'&:active': {
 		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.primary900,
+		backgroundColor: theme.colors.primary400,
 		transitionDuration: '0s',
 	},
 	svg: {
@@ -63,7 +63,7 @@ const LinkButton = styled(Link, {
 const Separator = styled('div', {
 	height: 1,
 	margin: '.5rem',
-	borderBottom: `1px solid ${theme.colors.grey500}`,
+	borderBottom: `1px solid ${theme.colors.grey400}`,
 });
 
 type Props = {

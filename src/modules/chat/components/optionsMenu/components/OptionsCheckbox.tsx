@@ -19,7 +19,7 @@ const Checkbox = styled('button', {
 			},
 			false: {
 				'&::after': {
-					backgroundColor: theme.colors.primary700,
+					backgroundColor: theme.colors.primary200,
 				},
 			},
 		},
@@ -31,7 +31,7 @@ const Checkbox = styled('button', {
 		right: '.25rem',
 		width: '50%',
 		height: '50%',
-		backgroundColor: theme.colors.primary700,
+		backgroundColor: theme.colors.primary200,
 		transition: 'background-color .1s ease',
 	},
 	svg: {
@@ -40,7 +40,7 @@ const Checkbox = styled('button', {
 		left: 0,
 		width: '100%',
 		height: '100%',
-		color: theme.colors.primary700,
+		color: theme.colors.primary200,
 		zIndex: 1,
 	},
 });
@@ -53,10 +53,7 @@ const Container = styled('div', {
 	cursor: 'pointer',
 	userSelect: 'none',
 	'&:hover': {
-		backgroundColor: theme.colors.grey900,
-	},
-	[`&:hover ${Checkbox}`]: {
-		color: theme.colors.primary300,
+		backgroundColor: theme.colors.grey800,
 	},
 });
 

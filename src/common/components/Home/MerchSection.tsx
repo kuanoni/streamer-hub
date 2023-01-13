@@ -42,7 +42,7 @@ const MerchLink = styled('a', {
 	},
 	[`&:hover ${MerchImage}`]: {
 		transform: 'scale(.87)',
-		filter: `drop-shadow(0 0 5px ${theme.colors.primary700})`,
+		filter: `drop-shadow(0 0 5px ${theme.colors.primary200})`,
 	},
 	[`&:active ${MerchImage}`]: {
 		transitionDuration: '0s',

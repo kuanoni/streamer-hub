@@ -6,6 +6,7 @@ import { InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
 import Tier1 from '@images/flairs/tier_1.png';
 import Tier2 from '@images/flairs/tier_2.png';
 import Tier3 from '@images/flairs/tier_3.png';
+import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 const Container = styled('span', {
 	display: 'inline-flex',
@@ -58,17 +59,6 @@ const subscriberColors = {
 	},
 };
 
-const roleColors = {
-	[Role.BUDDY]: {
-		color: theme.colors.primary300,
-		backgroundColor: theme.colors.frostedPrimary,
-	},
-	[Role.OWNER]: {
-		color: 'rgb(225, 53, 53)',
-		backgroundColor: '#ff000826',
-	},
-};
-
 interface Props {
 	subTier: SubscriptionTier;
 	infoBadges: InfoBadge[] | undefined;
@@ -77,7 +67,7 @@ interface Props {
 }
 
 const TextMessageAuthor = ({ subTier, infoBadges, role, onClick, children }: React.PropsWithChildren<Props>) => {
-	const colors = role ? roleColors[role] : subTier ? subscriberColors[subTier] : {};
+	const colors = getUsernameColorsCss(role, subTier);
 	const badges: React.ReactNode[] = [];
 
 	if (subTier) badges.push(subBadgeImages[subTier]);

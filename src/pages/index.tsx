@@ -2,7 +2,6 @@ import { styled } from 'stiches.config';
 
 import MerchSection from '@components/Home/MerchSection';
 import RedditSection from '@components/Home/RedditSection';
-import Section from '@components/Home/Section';
 import TwitterSection from '@components/Home/TwitterSection';
 import VideosSection from '@components/Home/VideosSection';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
@@ -12,7 +11,7 @@ const Container = styled('div', {
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '2rem',
-	marginTop: '1rem',
+	marginTop: '2rem',
 });
 
 const Row = styled('div', {

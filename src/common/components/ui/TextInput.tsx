@@ -15,19 +15,17 @@ const InputWrapper = styled('div', {
 		color: {
 			dark: {
 				color: theme.colors.textMedium,
-				backgroundColor: theme.colors.grey900,
-				borderTop: `1px solid ${theme.colors.border}`,
-				borderLeft: `1px solid ${theme.colors.border}`,
-				borderRight: `1px solid ${theme.colors.grey800}`,
-				borderBottom: `1px solid ${theme.colors.grey800}`,
+				backgroundColor: theme.colors.grey800,
+				borderRight: `1px solid ${theme.colors.grey700}`,
+				borderBottom: `1px solid ${theme.colors.grey700}`,
 				'&.focus': {
 					color: theme.colors.textMediumActive,
-					outlineColor: theme.colors.grey400,
+					outlineColor: theme.colors.grey300,
 				},
 
 				'&.disabled': {
 					color: theme.colors.textDark,
-					backgroundColor: theme.colors.bg,
+					backgroundColor: theme.colors.primary900,
 				},
 			},
 			transparent: {

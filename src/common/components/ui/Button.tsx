@@ -3,7 +3,6 @@ import { styled, theme } from 'stiches.config';
 
 const Btn = styled('button', {
 	color: theme.colors.textLight,
-	backgroundColor: theme.colors.trinary700,
 	border: 'none',
 	borderRadius: theme.space.borderRad,
 	fontSize: '1rem',
@@ -18,41 +17,50 @@ const Btn = styled('button', {
 		color: {
 			primary: {
 				color: theme.colors.textLight,
-				backgroundColor: theme.colors.primary700,
+				backgroundColor: theme.colors.primary200,
 				'&:hover': {
-					boxShadow: `0 0 4px 1px ${theme.colors.primary400}`,
-					backgroundColor: theme.colors.primary600,
+					backgroundColor: theme.colors.primary100,
 				},
 				'&:active': {
 					transform: 'translateY(1px)',
 					boxShadow: 'none',
-					backgroundColor: theme.colors.primary800,
+					backgroundColor: theme.colors.primary300,
+				},
+			},
+			secondary: {
+				color: theme.colors.textLight,
+				backgroundColor: theme.colors.secondary900,
+				'&:hover': {
+					backgroundColor: theme.colors.primary100,
+				},
+				'&:active': {
+					transform: 'translateY(1px)',
+					boxShadow: 'none',
+					backgroundColor: theme.colors.primary200,
 				},
 			},
 			primaryTransparent: {
 				color: theme.colors.textLight,
 				backgroundColor: 'transparent',
-				border: `1px solid ${theme.colors.primary700}`,
+				border: `1px solid ${theme.colors.primary200}`,
 				'&:hover': {
-					boxShadow: `0 0 4px 1px ${theme.colors.primary400}`,
-					backgroundColor: theme.colors.primary600,
-					borderColor: theme.colors.primary400,
+					backgroundColor: theme.colors.primary100,
 				},
 				'&:active': {
 					transform: 'translateY(1px)',
 					boxShadow: 'none',
-					backgroundColor: theme.colors.primary800,
+					backgroundColor: theme.colors.primary300,
 				},
 			},
 			dark: {
-				color: theme.colors.grey700,
+				color: theme.colors.textDark,
 				backgroundColor: 'transparent',
 				'&:hover': {
-					color: theme.colors.grey300,
-					backgroundColor: theme.colors.grey900,
+					color: theme.colors.textDarkActive,
+					backgroundColor: theme.colors.grey700,
 				},
 				'&:active': {
-					color: theme.colors.primary500,
+					color: theme.colors.textPrimaryMedium,
 					backgroundColor: theme.colors.grey800,
 				},
 			},
@@ -93,7 +101,7 @@ const Btn = styled('button', {
 });
 
 interface Props {
-	color?: 'primary' | 'primaryTransparent' | 'dark';
+	color?: 'primary' | 'secondary' | 'primaryTransparent' | 'dark';
 	content?: 'text' | 'icon';
 	size?: 'icon' | 'fill' | '2em' | undefined;
 	onClick: MouseEventHandler<HTMLButtonElement>;

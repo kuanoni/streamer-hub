@@ -32,8 +32,8 @@ const Header = styled('div', {
 	alignItems: 'center',
 	padding: '.5rem',
 	paddingLeft: '1rem',
-	backgroundColor: theme.colors.primary900,
-	borderBottom: `1px solid ${theme.colors.trinary700}`,
+	backgroundColor: theme.colors.primary400,
+	borderBottom: `1px solid ${theme.colors.secondary700}`,
 });
 
 const HeaderTitles = styled('div', {
@@ -56,7 +56,7 @@ const HeaderButtons = styled('div', {
 const Content = styled('div', {
 	height: '100%',
 	paddingTop: '.5rem',
-	backgroundColor: theme.colors.bg,
+	backgroundColor: theme.colors.primary900,
 	borderBottomLeftRadius: theme.space.borderRad,
 	borderBottomLRightRadius: theme.space.borderRad,
 	overflowY: 'auto',

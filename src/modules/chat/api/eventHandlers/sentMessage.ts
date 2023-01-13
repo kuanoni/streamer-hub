@@ -52,7 +52,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 		const { name, params } = value;
 
 		if (error) {
-			serverSendEmbedMsg(socket, { title: 'Error', description: error.message, color: EmbedColors.red });
+			serverSendEmbedMsg(socket, { title: 'Error', description: error.message, color: EmbedColors.error });
 			throw error;
 		}
 
@@ -67,7 +67,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 			return serverSendEmbedMsg(socket, {
 				title: 'Error',
 				description: "You don't have permission to use that command",
-				color: EmbedColors.red,
+				color: EmbedColors.error,
 			});
 
 		const paramsArr = params.split(' ');
@@ -77,7 +77,7 @@ const sentMessage = (socket: Socket) => (msg: UserMessageToServer, room?: Socket
 
 		// if (errors.length) serverSendTextMsg(socket, errors.join(' '));
 		if (errors.length)
-			serverSendEmbedMsg(socket, { title: 'Error', description: errors.join(' '), color: EmbedColors.red });
+			serverSendEmbedMsg(socket, { title: 'Error', description: errors.join(' '), color: EmbedColors.error });
 	};
 
 	const handleText = (msg: UserMessageToServer) => {

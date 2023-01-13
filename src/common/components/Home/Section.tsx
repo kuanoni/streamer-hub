@@ -5,15 +5,15 @@ import { CSS } from '@stitches/react';
 
 const Container = styled('section', {
 	width: '100%',
-	border: `1px solid ${theme.colors.grey800}`,
+	border: `1px solid ${theme.colors.grey700}`,
 	borderRadius: theme.space.borderRad,
 	overflow: 'hidden',
 });
 
 const Header = styled('div', {
 	padding: '1rem',
-	paddingBottom: '.25rem',
-	backgroundColor: theme.colors.frostedPrimary,
+	paddingBottom: '.5rem',
+	backgroundColor: theme.colors.primary600,
 	h1: {
 		margin: 0,
 	},
@@ -21,6 +21,9 @@ const Header = styled('div', {
 
 const Content = styled('div', {
 	scrollbarWidth: 'thin',
+	'&::-webkit-scrollbar': {
+		width: 8,
+	},
 });
 
 interface SectionProps {

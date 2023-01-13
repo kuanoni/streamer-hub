@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
@@ -18,7 +17,7 @@ const TextAreaWrapper = styled('div', {
 	display: 'flex',
 	height: 'auto',
 	padding: '.5rem',
-	border: `1px solid ${theme.colors.grey900}`,
+	border: `1px solid ${theme.colors.grey700}`,
 	borderRadius: theme.space.borderRad,
 });
 

@@ -19,7 +19,7 @@ const subscriberColors = {
 
 const roleColors = {
 	[Role.BUDDY]: {
-		color: theme.colors.primary300,
+		color: theme.colors.textPrimaryMedium,
 		backgroundColor: theme.colors.frostedPrimary,
 	},
 	[Role.OWNER]: {
