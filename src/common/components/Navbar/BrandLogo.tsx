@@ -86,7 +86,7 @@ const Square = styled('div', {
 
 const BrandLogo = () => {
 	return (
-		<Container href={'/'} title='Streamer Hub'>
+		<Container href={'/'} title='Streamer Hub' aria-hidden='true'>
 			<Text>
 				<svg width='93.3' height='82.201' viewBox='0 0 93.3 82.201' xmlns='http://www.w3.org/2000/svg'>
 					<g id='svgGroup' strokeLinecap='round' fillRule='evenodd' fontSize='9pt' strokeWidth='0.5mm'>

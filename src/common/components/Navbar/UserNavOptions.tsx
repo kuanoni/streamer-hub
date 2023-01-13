@@ -14,6 +14,7 @@ import UserNavOptionsDropdown from './UserNavOptionsDropdown';
 const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
+	gap: '1rem',
 	alignItems: 'center',
 });
 
@@ -24,13 +25,17 @@ const Username = styled(Link, {
 	},
 });
 
-const SignedIn = styled('div', {
+const SignedIn = styled('button', {
 	display: 'flex',
 	alignItems: 'center',
 	gap: 6,
 	height: '100%',
+	margin: 0,
 	marginRight: '.5rem',
+	padding: 0,
 	color: theme.colors.grey400,
+	backgroundColor: 'transparent',
+	border: 'none',
 	cursor: 'pointer',
 	transition: 'color .1s ease',
 	'&:hover': {
@@ -48,7 +53,6 @@ const ProfilePic = styled(BsPersonCircle, {
 const ProfilePicImage = styled(Image, {
 	width: '2.5rem',
 	height: '2.5rem',
-	marginLeft: '1rem',
 	borderRadius: '50%',
 });
 
@@ -70,7 +74,7 @@ type Props = {
 const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+	const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
 		if (status === 'loading') return;
 		// prevents click event from being passed to newly created event listener in UserDropdownOptions
 		e.stopPropagation();
@@ -111,7 +115,7 @@ const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 				) : (
 					<ProfilePic />
 				)}
-				<DropdownCaret className={isDropdownOpen ? 'open' : ''} />
+				<DropdownCaret className={isDropdownOpen ? 'open' : ''} aria-hidden='true' />
 			</SignedIn>
 			{isDropdownOpen && (
 				<UserNavOptionsDropdown setIsDropdownOpen={setIsDropdownOpen} status={status} openSignIn={openSignIn} />
