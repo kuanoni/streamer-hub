@@ -3,8 +3,6 @@ import { keyframes, styled, theme } from 'stiches.config';
 
 const Container = styled(Link, {
 	position: 'relative',
-	// left: '50%',
-	// bottom: '.5rem',
 	height: '100%',
 	aspectRatio: 1,
 	display: 'grid',
@@ -16,7 +14,7 @@ const Container = styled(Link, {
 	transition: '.2s ease',
 	'&:hover': {
 		transform: 'scale(1.05) translateY(-2px)',
-		boxShadow: `0 0 7px 1px ${theme.colors.secondary000}`,
+		boxShadow: `0 0 7px 1px ${theme.colors.secondary100}`,
 	},
 });
 

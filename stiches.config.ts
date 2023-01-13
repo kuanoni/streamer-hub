@@ -37,7 +37,6 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			secondary300: 'hsl(118, 100%, 56%)',
 			secondary200: 'hsl(118, 100%, 63%)',
 			secondary100: 'hsl(118, 100%, 68%)',
-			secondary000: 'hsl(118, 100%, 75%)',
 
 			textLight: 'hsl(180, 4%, 89%)',
 			textLightActive: 'hsl(180, 4%, 100%)',

@@ -14,7 +14,7 @@ const NavLink = styled(Link, {
 	fontWeight: 500,
 	verticalAlign: 'bottom',
 	transform: 'translateY(1px)',
-	transition: 'color border-color background .2s ease',
+	transition: 'border-color background .2s ease',
 	'&::after': {
 		content: '',
 		position: 'absolute',
@@ -34,7 +34,8 @@ const NavLink = styled(Link, {
 		height: '100%',
 	},
 	'&:active': {
-		color: theme.colors.secondary000,
+		color: theme.colors.secondary300,
+		transitionDuration: '0s',
 	},
 	'&:active::after': {
 		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 50%)',
