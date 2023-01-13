@@ -18,7 +18,7 @@ const PostTitle = styled('span', {
 	marginBottom: '1rem',
 	marginRight: 'auto',
 	paddingRight: '2rem',
-	color: theme.colors.textLink,
+	color: theme.colors.textLight,
 	'&:hover': {
 		textDecoration: 'underline',
 	},
