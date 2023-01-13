@@ -13,9 +13,8 @@ const Container = styled('div', {
 	maxWidth: '500px',
 	width: '450px',
 	padding: '2rem',
-	backgroundColor: theme.colors.bg,
+	backgroundColor: theme.colors.grey1000,
 	color: theme.colors.textLight,
-	border: `1px solid ${theme.colors.grey500}`,
 	'& h1': {
 		marginTop: 0,
 	},

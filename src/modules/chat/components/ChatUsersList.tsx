@@ -39,7 +39,6 @@ const Searchbar = styled('div', {
 	top: 0,
 	left: 0,
 	padding: '0 .5rem',
-	backgroundColor: theme.colors.bg,
 	svg: {
 		height: '100%',
 	},
