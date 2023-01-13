@@ -12,7 +12,7 @@ interface props {
 
 const fadeIn = keyframes({
 	'0%': { backgroundColor: 'rgba(0, 0, 0, 0)' },
-	'100%': { backgroundColor: 'rgba(0, 0, 0, 0.3)' },
+	'100%': { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
 });
 
 const StyledOverlay = styled('div', {
@@ -20,7 +20,7 @@ const StyledOverlay = styled('div', {
 	justifyContent: 'center',
 	alignItems: 'center',
 	position: 'fixed',
-	backgroundColor: 'rgba(0, 0, 0, 0.3)',
+	backgroundColor: 'rgba(0, 0, 0, 0.5)',
 	zIndex: 100,
 	inset: '0 0 0 0',
 	animation: `${fadeIn} .5s`,

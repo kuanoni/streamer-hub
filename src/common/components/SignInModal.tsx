@@ -10,11 +10,12 @@ interface Props {
 }
 
 const Container = styled('div', {
-	maxWidth: '500px',
-	width: '450px',
+	width: 'min(95vw, 400px)',
+	maxHeight: '70vh',
 	padding: '2rem',
-	backgroundColor: theme.colors.grey900,
 	color: theme.colors.textLight,
+	backgroundColor: theme.colors.primary500,
+	borderRadius: theme.space.borderRad,
 	'& h1': {
 		marginTop: 0,
 	},
