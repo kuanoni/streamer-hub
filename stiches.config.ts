@@ -15,15 +15,15 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			grey100: 'hsl(253, 15%, 76%)',
 			grey000: 'hsl(255, 15%, 84%)',
 
-			primary900: 'hsl(276, 100%, 33%)',
-			primary800: 'hsl(275, 100%, 39%)',
-			primary700: 'hsl(275, 100%, 46%)',
-			primary600: 'hsl(276, 100%, 52%)',
-			primary500: 'hsl(275, 100%, 59%)',
-			primary300: 'hsl(275, 100%, 71%)',
-			primary200: 'hsl(275, 100%, 77%)',
-			primary100: 'hsl(276, 100%, 83%)',
-			primary000: 'hsl(276, 100%, 89%)',
+			primary900: 'hsl(276, 100%, 6%)',
+			primary800: 'hsl(276, 100%, 11%)',
+			primary700: 'hsl(276, 100%, 15%)',
+			primary600: 'hsl(276, 100%, 21%)',
+			primary500: 'hsl(276, 100%, 27%)',
+			primary400: 'hsl(276, 100%, 33%)',
+			primary300: 'hsl(275, 100%, 39%)',
+			primary200: 'hsl(275, 100%, 46%)',
+			primary100: 'hsl(276, 100%, 52%)',
 
 			secondary900: 'hsl(186, 100%, 26%)',
 			secondary800: 'hsl(185, 100%, 31%)',
@@ -48,7 +48,7 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			trinary000: 'hsl(118, 100%, 75%)',
 
 			textLight: 'hsl(180, 4%, 89%)',
-			textLightActive: 'hsl(0, 0%, 100%)',
+			textLightActive: 'hsl(180, 4%, 100%)',
 
 			textMedium: 'hsl(210, 4%, 54%)',
 			textMediumActive: 'hsl(210, 4%, 65%)',

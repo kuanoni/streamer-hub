@@ -50,7 +50,7 @@ const UnpauseButton = styled(MessageBoxContainer, {
 	justifyContent: 'center',
 	alignItems: 'center',
 	padding: '.25rem',
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.primary400,
 	fontWeight: 700,
 	opacity: 0.9,
 	transition: 'opacity .2s ease',

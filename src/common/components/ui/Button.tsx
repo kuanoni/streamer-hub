@@ -18,27 +18,27 @@ const Btn = styled('button', {
 		color: {
 			primary: {
 				color: theme.colors.textLight,
-				backgroundColor: theme.colors.primary700,
+				backgroundColor: theme.colors.primary200,
 				'&:hover': {
-					backgroundColor: theme.colors.primary600,
+					backgroundColor: theme.colors.primary100,
 				},
 				'&:active': {
 					transform: 'translateY(1px)',
 					boxShadow: 'none',
-					backgroundColor: theme.colors.primary800,
+					backgroundColor: theme.colors.primary300,
 				},
 			},
 			primaryTransparent: {
 				color: theme.colors.textLight,
 				backgroundColor: 'transparent',
-				border: `1px solid ${theme.colors.primary700}`,
+				border: `1px solid ${theme.colors.primary200}`,
 				'&:hover': {
-					backgroundColor: theme.colors.primary600,
+					backgroundColor: theme.colors.primary100,
 				},
 				'&:active': {
 					transform: 'translateY(1px)',
 					boxShadow: 'none',
-					backgroundColor: theme.colors.primary800,
+					backgroundColor: theme.colors.primary300,
 				},
 			},
 			dark: {

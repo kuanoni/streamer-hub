@@ -23,7 +23,7 @@ const StreamEmbedWrapper = styled('div', {
 
 const StyledIframe = styled('iframe', {
 	aspectRatio: '16 / 9',
-	backgroundColor: theme.colors.bg,
+	backgroundColor: theme.colors.primary900,
 	border: 'none',
 	boxShadow: 'rgba(117, 52, 223, 0.22) 0px 0px 12px 1px',
 });

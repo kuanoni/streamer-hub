@@ -24,7 +24,7 @@ const Form = styled('form', {
 	display: 'flex',
 	alignItems: 'end',
 	padding: '.5rem 1rem',
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.primary400,
 });
 
 const InputContainer = styled('div', {

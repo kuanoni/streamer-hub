@@ -7,7 +7,7 @@ const containerGap = 8;
 const Container = styled('div', {
 	visibility: 'hidden',
 	position: 'relative',
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.primary400,
 	borderRadius: theme.space.borderRad,
 });
 

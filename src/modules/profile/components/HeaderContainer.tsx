@@ -15,7 +15,7 @@ const TopCutout = styled('div', {
 	width: '14rem',
 	height: '6rem',
 	borderTopLeftRadius: theme.space.borderRad,
-	backgroundImage: `radial-gradient(circle at 50% 8.2rem, transparent 6rem, ${theme.colors.primary900} 0)`,
+	backgroundImage: `radial-gradient(circle at 50% 8.2rem, transparent 6rem, ${theme.colors.primary400} 0)`,
 });
 
 const Avatar = styled(Image, {

@@ -25,7 +25,7 @@ const InputWrapper = styled('div', {
 
 				'&.disabled': {
 					color: theme.colors.textDark,
-					backgroundColor: theme.colors.primary1400,
+					backgroundColor: theme.colors.primary900,
 				},
 			},
 			transparent: {

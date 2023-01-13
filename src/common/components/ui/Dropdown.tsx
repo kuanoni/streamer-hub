@@ -15,12 +15,13 @@ const Input = styled('div', {
 	justifyContent: 'space-between',
 	alignItems: 'center',
 	padding: '.25rem',
+	fontWeight: 700,
 	cursor: 'pointer',
 	variants: {
 		color: {
 			primary: {
 				color: theme.colors.textLight,
-				backgroundColor: theme.colors.primary700,
+				backgroundColor: theme.colors.primary200,
 			},
 			dark: {
 				color: theme.colors.textDark,
@@ -61,7 +62,7 @@ const OptionsContainer = styled('div', {
 	variants: {
 		color: {
 			primary: {
-				backgroundColor: theme.colors.primary900,
+				backgroundColor: theme.colors.primary400,
 			},
 			dark: {
 				backgroundColor: theme.colors.grey800,

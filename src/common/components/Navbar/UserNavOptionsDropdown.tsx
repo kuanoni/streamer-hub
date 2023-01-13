@@ -52,7 +52,7 @@ const LinkButton = styled(Link, {
 	},
 	'&:active': {
 		color: theme.colors.textMediumActive,
-		backgroundColor: theme.colors.primary900,
+		backgroundColor: theme.colors.primary400,
 		transitionDuration: '0s',
 	},
 	svg: {

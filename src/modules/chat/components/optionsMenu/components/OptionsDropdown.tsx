@@ -14,7 +14,7 @@ const InputBox = styled('div', {
 	width: '100%',
 	padding: '.25rem',
 	color: theme.colors.textLight,
-	backgroundColor: theme.colors.primary700,
+	backgroundColor: theme.colors.primary200,
 	cursor: 'pointer',
 });
 
@@ -41,7 +41,7 @@ const Dropdown = styled('div', {
 	left: 0,
 	top: 0,
 	width: '100%',
-	backgroundColor: theme.colors.primary900,
+	backgroundColor: theme.colors.primary400,
 	overflow: 'hidden',
 	zIndex: 2,
 	transformOrigin: 'top',
@@ -65,7 +65,7 @@ const DropdownOption = styled('div', {
 	padding: '.25rem',
 	cursor: 'pointer',
 	'&:hover': {
-		backgroundColor: theme.colors.primary800,
+		backgroundColor: theme.colors.primary300,
 	},
 	'&.selected': {
 		textDecoration: 'underline',

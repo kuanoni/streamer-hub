@@ -26,7 +26,7 @@ const Container = styled('div', {
 
 const borderColors = {
 	[EmbedColors.primary]: {
-		backgroundColor: theme.colors.primary700,
+		backgroundColor: theme.colors.primary200,
 	},
 	[EmbedColors.blue]: {
 		backgroundColor: theme.colors.secondary900,
