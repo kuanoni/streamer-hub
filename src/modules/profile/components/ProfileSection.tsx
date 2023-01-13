@@ -28,7 +28,7 @@ const SectionHeader = styled('header', {
 		backgroundColor: theme.colors.frosted,
 	},
 	'&:hover': {
-		color: theme.colors.textLightActive,
+		color: theme.colors.textLight,
 	},
 	h2: {
 		margin: 0,
