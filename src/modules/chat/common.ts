@@ -21,10 +21,10 @@ export enum ChatPopups {
 }
 
 export enum EmbedColors {
-	primary,
-	blue,
-	green,
-	red,
+	default,
+	info,
+	success,
+	error,
 }
 
 export type DispatchAction = { type: string; payload?: any };

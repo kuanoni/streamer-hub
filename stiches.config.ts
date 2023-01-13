@@ -3,6 +3,9 @@ import { createStitches } from '@stitches/react';
 export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme, config } = createStitches({
 	theme: {
 		colors: {
+			frosted: 'hsla(0, 0%, 100%, 0.15)',
+			frostedPrimary: 'hsla(275, 100%, 67%, 0.25)',
+
 			grey1000: 'hsl(253, 15%, 6%)',
 			grey900: 'hsl(253, 15%, 12%)',
 			grey800: 'hsl(255, 15%, 20%)',
@@ -49,18 +52,17 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 
 			textLight: 'hsl(180, 4%, 89%)',
 			textLightActive: 'hsl(180, 4%, 100%)',
-
 			textMedium: 'hsl(210, 4%, 54%)',
 			textMediumActive: 'hsl(210, 4%, 65%)',
-
 			textDark: 'hsl(255, 20%, 41%)',
 			textDarkActive: 'hsl(255, 20%, 59%)',
 
 			textLink: 'hsl(204, 78%, 53%)',
 			textPrimaryMedium: 'hsl(275, 100%, 71%)',
 
-			frosted: 'hsla(0, 0%, 100%, 0.15)',
-			frostedPrimary: 'hsla(275, 100%, 67%, 0.25)',
+			info: 'hsl(180, 63%, 40%)',
+			success: 'hsl(120, 63%, 40%)',
+			error: 'hsl(0, 63%, 44%)',
 		},
 		space: {
 			pageWidth: '1140px',

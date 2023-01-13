@@ -29,7 +29,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 				type: 'push',
 				payload: createEmbedMessage({
 					description: 'You must sign in to send chat messages.',
-					color: EmbedColors.red,
+					color: EmbedColors.error,
 				}),
 			});
 
@@ -41,7 +41,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 		// create and write 'Attempting to connect...' message
 		const id = v4();
 		const connectingEmbedMsg: EmbedMessage = createEmbedMessage(
-			{ description: 'Attempting to connect...', color: EmbedColors.blue },
+			{ description: 'Attempting to connect...', color: EmbedColors.info },
 			id
 		);
 		msgDispatch({ type: 'push', payload: connectingEmbedMsg });
@@ -78,7 +78,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 					usersDispatch({ type: 'set', payload: data.usersList });
 					msgDispatch({
 						type: 'updateEmbedMsg',
-						payload: { id, data: { description: data.message, color: EmbedColors.green } },
+						payload: { id, data: { description: data.message, color: EmbedColors.success } },
 					});
 				});
 
