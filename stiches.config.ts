@@ -50,12 +50,15 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 
 			textLight: 'hsl(180, 4%, 89%)',
 			textLightActive: 'hsl(0, 0%, 100%)',
+
 			textMedium: 'hsl(210, 4%, 54%)',
 			textMediumActive: 'hsl(210, 4%, 65%)',
+
 			textDark: 'hsl(255, 15%, 36%)',
 			textDarkActive: 'hsl(255, 15%, 48%)',
 
 			textLink: 'hsl(204, 78%, 53%)',
+			textPrimaryMedium: 'hsl(275, 100%, 71%)',
 
 			bg: 'hsl(276, 100%, 6%)',
 			border: 'hsl(275, 100%, 13%)',

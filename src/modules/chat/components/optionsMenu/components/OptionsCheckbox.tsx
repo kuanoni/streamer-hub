@@ -55,9 +55,6 @@ const Container = styled('div', {
 	'&:hover': {
 		backgroundColor: theme.colors.grey900,
 	},
-	[`&:hover ${Checkbox}`]: {
-		color: theme.colors.primary300,
-	},
 });
 
 type Props = {
