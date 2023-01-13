@@ -3,7 +3,7 @@ import { styled, theme } from 'stiches.config';
 
 const Btn = styled('button', {
 	color: theme.colors.textLight,
-	backgroundColor: theme.colors.trinary700,
+	backgroundColor: theme.colors.secondary700,
 	border: 'none',
 	borderRadius: theme.space.borderRad,
 	fontSize: '1rem',

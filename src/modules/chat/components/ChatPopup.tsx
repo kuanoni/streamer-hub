@@ -33,7 +33,7 @@ const Header = styled('div', {
 	padding: '.5rem',
 	paddingLeft: '1rem',
 	backgroundColor: theme.colors.primary400,
-	borderBottom: `1px solid ${theme.colors.trinary700}`,
+	borderBottom: `1px solid ${theme.colors.secondary700}`,
 });
 
 const HeaderTitles = styled('div', {

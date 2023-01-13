@@ -34,7 +34,7 @@ const NavLink = styled(Link, {
 		height: '100%',
 	},
 	'&:active': {
-		color: theme.colors.trinary000,
+		color: theme.colors.secondary000,
 	},
 	'&:active::after': {
 		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 50%)',

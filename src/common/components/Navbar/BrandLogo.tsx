@@ -16,7 +16,7 @@ const Container = styled(Link, {
 	transition: '.2s ease',
 	'&:hover': {
 		transform: 'scale(1.05) translateY(-2px)',
-		boxShadow: `0 0 7px 1px ${theme.colors.trinary000}`,
+		boxShadow: `0 0 7px 1px ${theme.colors.secondary000}`,
 	},
 });
 

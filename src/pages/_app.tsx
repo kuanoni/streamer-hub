@@ -23,7 +23,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 				<meta property='og:title' content={pageTitle} key='title' />
 			</Head>
 
-			<NextNProgress color={theme.colors.trinary500.toString()} />
+			<NextNProgress color={theme.colors.secondary500.toString()} />
 			{Component.authorizationOptions
 				? getLayout(
 						<AuthorizedPageWrapper authorizationOptions={Component.authorizationOptions}>
