@@ -27,7 +27,7 @@ const NavLink = styled(Link, {
 	},
 	'&:hover': {
 		color: theme.colors.textMediumActive,
-		borderColor: theme.colors.primary400,
+		borderColor: theme.colors.textPrimaryMedium,
 		textDecoration: 'none',
 	},
 	'&:hover::after': {
@@ -40,7 +40,7 @@ const NavLink = styled(Link, {
 		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 50%)',
 	},
 	'&.current': {
-		color: theme.colors.primary400,
+		color: theme.colors.textPrimaryMedium,
 	},
 	'&.current::after': {
 		height: '100%',

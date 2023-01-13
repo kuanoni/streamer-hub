@@ -20,7 +20,6 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 			primary700: 'hsl(275, 100%, 46%)',
 			primary600: 'hsl(276, 100%, 52%)',
 			primary500: 'hsl(275, 100%, 59%)',
-			primary400: 'hsl(275, 100%, 65%)',
 			primary300: 'hsl(275, 100%, 71%)',
 			primary200: 'hsl(275, 100%, 77%)',
 			primary100: 'hsl(276, 100%, 83%)',

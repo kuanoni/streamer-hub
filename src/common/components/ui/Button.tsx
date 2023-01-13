@@ -20,7 +20,6 @@ const Btn = styled('button', {
 				color: theme.colors.textLight,
 				backgroundColor: theme.colors.primary700,
 				'&:hover': {
-					boxShadow: `0 0 4px 1px ${theme.colors.primary400}`,
 					backgroundColor: theme.colors.primary600,
 				},
 				'&:active': {
@@ -34,9 +33,7 @@ const Btn = styled('button', {
 				backgroundColor: 'transparent',
 				border: `1px solid ${theme.colors.primary700}`,
 				'&:hover': {
-					boxShadow: `0 0 4px 1px ${theme.colors.primary400}`,
 					backgroundColor: theme.colors.primary600,
-					borderColor: theme.colors.primary400,
 				},
 				'&:active': {
 					transform: 'translateY(1px)',
