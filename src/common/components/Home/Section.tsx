@@ -13,7 +13,7 @@ const Container = styled('section', {
 const Header = styled('div', {
 	padding: '1rem',
 	paddingBottom: '.5rem',
-	backgroundColor: theme.colors.frostedPrimary,
+	backgroundColor: theme.colors.primary600,
 	h1: {
 		margin: 0,
 	},
