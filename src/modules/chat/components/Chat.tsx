@@ -20,6 +20,7 @@ const Container = styled('div', {
 	minWidth: 300,
 	width: 300,
 	overflow: 'auto',
+	'@md': { width: '100%' },
 });
 
 const MessagesSection = styled('div', {
@@ -31,6 +32,7 @@ const MessagesSection = styled('div', {
 });
 
 const Popups = styled('div', {
+	flexGrow: 1,
 	'&:not(:empty)': {
 		maxHeight: '80%',
 	},
