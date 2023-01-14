@@ -1,5 +1,7 @@
 import { useSession } from 'next-auth/react';
 import React, { ReactNode, useEffect, useState } from 'react';
+import { BsCameraVideoFill, BsCollectionPlayFill, BsFillHouseDoorFill } from 'react-icons/bs';
+import useBreakpoints from 'src/common/hooks/useBreakpoints';
 import { styled, theme } from 'stiches.config';
 
 import { AuthPerms } from '@globalTypes/user';
@@ -35,6 +37,7 @@ interface Props {
 }
 
 const Navbar = ({ children }: Props) => {
+	const { isXs, isSm } = useBreakpoints();
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 
@@ -55,11 +58,11 @@ const Navbar = ({ children }: Props) => {
 		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
 			<Topbar>
-				<BrandLogo />
+				{!isSm && <BrandLogo />}
 				<Nav>
-					<NavButton link='/'>Home</NavButton>
-					<NavButton link='/stream'>Stream</NavButton>
-					<NavButton link='/videos'>Videos</NavButton>
+					<NavButton link='/'>{isSm ? <BsFillHouseDoorFill /> : 'Home'}</NavButton>
+					<NavButton link='/stream'>{isSm ? <BsCameraVideoFill /> : 'Stream'}</NavButton>
+					<NavButton link='/videos'>{isSm ? <BsCollectionPlayFill /> : 'Videos'}</NavButton>
 					{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					<AlignRightContainer>
 						{children}
