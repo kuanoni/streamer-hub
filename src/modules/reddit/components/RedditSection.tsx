@@ -1,20 +1,22 @@
 import { useMemo } from 'react';
-import { styled, theme } from 'stiches.config';
+import { styled } from 'stiches.config';
 
 import Section from '@components/Home/Section';
 import { CSS } from '@stitches/react';
 
 import RedditPost from './RedditPost';
 
+const borderColor = 'rgb(51, 54, 57)';
+
 const Container = styled('article', {
-	border: `1px solid ${theme.colors.grey700}`,
+	border: `1px solid ${borderColor}`,
 	fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
 });
 
 const contentCss: CSS = {
 	height: '100%',
 	overflowY: 'auto',
-	borderRight: `1px solid ${theme.colors.grey700}`,
+	borderRight: `1px solid ${borderColor}`,
 	cursor: 'pointer',
 };
 
@@ -51,7 +53,7 @@ const HeaderButton = styled('button', {
 const Header = styled('a', {
 	display: 'flex',
 	padding: 12,
-	border: `1px solid ${theme.colors.grey700}`,
+	border: `1px solid ${borderColor}`,
 	borderBottom: 'none',
 	borderTopLeftRadius: 12,
 	borderTopRightRadius: 12,
@@ -69,7 +71,7 @@ const Header = styled('a', {
 
 const Footer = styled('footer', {
 	padding: '24px 0',
-	border: `1px solid ${theme.colors.grey700}`,
+	border: `1px solid ${borderColor}`,
 	borderTop: 'none',
 	borderBottomLeftRadius: 12,
 	borderBottomRightRadius: 12,
