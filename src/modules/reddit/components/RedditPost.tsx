@@ -27,7 +27,7 @@ const PostTitle = styled('span', {
 
 const PostAuthor = styled('div', {
 	color: darkText,
-	fontSize: '0.8em',
+	fontSize: 13,
 });
 
 const SvgWrapper = styled('div', {
@@ -57,12 +57,10 @@ const SvgWrapper = styled('div', {
 const PostMetrics = styled('span', {
 	display: 'flex',
 	height: 20,
-	fontSize: 13,
-	lineHeight: '20px',
 	span: {
-		height: '100%',
+		display: 'inline',
 		padding: '0 8px',
-		lineHeight: '16px',
+		marginTop: 2,
 		transition: 'color .1s',
 	},
 	[`&:hover ${SvgWrapper}::after`]: {
@@ -92,6 +90,7 @@ const PostMetrics = styled('span', {
 
 const PostTime = styled('time', {
 	display: 'flex',
+	marginTop: 2,
 	marginLeft: 'auto',
 });
 
@@ -106,7 +105,7 @@ const PostFooter = styled('footer', {
 	gap: '.5rem',
 	marginTop: 'auto',
 	color: darkText,
-	fontSize: '0.8em',
+	fontSize: 13,
 });
 
 const Post = styled('a', {
