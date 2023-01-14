@@ -64,7 +64,7 @@ const ProfilePicImage = styled(Image, {
 	width: '2.5rem',
 	height: '2.5rem',
 	borderRadius: '50%',
-	'@xs': {
+	'@sm': {
 		width: '2rem',
 		height: '2rem',
 	},
@@ -77,11 +77,11 @@ const DropdownCaret = styled(BsCaretDownFill, {
 	'&.open': {
 		transform: 'rotate(180deg)',
 	},
-	'@xs': {
-		display: 'none',
+	'@sm': {
 		width: '.75rem',
 		height: '.75rem',
 	},
+	'@xs': { display: 'none' },
 });
 
 type Props = {
