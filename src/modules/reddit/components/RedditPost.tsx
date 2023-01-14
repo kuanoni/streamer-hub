@@ -1,13 +1,10 @@
 import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import Image from 'next/image';
-import { useMemo } from 'react';
 import { BiComment, BiUpvote } from 'react-icons/bi';
 import { BsReddit } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import selfPostThumbnail from '@images/self_post_thumbnail.png';
-
-import Section from './Section';
 
 const PostThumbnail = styled(Image, {
 	objectFit: 'contain',
@@ -82,11 +79,6 @@ const Post = styled('a', {
 	},
 });
 
-const Container = styled('div', {
-	borderRadius: 12,
-	border: `1px solid ${theme.colors.grey700}`,
-});
-
 const RedditIcon = styled('div', {
 	position: 'absolute',
 	top: '.75rem',
@@ -95,56 +87,39 @@ const RedditIcon = styled('div', {
 	fontSize: '1.25em',
 });
 
-type Props = {
-	posts: RedditPostData[];
-};
+interface Props extends RedditPostData {}
 
-const RedditSection = ({ posts }: Props) => {
-	const postComponents = useMemo(() => {
-		return posts.map((post) => {
-			const { author, title, permalink, thumbnail, created_utc, num_comments, score } = post;
+const RedditPost = ({ author, title, permalink, thumbnail, created_utc, num_comments, score }: Props) => {
+	const thumbnailUrl =
+		thumbnail === 'self' ? selfPostThumbnail : thumbnail === 'default' ? selfPostThumbnail : thumbnail;
 
-			const thumbnailUrl =
-				thumbnail === 'self' ? selfPostThumbnail : thumbnail === 'default' ? selfPostThumbnail : thumbnail;
-
-			const timeFromUnix = fromUnixTime(created_utc);
-			const timeAgo = formatDistanceToNowStrict(timeFromUnix);
-			const timeFormatted = format(timeFromUnix, 'yyy-MM-dd, HH:mm:ss');
-
-			return (
-				<Post key={permalink} href={`https://reddit.com${permalink}`} target='_blank'>
-					<PostThumbnail src={thumbnailUrl} alt='' width={64} height={64} />
-					<PostContent>
-						<RedditIcon>
-							<BsReddit />
-						</RedditIcon>
-						<PostAuthor>/u/{author}</PostAuthor>
-						<PostTitle>{title}</PostTitle>
-						<PostFooter>
-							<PostMetrics>
-								<BiUpvote style={{ marginBottom: '.1em' }} />
-								<span>{score}</span>
-							</PostMetrics>
-							<PostMetrics>
-								<BiComment />
-								<span>{num_comments}</span>
-							</PostMetrics>
-							<PostTime title={timeFormatted}>{`${timeAgo} ago`}</PostTime>
-						</PostFooter>
-					</PostContent>
-				</Post>
-			);
-		});
-	}, [posts]);
+	const timeFromUnix = fromUnixTime(created_utc);
+	const timeAgo = formatDistanceToNowStrict(timeFromUnix);
+	const timeFormatted = format(timeFromUnix, 'yyy-MM-dd, HH:mm:ss');
 
 	return (
-		<Section css={{ borderLeft: 'none' }}>
-			<Section.Header>Reddit</Section.Header>
-			<Section.Content css={{ height: '100%', overflowY: 'auto' }}>
-				<Container>{postComponents}</Container>
-			</Section.Content>
-		</Section>
+		<Post key={permalink} href={`https://reddit.com${permalink}`} target='_blank'>
+			<PostThumbnail src={thumbnailUrl} alt='' width={64} height={64} />
+			<PostContent>
+				<RedditIcon>
+					<BsReddit />
+				</RedditIcon>
+				<PostAuthor>/u/{author}</PostAuthor>
+				<PostTitle>{title}</PostTitle>
+				<PostFooter>
+					<PostMetrics>
+						<BiUpvote style={{ marginBottom: '.1em' }} />
+						<span>{score}</span>
+					</PostMetrics>
+					<PostMetrics>
+						<BiComment />
+						<span>{num_comments}</span>
+					</PostMetrics>
+					<PostTime title={timeFormatted}>{`${timeAgo} ago`}</PostTime>
+				</PostFooter>
+			</PostContent>
+		</Post>
 	);
 };
 
-export default RedditSection;
+export default RedditPost;
