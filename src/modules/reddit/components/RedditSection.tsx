@@ -30,6 +30,15 @@ const HeaderText = styled('span', {
 });
 
 const HeaderButton = styled('button', {
+	'&::before': {
+		content: `Visit`,
+	},
+	'@md': {
+		'&::before': {
+			content: 'Visit on Reddit',
+		},
+	},
+
 	display: 'flex',
 	alignItems: 'center',
 	height: 32,
@@ -120,12 +129,8 @@ const RedditSection = ({ posts }: Props) => {
 		<Section css={{ borderRadius: '11px' }}>
 			<Section.Content css={contentCss}>
 				<Header href='https://www.reddit.com/r/Destiny/' target='_blank'>
-					<HeaderText>
-						Posts from
-						<br />
-						/r/Destiny
-					</HeaderText>
 					<HeaderButton>Visit</HeaderButton>
+					<HeaderText>Posts from /r/Destiny</HeaderText>
 				</Header>
 				<Container>{postComponents}</Container>
 				<Footer>
