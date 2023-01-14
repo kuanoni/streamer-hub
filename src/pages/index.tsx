@@ -12,12 +12,8 @@ const Container = styled('div', {
 	flexDirection: 'column',
 	gap: '2rem',
 	marginTop: '2rem',
-	'@md': {
-		gap: '1rem',
-	},
-	'@sm': {
-		marginTop: '.5rem',
-	},
+	'@md': { gap: '1rem' },
+	'@sm': { marginTop: '.5rem' },
 });
 
 const Row = styled('div', {
@@ -26,12 +22,8 @@ const Row = styled('div', {
 	gridTemplateRows: '1fr',
 	placeItems: 'stretch',
 	gap: '2rem',
-	'@md': {
-		gap: '1rem',
-	},
-	'@sm': {
-		gridTemplateColumns: '1fr',
-	},
+	'@md': { gap: '1rem' },
+	'@sm': { gridTemplateColumns: '1fr' },
 });
 
 const ColumnWrapper = styled('div', {
