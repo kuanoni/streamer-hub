@@ -1,6 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React, { FC, ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { styled, theme } from 'stiches.config';
 
 import { AuthPerms } from '@globalTypes/user';
@@ -35,8 +34,8 @@ interface Props {
 	children?: ReactNode;
 }
 
-	const { data, status } = useSession();
 const Navbar = ({ children }: Props) => {
+	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 
 	const openSignIn = () => {
