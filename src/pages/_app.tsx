@@ -21,6 +21,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 			<Head>
 				<title>{pageTitle}</title>
 				<meta property='og:title' content={pageTitle} key='title' />
+				<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
 			</Head>
 
 			<NextNProgress color={theme.colors.secondary500.toString()} />
