@@ -33,7 +33,10 @@ const MerchImage = styled(Image, {
 const MerchLabel = styled('span', {
 	minHeight: '1.5rem',
 	color: theme.colors.textLight,
+	whiteSpace: 'nowrap',
 	transition: 'transform .1s ease',
+	'@sm': { fontSize: '.8rem', minHeight: '1rem' },
+	'@xs': { fontSize: '1rem', minHeight: '1.5rem' },
 });
 
 const MerchLink = styled('a', {
