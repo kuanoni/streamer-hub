@@ -15,7 +15,7 @@ const HeaderButton = styled('button', {
 	'&::before': {
 		content: `Visit`,
 	},
-	'@md': {
+	'@sm': {
 		'&::before': {
 			content: 'Visit on Reddit',
 		},

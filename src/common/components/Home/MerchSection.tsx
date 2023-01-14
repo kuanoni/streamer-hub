@@ -20,7 +20,7 @@ const MerchImage = styled(Image, {
 	width: '100%',
 	transformOrigin: 'top',
 	transition: '.1s ease-in',
-	'@lg': {},
+	'@md': {},
 });
 
 const MerchLabel = styled('span', {
@@ -49,7 +49,7 @@ const MerchLink = styled('a', {
 		transitionDuration: '0s',
 		transform: 'scale(.87) rotateX(15deg)',
 	},
-	'@lg': {
+	'@md': {
 		[`&:hover ${MerchImage}`]: {
 			transform: 'scale(.8)',
 		},
@@ -59,7 +59,7 @@ const MerchLink = styled('a', {
 const MerchItem = styled('div', {
 	aspectRatio: 1,
 	overflow: 'hidden',
-	'@lg': {},
+	'@md': {},
 });
 
 const MerchSection = () => {

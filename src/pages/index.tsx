@@ -12,10 +12,10 @@ const Container = styled('div', {
 	flexDirection: 'column',
 	gap: '2rem',
 	marginTop: '2rem',
-	'@lg': {
+	'@md': {
 		gap: '1rem',
 	},
-	'@md': {
+	'@sm': {
 		marginTop: '.5rem',
 	},
 });
@@ -26,10 +26,10 @@ const Row = styled('div', {
 	gridTemplateRows: '1fr',
 	placeItems: 'stretch',
 	gap: '2rem',
-	'@lg': {
+	'@md': {
 		gap: '1rem',
 	},
-	'@md': {
+	'@sm': {
 		gridTemplateColumns: '1fr',
 	},
 });
@@ -49,7 +49,7 @@ const ColumnContainer = styled('div', {
 	'& > *': {
 		height: '50%',
 	},
-	'@md': {
+	'@sm': {
 		position: 'static',
 		'& > *': {
 			height: 400,
