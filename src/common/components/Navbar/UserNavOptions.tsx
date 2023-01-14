@@ -11,17 +11,22 @@ import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 import UserNavOptionsDropdown from './UserNavOptionsDropdown';
 
+const Username = styled(Link, {
+	padding: '0 .25rem',
+	'&:hover': {
+		textDecoration: 'underline',
+	},
+});
+
 const Container = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	gap: '1rem',
 	alignItems: 'center',
-});
-
-const Username = styled(Link, {
-	padding: '0 .25rem',
-	'&:hover': {
-		textDecoration: 'underline',
+	'@sm': { gap: '.5rem' },
+	'@xs': {
+		[`& ${Username}`]: { display: 'none' },
+		'.signin': { display: 'none' },
 	},
 });
 
@@ -48,12 +53,21 @@ const ProfilePic = styled(BsPersonCircle, {
 	height: '2.5rem',
 	marginLeft: '1rem',
 	borderRadius: '50%',
+	'@sm': { marginLeft: '.5rem' },
+	'@xs': {
+		width: '2rem',
+		height: '2rem',
+	},
 });
 
 const ProfilePicImage = styled(Image, {
 	width: '2.5rem',
 	height: '2.5rem',
 	borderRadius: '50%',
+	'@xs': {
+		width: '2rem',
+		height: '2rem',
+	},
 });
 
 const DropdownCaret = styled(BsCaretDownFill, {
@@ -62,6 +76,11 @@ const DropdownCaret = styled(BsCaretDownFill, {
 	transition: 'transform .2s ease',
 	'&.open': {
 		transform: 'rotate(180deg)',
+	},
+	'@xs': {
+		display: 'none',
+		width: '.75rem',
+		height: '.75rem',
 	},
 });
 
@@ -89,7 +108,7 @@ const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 				</Username>
 			)}
 			{status === 'unauthenticated' && (
-				<Button color='secondary' onClick={openSignIn}>
+				<Button className='signin' color='secondary' onClick={openSignIn}>
 					Sign In
 				</Button>
 			)}
