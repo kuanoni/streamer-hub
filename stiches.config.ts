@@ -59,7 +59,7 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 	},
 	media: {
 		xxs: '(max-width: 375px)',
-		xs: '(max-width: 640px)',
+		xs: '(max-width: 524px)',
 		sm: '(max-width: 768px)',
 		md: '(max-width: 1024px)',
 		lg: '(min-width: 1025px)',
