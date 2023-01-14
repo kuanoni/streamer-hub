@@ -58,7 +58,9 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 		},
 	},
 	media: {
-		bp1: '(min-width: 480px)',
+		sm: '(max-width: 640px)',
+		md: '(max-width: 768px)',
+		lg: '(max-width: 1024px)',
 	},
 	utils: {
 		marginX: (value: number) => ({ marginLeft: value, marginRight: value }),
