@@ -28,7 +28,7 @@ const LayoutWithNavbar = ({ children }: Props) => {
 
 	return (
 		<Page>
-			<Navbar fullWidth />
+			<Navbar />
 			<Main>{children}</Main>
 		</Page>
 	);

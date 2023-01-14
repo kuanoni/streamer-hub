@@ -14,11 +14,7 @@ const Topbar = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	width: '100%',
-	maxWidth: theme.space.pageWidth,
 	margin: '0 auto',
-	'&.full-width': {
-		maxWidth: 'none',
-	},
 });
 
 const Nav = styled('nav', {
@@ -36,12 +32,11 @@ const AlignRightContainer = styled('div', {
 });
 
 interface Props {
-	fullWidth?: boolean;
 	children?: ReactNode;
 }
 
-const Navbar = ({ fullWidth = false, children }: Props) => {
 	const { data, status } = useSession();
+const Navbar = ({ children }: Props) => {
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 
 	const openSignIn = () => {
@@ -60,7 +55,7 @@ const Navbar = ({ fullWidth = false, children }: Props) => {
 	return (
 		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
-			<Topbar className={fullWidth ? 'full-width' : ''}>
+			<Topbar>
 				<BrandLogo />
 				<Nav>
 					<NavButton link='/'>Home</NavButton>
