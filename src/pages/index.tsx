@@ -12,14 +12,26 @@ const Container = styled('div', {
 	flexDirection: 'column',
 	gap: '2rem',
 	marginTop: '2rem',
+	'@lg': {
+		gap: '1rem',
+	},
+	'@md': {
+		marginTop: '.5rem',
+	},
 });
 
 const Row = styled('div', {
 	display: 'grid',
-	gridTemplateColumns: '1fr minmax(auto, 400px)',
+	gridTemplateColumns: '64fr minmax(305px, 36fr)',
 	gridTemplateRows: '1fr',
 	placeItems: 'stretch',
 	gap: '2rem',
+	'@lg': {
+		gap: '1rem',
+	},
+	'@md': {
+		gridTemplateColumns: '1fr',
+	},
 });
 
 const ColumnWrapper = styled('div', {
@@ -36,6 +48,12 @@ const ColumnContainer = styled('div', {
 	gap: '1rem',
 	'& > *': {
 		height: '50%',
+	},
+	'@md': {
+		position: 'static',
+		'& > *': {
+			height: 400,
+		},
 	},
 });
 
