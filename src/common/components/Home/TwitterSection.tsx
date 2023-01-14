@@ -1,14 +1,22 @@
 import { Timeline } from 'react-twitter-widgets';
+import { theme } from 'stiches.config';
+
+import { CSS } from '@stitches/react';
 
 import Section from './Section';
+
+const contentCss: CSS = {
+	height: '100%',
+	overflowY: 'auto',
+	borderRight: `1px solid ${theme.colors.grey700}`,
+};
 
 interface Props {}
 
 const TwitterSection = ({}: Props) => {
 	return (
-		<Section css={{ borderLeft: 'none' }}>
-			<Section.Header>Twitter</Section.Header>
-			<Section.Content css={{ height: '100%', overflowY: 'auto' }}>
+		<Section css={{ borderRadius: '11px' }}>
+			<Section.Content css={contentCss}>
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',
@@ -16,7 +24,7 @@ const TwitterSection = ({}: Props) => {
 					}}
 					options={{
 						theme: 'dark',
-						chrome: 'noheader, nofooter, noscrollbar, transparent',
+						chrome: 'noscrollbar, transparent',
 						tweetLimit: 10,
 						dnt: true,
 					}}
