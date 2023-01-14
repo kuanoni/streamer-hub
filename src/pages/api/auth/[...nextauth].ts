@@ -1,15 +1,21 @@
-import extractStringEnvVar from '@/utils/extractStringEnvVar';
-import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from '@/utils/mongodb';
 import NextAuth, { NextAuthOptions } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import DiscordProvider from 'next-auth/providers/discord';
-import { AuthPerms, Rank } from 'types/custom-auth';
+import DiscordProvider, { DiscordProfile } from 'next-auth/providers/discord';
+import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
+
+import { AuthPerms, InfoBadge, Role, SubscriptionTier } from '@globalTypes/user';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import extractStringEnvVar from '@utils/extractStringEnvVar';
+import clientPromise from '@utils/mongodb';
 
 const defaultProfile = {
-	displayName: '',
-	role: AuthPerms.USER,
-	rank: Rank.DEFAULT,
+	username: '',
+	email: null,
+	role: null,
+	infoBadges: [],
+	subscriptionTier: SubscriptionTier.NONE,
+
+	bannedUntil: null,
+	authLevel: AuthPerms.USER,
 };
 
 export const authOptions: NextAuthOptions = {
@@ -18,9 +24,11 @@ export const authOptions: NextAuthOptions = {
 		GoogleProvider({
 			clientId: extractStringEnvVar('GOOGLE_ID'),
 			clientSecret: extractStringEnvVar('GOOGLE_SECRET'),
-			profile(profile) {
+			profile(profile: GoogleProfile) {
 				return {
 					id: profile.sub,
+					avatar: profile.picture,
+					joined: new Date(),
 					...defaultProfile,
 				};
 			},
@@ -28,9 +36,13 @@ export const authOptions: NextAuthOptions = {
 		DiscordProvider({
 			clientId: extractStringEnvVar('DISCORD_CLIENT_ID'),
 			clientSecret: extractStringEnvVar('DISCORD_CLIENT_SECRET'),
-			profile(profile) {
+			profile(profile: DiscordProfile) {
+				const avatar = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.webp`;
+
 				return {
 					id: profile.id,
+					avatar,
+					joined: new Date(),
 					...defaultProfile,
 				};
 			},
@@ -38,7 +50,7 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		async session({ session, user }: any) {
-			session.user = user; // Add role value to user object so it is passed along with session
+			session.user = user;
 			return session;
 		},
 		async redirect({ url }: { url: string }) {

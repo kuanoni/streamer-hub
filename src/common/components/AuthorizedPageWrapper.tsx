@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { PageAuthorizationOptions } from 'types/custom-auth';
+
+import { PageAuthorizationOptions } from '@globalTypes/authorized-page';
 
 type Props = {
 	authorizationOptions: PageAuthorizationOptions;
@@ -10,7 +11,7 @@ type Props = {
 const AuthorizedPageWrapper = ({ authorizationOptions, children }: Props) => {
 	const router = useRouter();
 	const { data, status } = useSession();
-	const userRole = data?.user?.role;
+	const userRole = data?.user?.authLevel;
 
 	const { roleRequired, whileLoading, unauthorizedRedirect } = authorizationOptions;
 

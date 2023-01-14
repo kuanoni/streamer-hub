@@ -1,6 +1,8 @@
-import Navbar from '@/components/Navbar';
 import React from 'react';
 import { styled } from 'stiches.config';
+
+import Navbar from '@components/Navbar/Navbar';
+
 import StreamProvider from '../context/StreamProvider';
 
 type Props = {
@@ -13,6 +15,9 @@ const Page = styled('div', {
 	gridTemplateRows: 'auto 1fr',
 	padding: '2rem',
 	paddingBottom: '1rem',
+	'@sm': {
+		padding: '.5rem',
+	},
 });
 
 const Main = styled('main', {

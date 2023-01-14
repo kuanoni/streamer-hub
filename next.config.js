@@ -2,6 +2,16 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	images: {
+		domains: [
+			'lh3.googleusercontent.com',
+			'cdn.discordapp.com',
+			'b.thumbs.redditmedia.com',
+			'a.thumbs.redditmedia.com',
+			'img.youtube.com',
+			'i3.ytimg.com',
+		],
+	},
 };
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({

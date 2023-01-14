@@ -1,6 +1,7 @@
-import Navbar from '@/components/Navbar';
 import React from 'react';
-import { styled } from 'stiches.config';
+import { styled, theme } from 'stiches.config';
+
+import Navbar from '@components/Navbar/Navbar';
 
 type Props = {
 	children?: React.ReactNode;
@@ -12,10 +13,15 @@ const LayoutWithNavbar = ({ children }: Props) => {
 		minHeight: '100vh',
 		gridTemplateRows: 'auto 1fr',
 		padding: '2rem',
+		'@sm': { padding: '2rem 1rem' },
 	});
 
 	const Main = styled('main', {
 		position: 'relative',
+		width: '100%',
+		maxWidth: theme.space.pageWidth,
+		margin: '0 auto',
+		marginTop: '1rem',
 	});
 
 	return (
