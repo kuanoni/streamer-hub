@@ -1,11 +1,11 @@
 import { styled } from 'stiches.config';
 
 import MerchSection from '@components/Home/MerchSection';
-import RedditSection from '@components/Home/RedditSection';
 import TwitterSection from '@components/Home/TwitterSection';
 import VideosSection from '@components/Home/VideosSection';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
-import fetchRedditPosts from '@utils/fetchRedditPosts';
+import fetchRedditPosts from '@modules/reddit/api/fetchRedditPosts';
+import RedditSection from '@modules/reddit/components/RedditSection';
 
 const Container = styled('div', {
 	display: 'flex',
