@@ -5,7 +5,7 @@ import TwitterSection from '@components/Home/TwitterSection';
 import VideosSection from '@components/Home/VideosSection';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import fetchRedditPosts from '@modules/reddit/api/fetchRedditPosts';
-import RedditSection from '@modules/reddit/components/RedditSection';
+import RedditSection from '@modules/reddit/components/section/RedditSection';
 
 const Container = styled('div', {
 	display: 'flex',
