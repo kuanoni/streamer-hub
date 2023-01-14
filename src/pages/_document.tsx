@@ -35,7 +35,7 @@ const globalStyles = globalCss({
 	},
 	'::-webkit-scrollbar': {
 		width: 16,
-		backgroundColor: 'hsl(276, 35%, 5%)',
+		backgroundColor: 'hsl(210, 8%, 5%)',
 	},
 	'::-webkit-scrollbar-thumb': {
 		backgroundColor: 'hsl(300, 1%, 42%)',
