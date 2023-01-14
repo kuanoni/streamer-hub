@@ -1,3 +1,4 @@
+import useBreakpoints from 'src/common/hooks/useBreakpoints';
 import { styled } from 'stiches.config';
 
 import { borderColor } from '../../common';
@@ -60,13 +61,13 @@ const Header = styled('a', {
 	},
 });
 
-interface Props {}
+const RedditSectionHeader = () => {
+	const { isMd } = useBreakpoints();
 
-const RedditSectionHeader = ({}: Props) => {
 	return (
 		<Header href='https://www.reddit.com/r/Destiny/' target='_blank'>
-			<HeaderText>Posts from /r/Destiny</HeaderText>
-			<HeaderButton />
+			<HeaderText>Posts from{isMd ? ' ' : <br />}/r/Destiny</HeaderText>
+			{!isMd && <HeaderButton />}
 		</Header>
 	);
 };
