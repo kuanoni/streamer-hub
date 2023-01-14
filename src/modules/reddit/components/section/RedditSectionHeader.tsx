@@ -1,4 +1,3 @@
-import useBreakpoints from 'src/common/hooks/useBreakpoints';
 import { styled } from 'stiches.config';
 
 import { borderColor } from '../../common';
@@ -13,15 +12,6 @@ const HeaderText = styled('span', {
 });
 
 const HeaderButton = styled('button', {
-	'&::before': {
-		content: `Visit`,
-	},
-	'@sm': {
-		'&::before': {
-			content: 'Visit on Reddit',
-		},
-	},
-
 	display: 'flex',
 	alignItems: 'center',
 	height: 32,
@@ -34,11 +24,27 @@ const HeaderButton = styled('button', {
 	fontFamily: 'inherit',
 	fontSize: 14,
 	fontWeight: 700,
+	whiteSpace: 'nowrap',
 	transition: 'background-color .2s',
 	'&:hover': {
 		backgroundColor: 'rgb(215, 219, 220)',
 		textDecoration: 'none',
 		cursor: 'pointer',
+	},
+	'&::before': {
+		content: `Visit`,
+	},
+	'@media (max-width: 1105px)': {
+		display: 'none',
+	},
+	'@sm': {
+		display: 'flex',
+		'&::before': {
+			content: `Visit on Reddit`,
+		},
+	},
+	'@media (max-width: 390px)': {
+		display: 'none',
 	},
 });
 
@@ -61,13 +67,21 @@ const Header = styled('a', {
 	},
 });
 
-const RedditSectionHeader = () => {
-	const { isMd } = useBreakpoints();
+const LineBreak = styled('br', {
+	'@media (max-width: 1105px)': { display: 'none' },
+	'@media (max-width: 967px)': { display: 'initial' },
+	'@sm': { display: 'none' },
+});
 
+const RedditSectionHeader = () => {
 	return (
 		<Header href='https://www.reddit.com/r/Destiny/' target='_blank'>
-			<HeaderText>Posts from{isMd ? ' ' : <br />}/r/Destiny</HeaderText>
-			{!isMd && <HeaderButton />}
+			<HeaderText>
+				Posts from &nbsp;
+				<LineBreak />
+				/r/Destiny
+			</HeaderText>
+			<HeaderButton />
 		</Header>
 	);
 };
