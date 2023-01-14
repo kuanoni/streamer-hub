@@ -14,13 +14,20 @@ const contentCss: CSS = {
 	gap: '1rem',
 	padding: '.5rem .25rem',
 	overflowX: 'auto',
+	'@xs': {
+		gridTemplateColumns: '1fr 1fr 1fr',
+		gridTemplateRows: '1fr 1fr',
+	},
+	'@xxs': {
+		gridTemplateColumns: '1fr 1fr',
+		gridTemplateRows: '1fr 1fr 1fr',
+	},
 };
 
 const MerchImage = styled(Image, {
 	width: '100%',
 	transformOrigin: 'top',
 	transition: '.1s ease-in',
-	'@md': {},
 });
 
 const MerchLabel = styled('span', {
@@ -59,7 +66,6 @@ const MerchLink = styled('a', {
 const MerchItem = styled('div', {
 	aspectRatio: 1,
 	overflow: 'hidden',
-	'@md': {},
 });
 
 const MerchSection = () => {
