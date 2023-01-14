@@ -7,6 +7,7 @@ import YoutubeThumbnail from './YoutubeThumbnail';
 
 const contentCss: CSS = {
 	padding: '.5rem 1rem',
+	'@xs': { padding: '.5rem' },
 };
 
 const RecentVideos = styled('div', {
@@ -14,6 +15,7 @@ const RecentVideos = styled('div', {
 	gridTemplateColumns: 'repeat(3, 1fr)',
 	justifyContent: 'stretch',
 	gap: '1rem',
+	'@xs': { gap: '.5rem' },
 });
 
 const RecentVideosTitle = styled('h3', {
@@ -26,6 +28,7 @@ const Feature = styled('article', {
 	marginBottom: '4rem',
 	backgroundColor: theme.colors.grey900,
 	borderRadius: theme.space.borderRad,
+	'@sm': { marginBottom: '2rem' },
 });
 
 const FeatureContent = styled('div', {});

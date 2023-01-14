@@ -16,6 +16,7 @@ const Container = styled(Link, {
 		transform: 'scale(1.05) translateY(-2px)',
 		boxShadow: `0 0 7px 1px ${theme.colors.secondary100}`,
 	},
+	'@sm': { display: 'none' },
 });
 
 const Text = styled('span', {

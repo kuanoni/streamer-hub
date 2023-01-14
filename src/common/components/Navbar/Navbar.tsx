@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React, { FC, ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { BsCameraVideoFill, BsCollectionPlayFill, BsFillHouseDoorFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { AuthPerms } from '@globalTypes/user';
@@ -14,11 +14,7 @@ const Topbar = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	width: '100%',
-	maxWidth: theme.space.pageWidth,
 	margin: '0 auto',
-	'&.full-width': {
-		maxWidth: 'none',
-	},
 });
 
 const Nav = styled('nav', {
@@ -36,11 +32,10 @@ const AlignRightContainer = styled('div', {
 });
 
 interface Props {
-	fullWidth?: boolean;
 	children?: ReactNode;
 }
 
-const Navbar = ({ fullWidth = false, children }: Props) => {
+const Navbar = ({ children }: Props) => {
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 
@@ -60,12 +55,21 @@ const Navbar = ({ fullWidth = false, children }: Props) => {
 	return (
 		<>
 			<SignIn isOpen={isSignInOpen} close={closeSignIn} />
-			<Topbar className={fullWidth ? 'full-width' : ''}>
+			<Topbar>
 				<BrandLogo />
 				<Nav>
-					<NavButton link='/'>Home</NavButton>
-					<NavButton link='/stream'>Stream</NavButton>
-					<NavButton link='/videos'>Videos</NavButton>
+					<NavButton link='/'>
+						<BsFillHouseDoorFill />
+						<span className='label'>Home</span>
+					</NavButton>
+					<NavButton link='/stream'>
+						<BsCameraVideoFill />
+						<span className='label'>Stream</span>
+					</NavButton>
+					<NavButton link='/videos'>
+						<BsCollectionPlayFill />
+						<span className='label'>Videos</span>
+					</NavButton>
 					{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					<AlignRightContainer>
 						{children}

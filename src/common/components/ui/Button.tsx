@@ -101,15 +101,23 @@ const Btn = styled('button', {
 });
 
 interface Props {
+	className?: string;
 	color?: 'primary' | 'secondary' | 'primaryTransparent' | 'dark';
 	content?: 'text' | 'icon';
 	size?: 'icon' | 'fill' | '2em' | undefined;
 	onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-const Button = ({ color = 'primary', content = 'text', size, onClick, children: label }: PropsWithChildren<Props>) => {
+const Button = ({
+	className = '',
+	color = 'primary',
+	content = 'text',
+	size,
+	onClick,
+	children: label,
+}: PropsWithChildren<Props>) => {
 	return (
-		<Btn color={color} content={content} size={size} onClick={onClick}>
+		<Btn className={className} color={color} content={content} size={size} onClick={onClick}>
 			{label}
 		</Btn>
 	);

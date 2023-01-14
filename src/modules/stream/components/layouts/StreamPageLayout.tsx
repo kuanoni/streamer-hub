@@ -25,7 +25,7 @@ const StreamPageLayout = ({ children }: Props) => {
 	return (
 		<StreamProvider>
 			<Page>
-				<Navbar fullWidth />
+				<Navbar />
 				<Main>{children}</Main>
 			</Page>
 		</StreamProvider>

@@ -4,6 +4,8 @@ import { styled, theme } from 'stiches.config';
 import { CSS } from '@stitches/react';
 
 const Container = styled('section', {
+	display: 'flex',
+	flexDirection: 'column',
 	width: '100%',
 	border: `1px solid ${theme.colors.grey700}`,
 	borderRadius: theme.space.borderRad,
