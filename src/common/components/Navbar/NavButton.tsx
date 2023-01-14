@@ -47,6 +47,15 @@ const NavLink = styled(Link, {
 		height: '100%',
 		background: 'linear-gradient(180deg, rgba(183, 79, 255, 0) 0%, rgba(183, 79, 255, 0.2) 50%)',
 	},
+	svg: { display: 'none' },
+	'@sm': {
+		svg: { fontSize: '1.5rem', display: 'block' },
+		'& .label': { display: 'none' },
+	},
+	'@xxs': {
+		svg: { fontSize: '1.5rem', display: 'block' },
+		'& .label': { display: 'none' },
+	},
 });
 
 const NavButton = ({ link, children }: { link: string; children: React.ReactNode }) => {
