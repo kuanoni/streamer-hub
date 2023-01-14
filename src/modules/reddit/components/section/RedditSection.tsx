@@ -5,6 +5,7 @@ import Section from '@components/Home/Section';
 import { CSS } from '@stitches/react';
 
 import { borderColor } from '../../common';
+import RedditPost from '../post/RedditPost';
 import RedditSectionFooter from './RedditSectionFooter';
 import RedditSectionHeader from './RedditSectionHeader';
 
