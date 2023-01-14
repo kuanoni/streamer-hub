@@ -49,11 +49,7 @@ const NavLink = styled(Link, {
 	},
 	svg: { display: 'none' },
 	'@sm': {
-		svg: { fontSize: '1.5rem', display: 'block' },
-		'& .label': { display: 'none' },
-	},
-	'@xxs': {
-		svg: { fontSize: '1.5rem', display: 'block' },
+		svg: { fontSize: '1rem', display: 'block' },
 		'& .label': { display: 'none' },
 	},
 });
