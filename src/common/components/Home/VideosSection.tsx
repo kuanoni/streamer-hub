@@ -28,6 +28,7 @@ const Feature = styled('article', {
 	marginBottom: '4rem',
 	backgroundColor: theme.colors.grey900,
 	borderRadius: theme.space.borderRad,
+	'@sm': { marginBottom: '2rem' },
 });
 
 const FeatureContent = styled('div', {});
