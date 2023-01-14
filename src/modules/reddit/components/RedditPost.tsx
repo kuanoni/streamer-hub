@@ -2,9 +2,13 @@ import { format, formatDistanceToNowStrict, fromUnixTime } from 'date-fns';
 import Image from 'next/image';
 import { BiComment, BiUpvote } from 'react-icons/bi';
 import { BsReddit } from 'react-icons/bs';
-import { styled, theme } from 'stiches.config';
+import { styled } from 'stiches.config';
 
 import selfPostThumbnail from '@images/self_post_thumbnail.png';
+
+const lightText = 'rgb(231, 233, 234)';
+const darkText = 'rgb(113, 118, 123)';
+const borderColor = 'rgb(51, 54, 57)';
 
 const PostThumbnail = styled(Image, {
 	objectFit: 'contain',
@@ -15,29 +19,79 @@ const PostTitle = styled('span', {
 	marginBottom: '1rem',
 	marginRight: 'auto',
 	paddingRight: '2rem',
-	color: theme.colors.textLight,
+	color: lightText,
 	'&:hover': {
 		textDecoration: 'underline',
 	},
 });
 
 const PostAuthor = styled('div', {
-	color: theme.colors.textMedium,
+	color: darkText,
 	fontSize: '0.8em',
+});
+
+const SvgWrapper = styled('div', {
+	position: 'relative',
+	width: 18.75,
+	height: 18.75,
+	svg: {
+		color: 'inherit',
+		width: '100%',
+		height: '100%',
+		transition: 'color .1s',
+	},
+	'&::after': {
+		content: '',
+		position: 'absolute',
+		top: '-8px',
+		left: '-8px',
+		width: 'calc(100% + 16px)',
+		height: 'calc(100% + 16px)',
+		padding: 8,
+		borderRadius: '50%',
+		opacity: 0,
+		transition: 'opacity .1s',
+	},
 });
 
 const PostMetrics = styled('span', {
 	display: 'flex',
-	alignItems: 'center',
-	gap: '1em',
-	svg: {
-		fontSize: '1.25em',
+	height: 20,
+	fontSize: 13,
+	lineHeight: '20px',
+	span: {
+		height: '100%',
+		padding: '0 8px',
+		lineHeight: '16px',
+		transition: 'color .1s',
+	},
+	[`&:hover ${SvgWrapper}::after`]: {
+		opacity: 1,
+	},
+	variants: {
+		color: {
+			blue: {
+				'&:hover': {
+					color: 'rgb(20, 158, 240)',
+				},
+				[`${SvgWrapper}::after`]: {
+					backgroundColor: 'rgb(20, 158, 240, 0.1)',
+				},
+			},
+			orange: {
+				'&:hover': {
+					color: 'rgb(255, 139, 90)',
+				},
+				[`${SvgWrapper}::after`]: {
+					backgroundColor: 'rgb(255, 139, 90, 0.1)',
+				},
+			},
+		},
 	},
 });
 
 const PostTime = styled('time', {
 	display: 'flex',
-	alignItems: 'center',
 	marginLeft: 'auto',
 });
 
@@ -49,9 +103,9 @@ const PostContent = styled('div', {
 
 const PostFooter = styled('footer', {
 	display: 'flex',
-	gap: '1rem',
+	gap: '.5rem',
 	marginTop: 'auto',
-	color: theme.colors.textMedium,
+	color: darkText,
 	fontSize: '0.8em',
 });
 
@@ -60,7 +114,7 @@ const Post = styled('a', {
 	display: 'flex',
 	columnGap: '1rem',
 	padding: '.75rem 1rem',
-	border: `1px solid ${theme.colors.grey700}`,
+	border: `1px solid ${borderColor}`,
 	borderTop: 'none',
 	transition: 'background-color .2s',
 	'&:hover': {
@@ -98,12 +152,16 @@ const RedditPost = ({ author, title, permalink, thumbnail, created_utc, num_comm
 				<PostAuthor>/u/{author}</PostAuthor>
 				<PostTitle>{title}</PostTitle>
 				<PostFooter>
-					<PostMetrics>
-						<BiUpvote style={{ marginBottom: '.1em' }} />
+					<PostMetrics color='orange'>
+						<SvgWrapper>
+							<BiUpvote style={{ marginTop: 0 }} />
+						</SvgWrapper>
 						<span>{score}</span>
 					</PostMetrics>
-					<PostMetrics>
-						<BiComment />
+					<PostMetrics color='blue'>
+						<SvgWrapper>
+							<BiComment style={{ marginLeft: 1, marginTop: 1 }} />
+						</SvgWrapper>
 						<span>{num_comments}</span>
 					</PostMetrics>
 					<PostTime title={timeFormatted}>{`${timeAgo} ago`}</PostTime>
