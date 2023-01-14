@@ -3,29 +3,29 @@ import { styled, theme } from 'stiches.config';
 
 import mug from '@images/mug.png';
 import tshirt from '@images/tshirt.png';
+import { CSS } from '@stitches/react';
 
 import Section from './Section';
 
-const contentCss = {
+const contentCss: CSS = {
 	display: 'grid',
 	gridTemplateColumns: 'repeat(6, 1fr)',
 	gridTemplateRows: '1fr',
 	gap: '1rem',
 	padding: '.5rem .25rem',
+	overflowX: 'auto',
 };
 
 const MerchImage = styled(Image, {
-	width: '10rem',
-	height: '10rem',
-	objectFit: 'contain',
+	width: '100%',
 	transformOrigin: 'top',
 	transition: '.1s ease-in',
+	'@lg': {},
 });
 
 const MerchLabel = styled('span', {
-	height: '1.5rem',
+	minHeight: '1.5rem',
 	color: theme.colors.textLight,
-	overflow: 'hidden',
 	transition: 'transform .1s ease',
 });
 
@@ -33,6 +33,7 @@ const MerchLink = styled('a', {
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
+	height: '100%',
 	cursor: 'pointer',
 	'&:hover': {
 		textDecoration: 'none',
@@ -48,12 +49,17 @@ const MerchLink = styled('a', {
 		transitionDuration: '0s',
 		transform: 'scale(.87) rotateX(15deg)',
 	},
+	'@lg': {
+		[`&:hover ${MerchImage}`]: {
+			transform: 'scale(.8)',
+		},
+	},
 });
 
 const MerchItem = styled('div', {
-	height: '10rem',
-	width: '10rem',
+	aspectRatio: 1,
 	overflow: 'hidden',
+	'@lg': {},
 });
 
 const MerchSection = () => {
@@ -61,6 +67,30 @@ const MerchSection = () => {
 		<Section>
 			<Section.Header>Merch</Section.Header>
 			<Section.Content css={contentCss}>
+				<MerchItem>
+					<MerchLink href='#'>
+						<MerchImage src={tshirt} alt='tshirt' />
+						<MerchLabel>T-Shirt $35</MerchLabel>
+					</MerchLink>
+				</MerchItem>
+				<MerchItem>
+					<MerchLink href='#'>
+						<MerchImage src={mug} alt='tshirt' />
+						<MerchLabel>Mug $15</MerchLabel>
+					</MerchLink>
+				</MerchItem>
+				<MerchItem>
+					<MerchLink href='#'>
+						<MerchImage src={tshirt} alt='tshirt' />
+						<MerchLabel>T-Shirt $35</MerchLabel>
+					</MerchLink>
+				</MerchItem>
+				<MerchItem>
+					<MerchLink href='#'>
+						<MerchImage src={mug} alt='tshirt' />
+						<MerchLabel>Mug $15</MerchLabel>
+					</MerchLink>
+				</MerchItem>
 				<MerchItem>
 					<MerchLink href='#'>
 						<MerchImage src={tshirt} alt='tshirt' />
