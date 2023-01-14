@@ -62,20 +62,11 @@ const Post = styled('a', {
 	padding: '.75rem 1rem',
 	border: `1px solid ${theme.colors.grey700}`,
 	borderTop: 'none',
-	transition: '.2s ease',
+	transition: 'background-color .2s',
 	'&:hover': {
-		backgroundColor: theme.colors.grey800,
+		backgroundColor: 'rgb(22, 24, 28)',
 		textDecoration: 'none',
 		cursor: 'pointer',
-	},
-	'&:first-child': {
-		borderTopLeftRadius: 12,
-		borderTopRightRadius: 12,
-	},
-	'&:last-child': {
-		borderBottom: 'none',
-		borderBottomLeftRadius: 12,
-		borderBottomRightRadius: 12,
 	},
 });
 
