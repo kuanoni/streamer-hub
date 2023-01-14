@@ -9,6 +9,7 @@ const contentCss: CSS = {
 	height: '100%',
 	overflowY: 'auto',
 	borderRight: `1px solid ${theme.colors.grey700}`,
+	'@sm': { maxWidth: 'calc(100vw - 2rem)' },
 };
 
 interface Props {}
