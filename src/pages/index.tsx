@@ -13,7 +13,7 @@ const Container = styled('div', {
 	gap: '2rem',
 	marginTop: '2rem',
 	'@md': { gap: '1rem' },
-	'@sm': { marginTop: '.5rem' },
+	'@sm': { marginTop: '.5rem', gap: '2rem' },
 });
 
 const Row = styled('div', {
@@ -23,13 +23,11 @@ const Row = styled('div', {
 	placeItems: 'stretch',
 	gap: '2rem',
 	'@md': { gap: '1rem' },
-	'@sm': { gridTemplateColumns: '1fr' },
+	'@sm': { gridTemplateColumns: '1fr', gap: '2rem' },
 });
 
 const ColumnWrapper = styled('div', {
 	position: 'relative',
-	display: 'flex',
-	gap: '1rem',
 });
 
 const ColumnContainer = styled('div', {
@@ -37,16 +35,18 @@ const ColumnContainer = styled('div', {
 	inset: '0 0 0 0',
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '1rem',
+	gap: '2rem',
 	'& > *': {
 		height: '50%',
 	},
 	'@sm': {
 		position: 'static',
+		gap: '2rem !important',
 		'& > *': {
 			height: 400,
 		},
 	},
+	'@md': { gap: '1rem' },
 });
 
 interface Props {
