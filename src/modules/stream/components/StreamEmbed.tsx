@@ -31,6 +31,8 @@ const StyledIframe = styled('iframe', {
 const StreamEmbed = () => {
 	const ctx = useContext(StreamContext);
 
+	const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'streamer-hub.fly.dev';
+
 	return (
 		<StreamEmbedContainer>
 			<StreamEmbedWrapper>
@@ -38,7 +40,7 @@ const StreamEmbed = () => {
 					<></>
 				) : ctx.streamSource === 'twitch' ? (
 					<StyledIframe
-						src='https://player.twitch.tv/?channel=public_domain_television&parent=localhost'
+						src={`https://player.twitch.tv/?channel=public_domain_television&parent=${domain}`}
 						width='100%'
 						height='100%'
 						title='Faker stream'
@@ -47,7 +49,7 @@ const StreamEmbed = () => {
 					<StyledIframe
 						width='100%'
 						height='100%'
-						src='https://www.youtube.com/embed/j_A_jAsuZD8/embed/live_stream?channel=UCM2fsEsL6rW99JYMPFmwgtA&origin=http://localhost:3000/'
+						src='https://www.youtube.com/embed/j_A_jAsuZD8/embed/live_stream?channel=UCM2fsEsL6rW99JYMPFmwgtA'
 					/>
 				) : (
 					<></>
