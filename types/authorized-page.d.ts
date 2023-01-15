@@ -10,6 +10,7 @@ interface PageAuthorizationOptions {
 
 type Page = NextComponentType & {
 	title?: string;
+	description?: string;
 	getLayout?: (page: ReactElement) => ReactNode;
 	authorizationOptions?: PageAuthorizationOptions | undefined;
 };
