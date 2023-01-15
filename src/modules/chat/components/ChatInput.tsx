@@ -31,6 +31,12 @@ const TextArea = styled('textarea', {
 	outline: 'none',
 	resize: 'none',
 	...CustomScrollbar,
+	'@sm': {
+		fontSize: 16,
+	},
+	'@vsm': {
+		fontSize: 16,
+	},
 });
 
 const ButtonsContainer = styled('div', {
