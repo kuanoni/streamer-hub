@@ -28,6 +28,7 @@ const ChatOptionsProvider = ({ children }: Props) => {
 		const options = { ...defaultOptions };
 
 		Object.keys(options).forEach((key) => {
+			if (localStorage.getItem(key) === null) localStorage.setItem(key, options[key].toString());
 			const value = localStorage.getItem(key) || options[key];
 
 			// localStorage stores its values as strings

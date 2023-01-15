@@ -16,6 +16,10 @@ const StreamProvider = ({ children }: Props) => {
 	};
 
 	useEffect(() => {
+		if (!localStorage.getItem('streamEmbedSource')) localStorage.setItem('streamEmbedSource', streamSource);
+	}, []);
+
+	useEffect(() => {
 		setStreamSource(localStorage.getItem('streamEmbedSource') as StreamSource);
 		setIsLoaded(true);
 	}, [setStreamSource, setIsLoaded]);
