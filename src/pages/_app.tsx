@@ -14,13 +14,35 @@ interface PageAppProps extends AppProps {
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: PageAppProps) {
 	const getLayout = Component.getLayout || ((page: ReactElement) => page);
-	const pageTitle = `${Component.title || 'Unnamed'} | Stream Hub`;
+
+	const siteTitle = 'KroyOoz.tv';
+
+	const pageTitle = Component.title ? `${Component.title} | ${siteTitle}` : siteTitle;
+	const pageDescription = Component.description ? `` : '';
+	const previewImage = '/images/previewImage.png';
 
 	return (
 		<SessionProvider>
 			<Head>
 				<title>{pageTitle}</title>
-				<meta property='og:title' content={pageTitle} key='title' />
+				<meta name='title' content={pageTitle} />
+				<meta name='description' content={pageDescription} />
+				<meta charSet='utf-8' />
+
+				{/* Open Graph / Facebook */}
+				<meta property='og:type' content='website' />
+				<meta property='og:url' content='https://streamer-hub.fly.dev/' />
+				<meta property='og:title' content={pageTitle} />
+				<meta property='og:description' content={pageDescription} />
+				<meta property='og:image' content={previewImage} />
+
+				{/* Twitter */}
+				<meta property='twitter:card' content='summary_large_image' />
+				<meta property='twitter:url' content='https://streamer-hub.fly.dev/' />
+				<meta property='twitter:title' content={pageTitle} />
+				<meta property='twitter:description' content={pageDescription} />
+				<meta property='twitter:image' content={previewImage} />
+
 				<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
 				<meta name='theme-color' content='#090408' />
 				<meta name='msapplication-navbutton-color' content='#090408' />
