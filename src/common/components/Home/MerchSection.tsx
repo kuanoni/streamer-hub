@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import { styled, theme } from 'stiches.config';
 
-import mug from '@images/shop/mug.png';
+import hat from '@images/shop/hat.png';
+import mask from '@images/shop/mask.png';
+import sweatshirt from '@images/shop/sweatshirt.png';
+import tanktop from '@images/shop/tanktop.png';
 import tshirt from '@images/shop/tshirt.png';
+import tshirt2 from '@images/shop/tshirt2.png';
 import { CSS } from '@stitches/react';
 
 import Section from './Section';
@@ -78,38 +82,38 @@ const MerchSection = () => {
 			<Section.Content css={contentCss}>
 				<MerchItem>
 					<MerchLink href='#'>
-						<MerchImage src={tshirt} alt='tshirt' />
-						<MerchLabel>T-Shirt $35</MerchLabel>
+						<MerchImage src={hat} alt='hat' />
+						<MerchLabel>Hat $15</MerchLabel>
 					</MerchLink>
 				</MerchItem>
 				<MerchItem>
 					<MerchLink href='#'>
-						<MerchImage src={mug} alt='tshirt' />
-						<MerchLabel>Mug $15</MerchLabel>
-					</MerchLink>
-				</MerchItem>
-				<MerchItem>
-					<MerchLink href='#'>
-						<MerchImage src={tshirt} alt='tshirt' />
-						<MerchLabel>T-Shirt $35</MerchLabel>
-					</MerchLink>
-				</MerchItem>
-				<MerchItem>
-					<MerchLink href='#'>
-						<MerchImage src={mug} alt='tshirt' />
-						<MerchLabel>Mug $15</MerchLabel>
+						<MerchImage src={sweatshirt} alt='sweatshirt' />
+						<MerchLabel>Sweatshirt $35</MerchLabel>
 					</MerchLink>
 				</MerchItem>
 				<MerchItem>
 					<MerchLink href='#'>
 						<MerchImage src={tshirt} alt='tshirt' />
-						<MerchLabel>T-Shirt $35</MerchLabel>
+						<MerchLabel>T-Shirt $20</MerchLabel>
 					</MerchLink>
 				</MerchItem>
 				<MerchItem>
 					<MerchLink href='#'>
-						<MerchImage src={mug} alt='tshirt' />
-						<MerchLabel>Mug $15</MerchLabel>
+						<MerchImage src={tshirt2} alt='tshirt' />
+						<MerchLabel>T-Shirt $20</MerchLabel>
+					</MerchLink>
+				</MerchItem>
+				<MerchItem>
+					<MerchLink href='#'>
+						<MerchImage src={tanktop} alt='tanktop' />
+						<MerchLabel>Tanktop $15</MerchLabel>
+					</MerchLink>
+				</MerchItem>
+				<MerchItem>
+					<MerchLink href='#'>
+						<MerchImage src={mask} alt='mask' />
+						<MerchLabel>Mask $10</MerchLabel>
 					</MerchLink>
 				</MerchItem>
 			</Section.Content>
