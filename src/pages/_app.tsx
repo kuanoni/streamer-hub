@@ -22,6 +22,10 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 				<title>{pageTitle}</title>
 				<meta property='og:title' content={pageTitle} key='title' />
 				<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+				<meta name='theme-color' content='#090408' />
+				<meta name='msapplication-navbutton-color' content='#090408' />
+				<meta name='apple-mobile-web-app-capable' content='yes' />
+				<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
 			</Head>
 
 			<NextNProgress color={theme.colors.secondary500.toString()} />
