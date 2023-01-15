@@ -17,6 +17,7 @@ interface Props {}
 const TwitterSection = ({}: Props) => {
 	return (
 		<Section css={{ borderRadius: '11px' }}>
+			<Section.Header></Section.Header>
 			<Section.Content css={contentCss}>
 				<Timeline
 					dataSource={{
