@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { styled, theme } from 'stiches.config';
 
-import mug from '@images/mug.png';
-import tshirt from '@images/tshirt.png';
+import mug from '@images/shop/mug.png';
+import tshirt from '@images/shop/tshirt.png';
 import { CSS } from '@stitches/react';
 
 import Section from './Section';
