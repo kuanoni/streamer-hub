@@ -3,6 +3,9 @@ import { theme } from 'stiches.config';
 import { Role, SubscriptionTier } from '@globalTypes/user';
 
 const subscriberColors = {
+	[SubscriptionTier.NONE]: {
+		color: theme.colors.textLight,
+	},
 	[SubscriptionTier.TIER_1]: {
 		color: 'rgb(232, 219, 164)',
 	},
@@ -29,7 +32,7 @@ const roleColors = {
 };
 
 const getUsernameColorsCss = (role?: Role | null, subTier?: SubscriptionTier) => {
-	return role ? roleColors[role] : subTier ? subscriberColors[subTier] : {};
+	return role ? roleColors[role] : subTier !== undefined ? subscriberColors[subTier] : {};
 };
 
 export default getUsernameColorsCss;

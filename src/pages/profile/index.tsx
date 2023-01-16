@@ -13,7 +13,7 @@ import UsernameInput from '@modules/profile/components/UsernameInput';
 
 const Container = styled('div', {
 	position: 'relative',
-	marginTop: '2rem',
+	marginTop: '1rem',
 	paddingBottom: '2rem',
 	borderRadius: theme.space.borderRad,
 	background: `

@@ -7,9 +7,12 @@ const Section = styled('article', {
 	marginBottom: 0,
 	borderRadius: theme.space.borderRad,
 	border: `1px solid ${theme.colors.grey700}`,
-	transition: '.2s ease',
+	transition: 'height .2s ease',
 	'&.collapse': {
 		borderColor: 'transparent',
+	},
+	'@xs': {
+		margin: '2rem .5rem',
 	},
 });
 

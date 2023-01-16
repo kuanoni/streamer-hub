@@ -24,13 +24,18 @@ const Form = styled('form', {
 	display: 'flex',
 	alignItems: 'end',
 	padding: '.5rem 1rem',
-	backgroundColor: theme.colors.primary400,
+	backgroundColor: theme.colors.primary600,
+	'@xs': {
+		marginTop: '2rem',
+		backgroundColor: 'transparent',
+	},
 });
 
 const InputContainer = styled('div', {
 	position: 'relative',
-	'& > input': {
-		paddingRight: '4rem',
+	width: '100%',
+	'& input': {
+		paddingRight: '3rem',
 	},
 });
 
