@@ -1,7 +1,7 @@
 import { User } from 'next-auth';
 import { MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { BsHandThumbsUpFill } from 'react-icons/bs';
-import { MoonLoader } from 'react-spinners';
+import { BeatLoader, MoonLoader } from 'react-spinners';
 import { keyframes, styled, theme } from 'stiches.config';
 
 import Button from '@components/ui/Button';
@@ -170,7 +170,7 @@ const UsernameInput = ({ user }: Props) => {
 					<li>Have no special characters [!?-.@&$] or spaces</li>
 					<li>Have no bad words</li>
 				</List>
-				{hasFeedback ? (
+				{hasFeedback && !isLoading ? (
 					<>
 						<Label color={isNameAvailable ? 'success' : 'error'} weight='bold'>
 							That username...
@@ -181,6 +181,13 @@ const UsernameInput = ({ user }: Props) => {
 							))}
 						</List>
 					</>
+				) : isLoading ? (
+					<BeatLoader
+						color={theme.colors.grey300.toString()}
+						loading={true}
+						size='.75rem'
+						cssOverride={{ marginTop: '1rem' }}
+					/>
 				) : null}
 			</FeedbackContainer>
 		</>
