@@ -70,11 +70,11 @@ export const SocketServerHandler = (res: NextApiResponseWithSocket) => {
 			process.env.NODE_ENV === 'development' ? 'next-auth.session-token' : '__Secure-next-auth.session-token';
 
 		// validate session token from cookies
-		const session = await validateSessionToken(parsedCookie[tokenCookieKey]);
-		if (!session) return [, 'You are connected.\n **Sign in to chat**'];
+		const userId = await validateSessionToken(parsedCookie[tokenCookieKey]);
+		if (!userId) return [, 'You are connected.\n **Sign in to chat**'];
 
 		// use session data to get user data, add it to socket
-		const user = await getUserById(session.userId);
+		const user = await getUserById(userId);
 		if (!user) return [, 'Failed to retrieve user data. Try logging in again.'];
 
 		return [user, 'You have connected'];
