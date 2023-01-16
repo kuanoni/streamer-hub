@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import clientPromise from '@utils/mongodb';
 
-const usernameSchema = Joi.string().min(5).max(15).token().required();
+const usernameSchema = Joi.string().min(5).max(15).alphanum().required();
 
 const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== 'GET') return res.json({ status: 500, message: 'Request must be GET.' });
@@ -16,7 +16,7 @@ const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 		messages: {
 			'string.min': `Has too few characters ${username.length}/5`,
 			'string.max': `Has too many characters ${username.length}/15`,
-			'string.token': `Contains special characters or spaces`,
+			'string.alphanum': `Contains special characters or spaces`,
 		},
 	});
 
