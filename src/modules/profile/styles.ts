@@ -3,8 +3,11 @@ import { styled, theme } from 'stiches.config';
 
 const colorVariants = {
 	color: {
+		success: {
+			color: theme.colors.success,
+		},
 		error: {
-			color: '#ff6d6d',
+			color: theme.colors.error,
 		},
 	},
 };
