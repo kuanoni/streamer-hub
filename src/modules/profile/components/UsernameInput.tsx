@@ -111,11 +111,10 @@ const UsernameInput = ({ user }: Props) => {
 		checkUsername(inputValue).then((result) => {
 			setIsLoading(false);
 
-			if (result.status === 200)
-				if (result.available) {
-					setIsNameAvailable(true);
-					setValidationFeedback([]);
-				} else setValidationFeedback(result.validationErrors);
+			if (result.status === 200) {
+				if (result.available) setIsNameAvailable(true);
+				setValidationFeedback(result.validationErrors);
+			}
 		});
 	}, [inputValue, setValidationFeedback, setIsLoading]);
 
@@ -173,10 +172,10 @@ const UsernameInput = ({ user }: Props) => {
 				</List>
 				{hasFeedback ? (
 					<>
-						<Label color='error' weight='bold'>
+						<Label color={isNameAvailable ? 'success' : 'error'} weight='bold'>
 							That username...
 						</Label>
-						<List color='error'>
+						<List color={isNameAvailable ? 'success' : 'error'}>
 							{validationFeedback.map((item) => (
 								<li key={item}>{item}</li>
 							))}
