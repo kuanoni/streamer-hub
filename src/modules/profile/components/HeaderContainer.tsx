@@ -6,19 +6,36 @@ import { styled, theme } from 'stiches.config';
 const Grid = styled('div', {
 	display: 'grid',
 	gridAutoFlow: 'column',
-	gridTemplateRows: '6rem auto',
 	gridTemplateColumns: '14rem auto',
+	gridTemplateRows: '6rem auto',
+	gridTemplateAreas: `
+	    "cutout username"
+	    "avatar info"
+	`,
 	width: '100%',
+	'@xs': {
+		gridTemplateColumns: '1fr',
+		gridTemplateRows: 'auto auto auto auto',
+		gridTemplateAreas: `
+        "cutout"
+        "avatar"
+        "username"
+            "info"
+	    `,
+	},
 });
 
-const TopCutout = styled('div', {
-	width: '14rem',
+const Cutout = styled('div', {
+	gridArea: 'cutout',
+	width: '100%',
 	height: '6rem',
+	margin: '0 auto',
 	borderTopLeftRadius: theme.space.borderRad,
 	backgroundImage: `radial-gradient(circle at 50% 8.2rem, transparent 6rem, ${theme.colors.primary600} 0)`,
 });
 
 const Avatar = styled(Image, {
+	gridArea: 'avatar',
 	display: 'block',
 	width: '10rem',
 	height: '10rem',
@@ -34,9 +51,10 @@ interface Props {
 
 const ProfileHeaderContainer = ({ user, children }: PropsWithChildren<Props>) => {
 	if (!user) return <></>;
+
 	return (
 		<Grid>
-			<TopCutout />
+			<Cutout />
 			<Avatar
 				src={user.avatar}
 				alt='profile picture'
