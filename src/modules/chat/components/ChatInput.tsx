@@ -34,7 +34,7 @@ const TextArea = styled('textarea', {
 	'@sm': {
 		fontSize: 16,
 	},
-	'@vsm': {
+	'@l_xs': {
 		fontSize: 16,
 	},
 });

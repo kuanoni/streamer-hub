@@ -12,16 +12,23 @@ type Props = {
 const Page = styled('div', {
 	display: 'grid',
 	minHeight: '100vh',
+	maxWidth: '100vw',
 	gridTemplateRows: 'auto 1fr',
 	padding: '2rem',
 	paddingBottom: '1rem',
 	'@sm': {
 		padding: '.5rem',
 	},
+	'@l_xs': {
+		padding: '.5rem',
+	},
 });
 
 const Main = styled('main', {
 	position: 'relative',
+	'@l_xs': {
+		height: '100vh',
+	},
 });
 
 const StreamPageLayout = ({ children }: Props) => {

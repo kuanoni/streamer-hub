@@ -58,13 +58,17 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 		},
 	},
 	media: {
-		xxs: '(max-width: 375px)',
-		xs: '(max-width: 529px)',
-		sm: '(max-width: 768px)',
-		md: '(max-width: 1024px)',
-		lg: '(min-width: 1025px)',
+		xxs: '(max-width: 375px) and (orientation:portrait)',
+		xs: '(max-width: 529px) and (orientation:portrait)',
+		sm: '(max-width: 768px) and (orientation:portrait)',
+		md: '(max-width: 1024px) and (orientation:portrait)',
+		lg: '(min-width: 1025px) and (orientation:portrait)',
 
-		vsm: '(max-height: 529px)',
+		l_xxs: '(max-height: 375px) and (orientation:landscape)',
+		l_xs: '(max-height: 529px) and (orientation:landscape)',
+		l_sm: '(max-height: 768px) and (orientation:landscape)',
+		l_md: '(max-height: 1024px) and (orientation:landscape)',
+		l_lg: '(min-height: 1025px) and (orientation:landscape)',
 	},
 	utils: {
 		marginX: (value: number) => ({ marginLeft: value, marginRight: value }),

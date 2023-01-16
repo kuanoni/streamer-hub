@@ -44,6 +44,7 @@ const ColumnContainer = styled('div', {
 		gap: '2rem !important',
 		'& > *': {
 			height: 400,
+			maxHeight: '80vh',
 		},
 	},
 	'@md': { gap: '1rem' },
