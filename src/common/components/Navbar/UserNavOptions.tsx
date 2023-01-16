@@ -6,7 +6,7 @@ import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import TextButton from '@components/ui/TextButton';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 import UserNavOptionsDropdown from './UserNavOptionsDropdown';
@@ -26,7 +26,6 @@ const Container = styled('div', {
 	'@sm': { gap: '.5rem' },
 	'@xs': {
 		[`& ${Username}`]: { display: 'none' },
-		'.signin': { display: 'none' },
 	},
 });
 
@@ -108,9 +107,9 @@ const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 				</Username>
 			)}
 			{status === 'unauthenticated' && (
-				<Button className='signin' color='secondary' onClick={openSignIn}>
+				<TextButton color='secondary' onClick={openSignIn}>
 					Sign In
-				</Button>
+				</TextButton>
 			)}
 			{status === 'loading' && (
 				<BeatLoader

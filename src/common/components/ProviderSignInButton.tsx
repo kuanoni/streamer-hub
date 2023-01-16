@@ -14,7 +14,7 @@ interface ProviderLogos {
 	[index: string]: StaticImageData;
 }
 
-const Button = styled('button', {
+const ProviderButton = styled('button', {
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
@@ -56,10 +56,10 @@ const providerLogos: ProviderLogos = {
 
 const ProviderSignInButton = ({ provider }: Props) => {
 	return (
-		<Button className={provider} onClick={() => signIn(provider)}>
+		<ProviderButton className={provider} onClick={() => signIn(provider)}>
 			<Image src={providerLogos[provider]} alt={provider}></Image>
 			{provider.charAt(0).toUpperCase() + provider.slice(1)}
-		</Button>
+		</ProviderButton>
 	);
 };
 

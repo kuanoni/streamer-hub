@@ -1,7 +1,7 @@
 import { BsX } from 'react-icons/bs';
 import { keyframes, styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import IconButton from '@components/ui/IconButton';
 
 import { CustomScrollbar } from '../styles';
 
@@ -81,9 +81,9 @@ const ChatPopupHeader = ({ title, subtitle, closePopup, children }: React.PropsW
 		</HeaderTitles>
 		<HeaderButtons>
 			{children}
-			<Button color='primaryTransparent' content='icon' size='2em' onClick={() => closePopup()}>
+			<IconButton color='primaryTransparent' size='2em' onClick={() => closePopup()}>
 				<BsX viewBox='3 3 10 10' />
-			</Button>
+			</IconButton>
 		</HeaderButtons>
 	</Header>
 );

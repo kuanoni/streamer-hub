@@ -2,7 +2,7 @@ import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'reac
 import { BsCursorFill, BsEmojiSmileFill } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import IconButton from '@components/ui/IconButton';
 
 import { ChatPopups } from '../common';
 import { CustomScrollbar } from '../styles';
@@ -129,19 +129,17 @@ const ChatInput = forwardRef(({ popupOpen, togglePopup, closePopup }: Props, ref
 						spellCheck={false}
 					/>
 					<ButtonsContainer>
-						<Button
+						<IconButton
 							color='dark'
-							content='icon'
-							size='icon'
 							onClick={() => {
 								if (textAreaRef.current?.value) submitMessage();
 							}}
 						>
 							<BsCursorFill />
-						</Button>
-						<Button color='dark' content='icon' size='icon' onClick={toggleEmoteList}>
+						</IconButton>
+						<IconButton color='dark' onClick={toggleEmoteList}>
 							<BsEmojiSmileFill />
-						</Button>
+						</IconButton>
 					</ButtonsContainer>
 				</TextAreaWrapper>
 			</Container>

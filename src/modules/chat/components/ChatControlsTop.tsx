@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { BsArrowUpRightSquareFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
-import Button from '@components/ui/Button';
 import Dropdown from '@components/ui/Dropdown';
+import IconButton from '@components/ui/IconButton';
 import StreamContext from '@modules/stream/components/context/StreamContext';
 
 const Container = styled('div', {
@@ -12,7 +12,7 @@ const Container = styled('div', {
 	alignItems: 'center',
 	padding: '.5rem 0',
 	backgroundColor: 'transparent',
-	'@xs': { '.popout': { display: 'none' } },
+	'@xs': { [`& ${IconButton.toString()}`]: { display: 'none' } },
 });
 
 const ChatControlsTop = () => {
@@ -29,9 +29,9 @@ const ChatControlsTop = () => {
 				value={streamSource}
 				chooseOption={changeStreamSource}
 			/>
-			<Button className='popout' color='dark' content='icon' size='icon' onClick={() => {}}>
+			<IconButton color='dark' onClick={() => {}}>
 				<BsArrowUpRightSquareFill />
-			</Button>
+			</IconButton>
 		</Container>
 	);
 };
