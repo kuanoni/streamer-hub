@@ -6,11 +6,11 @@ import clientPromise from '@utils/mongodb';
 const usernameSchema = Joi.string().min(5).max(15).alphanum().required();
 
 const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method !== 'GET') return res.json({ status: 500, message: 'Request must be GET.' });
-	if (!req.query.username) return res.json({ status: 500, message: 'Request query "username" missing.' });
+	if (req.method !== 'GET') return res.json({ status: 500, message: 'Request must be GET' });
+	if (!req.query.username) return res.json({ status: 500, message: 'Request query "username" missing' });
 	const username = req.query.username;
 
-	// validate username
+	// validate username with JOI
 	const { value, error } = usernameSchema.validate(username, {
 		abortEarly: false,
 		messages: {
@@ -38,12 +38,11 @@ const checkUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 		const docByDisplayName = await collection.findOne({ username });
 
 		if (docByDisplayName)
-			return res.json({ status: 200, available: false, validationErrors: ['Username is already taken'] });
-		else return res.json({ status: 200, available: true, validationErrors: [] });
+			return res.json({ status: 200, available: false, validationErrors: ['Is already taken'] });
+		else return res.json({ status: 200, available: true, validationErrors: ['Is available!'] });
 	} catch (err) {
 		res.json({ status: 500, message: err });
 	}
-	res.json({ success: false, message: 'Display name checked' });
 };
 
 export default checkUsername;
