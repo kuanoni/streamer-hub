@@ -10,7 +10,7 @@ type Props = {
 const LayoutWithNavbar = ({ children }: Props) => {
 	const Page = styled('div', {
 		display: 'grid',
-		gridTemplateColumns: `1fr auto 1fr`,
+		gridTemplateColumns: `1fr min(${theme.space.pageWidth}, 100vw) 1fr`,
 		gridTemplateAreas: `"dl content dr"`,
 		minHeight: '100vh',
 	});
