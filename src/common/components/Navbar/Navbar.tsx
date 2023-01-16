@@ -1,6 +1,8 @@
 import { useSession } from 'next-auth/react';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { BsCameraVideoFill, BsCollectionPlayFill, BsFillHouseDoorFill } from 'react-icons/bs';
+import {
+	BsCameraVideoFill, BsCollectionPlayFill, BsFillCartFill, BsFillHouseDoorFill
+} from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 import { AuthPerms } from '@globalTypes/user';
@@ -69,6 +71,10 @@ const Navbar = ({ children }: Props) => {
 					<NavButton link='/videos'>
 						<BsCollectionPlayFill />
 						<span className='label'>Videos</span>
+					</NavButton>
+					<NavButton link='/shop'>
+						<BsFillCartFill />
+						<span className='label'>Shop</span>
 					</NavButton>
 					{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					<AlignRightContainer>
