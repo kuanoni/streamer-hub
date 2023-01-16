@@ -10,24 +10,58 @@ type Props = {
 const LayoutWithNavbar = ({ children }: Props) => {
 	const Page = styled('div', {
 		display: 'grid',
+		gridTemplateColumns: `1fr auto 1fr`,
+		gridTemplateAreas: `"dl content dr"`,
 		minHeight: '100vh',
-		gridTemplateRows: 'auto 1fr',
+	});
+
+	const PageContent = styled('div', {
+		gridArea: 'content',
+		display: 'flex',
+		flexDirection: 'column',
+		maxWidth: theme.space.pageWidth,
 		padding: '2rem',
-		'@sm': { padding: '2rem 1rem' },
+		paddingBottom: 0,
+		'@sm': { padding: '2rem 1rem 0 1rem' },
 	});
 
 	const Main = styled('main', {
 		position: 'relative',
 		width: '100%',
 		maxWidth: theme.space.pageWidth,
-		margin: '0 auto',
-		marginTop: '1rem',
+		margin: '1rem 0',
+	});
+
+	const SideDecoration = styled('div', {
+		position: 'relative',
+		width: '100%',
+		height: '100%',
+		backgroundImage: `url('images/svg/dots.svg')`,
+		backgroundRepeat: 'repeat-y',
+		backgroundPosition: 'right',
+		backgroundSize: '1054px 50px',
+		variants: {
+			pos: {
+				left: {
+					gridArea: 'dl',
+				},
+				right: {
+					gridArea: 'dr',
+					transform: 'rotate(180deg)',
+				},
+			},
+		},
 	});
 
 	return (
 		<Page>
-			<Navbar />
-			<Main>{children}</Main>
+			<SideDecoration pos='left' />
+			<SideDecoration pos='right' />
+
+			<PageContent>
+				<Navbar />
+				<Main>{children}</Main>
+			</PageContent>
 		</Page>
 	);
 };
