@@ -48,7 +48,7 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 
 			info: 'hsl(180, 63%, 40%)',
 			success: 'hsl(120, 63%, 40%)',
-			error: 'hsl(0, 63%, 44%)',
+			error: 'hsl(0, 63%, 53%)',
 		},
 		space: {
 			pageWidth: '1140px',
