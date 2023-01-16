@@ -64,8 +64,6 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
 		md: '(max-width: 1024px) and (orientation:portrait)',
 		lg: '(min-width: 1025px) and (orientation:portrait)',
 
-		vxs: '(max-height: 529px)',
-
 		l_xxs: '(max-height: 375px) and (orientation:landscape)',
 		l_xs: '(max-height: 529px) and (orientation:landscape)',
 		l_sm: '(max-height: 768px) and (orientation:landscape)',
