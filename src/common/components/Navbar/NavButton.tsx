@@ -57,10 +57,12 @@ const NavLink = styled(Link, {
 const NavButton = ({ link, children }: { link: string; children: React.ReactNode }) => {
 	const router = useRouter();
 	return (
-		<NavLink href={link} className={router.asPath.split('#')[0] === link ? 'current' : ''}>
+		<NavLink href={link} className={'btn-nav' + (router.asPath.split('#')[0] === link ? ' current' : '')}>
 			{children}
 		</NavLink>
 	);
 };
+
+NavButton.toString = () => '.btn-nav';
 
 export default NavButton;
