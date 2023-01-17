@@ -16,6 +16,7 @@ const Username = styled(Link, {
 	'&:hover': {
 		textDecoration: 'underline',
 	},
+	'@sm': { display: 'none' },
 });
 
 const Container = styled('div', {
