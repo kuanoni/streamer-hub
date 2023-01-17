@@ -1,5 +1,4 @@
 import { MouseEventHandler, PropsWithChildren } from 'react';
-import { theme } from 'stiches.config';
 
 import { CSS } from '@stitches/react';
 
