@@ -104,7 +104,7 @@ const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 				</Username>
 			)}
 			{status === 'unauthenticated' && (
-				<TextButton color='secondary' onClick={openSignIn}>
+				<TextButton color='primaryTransparent' onClick={openSignIn}>
 					Sign In
 				</TextButton>
 			)}
