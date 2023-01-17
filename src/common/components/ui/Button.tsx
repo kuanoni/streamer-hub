@@ -53,6 +53,18 @@ const buttonColorVariants = {
 			backgroundColor: theme.colors.grey800,
 		},
 	},
+	lightTransparent: {
+		color: theme.colors.textLight,
+		backgroundColor: 'transparent',
+		'&:hover': {
+			color: theme.colors.textLightActive,
+			// backgroundColor: theme.colors.grey700,
+		},
+		'&:active': {
+			color: theme.colors.textPrimaryMedium,
+			// backgroundColor: theme.colors.grey800,
+		},
+	},
 };
 
 export type ButtonColors = keyof typeof buttonColorVariants;
@@ -79,7 +91,7 @@ const Btn = styled('button', {
 interface Props {
 	css?: CSS;
 	className?: string;
-	color?: 'primary' | 'secondary' | 'primaryTransparent' | 'dark';
+	color?: ButtonColors;
 	onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
