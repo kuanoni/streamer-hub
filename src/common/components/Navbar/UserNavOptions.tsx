@@ -6,7 +6,7 @@ import { BsCaretDownFill, BsPersonCircle } from 'react-icons/bs';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import TextButton from '@components/ui/TextButton';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
 
 import UserNavOptionsDropdown from './UserNavOptionsDropdown';
@@ -16,6 +16,7 @@ const Username = styled(Link, {
 	'&:hover': {
 		textDecoration: 'underline',
 	},
+	'@sm': { display: 'none' },
 });
 
 const Container = styled('div', {
@@ -23,11 +24,12 @@ const Container = styled('div', {
 	display: 'flex',
 	gap: '1rem',
 	alignItems: 'center',
-	'@sm': { gap: '.5rem' },
-	'@xs': {
-		[`& ${Username}`]: { display: 'none' },
-		'.signin': { display: 'none' },
+	'@sm': {
+		gap: '.5rem',
+		marginLeft: 'auto',
+		[`& ${TextButton.toString()}`]: { display: 'none' },
 	},
+	[`& ${TextButton.toString()}`]: { whiteSpace: 'nowrap' },
 });
 
 const SignedIn = styled('button', {
@@ -43,8 +45,10 @@ const SignedIn = styled('button', {
 	border: 'none',
 	cursor: 'pointer',
 	transition: 'color .1s ease',
-	'&:hover': {
-		color: theme.colors.grey100,
+	'&:hover': { color: theme.colors.grey100 },
+	'@sm': {
+		color: theme.colors.textLight,
+		'&:hover': { color: theme.colors.textLightActive },
 	},
 });
 
@@ -81,7 +85,6 @@ const DropdownCaret = styled(BsCaretDownFill, {
 		width: '.75rem',
 		height: '.75rem',
 	},
-	'@xs': { display: 'none' },
 });
 
 type Props = {
@@ -108,9 +111,9 @@ const UserNavOptions = ({ user, status, openSignIn }: Props) => {
 				</Username>
 			)}
 			{status === 'unauthenticated' && (
-				<Button className='signin' color='secondary' onClick={openSignIn}>
+				<TextButton color='primaryTransparent' onClick={openSignIn}>
 					Sign In
-				</Button>
+				</TextButton>
 			)}
 			{status === 'loading' && (
 				<BeatLoader

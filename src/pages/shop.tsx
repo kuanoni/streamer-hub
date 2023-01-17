@@ -6,7 +6,7 @@ const Container = styled('div', {});
 
 interface Props {}
 
-const Videos = ({}: Props) => {
+const Shop = ({}: Props) => {
 	return (
 		<Container>
 			<h1>Under construction...</h1>
@@ -14,10 +14,10 @@ const Videos = ({}: Props) => {
 	);
 };
 
-export default Videos;
+export default Shop;
 
-Videos.getLayout = function getLayout(page: JSX.Element) {
+Shop.getLayout = function getLayout(page: JSX.Element) {
 	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
 };
 
-Videos.title = 'Videos';
+Shop.title = 'Shop';

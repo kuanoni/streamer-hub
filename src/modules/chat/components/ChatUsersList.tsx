@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useStat
 import { BsArrowClockwise, BsSearch, BsX } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import IconButton from '@components/ui/IconButton';
 import TextInput from '@components/ui/TextInput';
 import { Role } from '@globalTypes/user';
 import getUsernameColorsCss from '@utils/getUsernameColorsCss';
@@ -109,9 +109,9 @@ const ChatUsersList = ({ setFocusedUser, closePopup }: Props) => {
 	return (
 		<ChatPopup>
 			<ChatPopup.Header title='Users' subtitle={` (${ctx?.usersList.length})`} closePopup={closePopup}>
-				<Button color='primaryTransparent' content='icon' size='2em' onClick={() => refreshList()}>
+				<IconButton color='primaryTransparent' size='2em' onClick={() => refreshList()}>
 					<BsArrowClockwise />
-				</Button>
+				</IconButton>
 			</ChatPopup.Header>
 			<ChatPopup.Content>
 				<Searchbar>

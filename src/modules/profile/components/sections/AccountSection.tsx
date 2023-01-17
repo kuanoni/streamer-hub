@@ -1,7 +1,7 @@
 import { User } from 'next-auth';
 import { useState } from 'react';
 
-import Button from '@components/ui/Button';
+import TextButton from '@components/ui/TextButton';
 import TextInput from '@components/ui/TextInput';
 
 import { Footer, Label, StyledLink, SubLabel } from '../../styles';
@@ -27,7 +27,7 @@ const AccountSection = ({ user, locked = false }: Props) => {
 			<Label>Email</Label>
 			<TextInput value={email} setValue={setEmail} placeholder='Enter email...' />
 			<Footer>
-				<Button onClick={saveAccount}>Save</Button>
+				<TextButton onClick={saveAccount}>Save</TextButton>
 			</Footer>
 		</ProfileSection>
 	);

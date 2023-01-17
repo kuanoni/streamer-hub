@@ -2,7 +2,7 @@ import React from 'react';
 import { BsFillGearFill, BsPeopleFill } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import IconButton from '@components/ui/IconButton';
 
 import { ChatPopups } from '../common';
 
@@ -20,12 +20,12 @@ type Props = {
 const ChatControlsBottom = ({ togglePopup }: Props) => {
 	return (
 		<Container>
-			<Button color='dark' content='icon' size='icon' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
+			<IconButton color='dark' onClick={() => togglePopup(ChatPopups.OPTIONS)}>
 				<BsFillGearFill />
-			</Button>
-			<Button color='dark' content='icon' size='icon' onClick={() => togglePopup(ChatPopups.USERS)}>
+			</IconButton>
+			<IconButton color='dark' onClick={() => togglePopup(ChatPopups.USERS)}>
 				<BsPeopleFill />
-			</Button>
+			</IconButton>
 		</Container>
 	);
 };

@@ -86,6 +86,6 @@ Home.getLayout = function getLayout(page: JSX.Element) {
 	return <LayoutWithNavbar>{page}</LayoutWithNavbar>;
 };
 
-Home.title = 'Home';
+Home.description = 'Home';
 
 export default Home;

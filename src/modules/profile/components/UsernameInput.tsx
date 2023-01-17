@@ -4,7 +4,7 @@ import { BsHandThumbsUpFill } from 'react-icons/bs';
 import { BeatLoader, MoonLoader } from 'react-spinners';
 import { keyframes, styled, theme } from 'stiches.config';
 
-import Button from '@components/ui/Button';
+import IconButton from '@components/ui/IconButton';
 import TextInput from '@components/ui/TextInput';
 import reloadAuthSession from '@utils/reloadAuthSession';
 
@@ -155,9 +155,9 @@ const UsernameInput = ({ user }: Props) => {
 							<MoonLoader color={theme.colors.textLight.toString()} loading={true} size={30} />
 						) : null}
 						{isNameAvailable ? (
-							<Button content='icon' size='fill' onClick={submitUsername}>
+							<IconButton size='100%' onClick={submitUsername}>
 								<BsHandThumbsUpFill />
-							</Button>
+							</IconButton>
 						) : null}
 					</ButtonContainer>
 				</InputContainer>

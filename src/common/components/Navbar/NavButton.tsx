@@ -6,13 +6,10 @@ const NavLink = styled(Link, {
 	position: 'relative',
 	display: 'inline-flex',
 	alignItems: 'end',
-	padding: '16px 32px',
+	padding: '1rem 2rem',
 	color: theme.colors.textMedium,
 	borderBottom: `1px solid transparent`,
-	fontFamily: 'DM Sans',
-	fontSize: '1rem',
 	fontWeight: 500,
-	verticalAlign: 'bottom',
 	transform: 'translateY(1px)',
 	transition: 'border-color background .2s ease',
 	'&::after': {
@@ -49,18 +46,22 @@ const NavLink = styled(Link, {
 	},
 	svg: { display: 'none' },
 	'@sm': {
+		alignItems: 'center',
+		gap: '1rem',
+		width: '100%',
 		svg: { fontSize: '1rem', display: 'block' },
-		'& .label': { display: 'none' },
 	},
 });
 
 const NavButton = ({ link, children }: { link: string; children: React.ReactNode }) => {
 	const router = useRouter();
 	return (
-		<NavLink href={link} className={router.asPath.split('#')[0] === link ? 'current' : ''}>
+		<NavLink href={link} className={'btn-nav' + (router.asPath.split('#')[0] === link ? ' current' : '')}>
 			{children}
 		</NavLink>
 	);
 };
+
+NavButton.toString = () => '.btn-nav';
 
 export default NavButton;
