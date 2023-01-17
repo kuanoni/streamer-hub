@@ -24,8 +24,6 @@ const Container = styled('div', {
 	gap: '1rem',
 	alignItems: 'center',
 	'@sm': { gap: '.5rem' },
-	'@xs': {
-		[`& ${Username}`]: { display: 'none' },
 	},
 });
 
@@ -80,7 +78,6 @@ const DropdownCaret = styled(BsCaretDownFill, {
 		width: '.75rem',
 		height: '.75rem',
 	},
-	'@xs': { display: 'none' },
 });
 
 type Props = {
