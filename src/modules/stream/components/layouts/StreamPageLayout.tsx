@@ -16,19 +16,14 @@ const Page = styled('div', {
 	gridTemplateRows: 'auto 1fr',
 	padding: '2rem',
 	paddingBottom: '1rem',
-	'@sm': {
-		padding: '.5rem',
-	},
-	'@l_xs': {
-		padding: '.5rem',
-	},
+	'@sm': { padding: 0 },
+	'@l_xs': { padding: '.5rem' },
 });
 
 const Main = styled('main', {
 	position: 'relative',
-	'@l_xs': {
-		height: '100vh',
-	},
+	'@sm': { padding: '.5rem' },
+	'@l_xs': { height: '100vh' },
 });
 
 const StreamPageLayout = ({ children }: Props) => {
