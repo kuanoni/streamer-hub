@@ -13,6 +13,42 @@ import NavButton from './NavButton';
 import UserNavOptions from './UserNavOptions';
 
 const Topbar = styled('div', {
+const NavButtonsOpen = keyframes({
+	'0%': { visibility: 'visible' },
+	'1%': {
+		opacity: 0,
+		transform: 'translateY(-50px)',
+	},
+	'100%': {
+		visibility: 'visible',
+		opacity: 1,
+		transform: 'translateY(0px)',
+	},
+});
+
+const NavButtonClose = keyframes({
+	'0%': {
+		visibility: 'visible',
+		opacity: 1,
+		transform: 'translateY(0px)',
+	},
+	'99%': {
+		opacity: 0,
+		transform: 'translateY(-50px)',
+	},
+	'100%': { visibility: 'collapse' },
+});
+
+const ControlButtonsOpen = keyframes({
+	'0%': { transform: 'translateY(-50px)' },
+	'100%': { transform: 'translateY(0px)' },
+});
+
+const ControlButtonsClose = keyframes({
+	'0%': { transform: 'translateY(0px)' },
+	'100%': { transform: 'translateY(-50px)' },
+});
+
 	position: 'relative',
 	display: 'flex',
 	width: '100%',
