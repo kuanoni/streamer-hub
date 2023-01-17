@@ -1,8 +1,9 @@
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import {
-	BsCameraVideoFill, BsCaretDownFill, BsCollectionPlayFill, BsFillCartFill, BsFillHouseDoorFill
+	BsCameraVideoFill, BsCollectionPlayFill, BsFillCartFill, BsFillHouseDoorFill
 } from 'react-icons/bs';
+import { HiOutlineMenu } from 'react-icons/hi';
 import { keyframes, styled, theme } from 'stiches.config';
 
 import IconButton from '@components/ui/IconButton';
@@ -63,7 +64,6 @@ const NavButtons = styled('div', {
 	'@sm': {
 		display: 'block',
 		visibility: 'collapse',
-		border: `1px solid ${theme.colors.grey700}`,
 		'&.noanim': { animationDuration: '0s !important' },
 		'&.open': { animation: `${NavButtonsOpen} .2s forwards` },
 		'&.closed': { animation: `${NavButtonClose} .2s` },
@@ -73,12 +73,12 @@ const NavButtons = styled('div', {
 const ControlButtons = styled('div', {
 	display: 'flex',
 	alignItems: 'center',
-	justifyContent: 'space-between',
 	marginLeft: 'auto',
 	[`& ${IconButton}`]: { display: 'none' },
 	'@sm': {
 		width: '100%',
 		padding: '.5rem',
+		backgroundColor: theme.colors.primary400,
 		'&.noanim': { animationDuration: '0s !important' },
 		'&.open': { animation: `${ControlButtonsOpen} .2s` },
 		'&.closed': { animation: `${ControlButtonsClose} .2s` },
@@ -89,6 +89,13 @@ const ControlButtons = styled('div', {
 			transition: 'transform .2s ease',
 		},
 	},
+});
+
+const TextLogo = styled('h2', {
+	margin: 0,
+	marginLeft: '.5rem',
+	display: 'none',
+	'@sm': { display: 'block' },
 });
 
 const Nav = styled('nav', {
@@ -149,9 +156,10 @@ const Navbar = () => {
 						{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					</NavButtons>
 					<ControlButtons className={animationClasses}>
-						<IconButton color='primary' size='2.25rem' onClick={toggleNavbar}>
-							<BsCaretDownFill />
+						<IconButton color='lightTransparent' size='2.25rem' iconSizeRatio={0.75} onClick={toggleNavbar}>
+							<HiOutlineMenu />
 						</IconButton>
+						<TextLogo>KroyOoz.tv</TextLogo>
 						<UserNavOptions user={data?.user} status={status} openSignIn={() => setIsSignInOpen(true)} />
 					</ControlButtons>
 				</Nav>
