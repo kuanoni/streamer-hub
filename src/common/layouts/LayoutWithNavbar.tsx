@@ -22,7 +22,7 @@ const LayoutWithNavbar = ({ children }: Props) => {
 		maxWidth: theme.space.pageWidth,
 		padding: '2rem',
 		paddingBottom: 0,
-		'@sm': { padding: '2rem 1rem 0 1rem' },
+		'@sm': { padding: 0 },
 	});
 
 	const Main = styled('main', {
@@ -30,6 +30,7 @@ const LayoutWithNavbar = ({ children }: Props) => {
 		width: '100%',
 		maxWidth: theme.space.pageWidth,
 		margin: '1rem 0',
+		'@sm': { padding: '0 1rem' },
 	});
 
 	const SideDecoration = styled('div', {
