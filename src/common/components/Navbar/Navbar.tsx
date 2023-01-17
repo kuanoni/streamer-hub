@@ -149,7 +149,7 @@ const Navbar = () => {
 						{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					</NavButtons>
 					<ControlButtons className={animationClasses}>
-						<IconButton color='primary' size='2rem' onClick={toggleNavbar}>
+						<IconButton color='primary' size='2.25rem' onClick={toggleNavbar}>
 							<BsCaretDownFill />
 						</IconButton>
 						<UserNavOptions user={data?.user} status={status} openSignIn={() => setIsSignInOpen(true)} />
