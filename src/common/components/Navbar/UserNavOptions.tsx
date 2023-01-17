@@ -23,10 +23,12 @@ const Container = styled('div', {
 	display: 'flex',
 	gap: '1rem',
 	alignItems: 'center',
-	'@sm': { gap: '.5rem' },
-	[`& ${TextButton.toString()}`]: {
-		whiteSpace: 'nowrap',
+	'@sm': {
+		gap: '.5rem',
+		marginLeft: 'auto',
+		[`& ${TextButton.toString()}`]: { display: 'none' },
 	},
+	[`& ${TextButton.toString()}`]: { whiteSpace: 'nowrap' },
 });
 
 const SignedIn = styled('button', {
