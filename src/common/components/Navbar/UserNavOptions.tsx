@@ -24,6 +24,8 @@ const Container = styled('div', {
 	gap: '1rem',
 	alignItems: 'center',
 	'@sm': { gap: '.5rem' },
+	[`& ${TextButton.toString()}`]: {
+		whiteSpace: 'nowrap',
 	},
 });
 

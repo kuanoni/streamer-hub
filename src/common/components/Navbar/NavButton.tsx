@@ -46,6 +46,9 @@ const NavLink = styled(Link, {
 	},
 	svg: { display: 'none' },
 	'@sm': {
+		alignItems: 'center',
+		gap: '1rem',
+		width: '100%',
 		svg: { fontSize: '1rem', display: 'block' },
 	},
 });
