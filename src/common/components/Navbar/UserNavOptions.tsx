@@ -42,8 +42,10 @@ const SignedIn = styled('button', {
 	border: 'none',
 	cursor: 'pointer',
 	transition: 'color .1s ease',
-	'&:hover': {
-		color: theme.colors.grey100,
+	'&:hover': { color: theme.colors.grey100 },
+	'@sm': {
+		color: theme.colors.textLight,
+		'&:hover': { color: theme.colors.textLightActive },
 	},
 });
 
