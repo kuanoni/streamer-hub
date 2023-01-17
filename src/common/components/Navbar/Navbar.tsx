@@ -14,16 +14,16 @@ import BrandLogo from './BrandLogo';
 import NavButton from './NavButton';
 import UserNavOptions from './UserNavOptions';
 
+const controlBarHeight = '52px';
+
 const NavButtonsOpen = keyframes({
-	'0%': { visibility: 'visible' },
-	'1%': {
+	'0%': {
+		visibility: 'visible',
 		opacity: 0,
-		transform: 'translateY(-50px)',
 	},
 	'100%': {
 		visibility: 'visible',
 		opacity: 1,
-		transform: 'translateY(0px)',
 	},
 });
 
@@ -31,23 +31,21 @@ const NavButtonClose = keyframes({
 	'0%': {
 		visibility: 'visible',
 		opacity: 1,
-		transform: 'translateY(0px)',
 	},
-	'99%': {
+	'100%': {
+		visibility: 'collapse',
 		opacity: 0,
-		transform: 'translateY(-50px)',
 	},
-	'100%': { visibility: 'collapse' },
 });
 
-const ControlButtonsOpen = keyframes({
-	'0%': { transform: 'translateY(-50px)' },
-	'100%': { transform: 'translateY(0px)' },
+const NavOpen = keyframes({
+	'0%': { transform: `translateY(calc(-100% + ${controlBarHeight}))` },
+	'100%': { transform: 'translateY(0%)' },
 });
 
-const ControlButtonsClose = keyframes({
-	'0%': { transform: 'translateY(0px)' },
-	'100%': { transform: 'translateY(-50px)' },
+const NavClose = keyframes({
+	'0%': { transform: 'translateY(0%)' },
+	'100%': { transform: `translateY(calc(-100% + ${controlBarHeight}))` },
 });
 
 const Container = styled('div', {
@@ -70,18 +68,16 @@ const NavButtons = styled('div', {
 	},
 });
 
-const ControlButtons = styled('div', {
+const ControlBar = styled('div', {
 	display: 'flex',
 	alignItems: 'center',
 	marginLeft: 'auto',
 	[`& ${IconButton}`]: { display: 'none' },
 	'@sm': {
 		width: '100%',
+		height: controlBarHeight,
 		padding: '.5rem',
 		backgroundColor: theme.colors.primary400,
-		'&.noanim': { animationDuration: '0s !important' },
-		'&.open': { animation: `${ControlButtonsOpen} .2s` },
-		'&.closed': { animation: `${ControlButtonsClose} .2s` },
 		[`& ${IconButton}`]: { display: 'initial' },
 		[`&.open ${IconButton} > svg`]: { transform: 'rotate(180deg) translate(50%, 50%)' },
 		[`& ${IconButton} > svg`]: {
@@ -108,6 +104,9 @@ const Nav = styled('nav', {
 		flexDirection: 'column',
 		alignItems: 'start',
 		margin: 0,
+		'&.noanim': { animationDuration: '0s !important' },
+		'&.open': { animation: `${NavOpen} .2s forwards` },
+		'&.closed': { animation: `${NavClose} .2s forwards` },
 	},
 });
 
@@ -135,7 +134,7 @@ const Navbar = () => {
 			<SignInModal isOpen={isSignInOpen} close={() => setIsSignInOpen(false)} />
 			<Container>
 				<BrandLogo />
-				<Nav>
+				<Nav className={animationClasses}>
 					<NavButtons className={animationClasses}>
 						<NavButton link='/'>
 							<BsFillHouseDoorFill />
@@ -155,13 +154,13 @@ const Navbar = () => {
 						</NavButton>
 						{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					</NavButtons>
-					<ControlButtons className={animationClasses}>
+					<ControlBar>
 						<IconButton color='lightTransparent' size='2.25rem' iconSizeRatio={0.75} onClick={toggleNavbar}>
 							<HiOutlineMenu />
 						</IconButton>
 						<TextLogo>KroyOoz.tv</TextLogo>
 						<UserNavOptions user={data?.user} status={status} openSignIn={() => setIsSignInOpen(true)} />
-					</ControlButtons>
+					</ControlBar>
 				</Nav>
 			</Container>
 		</>
