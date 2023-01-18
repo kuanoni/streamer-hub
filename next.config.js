@@ -11,6 +11,7 @@ const nextConfig = {
 			'a.thumbs.redditmedia.com',
 			'img.youtube.com',
 			'i3.ytimg.com',
+			'i.ytimg.com',
 		],
 	},
 };
