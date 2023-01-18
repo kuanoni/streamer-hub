@@ -22,6 +22,7 @@ const AbsoluteContainer = styled('div', {
 const GridContainer = styled(AbsoluteContainer, {
 	display: 'grid',
 	gridTemplateColumns: '1fr auto',
+	gridTemplateRows: '100%',
 	gap: '2rem',
 	'@sm': {
 		gridTemplateRows: 'min-content 1fr',

@@ -22,8 +22,8 @@ const Page = styled('div', {
 
 const Main = styled('main', {
 	position: 'relative',
-	minHeight: '-webkit-fill-available',
-	'@sm': { padding: '.5rem' },
+
+	'@sm': { padding: '.5rem', minHeight: '-webkit-fill-available' },
 	'@l_xs': { height: '100vh' },
 });
 
