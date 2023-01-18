@@ -6,6 +6,7 @@ import VideosSection from '@components/Home/VideosSection';
 import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import fetchRedditPosts from '@modules/reddit/api/fetchRedditPosts';
 import RedditSection from '@modules/reddit/components/section/RedditSection';
+import fetchYoutubeVideos from '@modules/youtube/api/fetchYoutubeVideos';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -52,14 +53,15 @@ const ColumnContainer = styled('div', {
 
 interface Props {
 	posts: RedditPostData[];
+	videos: YoutubeVideoData[];
 }
 
-const Home = ({ posts }: Props) => {
+const Home = ({ posts, videos }: Props) => {
 	return (
 		<Container>
 			<MerchSection />
 			<Row>
-				<VideosSection />
+				<VideosSection videos={videos} />
 				<ColumnWrapper>
 					<ColumnContainer>
 						<TwitterSection />
@@ -73,11 +75,15 @@ const Home = ({ posts }: Props) => {
 
 export async function getStaticProps() {
 	const posts = await fetchRedditPosts();
+	const videos = await fetchYoutubeVideos();
+
+	const props: Props = {
+		posts,
+		videos,
+	};
 
 	return {
-		props: {
-			posts,
-		},
+		props,
 		revalidate: 10,
 	};
 }
