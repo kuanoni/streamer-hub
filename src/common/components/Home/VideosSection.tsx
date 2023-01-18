@@ -2,8 +2,8 @@ import { styled, theme } from 'stiches.config';
 
 import { CSS } from '@stitches/react';
 
+import YoutubeThumbnail from '../../../modules/youtube/components/YoutubeThumbnail';
 import Section from './Section';
-import YoutubeThumbnail from './YoutubeThumbnail';
 
 const contentCss: CSS = {
 	padding: '.5rem 1rem',
@@ -46,31 +46,28 @@ const FeatureDescription = styled('p', {
 	color: theme.colors.textMedium,
 });
 
-const featuredVideoId = '-A9Gl9dITk4';
+interface Props {
+	videos: YoutubeVideoData[];
+}
 
-const videoIds = ['adtOYmFdiCc', 'F18gVafNzc0', 'lh9sN4wm2qo', 'Ll9SOTC9o_8', 'HRz_6YUU6Sg', 'bX8IQf2z_Z8'];
+const VideosSection = ({ videos }: Props) => {
+	const featuredVideo = videos[0];
 
-interface Props {}
-
-const VideosSection = ({}: Props) => {
 	return (
 		<Section>
 			<Section.Header>Videos</Section.Header>
 			<Section.Content css={contentCss}>
 				<Feature>
-					<YoutubeThumbnail videoId={featuredVideoId} resolution='hd' />
+					<YoutubeThumbnail videoId={featuredVideo.videoId} thumbnails={featuredVideo.thumbnails} />
 					<FeatureContent>
-						<FeatureTitle>{`Andrew Tate Self Snitches In Chat Logs, Didn't Expect To Be Caught`}</FeatureTitle>
-						<FeatureDescription>
-							Destiny reacts to latest Andrew Tate updates from criminal lawyer Bruce Rivers, Romanian
-							TVee and DJ Akademiks...
-						</FeatureDescription>
+						<FeatureTitle>{featuredVideo.title}</FeatureTitle>
+						<FeatureDescription>{featuredVideo.description}</FeatureDescription>
 					</FeatureContent>
 				</Feature>
-				<RecentVideosTitle>Recent videos</RecentVideosTitle>
+				<RecentVideosTitle>Other videos</RecentVideosTitle>
 				<RecentVideos>
-					{videoIds.map((id) => (
-						<YoutubeThumbnail key={id} videoId={id} resolution='hd' />
+					{videos.map((video) => (
+						<YoutubeThumbnail key={video.videoId} videoId={video.videoId} thumbnails={video.thumbnails} />
 					))}
 				</RecentVideos>
 			</Section.Content>

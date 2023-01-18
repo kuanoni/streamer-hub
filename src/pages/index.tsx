@@ -61,7 +61,7 @@ const Home = ({ posts, videos }: Props) => {
 		<Container>
 			<MerchSection />
 			<Row>
-				<VideosSection />
+				<VideosSection videos={videos} />
 				<ColumnWrapper>
 					<ColumnContainer>
 						<TwitterSection />
