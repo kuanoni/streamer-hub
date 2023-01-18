@@ -18,10 +18,12 @@ const controlBarHeight = '52px';
 
 const NavButtonsOpen = keyframes({
 	'0%': {
+		position: 'static',
 		visibility: 'visible',
 		opacity: 0,
 	},
 	'100%': {
+		position: 'static',
 		visibility: 'visible',
 		opacity: 1,
 	},
@@ -29,11 +31,14 @@ const NavButtonsOpen = keyframes({
 
 const NavButtonClose = keyframes({
 	'0%': {
+		position: 'static',
 		visibility: 'visible',
 		opacity: 1,
 	},
+	'99%': { opacity: 0, position: 'static' },
 	'100%': {
-		visibility: 'collapse',
+		visibility: 'hidden',
+		position: 'absolute',
 		opacity: 0,
 	},
 });
@@ -53,6 +58,7 @@ const Container = styled('div', {
 	display: 'flex',
 	width: '100%',
 	margin: '0 auto',
+	zIndex: 1,
 	'@sm': { flexDirection: 'column' },
 });
 
@@ -64,7 +70,7 @@ const NavButtons = styled('div', {
 		visibility: 'collapse',
 		'&.noanim': { animationDuration: '0s !important' },
 		'&.open': { animation: `${NavButtonsOpen} .2s forwards` },
-		'&.closed': { animation: `${NavButtonClose} .2s` },
+		'&.closed': { animation: `${NavButtonClose} .2s forwards` },
 	},
 });
 
