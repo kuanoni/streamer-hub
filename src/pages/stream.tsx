@@ -24,7 +24,7 @@ const GridContainer = styled(AbsoluteContainer, {
 	gridTemplateColumns: '1fr auto',
 	gap: '2rem',
 	'@sm': {
-		gridTemplateRows: 'auto 1fr',
+		gridTemplateRows: 'min-content 1fr',
 		gridTemplateColumns: '1fr',
 		gap: 0,
 	},
