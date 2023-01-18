@@ -7,6 +7,7 @@ import Section from './Section';
 
 const contentCss: CSS = {
 	padding: '.5rem 1rem',
+	minHeight: 400,
 	'@xs': { padding: '.5rem' },
 };
 
@@ -46,6 +47,18 @@ const FeatureDescription = styled('p', {
 	color: theme.colors.textMedium,
 });
 
+const Fallback = styled('div', {
+	padding: '.5rem 0',
+	h1: {
+		margin: 0,
+		fontStyle: 'italic',
+	},
+	p: {
+		margin: 0,
+		color: theme.colors.textMedium,
+	},
+});
+
 interface Props {
 	videos: YoutubeVideoData[];
 }
@@ -55,21 +68,36 @@ const VideosSection = ({ videos }: Props) => {
 
 	return (
 		<Section>
-			<Section.Header>Videos</Section.Header>
+			<Section.Header>Recent Videos</Section.Header>
 			<Section.Content css={contentCss}>
-				<Feature>
-					<YoutubeThumbnail videoId={featuredVideo.videoId} thumbnails={featuredVideo.thumbnails} />
-					<FeatureContent>
-						<FeatureTitle>{featuredVideo.title}</FeatureTitle>
-						<FeatureDescription>{featuredVideo.description}</FeatureDescription>
-					</FeatureContent>
-				</Feature>
-				<RecentVideosTitle>Other videos</RecentVideosTitle>
-				<RecentVideos>
-					{videos.map((video) => (
-						<YoutubeThumbnail key={video.videoId} videoId={video.videoId} thumbnails={video.thumbnails} />
-					))}
-				</RecentVideos>
+				{videos.length ? (
+					<>
+						<Feature>
+							<YoutubeThumbnail videoId={featuredVideo.videoId} thumbnails={featuredVideo.thumbnails} />
+							<FeatureContent>
+								<FeatureTitle>{featuredVideo.title}</FeatureTitle>
+								<FeatureDescription>{featuredVideo.description}</FeatureDescription>
+							</FeatureContent>
+						</Feature>
+						<RecentVideosTitle>Other videos</RecentVideosTitle>
+						<RecentVideos>
+							{videos.map((video) => (
+								<YoutubeThumbnail
+									key={video.videoId}
+									videoId={video.videoId}
+									thumbnails={video.thumbnails}
+								/>
+							))}
+						</RecentVideos>
+					</>
+				) : (
+					<Fallback>
+						<h1>Failed to load Youtube videos...</h1>
+						<p>
+							Visit the channel <a href='#'>here</a> instead.
+						</p>
+					</Fallback>
+				)}
 			</Section.Content>
 		</Section>
 	);
