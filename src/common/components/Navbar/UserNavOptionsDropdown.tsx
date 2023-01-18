@@ -19,7 +19,7 @@ const moveIn = keyframes({
 
 const Options = styled('div', {
 	position: 'absolute',
-	bottom: -10,
+	bottom: '-1rem',
 	right: '.5rem',
 	display: 'flex',
 	flexDirection: 'column',
@@ -27,11 +27,15 @@ const Options = styled('div', {
 	minWidth: '10rem',
 	padding: '.5rem 0',
 	backgroundColor: theme.colors.primary400,
-	border: `1px solid ${theme.colors.grey400}`,
+	border: `1px solid ${theme.colors.grey700}`,
 	borderRadius: theme.space.borderRadHalf,
 	zIndex: 2,
 	transform: 'translateY(100%)',
 	animation: `${moveIn} .25s`,
+	'@sm': {
+		right: 0,
+		width: 'calc(100vw - 1rem)',
+	},
 });
 
 const LinkButton = styled(Link, {
