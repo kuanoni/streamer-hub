@@ -3,6 +3,7 @@ import { styled, theme } from 'stiches.config';
 const Container = styled('footer', {
 	gridArea: 'footer',
 	width: '100%',
+	height: 'min-content',
 	marginTop: '4rem',
 	backgroundColor: theme.colors.primary800,
 });
