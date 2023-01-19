@@ -2,6 +2,7 @@ import React from 'react';
 import { styled, theme } from 'stiches.config';
 
 import Navbar from '@components/Navbar/Navbar';
+import PageFooter from '@components/PageFooter';
 
 type Props = {
 	children?: React.ReactNode;
@@ -11,7 +12,8 @@ const LayoutWithNavbar = ({ children }: Props) => {
 	const Page = styled('div', {
 		display: 'grid',
 		gridTemplateColumns: `1fr min(${theme.space.pageWidth}, 100vw) 1fr`,
-		gridTemplateAreas: `"dl content dr"`,
+		gridTemplateRows: 'auto auto',
+		gridTemplateAreas: `"dl content dr" "footer footer footer"`,
 		minHeight: '100vh',
 	});
 
@@ -63,6 +65,7 @@ const LayoutWithNavbar = ({ children }: Props) => {
 				<Navbar />
 				<Main>{children}</Main>
 			</PageContent>
+			<PageFooter />
 		</Page>
 	);
 };
