@@ -68,8 +68,8 @@ const Home = ({ posts, videos }: Props) => {
 				<VideosSection videos={videos} />
 				<ColumnWrapper>
 					<ColumnContainer>
-						<RedditSection posts={posts} />
 						<TwitterSection username={TWITTER_USERNAME} />
+						<RedditSection subredditName={SUBREDDIT_NAME} posts={posts} />
 					</ColumnContainer>
 				</ColumnWrapper>
 			</Row>

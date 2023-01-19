@@ -73,13 +73,17 @@ const LineBreak = styled('br', {
 	'@sm': { display: 'none' },
 });
 
-const RedditSectionHeader = () => {
+type Props = {
+	subredditName: string;
+};
+
+const RedditSectionHeader = ({ subredditName }: Props) => {
 	return (
-		<Header href='https://www.reddit.com/r/Destiny/' target='_blank'>
+		<Header href={`https://www.reddit.com/r/${subredditName}/`} target='_blank'>
 			<HeaderText>
 				Posts from &nbsp;
 				<LineBreak />
-				/r/Destiny
+				/r/{subredditName}
 			</HeaderText>
 			<HeaderButton />
 		</Header>
