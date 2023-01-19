@@ -1,8 +1,7 @@
 import extractStringEnvVar from '../../../common/utils/extractStringEnvVar';
 
-const fetchYoutubeVideos = async () => {
+const fetchYoutubeVideos = async (channelId: string) => {
 	const endpoint = 'https://youtube.googleapis.com/youtube/v3/search';
-	const channelId = 'UCM2fsEsL6rW99JYMPFmwgtA';
 	const maxResults = 50;
 	const apiKey = extractStringEnvVar('YOUTUBE_DATA_API_KEY');
 

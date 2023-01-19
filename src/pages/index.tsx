@@ -78,8 +78,8 @@ const Home = ({ posts, videos }: Props) => {
 };
 
 export async function getStaticProps() {
-	const videos = await fetchYoutubeVideos();
 	const posts = await fetchRedditPosts(SUBREDDIT_NAME);
+	const videos = await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID);
 
 	const props: Props = {
 		posts,
