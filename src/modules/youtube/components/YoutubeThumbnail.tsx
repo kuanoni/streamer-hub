@@ -1,12 +1,14 @@
 import Image from 'next/image';
-import { BsYoutube } from 'react-icons/bs';
 import { styled, theme } from 'stiches.config';
 
 const Thumbnail = styled(Image, {
 	display: 'block',
 	width: '100%',
-	height: 'auto',
 	maxWidth: '100%',
+	height: 'auto',
+	aspectRatio: '16 / 9',
+	objectFit: 'cover',
+	objectPosition: 'center',
 });
 
 const Overlay = styled('div', {
@@ -44,10 +46,10 @@ interface Props extends Pick<YoutubeVideoData, 'videoId' | 'thumbnails'> {
 const YoutubeThumbnail = ({ videoId, thumbnails, resolution = 'standard' }: Props) => {
 	const thumbnail =
 		thumbnails[resolution] ||
-		thumbnails.medium ||
-		thumbnails.high ||
-		thumbnails.standard ||
 		thumbnails.maxres ||
+		thumbnails.high ||
+		thumbnails.medium ||
+		thumbnails.standard ||
 		thumbnails.default;
 
 	if (!thumbnail) return <>thumbnail missing</>;
