@@ -12,9 +12,11 @@ const contentCss: CSS = {
 	'@sm': { maxWidth: 'calc(100vw - 2rem)' },
 };
 
-interface Props {}
+interface Props {
+	username: string;
+}
 
-const TwitterSection = ({}: Props) => {
+const TwitterSection = ({ username }: Props) => {
 	return (
 		<Section css={{ borderRadius: '11px' }}>
 			<Section.Header></Section.Header>
@@ -22,7 +24,7 @@ const TwitterSection = ({}: Props) => {
 				<Timeline
 					dataSource={{
 						sourceType: 'profile',
-						screenName: 'theomniliberal',
+						screenName: username,
 					}}
 					options={{
 						theme: 'dark',
