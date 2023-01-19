@@ -73,7 +73,11 @@ const VideosSection = ({ videos }: Props) => {
 				{videos.length ? (
 					<>
 						<Feature>
-							<YoutubeThumbnail videoId={featuredVideo.videoId} thumbnails={featuredVideo.thumbnails} />
+							<YoutubeThumbnail
+								videoId={featuredVideo.videoId}
+								thumbnails={featuredVideo.thumbnails}
+								resolution='maxres'
+							/>
 							<FeatureContent>
 								<FeatureTitle>{featuredVideo.title}</FeatureTitle>
 								<FeatureDescription>{featuredVideo.description}</FeatureDescription>
@@ -81,7 +85,7 @@ const VideosSection = ({ videos }: Props) => {
 						</Feature>
 						<RecentVideosTitle>Other videos</RecentVideosTitle>
 						<RecentVideos>
-							{videos.map((video) => (
+							{videos.slice(1, 7).map((video) => (
 								<YoutubeThumbnail
 									key={video.videoId}
 									videoId={video.videoId}
