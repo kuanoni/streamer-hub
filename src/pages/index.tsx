@@ -53,7 +53,7 @@ const ColumnContainer = styled('div', {
 
 const SUBREDDIT_NAME = 'Jerma985';
 const TWITTER_USERNAME = 'Jerma985';
-const YOUTUBE_CHANNEL_ID = 'UCK3kaNXbB57CLcyhtccV_yw';
+const YOUTUBE_CHANNEL_ID = 'UCL7DDQWP6x7wy0O6L5ZIgxg';
 
 interface Props {
 	posts: RedditPostData[];
