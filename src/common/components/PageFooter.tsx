@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { styled, theme } from 'stiches.config';
 
 const Container = styled('footer', {
@@ -46,9 +47,7 @@ const Content = styled('ul', {
 	},
 });
 
-interface Props {}
-
-const PageFooter = ({}: Props) => {
+const PageFooter = () => {
 	return (
 		<Container>
 			<Content>
@@ -57,7 +56,7 @@ const PageFooter = ({}: Props) => {
 					<a href='mailto: kainoaaraizak@gmail.com'>Contact</a>
 				</li>
 				<li>
-					<a href='#'>Terms & Privacy</a>
+					<Link href='/agreement'>Terms & Privacy</Link>
 				</li>
 				<li>
 					<a href='https://github.com/kuanoni/streamer-hub'>Open Source</a>
