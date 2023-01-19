@@ -51,6 +51,10 @@ const ColumnContainer = styled('div', {
 	'@md': { gap: '1rem' },
 });
 
+const SUBREDDIT_NAME = 'Jerma985';
+const TWITTER_USERNAME = 'Jerma985';
+const YOUTUBE_CHANNEL_ID = 'UCL7DDQWP6x7wy0O6L5ZIgxg';
+
 interface Props {
 	posts: RedditPostData[];
 	videos: YoutubeVideoData[];
@@ -64,8 +68,8 @@ const Home = ({ posts, videos }: Props) => {
 				<VideosSection videos={videos} />
 				<ColumnWrapper>
 					<ColumnContainer>
-						<TwitterSection />
-						<RedditSection posts={posts} />
+						<TwitterSection username={TWITTER_USERNAME} />
+						<RedditSection subredditName={SUBREDDIT_NAME} posts={posts} />
 					</ColumnContainer>
 				</ColumnWrapper>
 			</Row>
@@ -74,8 +78,8 @@ const Home = ({ posts, videos }: Props) => {
 };
 
 export async function getStaticProps() {
-	const posts = await fetchRedditPosts();
-	const videos = await fetchYoutubeVideos();
+	const posts = await fetchRedditPosts(SUBREDDIT_NAME);
+	const videos = await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID);
 
 	const props: Props = {
 		posts,

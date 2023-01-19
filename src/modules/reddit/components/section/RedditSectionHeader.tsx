@@ -67,20 +67,14 @@ const Header = styled('a', {
 	},
 });
 
-const LineBreak = styled('br', {
-	'@media (max-width: 1105px)': { display: 'none' },
-	'@media (max-width: 967px)': { display: 'initial' },
-	'@sm': { display: 'none' },
-});
+type Props = {
+	subredditName: string;
+};
 
-const RedditSectionHeader = () => {
+const RedditSectionHeader = ({ subredditName }: Props) => {
 	return (
-		<Header href='https://www.reddit.com/r/Destiny/' target='_blank'>
-			<HeaderText>
-				Posts from &nbsp;
-				<LineBreak />
-				/r/Destiny
-			</HeaderText>
+		<Header href={`https://www.reddit.com/r/${subredditName}/`} target='_blank'>
+			<HeaderText>Posts from /r/{subredditName}</HeaderText>
 			<HeaderButton />
 		</Header>
 	);

@@ -22,10 +22,11 @@ const contentCss: CSS = {
 };
 
 type Props = {
+	subredditName: string;
 	posts: RedditPostData[];
 };
 
-const RedditSection = ({ posts }: Props) => {
+const RedditSection = ({ subredditName, posts }: Props) => {
 	const postComponents = useMemo(() => {
 		return posts.map((post) => {
 			return <RedditPost key={post.permalink} {...post} />;
@@ -36,7 +37,7 @@ const RedditSection = ({ posts }: Props) => {
 		<Section css={{ borderRadius: '11px' }}>
 			<Section.Header></Section.Header>
 			<Section.Content css={contentCss}>
-				<RedditSectionHeader />
+				<RedditSectionHeader subredditName={subredditName} />
 				<RedditPosts>{postComponents}</RedditPosts>
 				<RedditSectionFooter />
 			</Section.Content>
