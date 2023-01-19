@@ -3,7 +3,7 @@ import { styled, theme } from 'stiches.config';
 import { CSS } from '@stitches/react';
 
 import YoutubeThumbnail from '../../../modules/youtube/components/YoutubeThumbnail';
-import Section from './Section';
+import Section from '../Section';
 
 const contentCss: CSS = {
 	padding: '.5rem 1rem',

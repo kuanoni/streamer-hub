@@ -3,7 +3,7 @@ import { theme } from 'stiches.config';
 
 import { CSS } from '@stitches/react';
 
-import Section from './Section';
+import Section from '../Section';
 
 const contentCss: CSS = {
 	height: '100%',

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { styled } from 'stiches.config';
 
-import Section from '@components/Home/Section';
+import Section from '@components/Section';
 import { CSS } from '@stitches/react';
 
 import { borderColor } from '../../common';

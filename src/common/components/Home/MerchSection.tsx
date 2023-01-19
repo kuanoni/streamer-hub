@@ -9,7 +9,7 @@ import tshirt from '@images/shop/tshirt.png';
 import tshirt2 from '@images/shop/tshirt2.png';
 import { CSS } from '@stitches/react';
 
-import Section from './Section';
+import Section from '../Section';
 
 const contentCss: CSS = {
 	display: 'grid',
