@@ -59,8 +59,8 @@ const RedditIcon = styled('div', {
 interface Props extends RedditPostData {}
 
 const RedditPost = ({ author, title, permalink, thumbnail, created_utc, num_comments, score }: Props) => {
-	const thumbnailUrl =
-		thumbnail === 'self' ? selfPostThumbnail : thumbnail === 'default' ? selfPostThumbnail : thumbnail;
+	// TODO: add thumbnail images for 'self', 'default', and 'nsfw' posts
+	const thumbnailUrl = thumbnail.startsWith('http') ? thumbnail : selfPostThumbnail;
 
 	return (
 		<Post key={permalink} href={`https://reddit.com${permalink}`} target='_blank'>
