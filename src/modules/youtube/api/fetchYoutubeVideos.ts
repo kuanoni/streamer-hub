@@ -24,7 +24,14 @@ const fetchYoutubeVideos = async (channelId: string, broadcastsOnly: boolean = f
 		const videoId = item.id.videoId;
 		const { title, description, publishedAt, liveBroadcastContent, thumbnails } = item.snippet;
 
-		return { videoId, title, description, publishedAt, liveBroadcastContent, thumbnails };
+		return {
+			videoId,
+			title: title.replaceAll('&quot;', '"'),
+			description: description.replaceAll('&quot;', '"'),
+			publishedAt,
+			liveBroadcastContent,
+			thumbnails,
+		};
 	});
 
 	return videos;
