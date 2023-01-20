@@ -1,5 +1,7 @@
 import { styled } from 'stiches.config';
 
+import BroadcastsSection from '@components/Home/BroadcastsSection';
+import LivestreamSection from '@components/Home/LivestreamSection';
 import MerchSection from '@components/Home/MerchSection';
 import TwitterSection from '@components/Home/TwitterSection';
 import VideosSection from '@components/Home/VideosSection';
@@ -17,10 +19,20 @@ const Container = styled('div', {
 	'@sm': { marginTop: '.5rem', gap: '2rem' },
 });
 
-const Row = styled('div', {
+const VideosAndSocialsRow = styled('div', {
 	display: 'grid',
 	gridTemplateColumns: '64fr minmax(305px, 36fr)',
 	gridTemplateRows: '1fr',
+	placeItems: 'stretch',
+	gap: '2rem',
+	'@md': { gap: '1rem' },
+	'@sm': { gridTemplateColumns: '1fr', gap: '2rem' },
+});
+
+const LivestreamAndBroadcastsRow = styled('div', {
+	display: 'grid',
+	gridTemplateColumns: '1fr 1fr',
+	gridTemplateRows: 'min-content',
 	placeItems: 'stretch',
 	gap: '2rem',
 	'@md': { gap: '1rem' },
@@ -53,18 +65,26 @@ const ColumnContainer = styled('div', {
 
 const SUBREDDIT_NAME = 'Jerma985';
 const TWITTER_USERNAME = 'Jerma985';
-const YOUTUBE_CHANNEL_ID = 'UCL7DDQWP6x7wy0O6L5ZIgxg';
+// const YOUTUBE_CHANNEL_ID = 'UCL7DDQWP6x7wy0O6L5ZIgxg';
+// const YOUTUBE_CHANNEL_ID = 'UCsj_gOOEmCb73tgbjnUdUkg';
+const YOUTUBE_CHANNEL_ID = 'UC554eY5jNUfDq3yDOJYirOQ';
 
 interface Props {
 	posts: RedditPostData[];
 	videos: YoutubeVideoData[];
+	pastBroadcasts: YoutubeVideoData[];
+	livestream: YoutubeVideoData | undefined;
 }
 
-const Home = ({ posts, videos }: Props) => {
+const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
 	return (
 		<Container>
+			<LivestreamAndBroadcastsRow>
+				<LivestreamSection livestream={livestream} />
+				<BroadcastsSection pastBroadcasts={pastBroadcasts} />
+			</LivestreamAndBroadcastsRow>
 			<MerchSection />
-			<Row>
+			<VideosAndSocialsRow>
 				<VideosSection videos={videos} />
 				<ColumnWrapper>
 					<ColumnContainer>
@@ -72,7 +92,7 @@ const Home = ({ posts, videos }: Props) => {
 						<RedditSection subredditName={SUBREDDIT_NAME} posts={posts} />
 					</ColumnContainer>
 				</ColumnWrapper>
-			</Row>
+			</VideosAndSocialsRow>
 		</Container>
 	);
 };
