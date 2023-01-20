@@ -7,7 +7,7 @@ import { CSS } from '@stitches/react';
 
 const Container = styled('div', {
 	marginTop: '2rem',
-	h1: { margin: 0 },
+	h1: { fontSize: '2rem' },
 	h2: { margin: '0 0 .5rem 0' },
 	p: { marginTop: 0, color: theme.colors.textMedium },
 	'& p:last-child': { margin: 0 },
@@ -28,9 +28,7 @@ const Agreement = () => {
 	return (
 		<Container>
 			<CustomSection>
-				<CustomHeader>
-					<h1>Terms & Conditions and Privacy Policy</h1>
-				</CustomHeader>
+				<CustomHeader>Terms & Conditions and Privacy Policy</CustomHeader>
 				<CustomContent>
 					<h2>Cookies</h2>
 					<p>
@@ -58,9 +56,7 @@ const Agreement = () => {
 				</CustomContent>
 			</CustomSection>
 			<CustomSection>
-				<CustomHeader>
-					<h1>Account Deletion</h1>
-				</CustomHeader>
+				<CustomHeader>Account Deletion</CustomHeader>
 				<CustomContent>
 					<p>
 						You can request account removal via your profile. We will action this within 30 days of your
@@ -72,9 +68,7 @@ const Agreement = () => {
 				</CustomContent>
 			</CustomSection>
 			<CustomSection>
-				<CustomHeader>
-					<h1>Data Access</h1>
-				</CustomHeader>
+				<CustomHeader>Data Access</CustomHeader>
 				<CustomContent>
 					<p>
 						Any user may request a full output of their data at any point. An admin will provide these
@@ -83,9 +77,7 @@ const Agreement = () => {
 				</CustomContent>
 			</CustomSection>
 			<CustomSection>
-				<CustomHeader>
-					<h1>User Agreement</h1>
-				</CustomHeader>
+				<CustomHeader>User Agreement</CustomHeader>
 				<CustomContent>
 					<p>You must not attempt to gain access to data or user accounts that are not yours.</p>
 				</CustomContent>
