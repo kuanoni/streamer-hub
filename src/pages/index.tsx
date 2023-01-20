@@ -66,14 +66,14 @@ const ColumnContainer = styled('div', {
 const SUBREDDIT_NAME = 'Jerma985';
 const TWITTER_USERNAME = 'Jerma985';
 // const YOUTUBE_CHANNEL_ID = 'UCL7DDQWP6x7wy0O6L5ZIgxg';
-// const YOUTUBE_CHANNEL_ID = 'UCsj_gOOEmCb73tgbjnUdUkg';
-const YOUTUBE_CHANNEL_ID = 'UC554eY5jNUfDq3yDOJYirOQ';
+const YOUTUBE_CHANNEL_ID = 'UCsj_gOOEmCb73tgbjnUdUkg';
+// const YOUTUBE_CHANNEL_ID = 'UC554eY5jNUfDq3yDOJYirOQ';
 
 interface Props {
 	posts: RedditPostData[];
 	videos: YoutubeVideoData[];
 	pastBroadcasts: YoutubeVideoData[];
-	livestream: YoutubeVideoData | undefined;
+	livestream: YoutubeVideoData | null;
 }
 
 const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
@@ -99,6 +99,7 @@ const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
 
 export async function getStaticProps() {
 	const posts = await fetchRedditPosts(SUBREDDIT_NAME);
+
 	const videosAndBroadcasts = await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID);
 	const pastBroadcasts = (await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID, true))
 		.filter(
@@ -106,8 +107,9 @@ export async function getStaticProps() {
 		)
 		.slice(0, 6);
 
-	const livestream = videosAndBroadcasts.find((video) => video.liveBroadcastContent === 'live');
+	const livestream = videosAndBroadcasts.find((video) => video.liveBroadcastContent === 'live') || null;
 
+	// filter broadcasts out of video array
 	const broadcastIds = pastBroadcasts.map((broadcast) => broadcast.videoId);
 	const videos = videosAndBroadcasts.filter((video) => !broadcastIds.includes(video.videoId)).slice(0, 8);
 

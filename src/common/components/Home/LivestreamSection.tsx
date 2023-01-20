@@ -28,7 +28,7 @@ const LiveBadge = styled('span', {
 });
 
 interface Props {
-	livestream: YoutubeVideoData | undefined;
+	livestream: YoutubeVideoData | null;
 }
 
 const LivestreamSection = ({ livestream }: Props) => {
@@ -36,7 +36,7 @@ const LivestreamSection = ({ livestream }: Props) => {
 		<Section>
 			<Section.Header>
 				Livestream
-				<LiveBadge>{livestream ? 'LIVE' : 'OFFLINE'}</LiveBadge>
+				<LiveBadge>LIVE</LiveBadge>
 			</Section.Header>
 			<Section.Content css={contentCss}>
 				<Livestream>
