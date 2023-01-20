@@ -116,6 +116,16 @@ const Nav = styled('nav', {
 	},
 });
 
+const LiveBadge = styled('span', {
+	display: 'inline',
+	padding: '2px 4px',
+	marginLeft: 3,
+	color: theme.colors.textLightActive,
+	backgroundColor: '#e30000',
+	borderRadius: theme.space.borderRad,
+	fontSize: '.9em',
+});
+
 const Navbar = () => {
 	const { data, status } = useSession();
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -146,17 +156,15 @@ const Navbar = () => {
 							<BsFillHouseDoorFill />
 							<span className='label'>Home</span>
 						</NavButton>
-						<NavButton link='/stream'>
-							<BsCameraVideoFill />
-							<span className='label'>Stream</span>
-						</NavButton>
-						<NavButton link='/videos'>
-							<BsCollectionPlayFill />
-							<span className='label'>Videos</span>
-						</NavButton>
 						<NavButton link='/shop'>
 							<BsFillCartFill />
 							<span className='label'>Shop</span>
+						</NavButton>
+						<NavButton link='/stream'>
+							<BsCameraVideoFill />
+							<span className='label'>
+								Stream <LiveBadge>LIVE</LiveBadge>
+							</span>
 						</NavButton>
 						{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
 					</NavButtons>
