@@ -79,11 +79,23 @@ const Home = ({ posts, videos }: Props) => {
 
 export async function getStaticProps() {
 	const posts = await fetchRedditPosts(SUBREDDIT_NAME);
-	const videos = await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID);
+	const videosAndBroadcasts = await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID);
+	const pastBroadcasts = (await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID, true))
+		.filter(
+			(broadcast) => broadcast.liveBroadcastContent !== 'live' && broadcast.liveBroadcastContent !== 'upcoming'
+		)
+		.slice(0, 6);
+
+	const livestream = videosAndBroadcasts.find((video) => video.liveBroadcastContent === 'live');
+
+	const broadcastIds = pastBroadcasts.map((broadcast) => broadcast.videoId);
+	const videos = videosAndBroadcasts.filter((video) => !broadcastIds.includes(video.videoId)).slice(0, 8);
 
 	const props: Props = {
 		posts,
 		videos,
+		pastBroadcasts,
+		livestream,
 	};
 
 	return {
