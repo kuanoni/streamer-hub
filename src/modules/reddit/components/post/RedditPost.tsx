@@ -3,7 +3,10 @@ import Image from 'next/image';
 import { BsReddit } from 'react-icons/bs';
 import { styled } from 'stiches.config';
 
-import selfPostThumbnail from '@images/self_post_thumbnail.png';
+import defaultThumbnail from '@images/reddit_thumbnails/default.png';
+import linkThumbnail from '@images/reddit_thumbnails/link.png';
+import nsfwThumbnail from '@images/reddit_thumbnails/nsfw.png';
+import selfThumbnail from '@images/reddit_thumbnails/self.png';
 import { borderColor, darkText, lightText } from '@modules/reddit/common';
 
 import RedditPostFooter from './RedditPostFooter';
@@ -61,7 +64,17 @@ interface Props extends RedditPostData {}
 
 const RedditPost = ({ author, title, permalink, thumbnail, created_utc, num_comments, score }: Props) => {
 	// TODO: add thumbnail images for 'self', 'default', and 'nsfw' posts
-	const thumbnailUrl = thumbnail.startsWith('http') ? thumbnail : selfPostThumbnail;
+	const thumbnailUrl = thumbnail.startsWith('http')
+		? thumbnail
+		: thumbnail === 'self'
+		? selfThumbnail
+		: thumbnail === 'default'
+		? defaultThumbnail
+		: thumbnail === 'nsfw'
+		? nsfwThumbnail
+		: thumbnail === 'link'
+		? linkThumbnail
+		: defaultThumbnail;
 
 	return (
 		<Post key={permalink} href={`https://reddit.com${permalink}`} target='_blank'>
