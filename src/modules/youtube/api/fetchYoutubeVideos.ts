@@ -26,8 +26,8 @@ const fetchYoutubeVideos = async (channelId: string, broadcastsOnly: boolean = f
 
 		return {
 			videoId,
-			title: title.replaceAll('&quot;', '"'),
-			description: description.replaceAll('&quot;', '"'),
+			title: decode(title),
+			description: decode(description),
 			publishedAt,
 			liveBroadcastContent,
 			thumbnails,
