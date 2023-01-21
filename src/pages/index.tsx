@@ -9,6 +9,7 @@ import LayoutWithNavbar from '@layouts/LayoutWithNavbar';
 import fetchRedditPosts from '@modules/reddit/api/fetchRedditPosts';
 import RedditSection from '@modules/reddit/components/section/RedditSection';
 import fetchYoutubeVideos from '@modules/youtube/api/fetchYoutubeVideos';
+import { CSS } from '@stitches/react';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -29,7 +30,7 @@ const VideosAndSocialsRow = styled('div', {
 	'@sm': { gridTemplateColumns: '1fr', gap: '2rem' },
 });
 
-const LivestreamAndBroadcastsRow = styled('div', {
+const SplitRow = styled('div', {
 	display: 'grid',
 	gridTemplateColumns: '1fr 1fr',
 	gridTemplateRows: 'min-content',
@@ -77,12 +78,14 @@ interface Props {
 }
 
 const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
+	const splitRowCss: CSS = !livestream ? { gridTemplateColumns: '1fr' } : {};
+
 	return (
 		<Container>
-			<LivestreamAndBroadcastsRow>
-				<LivestreamSection livestream={livestream} />
-				<BroadcastsSection pastBroadcasts={pastBroadcasts} />
-			</LivestreamAndBroadcastsRow>
+			<SplitRow css={splitRowCss}>
+				{livestream && <LivestreamSection livestream={livestream} />}
+				<BroadcastsSection pastBroadcasts={pastBroadcasts} livestream={livestream} />
+			</SplitRow>
 			<MerchSection />
 			<VideosAndSocialsRow>
 				<VideosSection videos={videos} />
