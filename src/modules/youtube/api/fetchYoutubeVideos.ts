@@ -2,7 +2,7 @@ import extractStringEnvVar from '../../../common/utils/extractStringEnvVar';
 
 const fetchYoutubeVideos = async (channelId: string, broadcastsOnly: boolean = false) => {
 	const endpoint = 'https://youtube.googleapis.com/youtube/v3/';
-	const maxResults = 50;
+	const maxResults = 7;
 	const apiKey = extractStringEnvVar('YOUTUBE_DATA_API_KEY');
 
 	const reqUrl = `${endpoint}search?part=snippet&channelId=${channelId}&maxResults=${maxResults}&order=date&safeSearch=none&type=video&${
