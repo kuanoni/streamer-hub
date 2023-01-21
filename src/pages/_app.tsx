@@ -2,17 +2,20 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import NextNProgress from 'nextjs-progressbar';
+import { ReactElement, useState } from 'react';
 import { theme } from 'stiches.config';
 
 import AuthorizedPageWrapper from '@components/AuthorizedPageWrapper';
 import { Page } from '@globalTypes/authorized-page';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import type { ReactElement } from 'react';
 interface PageAppProps extends AppProps {
 	Component: Page;
 }
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: PageAppProps) {
+	const [queryClient] = useState(() => new QueryClient());
 	const getLayout = Component.getLayout || ((page: ReactElement) => page);
 
 	const siteTitle = 'KroyOoz.tv';
@@ -22,7 +25,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 	const previewImage = '/images/previewImage.png';
 
 	return (
-		<SessionProvider>
+		<>
 			<Head>
 				<title>{pageTitle}</title>
 				<meta name='title' content={pageTitle} />
@@ -50,14 +53,19 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 				<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
 			</Head>
 
-			<NextNProgress color={theme.colors.secondary500.toString()} />
-			{Component.authorizationOptions
-				? getLayout(
-						<AuthorizedPageWrapper authorizationOptions={Component.authorizationOptions}>
-							<Component {...pageProps} />
-						</AuthorizedPageWrapper>
-				  )
-				: getLayout(<Component {...pageProps} />)}
-		</SessionProvider>
+			<QueryClientProvider client={queryClient}>
+				<SessionProvider>
+					<NextNProgress color={theme.colors.secondary500.toString()} />
+					{Component.authorizationOptions
+						? getLayout(
+								<AuthorizedPageWrapper authorizationOptions={Component.authorizationOptions}>
+									<Component {...pageProps} />
+								</AuthorizedPageWrapper>
+						  )
+						: getLayout(<Component {...pageProps} />)}
+				</SessionProvider>
+				<ReactQueryDevtools initialIsOpen={false} />
+			</QueryClientProvider>
+		</>
 	);
 }
