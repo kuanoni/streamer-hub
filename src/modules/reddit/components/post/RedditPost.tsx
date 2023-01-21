@@ -1,3 +1,4 @@
+import { decode } from 'he';
 import Image from 'next/image';
 import { BsReddit } from 'react-icons/bs';
 import { styled } from 'stiches.config';
@@ -70,7 +71,7 @@ const RedditPost = ({ author, title, permalink, thumbnail, created_utc, num_comm
 					<BsReddit />
 				</RedditIcon>
 				<PostAuthor>/u/{author}</PostAuthor>
-				<PostTitle>{title}</PostTitle>
+				<PostTitle>{decode(title)}</PostTitle>
 				<RedditPostFooter created_utc={created_utc} num_comments={num_comments} score={score} />
 			</PostContent>
 		</Post>
