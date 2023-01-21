@@ -13,6 +13,8 @@
     "dependencies": {
         "@next-auth/mongodb-adapter": "^1.1.1",
         "@stitches/react": "^1.2.8",
+        "@tanstack/react-query": "^4.22.3",
+        "@tanstack/react-query-devtools": "^4.22.3",
         "date-fns": "^2.29.3",
         "eslint": "8.28.0",
         "eslint-config-next": "13.0.4",
