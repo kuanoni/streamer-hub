@@ -20,7 +20,7 @@ const PastBroadcasts = styled('div', {
 	gap: '.5rem',
 	padding: '.5rem 1rem',
 	'@sm': {
-		gridTemplateColumns: '1fr',
+		gridTemplateColumns: '1fr 1fr !important',
 		gridTemplateRows: 'repeat(6, 1fr)',
 		padding: '.5rem',
 	},
@@ -45,7 +45,7 @@ interface Props {
 
 const BroadcastsSection = ({ pastBroadcasts, livestream }: Props) => {
 	const pastBroadcastsCss: CSS = !livestream
-		? { gridTemplateColumns: 'repeat(6, 1fr)', gridTemplateRows: '1fr', position: 'relative' }
+		? { position: 'relative', gridTemplateColumns: 'repeat(6, 1fr)', gridTemplateRows: '1fr' }
 		: {};
 
 	return (
