@@ -8,6 +8,7 @@ import Section from '../Section';
 const contentCss: CSS = {
 	padding: '.5rem 1rem',
 	minHeight: 600,
+	'@sm': { minHeight: 'auto' },
 	'@xs': { padding: '.5rem' },
 };
 
