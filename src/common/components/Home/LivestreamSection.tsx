@@ -40,7 +40,13 @@ const LivestreamSection = ({ livestream }: Props) => {
 			</Section.Header>
 			<Section.Content css={contentCss}>
 				<Livestream>
-					{livestream && <YoutubeThumbnail videoId={livestream.videoId} thumbnails={livestream.thumbnails} />}
+					{livestream && (
+						<YoutubeThumbnail
+							href='/stream'
+							videoId={livestream.videoId}
+							thumbnails={livestream.thumbnails}
+						/>
+					)}
 				</Livestream>
 			</Section.Content>
 		</Section>
