@@ -52,7 +52,7 @@ export const Chat = () => {
 
 	return (
 		<Container>
-			<ChatControlsTop />
+			{/* <ChatControlsTop /> */}
 			<SocketProvider>
 				<ChatOptionsProvider>
 					<MessagesSection>
