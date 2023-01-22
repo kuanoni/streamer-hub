@@ -13,6 +13,7 @@ import fetchRedditPosts from '@modules/reddit/api/fetchRedditPosts';
 import RedditSection from '@modules/reddit/components/section/RedditSection';
 import fetchYoutubeVideos from '@modules/youtube/api/fetchYoutubeVideos';
 import { CSS } from '@stitches/react';
+import { useQuery } from '@tanstack/react-query';
 
 const Container = styled('div', {
 	display: 'flex',
@@ -68,13 +69,16 @@ const ColumnContainer = styled('div', {
 });
 
 interface Props {
-	posts: RedditPostData[];
 	videos: YoutubeVideoData[];
 	pastBroadcasts: YoutubeVideoData[];
 	livestream: YoutubeVideoData | null;
 }
 
-const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
+const Home = ({ videos, pastBroadcasts, livestream }: Props) => {
+	const { data: posts } = useQuery<RedditPostData[]>(['redditPosts'], fetchRedditPosts, {
+		staleTime: 1000 * 60 * 2,
+	});
+
 	const splitRowCss: CSS = !livestream ? { gridTemplateColumns: '1fr' } : {};
 
 	return (
@@ -89,7 +93,7 @@ const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
 				<ColumnWrapper>
 					<ColumnContainer>
 						<TwitterSection username={TWITTER_USERNAME} />
-						<RedditSection subredditName={SUBREDDIT_NAME} posts={posts} />
+						<RedditSection subredditName={SUBREDDIT_NAME} posts={posts || []} />
 					</ColumnContainer>
 				</ColumnWrapper>
 			</VideosAndSocialsRow>
@@ -98,8 +102,6 @@ const Home = ({ posts, videos, pastBroadcasts, livestream }: Props) => {
 };
 
 export async function getStaticProps() {
-	const posts = await fetchRedditPosts(SUBREDDIT_NAME);
-
 	const videosAndBroadcasts = await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID);
 	const pastBroadcasts = (await fetchYoutubeVideos(YOUTUBE_CHANNEL_ID, true))
 		.filter(
@@ -114,7 +116,6 @@ export async function getStaticProps() {
 	const videos = videosAndBroadcasts.filter((video) => !broadcastIds.includes(video.videoId)).slice(0, 8);
 
 	const props: Props = {
-		posts,
 		videos,
 		pastBroadcasts,
 		livestream,
