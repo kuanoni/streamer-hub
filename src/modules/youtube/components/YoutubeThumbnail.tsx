@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { styled, theme } from 'stiches.config';
 
 const Thumbnail = styled(Image, {
@@ -40,10 +41,11 @@ const Container = styled('a', {
 });
 
 interface Props extends Pick<YoutubeVideoData, 'videoId' | 'thumbnails'> {
+	href?: string;
 	resolution?: YoutubeThumbnailKeys;
 }
 
-const YoutubeThumbnail = ({ videoId, thumbnails, resolution = 'standard' }: Props) => {
+const YoutubeThumbnail = ({ videoId, href, thumbnails, resolution = 'standard' }: Props) => {
 	const thumbnail =
 		thumbnails[resolution] ||
 		thumbnails.maxres ||
@@ -55,7 +57,11 @@ const YoutubeThumbnail = ({ videoId, thumbnails, resolution = 'standard' }: Prop
 	if (!thumbnail) return <>thumbnail missing</>;
 
 	return (
-		<Container href={`https://www.youtube.com/watch?v=${videoId}`} target='_blank'>
+		<Container
+			as={href ? Link : 'a'}
+			href={href ? href : `https://www.youtube.com/watch?v=${videoId}`}
+			target={href ? '_self' : '_blank'}
+		>
 			<Thumbnail src={thumbnail.url} alt='' width={thumbnail.width} height={thumbnail.height} />
 			<Overlay>
 				<svg
