@@ -7,7 +7,7 @@ interface YoutubeThumbnail {
 type YoutubeThumbnailKeys = 'default' | 'medium' | 'high' | 'standard' | 'maxres';
 
 type YoutubeThumbnails = {
-	[key in YoutubeThumbnailKeys]: YoutubeThumbnail | undefined;
+	[key in YoutubeThumbnailKeys]?: YoutubeThumbnail | undefined;
 };
 
 interface YoutubeVideoSnippet {
@@ -59,4 +59,9 @@ type YoutubeResponse = YoutubeSuccessResponse | YoutubeErrorResponse;
 
 interface YoutubeVideoData extends YoutubeVideoSnippet {
 	videoId: string;
+}
+
+interface LivestreamData {
+	live: boolean;
+	videoId: string | undefined;
 }
