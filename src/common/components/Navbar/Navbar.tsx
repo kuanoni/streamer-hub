@@ -97,7 +97,7 @@ const TextLogo = styled('h2', {
 	margin: 0,
 	marginLeft: '.5rem',
 	display: 'none',
-	'@sm': { display: 'block' },
+	'@sm': { display: 'flex', alignItems: 'center', gap: '.25rem' },
 });
 
 const Nav = styled('nav', {
@@ -177,7 +177,7 @@ const Navbar = () => {
 						<IconButton color='lightTransparent' size='2.25rem' iconSizeRatio={0.75} onClick={toggleNavbar}>
 							<HiOutlineMenu />
 						</IconButton>
-						<TextLogo>KroyOoz.tv</TextLogo>
+						<TextLogo>KroyOoz.tv {livestreamData?.live && <LiveBadge>LIVE</LiveBadge>}</TextLogo>
 						<UserNavOptions user={data?.user} status={status} openSignIn={() => setIsSignInOpen(true)} />
 					</ControlBar>
 				</Nav>
