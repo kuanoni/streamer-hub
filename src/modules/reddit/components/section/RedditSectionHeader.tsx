@@ -1,3 +1,4 @@
+import { SUBREDDIT_NAME } from 'src/common/constants/socialMedia';
 import { styled } from 'stiches.config';
 
 import { borderColor } from '../../common';
@@ -67,14 +68,10 @@ const Header = styled('a', {
 	},
 });
 
-type Props = {
-	subredditName: string;
-};
-
-const RedditSectionHeader = ({ subredditName }: Props) => {
+const RedditSectionHeader = () => {
 	return (
-		<Header href={`https://www.reddit.com/r/${subredditName}/`} target='_blank'>
-			<HeaderText>Posts from /r/{subredditName}</HeaderText>
+		<Header href={`https://www.reddit.com/r/${SUBREDDIT_NAME}/`} target='_blank'>
+			<HeaderText>Posts from /r/{SUBREDDIT_NAME}</HeaderText>
 			<HeaderButton />
 		</Header>
 	);

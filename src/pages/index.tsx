@@ -1,6 +1,4 @@
-import {
-	SUBREDDIT_NAME, TWITTER_USERNAME, YOUTUBE_CHANNEL_ID
-} from 'src/common/constants/socialMedia';
+import { TWITTER_USERNAME, YOUTUBE_CHANNEL_ID } from 'src/common/constants/socialMedia';
 import { styled } from 'stiches.config';
 
 import BroadcastsSection from '@components/Home/BroadcastsSection';
@@ -93,7 +91,7 @@ const Home = ({ videos, pastBroadcasts, livestream }: Props) => {
 				<ColumnWrapper>
 					<ColumnContainer>
 						<TwitterSection username={TWITTER_USERNAME} />
-						<RedditSection subredditName={SUBREDDIT_NAME} posts={posts || []} />
+						<RedditSection posts={posts || []} />
 					</ColumnContainer>
 				</ColumnWrapper>
 			</VideosAndSocialsRow>
