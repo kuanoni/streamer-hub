@@ -1,5 +1,5 @@
 import React, {
-	Dispatch, SetStateAction, useContext, useEffect, useMemo, useRef, useState
+	Dispatch, SetStateAction, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState
 } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { styled, theme } from 'stiches.config';
@@ -19,6 +19,7 @@ const Container = styled('div', {
 	flexDirection: 'column-reverse',
 	height: '100%',
 	overflowY: 'scroll',
+	overscrollBehavior: 'none',
 	...CustomScrollbar,
 	variants: {
 		hide: {
@@ -36,7 +37,11 @@ const MessagesContainer = styled('div', {
 	position: 'relative',
 	display: 'flex',
 	flexDirection: 'column',
-	paddingBottom: '.25rem',
+	paddingBottom: '.5rem',
+	marginTop: 'auto',
+	minHeight: 5000,
+	justifyContent: 'end',
+	...CustomScrollbar,
 });
 
 const BottomContainer = styled('div', {
@@ -83,7 +88,6 @@ interface Props {
 
 const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Props) => {
 	const scrollableContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
-	const bottomRef: React.RefObject<HTMLDivElement> = useRef(null);
 	const [isPaused, setIsPaused] = useState(false);
 	const [messages, setMessages] = useState<(UserMessage | EmbedMessage)[]>([]);
 
@@ -157,24 +161,29 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 	}, [isPaused, showBadges, showTime, hideNsfw, hideNsfl]);
 
 	// update messages only when not paused
-	useEffect(() => {
-		if (!isPaused && liveMessageList) setMessages(liveMessageList);
+	useLayoutEffect(() => {
+		if (!isPaused && liveMessageList) {
+			setMessages(liveMessageList);
+			scrollToBottom();
+		}
 	}, [setMessages, liveMessageList, isPaused]);
 
 	// uses bottomRef to scroll to bottom of chat
 	const scrollToBottom = () => {
-		if (!bottomRef.current) return;
-		bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+		if (!scrollableContainerRef.current) return;
+
+		scrollableContainerRef.current.scrollTo({ top: scrollableContainerRef.current.scrollHeight });
 	};
 
 	// user scrolling turns on freeScroll, reaching the bottom turns it off
 	const handleScroll = () => {
 		if (!scrollableContainerRef.current) return;
 
-		const isScrolledToBottom = scrollableContainerRef.current?.scrollTop === 0;
+		const isScrolledToBottom = scrollableContainerRef.current.scrollTop === 0;
 		setIsPaused(!isScrolledToBottom);
 	};
 
+	// handle clicking anywhere in the messages container
 	const handleClick = () => {
 		if (focusedUser) setFocusedUser('');
 		closePopup();
@@ -190,7 +199,6 @@ const ChatMessageList = ({ focusedUser, setFocusedUser, closePopup, hide }: Prop
 				css={containerCss}
 			>
 				{/* since container has a flex direction of column-reverse, bottomRef needs to be at the top */}
-				<div ref={bottomRef}></div>
 				<MessagesContainer css={messagesContainerCss}>
 					{messages.map((msg) => {
 						if (msg.type === MessageType.TEXT)
