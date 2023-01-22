@@ -1,5 +1,9 @@
 import React, { useContext } from 'react';
+import { YOUTUBE_CHANNEL_ID } from 'src/common/constants/socialMedia';
 import { styled, theme } from 'stiches.config';
+
+import fetchLivestreamData from '@modules/youtube/utils/fetchLivestreamData';
+import { useQuery } from '@tanstack/react-query';
 
 import StreamContext from './context/StreamContext';
 
@@ -40,30 +44,22 @@ const StyledIframe = styled('iframe', {
 
 const StreamEmbed = () => {
 	const ctx = useContext(StreamContext);
-
 	const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'streamer-hub.fly.dev';
+
+	const { data: livestreamData } = useQuery<LivestreamData>(['livestreamData'], fetchLivestreamData, {
+		staleTime: 1000 * 60 * 1,
+	});
 
 	return (
 		<StreamEmbedContainer>
 			<StreamEmbedWrapper>
-				{!ctx?.isLoaded ? (
-					<></>
-				) : ctx.streamSource === 'twitch' ? (
-					<StyledIframe
-						src={`https://player.twitch.tv/?channel=public_domain_television&parent=${domain}`}
-						width='100%'
-						height='100%'
-						title='Faker stream'
-					/>
-				) : ctx.streamSource === 'youtube' ? (
+				{livestreamData?.live ? (
 					<StyledIframe
 						width='100%'
 						height='100%'
-						src='https://www.youtube.com/embed/j_A_jAsuZD8/embed/live_stream?channel=UCM2fsEsL6rW99JYMPFmwgtA'
+						src={`https://www.youtube.com/embed/live_stream?autoplay=1&disablekb=1&modestbranding=1&playsinline=1&channel=${YOUTUBE_CHANNEL_ID}&origin=${domain}`}
 					/>
-				) : (
-					<></>
-				)}
+				) : null}
 			</StreamEmbedWrapper>
 		</StreamEmbedContainer>
 	);
