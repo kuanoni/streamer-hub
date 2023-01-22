@@ -132,7 +132,7 @@ const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [canPlayAnimation, setCanPlayAnimation] = useState(false);
 
-	const { data: livestreamData } = useQuery<LivestreamData>(['checkLivestreamStatus'], fetchLivestreamData, {
+	const { data: livestreamData } = useQuery<LivestreamData>(['livestreamData'], fetchLivestreamData, {
 		staleTime: 1000 * 60 * 2,
 	});
 
