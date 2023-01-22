@@ -111,7 +111,9 @@ export async function getStaticProps() {
 
 	// filter broadcasts out of video array
 	const broadcastIds = pastBroadcasts.map((broadcast) => broadcast.videoId);
-	const videos = videosAndBroadcasts.filter((video) => !broadcastIds.includes(video.videoId)).slice(0, 8);
+	const videos = videosAndBroadcasts
+		.filter((video) => !broadcastIds.includes(video.videoId) && video.liveBroadcastContent === 'none')
+		.slice(0, 8);
 
 	const props: Props = {
 		videos,
