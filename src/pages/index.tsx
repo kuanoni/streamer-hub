@@ -1,3 +1,6 @@
+import {
+	SUBREDDIT_NAME, TWITTER_USERNAME, YOUTUBE_CHANNEL_ID
+} from 'src/common/constants/socialMedia';
 import { styled } from 'stiches.config';
 
 import BroadcastsSection from '@components/Home/BroadcastsSection';
@@ -64,12 +67,6 @@ const ColumnContainer = styled('div', {
 	'@md': { gap: '1rem' },
 });
 
-const SUBREDDIT_NAME = 'Jerma985';
-const TWITTER_USERNAME = 'Jerma985';
-// const YOUTUBE_CHANNEL_ID = 'UCL7DDQWP6x7wy0O6L5ZIgxg';
-const YOUTUBE_CHANNEL_ID = 'UCsj_gOOEmCb73tgbjnUdUkg';
-// const YOUTUBE_CHANNEL_ID = 'UC554eY5jNUfDq3yDOJYirOQ';
-
 interface Props {
 	posts: RedditPostData[];
 	videos: YoutubeVideoData[];
@@ -125,7 +122,7 @@ export async function getStaticProps() {
 
 	return {
 		props,
-		revalidate: 10,
+		revalidate: 1000 * 60 * 60 * 4,
 	};
 }
 
