@@ -1,13 +1,13 @@
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import {
-	BsCameraVideoFill, BsCollectionPlayFill, BsFillCartFill, BsFillHouseDoorFill
-} from 'react-icons/bs';
+import { BsCameraVideoFill, BsFillCartFill, BsFillHouseDoorFill } from 'react-icons/bs';
 import { HiOutlineMenu } from 'react-icons/hi';
 import { keyframes, styled, theme } from 'stiches.config';
 
 import IconButton from '@components/ui/IconButton';
 import { AuthPerms } from '@globalTypes/user';
+import fetchLivestreamData from '@modules/youtube/utils/fetchLivestreamData';
+import { useQuery } from '@tanstack/react-query';
 
 import SignInModal from '../SignInModal';
 import BrandLogo from './BrandLogo';
@@ -119,7 +119,7 @@ const Nav = styled('nav', {
 const LiveBadge = styled('span', {
 	display: 'inline',
 	padding: '2px 4px',
-	marginLeft: 3,
+	marginLeft: 6,
 	color: theme.colors.textLightActive,
 	backgroundColor: '#e30000',
 	borderRadius: theme.space.borderRad,
@@ -131,6 +131,10 @@ const Navbar = () => {
 	const [isSignInOpen, setIsSignInOpen] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const [canPlayAnimation, setCanPlayAnimation] = useState(false);
+
+	const { data: livestreamData } = useQuery<LivestreamData>(['checkLivestreamStatus'], fetchLivestreamData, {
+		staleTime: 1000 * 60 * 2,
+	});
 
 	useEffect(() => {
 		if (window.location.hash.startsWith('#signin') && status !== 'authenticated') setIsSignInOpen(true);
@@ -163,7 +167,8 @@ const Navbar = () => {
 						<NavButton link='/stream'>
 							<BsCameraVideoFill />
 							<span className='label'>
-								Stream <LiveBadge>LIVE</LiveBadge>
+								Stream
+								{livestreamData?.live && <LiveBadge>LIVE</LiveBadge>}
 							</span>
 						</NavButton>
 						{data?.user?.authLevel === AuthPerms.ADMIN && <NavButton link='/admin'>Admin</NavButton>}
