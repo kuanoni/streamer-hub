@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { YOUTUBE_CHANNEL_ID } from 'src/common/constants/socialMedia';
 
 const getVideoId = async () => {
-	const videoId = await fetch('https://www.youtube.com/channel/' + YOUTUBE_CHANNEL_ID)
+	const videoId = await fetch(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}`)
 		.then((response) => response.text())
 		.then((resp) => {
 			let n = resp.search(/\{"videoId[\sA-Za-z0-9:"\{\}\]\[,\-_]+BADGE_STYLE_TYPE_LIVE_NOW/i);

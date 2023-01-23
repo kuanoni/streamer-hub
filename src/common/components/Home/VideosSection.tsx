@@ -1,3 +1,4 @@
+import { YOUTUBE_CHANNEL_ID } from 'src/common/constants/socialMedia';
 import { styled, theme } from 'stiches.config';
 
 import { CSS } from '@stitches/react';
@@ -99,7 +100,8 @@ const VideosSection = ({ videos }: Props) => {
 					<Fallback>
 						<h1>Failed to load Youtube videos...</h1>
 						<p>
-							Visit the channel <a href='#'>here</a> instead.
+							Visit the channel <a href={`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}`}>here</a>{' '}
+							instead.
 						</p>
 					</Fallback>
 				)}
