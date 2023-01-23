@@ -27,6 +27,7 @@ const GridContainer = styled(AbsoluteContainer, {
 	'@sm': {
 		gridTemplateRows: 'min-content 1fr',
 		gridTemplateColumns: '1fr',
+		justifyItems: 'center',
 		gap: 0,
 	},
 });
