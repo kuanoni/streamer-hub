@@ -20,7 +20,7 @@ const Container = styled('div', {
 	minWidth: 300,
 	width: 300,
 	overflow: 'auto',
-	'@md': { width: '100%' },
+	'@sm': { width: '100%' },
 });
 
 const MessagesSection = styled('div', {
